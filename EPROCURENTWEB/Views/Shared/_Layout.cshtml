@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/shared")
+
+</head>
+<body>
+    @*
+    <nav class="navbar navbar-expand-lg navbar-dark bg-test">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="langs" style="list-style:none;">
+                <li style="display:inline;">
+                    <a href="" class="setLang" data-lang="es-MX"><img src="@Url.GetImage("Mexico.png",false)" /></a>
+                </li>
+                <li style="display:inline;">
+                    <a href="" class="setLang" data-lang="en-US"><img src="@Url.GetImage("usa.png", false)" /></a>
+                </li>
+            </ul>
+        </div>
+    </nav>*@
+
+
+
+    <div class="general">
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+
+    @RenderSection("scripts", required: false)
+    <script>
+        $(document).ready(function () {
+
+            var lang = EprocurementWeb.Cookies.getCookie("LangForMultiLanguage");
+            $(".setLang[data-lang='" + lang + "'] img").addClass("active-lang");
+
+            $(".setLang").on("click", function (event) {
+                var lang = $(this).attr("data-lang");
+                EprocurementWeb.Cookies.setCookie("LangForMultiLanguage", lang, 30);
+                location.reload(true);
+            })
+        });
+        $(document).on('click', '.panel-heading span.clickable', function (e) {
+            var $this = $(this);
+            if (!$this.hasClass('panel-collapsed')) {
+                $this.parents('.panel').find('.panel-body').slideUp();
+                $this.addClass('panel-collapsed');
+                $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+            } else {
+                $this.parents('.panel').find('.panel-body').slideDown();
+                $this.removeClass('panel-collapsed');
+                $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+            }
+        })
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,228 @@
+﻿
+@{
+    ViewBag.Title = "Tesoreria";
+}
+    <link href="~/Content/Gestor.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mt-3">
+            <div class="card-body">
+                <div class="row">
+                    @Html.Hidden("IdUsuarioRol", (int)ViewBag.IdUsuarioRol)
+                    <div class="col-md-12 h-filtro">Filtrar por</div>
+                    <div class="form-group col-md-4">
+                        @Html.Label("rfc", "RFC", new { @class = "control-label text-right " })
+                        @Html.TextBox("rfc", "", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        @Html.Label("proveedor", "Proveedor", new { @class = "control-label text-right " })<br />
+                        @Html.TextBox("proveedor", "", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        @Html.Label("email", "Correo Electrónico", new { @class = "control-label text-right " })
+                        @Html.TextBox("email", "", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        @Html.Label("aeropuerto", "Aeropuerto", new { @class = "control-label text-right " })
+                        @Html.DropDownList("aeropuerto", new SelectList(ViewBag.AeropuertoList, "Id", "Nombre"), "Seleccione una opción", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label text-right">Estatus</label>
+                        <select class="form-control">
+                            <option>...</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <button id="buscar" class="btn btn-search btn-purple float-right">
+                            <i class="fas fa-search"></i> Buscar
+                        </button>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-sm-12">
+        <table id="Table">
+            @*<thead>
+                    <tr>
+                        <td>IdProveedor</td>
+                        <td>Proveedor</td>
+                        <td>RFC</td>
+                        <td>Email</td>
+                        <td>Estatus</td>
+                        <td>Accion</td>
+                    </tr>
+                </thead>*@
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var fn_buscar = function () {
+        var tipoProveedor = $('#tipoProveedor').val() == '' ? null : $('#tipoProveedor').val();
+         var idGiroProveedor = $('#giro').val() == '' ? null : $('#giro').val();
+         var idAeropuerto = $('#aeropuerto').val() == '' ? null : $('#aeropuerto').val();
+         var email = $('#email').val() == '' ? null : $('#email').val();
+         var nombreEmpresa = $('#proveedor').val() == '' ? null : $('#proveedor').val();
+         var rfc = $('#rfc').val() == '' ? null : $('#rfc').val();
+         var jsonData = JSON.stringify({ idTipoProveedor: tipoProveedor, idGiroProveedor: idGiroProveedor, idAeropuerto: idAeropuerto, nombreEmpresa: nombreEmpresa, rfc: rfc, email: email });
+         $.ajax({
+             type: "POST",
+             contentType: "application/json; charset=utf-8",
+             url: '@Url.Action("GetProveedorEstatusList", "Tesoreria")',
+             data: jsonData,
+             async: false,
+             success: function(data) {
+                 console.log("Traigo Datos", data)
+                 $("#Table").html('');
+                 $("#Table").append('<thead class="bg-light-purple"><tr>' +
+                     //'<td>IdProveedor</td>'+
+                     '<td>RFC</td>' +
+                     '<td>Proveedor</td>' +
+                     '<td>Email</td>' +
+                     '<td>Estatus</td>' +
+                     '<td>Ver</td></tr></thead>'
+                 );
+                  //("#Table").DataTable().destroy();
+                 $("#Table").DataTable().clear().draw();
+                 $("#Table").DataTable().destroy();
+
+                 $("#Table").append('<tbody>');
+                 for (i = 0; i < data.length; i++) {
+                     console.log(data);
+
+                     @*var link = '@Html.ActionLink(" ", "About", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
+                     link = link.replace('_idProv_', data[i].IdProveedor);*@
+
+                     var link = '@Html.ActionLink(" ", "AceptarProveedor", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
+                     link = link.replace('_idProv_', data[i].IdProveedor);
+                     console.log("link", link);
+
+                     var color = ''
+                     switch (data[i].IdEstatus) {
+                         case 5: color = '#43ac3e';
+                             break;
+                         case 6: color = '#de343c';
+                             break;
+                         case 7: color = '#f9a32f';
+                             break;
+                         case 8: color = '#43ac3e';
+                             break;
+                     }
+                     
+                     $("#Table").append('<tr>' +
+                         //'<td align="center" style="dislay: none;">' + data[i].IdProveedor + '</td>' +
+                         '<td style="dislay: none;"><b>' + data[i].RFC + '</b></td>' +
+                         '<td style="dislay: none;">' + data[i].NombreEmpresa + '</td>' +
+                         '<td style="dislay: none;">' + data[i].Email + '</td>' +
+                         '<td style="dislay: none; color:'+ color +';">' + data[i].Estatus + '</td>' +
+                         '<td style="dislay: none;"><div class="btn-circle">' + link + '</div></td>' + '</tr>'
+                     );
+                 }
+                 $("#Table").append('</tbody>');
+
+                 $('#Table').DataTable({
+                        "paging": false,
+                         "bScrollInfinite": true,
+                         "bScrollCollapse": true
+                     });
+
+             },
+         });
+    }
+
+    var fn_buscarTesoreria = function () {
+        var tipoProveedor = $('#tipoProveedor').val() == '' ? null : $('#tipoProveedor').val();
+         var idGiroProveedor = $('#giro').val() == '' ? null : $('#giro').val();
+         var idAeropuerto = $('#aeropuerto').val() == '' ? null : $('#aeropuerto').val();
+         var email = $('#email').val() == '' ? null : $('#email').val();
+         var nombreEmpresa = $('#proveedor').val() == '' ? null : $('#proveedor').val();
+         var rfc = $('#rfc').val() == '' ? null : $('#rfc').val();
+         var jsonData = JSON.stringify({ idTipoProveedor: tipoProveedor, idGiroProveedor: idGiroProveedor, idAeropuerto: idAeropuerto, nombreEmpresa: nombreEmpresa, rfc: rfc, email: email });
+         $.ajax({
+             type: "POST",
+             contentType: "application/json; charset=utf-8",
+             url: '@Url.Action("GetProveedorEstatusList", "Tesoreria")',
+             data: jsonData,
+             async: false,
+             success: function(data) {
+                 console.log("Traigo Datos", data)
+                 $("#Table").html('');
+                 $("#Table").append('<thead class="bg-light-purple"><tr>' +
+                     //'<td>IdProveedor</td>'+
+                     '<td>RFC</td>' +
+                     '<td>Proveedor</td>' +
+                     '<td>Email</td>' +
+                     '<td>Estatus</td>' +
+                     '<td  align="right">Estatus AX</td>' +
+                     '<td>Ver</td></tr></thead>'
+                 );
+                  //("#Table").DataTable().destroy();
+                 $("#Table").DataTable().clear().draw();
+                 $("#Table").DataTable().destroy();
+
+                 $("#Table").append('<tbody>');
+                 for (i = 0; i < data.length; i++) {
+
+                     @*var link = '@Html.ActionLink(" ", "About", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
+                     link = link.replace('_idProv_', data[i].IdProveedor);*@
+
+                     var link = '@Html.ActionLink(" ", "AprobarInformacionBF", "Home", new { idProveedor ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
+                     link = link.replace('_idProv_', data[i].IdProveedor);
+                     console.log("link", link);
+
+                     $("#Table").append('<tr>' +
+                         //'<td align="center" style="dislay: none;">' + data[i].IdProveedor + '</td>' +
+                         '<td style="dislay: none;"><b>' + data[i].RFC + '</b></td>' +
+                         '<td style="dislay: none;">' + data[i].NombreEmpresa + '</td>' +
+                         '<td style="dislay: none;">' + data[i].Email + '</td>' +
+                         '<td style="dislay: none;">' + data[i].Estatus + '</td>' +
+                         '<td align="right" style="dislay: none;"><div class="btn-circle"><a href="#" class="fas fa-refresh icon-color"></a></div></td>' +
+                         //'<td style="dislay: none;">' + data[i].AXNumeroProveedor + '</td>' +
+                         '<td style="dislay: none;"><div class="btn-circle">' + link + '</div></td>' + '</tr>'
+                     );
+                 }
+                 $("#Table").append('</tbody>');
+
+                 $('#Table').DataTable({
+                        "paging": false,
+                         "bScrollInfinite": true,
+                         "bScrollCollapse": true
+                     });
+
+             },
+         });
+    }
+
+    $("#buscar").click(function () {
+        var idUsuarioRol = $("#IdUsuarioRol").val();
+        if (idUsuarioRol == 3) {
+            fn_buscarTesoreria
+        } else {
+            fn_buscar();
+        }
+    });
+
+    $(document).ready(function () {
+        var idUsuarioRol = $("#IdUsuarioRol").val();
+        console.log(idUsuarioRol);
+        if (idUsuarioRol == 3) {
+            fn_buscarTesoreria();
+        } else {
+            fn_buscar();
+        }
+    });
+
+</script>
+
+

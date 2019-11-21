@@ -1,0 +1,243 @@
+﻿
+
+@{
+    ViewBag.Title = "Información Bancaria - Financiera";
+}
+
+<link href="~/Content/Css/infoCuenta.css" rel="stylesheet" />
+<link href="~/Content/validacionProveedor.css" rel="stylesheet" />
+<div class="row panel-header">
+    <div class="col-sm-4 pull-left">
+        <img class="gap-logo" src="@Url.GetImage("logo-gap-color.png",false)" />
+    </div>
+
+    <div class="col-sm-4 t-a-c ">
+        <h1 class="h-title">
+            @RHome.ProvP
+        </h1>
+    </div>
+
+    <div class="col-sm-4">
+        <ul class="pull-right" style="list-style:none; float: right; display:none;">
+            <li style="display:inline;">
+                <a href="" class="setLang" data-lang="es-MX"><img src="@Url.GetImage("Mexico.png",false)" /></a>
+            </li>
+            <li style="display:inline;">
+                <a href="" class="setLang" data-lang="en-US"><img src="@Url.GetImage("usa.png", false)" /></a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row pb-0">
+        <div class="col-sm-12">
+            <h3 class="subtitle">
+                @RHome.TitlePP
+            </h3>
+        </div>
+    </div>
+
+
+    <div class="formPrincipal">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" style="width:50%">
+                <a class="nav-link active" href="#IB" role="tab" data-toggle="tab">Información Bancaria</a>
+            </li>
+            <li class="nav-item" style="width:50%">
+                <a class="nav-link" href="#IF" role="tab" data-toggle="tab">Información Financiera</a>
+            </li>
+        </ul>
+        <div class="tab-content" style="background-color:white; padding: 15px;">
+            <div role="tabpanel" class="tab-pane fade in active show" id="IB">
+                <div class="col100" style="font-size:14px;">
+                    <b>Por favor llena la siguiente información</b>
+                </div>
+                @Html.Partial("_CuentaBancaria", Model)
+
+                @model EPROCUREMENT.GAPPROVEEDOR.Entities.Proveedor.ProveedorInformacionFinanciera
+
+                @using (Html.BeginForm("CargarCuentas", "AltaProveedor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.HiddenFor(m => m.RFC)
+                    <b>Detalles de la compañia</b>
+                    <div class="row mt-5">
+                        <div class="col-sm-12">
+                            <table class="dataTable" width="100%">
+                                <thead class="bg-light-purple">
+                                    <tr>
+                                        <td>Cuenta</td>
+                                        <td>NombreBancco</td>
+                                        <td>Clabe</td>
+                                        <td>Tipo</td>
+                                        <td>Aeropuertos</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var cuenta in Model.ProveedorCuentaListRegistro)
+                                    {
+                                    <tr>
+                                        <td style="dislay: none;">@cuenta.Cuenta</td>
+                                        <td style="dislay: none;">@cuenta.NombreBanco</td>
+                                        <td style="dislay: none;">@cuenta.CLABE</td>
+                                        <td style="dislay: none;">@cuenta.TipoCuenta</td>
+                                        <td style="dislay: none;"><a href="">Ver</a></td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-sm-6">&nbsp;</div>
+                        <div class="col-sm-3"><input type="button" value="Cancelar" class="btnStyle btnWhite" /></div>
+                        <div class="col-sm-3"><input type="submit" value="Enviar" class="btnStyle" /></div>
+                        @ViewBag.Respuesta
+                    </div>
+                }
+            </div>
+
+            <div role="tabpanel" class="tab-pane fade" id="IF">
+                @using (Html.BeginForm("InformacionBF", "AltaProveedor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="col100" style="font-size:12px;">
+
+                        @for (int idx = 0; idx < Model.CatalogoDocumentoList.Count; idx++)
+                        {
+                            <div class="col-sm-6 mt-2" style="border:solid 1px #c6c7cb; padding:10px;">
+                                <div class="col50">
+                                    <div class="inputIF" style="font-weight:600;">
+                                        @Html.DisplayFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)
+                                        @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdCatalogoDocumento)
+                                        @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdFormatoArchivo)
+                                        @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdFormulario)
+                                    </div>
+                                </div>
+                                <div class="col25">
+                                    <input class="text-box single-line" type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].File)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-sm-6">&nbsp;</div>
+                        <div class="col-sm-3"><input type="button" value="Cancelar" class="btnStyle btnWhite" /></div>
+                        <div class="col-sm-3"><input type="submit" value="Enviar" class="btnStyle" /></div>
+                    </div>
+                }
+            </div>
+            <hr />
+
+
+        </div>
+    </div>
+</div>
+
+<style>
+.dataTable {
+    font-size: 14px;
+    color: #68686a;
+    width: 100%;
+    text-align:left;
+}
+
+.dataTable tbody {
+/*background-color: red !important;*/
+}
+
+table.dataTable thead tr td {
+    height:40px;
+}
+
+table.dataTable tbody tr {
+    background-color: transparent !important;
+}
+
+    table.dataTable tbody tr td {
+        background-color: white;
+        border-top: solid 5px #f6f6f8;
+        text-align:left;
+        font-size:12px;
+    }
+</style>
+
+<script type="text/javascript">
+    var fn_buscar = function () {
+        var tipoProveedor = $('#tipoProveedor').val() == '' ? null : $('#tipoProveedor').val();
+         var idGiroProveedor = $('#giro').val() == '' ? null : $('#giro').val();
+         var idAeropuerto = $('#aeropuerto').val() == '' ? null : $('#aeropuerto').val();
+         var email = $('#email').val() == '' ? null : $('#email').val();
+         var nombreEmpresa = $('#proveedor').val() == '' ? null : $('#proveedor').val();
+         var rfc = $('#rfc').val() == '' ? null : $('#rfc').val();
+         var jsonData = JSON.stringify({ idTipoProveedor: tipoProveedor, idGiroProveedor: idGiroProveedor, idAeropuerto: idAeropuerto, nombreEmpresa: nombreEmpresa, rfc: rfc, email: email });
+         $.ajax({
+             type: "POST",
+             contentType: "application/json; charset=utf-8",
+             url: '@Url.Action("GetProveedorEstatusList", "Tesoreria")',
+             data: jsonData,
+             async: false,
+             success: function(data) {
+                 console.log("Traigo Datos", data)
+                 $("#Table").html('');
+                 $("#Table").append('<thead class="bg-light-purple"><tr>' +
+                     //'<td>IdProveedor</td>'+
+                     '<td>Cuenta</td>' +
+                     '<td>Banco</td>' +
+                     '<td>Clabe</td>' +
+                     '<td>Tipo</td></tr></thead>'
+                 );
+                  //("#Table").DataTable().destroy();
+                 $("#Table").DataTable().clear().draw();
+                 $("#Table").DataTable().destroy();
+
+                 $("#Table").append('<tbody>');
+                 for (i = 0; i < data.length; i++) {
+
+                     @*var link = '@Html.ActionLink(" ", "About", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
+                     link = link.replace('_idProv_', data[i].IdProveedor);*@
+
+                     $("#Table").append('<tr>' +
+                         //'<td align="center" style="dislay: none;">' + data[i].IdProveedor + '</td>' +
+                         '<td align="center" style="dislay: none;"><b>' + data[i].RFC + '</b></td>' +
+                         '<td align="center" style="dislay: none;">' + data[i].NombreEmpresa + '</td>' +
+                         '<td align="center" style="dislay: none;">' + data[i].Email + '</td>' +
+                         '<td align="center" style="dislay: none;">' + data[i].Estatus + '</td>' +
+                         '<td align="center" style="dislay: none;">' + link + '</td>' + '</tr>'
+                     );
+                 }
+                 $("#Table").append('</tbody>');
+
+                 $('#Table').DataTable({
+                        "paging": false,
+                         "bScrollInfinite": true,
+                         "bScrollCollapse": true
+                     });
+
+             },
+         });
+    }
+
+    $("#buscar").click(function () {
+        fn_AgregarCuenta();
+    });
+
+    $(document).ready(function () {
+        if ('@ViewBag.Respuesta' != "") {
+            Swal.fire({
+                position: 'middle',
+                icon: 'success',
+                title: 'Las cuentas han sido guardadas con éxito',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+        $("#ProveedorCuentaList_0__Cuenta").val("");
+        $("#ProveedorCuentaList_0__CLABE").val("");
+        $("#idBanco").val(0);
+        $("#idTipoCuenta").val(0);
+
+        fn_buscar();
+    });
+
+</script>

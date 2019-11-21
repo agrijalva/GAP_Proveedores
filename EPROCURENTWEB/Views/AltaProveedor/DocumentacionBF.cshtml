@@ -1,0 +1,80 @@
+﻿@model EPROCUREMENT.GAPPROVEEDOR.Entities.Proveedor.ProveedorInformacionFinanciera
+
+
+@{
+    ViewBag.Title = "Documentación";
+}
+
+<link href="~/Content/validacionProveedor.css" rel="stylesheet" />
+<div class="row panel-header">
+    <div class="col-sm-4 pull-left">
+        <img class="gap-logo" src="@Url.GetImage("logo-gap-color.png",false)" />
+    </div>
+
+    <div class="col-sm-4 t-a-c ">
+        <h1 class="h-title">
+            @RHome.ProvP
+        </h1>
+    </div>
+
+    <div class="col-sm-4">
+        <ul class="pull-right" style="list-style:none; float: right; display:none;">
+            <li style="display:inline;">
+                <a href="" class="setLang" data-lang="es-MX"><img src="@Url.GetImage("Mexico.png",false)" /></a>
+            </li>
+            <li style="display:inline;">
+                <a href="" class="setLang" data-lang="en-US"><img src="@Url.GetImage("usa.png", false)" /></a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row pb-0">
+        <div class="col-sm-12">
+            <h3 class="subtitle">
+                @RHome.TitlePP
+            </h3>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("DocumentacionBF", "AltaProveedor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(m => m.RFC)
+        <div class="formPrincipal">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item" style="width:50%">
+                    <a class="nav-link active" href="#IF" role="tab" data-toggle="tab">Información Financiera</a>
+                </li>
+            </ul>
+            <div class="tab-content" style="background-color:white; padding: 15px;">
+                <div role="tabpanel" class="tab-pane fade in active show" id="IF">
+                    <div class="col100">
+                        @for (int idx = 0; idx < Model.CatalogoDocumentoList.Count; idx++)
+                        {
+                            <div class="col100">
+                                <div class="col25">
+                                    <div class="inputIF">
+                                        @Html.LabelFor(m => m.CatalogoDocumentoList[idx].NombreDocumento, new { @class = "labelTexto control-label" })
+                                        @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].RutaDocumento)
+                                    </div>
+                                </div>
+                                <div class="col25">
+                                    @Html.ActionLink("Descargar", "DescargarArchivo", new { ruta = Model.CatalogoDocumentoList[idx].RutaDocumento, nombre = Model.CatalogoDocumentoList[idx].NombreDocumento })
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <hr />
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-sm-6">&nbsp;</div>
+                <div class="col-sm-3"><input type="button" value="Cancelar" class="btnStyle btnWhite" /></div>
+                <div class="col-sm-3"><input type="submit" value="Enviar" class="btnStyle" /></div>
+            </div>
+        </div>
+
+    }
+</div>

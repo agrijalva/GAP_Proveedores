@@ -1,0 +1,32 @@
+﻿body {
+}
+
+.formPrincipal {
+    width: 100%;
+    display: inline-block;
+}
+
+.col50 {
+    display: inline-block;
+    width: 50%;
+}
+
+.col100 {
+    display: inline-block;
+    width: 100%;
+}
+
+.col25 {
+    display: inline-block;
+    width: 24%;
+}
+
+.inputIF {
+    display: inline-block;
+    width: 100%;
+}
+
+.labelTexto {
+    max-width: 100%;
+    flex: auto;
+}

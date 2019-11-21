@@ -1,0 +1,81 @@
+﻿.card-header .fas {
+    transition: .3s transform ease-in-out;
+}
+
+.card-header .collapsed .fas {
+    transform: rotate(180deg);
+}
+
+.card-body {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.accordion > .card:last-of-type {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-border {
+    border-radius: 12px !important;
+}
+
+.card-titulo {
+    font-size: 16px;
+    font-weight: 500 !important;
+}
+
+.card-header {
+
+    padding: 5px 0px 0px 25px;
+    background: rgba(67,41,121,1);
+    background: -moz-linear-gradient(left, rgba(67,41,121,1) 0%, rgba(92,61,147,1) 0%, rgba(114,78,170,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(67,41,121,1)), color-stop(0%, rgba(92,61,147,1)), color-stop(100%, rgba(114,78,170,1)));
+    background: -webkit-linear-gradient(left, rgba(67,41,121,1) 0%, rgba(92,61,147,1) 0%, rgba(114,78,170,1) 100%);
+    background: -o-linear-gradient(left, rgba(67,41,121,1) 0%, rgba(92,61,147,1) 0%, rgba(114,78,170,1) 100%);
+    background: -ms-linear-gradient(left, rgba(67,41,121,1) 0%, rgba(92,61,147,1) 0%, rgba(114,78,170,1) 100%);
+    background: linear-gradient(to right, rgba(67,41,121,1) 0%, rgba(92,61,147,1) 0%, rgba(114,78,170,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#432979', endColorstr='#724eaa', GradientType=1 );
+    color: #fff;
+}
+
+.btn {
+    padding: 0 10px 5px;
+}
+
+.collapse-color {
+    color: #e2e8ef80;
+}
+
+.label-formulario {
+    font-weight: 500 !important;
+    font-size:12px;
+}
+.btnStyle {
+    border-radius: 20px;
+}
+.btnStyle:hover {
+    border-radius: 20px;
+}
+
+.nav-tabs .nav-item {
+    background-color:white;
+    color:#212121;
+    border-bottom:solid 2px #edeef2;
+}
+
+.nav-tabs .nav-item a{
+    color: #212121;
+}
+
+    .nav-tabs .nav-item .active {
+        background-color: rgba(67,41,121,1);
+        color: white;
+        border-bottom: solid 2px white;
+    }
+
+.labelTexto{
+    font-size:12px;
+    font-weight:600;
+}
+
+
+

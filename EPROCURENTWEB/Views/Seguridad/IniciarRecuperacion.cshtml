@@ -1,0 +1,55 @@
+﻿@model EprocurementWeb.Models.UsuarioModel
+@{
+    ViewBag.Title = "Recuperacion de contraseña";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/Styles/Login.css" rel="stylesheet" />
+<div class="background row" style="padding-bottom: 0px;">
+    <div class="col-sm-7">
+        <div class="pnl-logo">
+            <img src="~/Content/Images/logo-gap-color.png" width="154" />
+        </div>
+        <div class="content-title">
+            <h1 class="title">PORTAL<br /> DE PROVEEDORES</h1>
+        </div>
+    </div>
+    <div class="col-sm-5 containerLogin">
+        @using (Html.BeginForm("IniciarRecuperacion", "Seguridad", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="row pb-0">
+                <div class="col-sm-12">
+                    <br /><br /><br /><br /><br /><br /><br />
+                    <h3 class="subtitle">
+                        Recuperación de contraseña
+                    </h3>
+                </div>
+            </div>
+
+            <div class="formPrincipal">
+                <div class="row login-user">
+                    <div class="col-sm-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="inputIF">
+                            @Html.LabelFor(model => model.Email, new { @class = "labelTexto control-label" })
+                        </div>
+                        <div class="inputIF">
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control inputIF" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="text-align:center;">
+                    <div class="col-sm-12">@ViewBag.Error</div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-sm-8"><input type="submit" value="Recuperar" class="btnStyle btn-radius" /></div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

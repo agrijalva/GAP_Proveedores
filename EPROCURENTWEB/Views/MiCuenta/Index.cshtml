@@ -1,0 +1,134 @@
+﻿@model EprocurementWeb.Models.MiCuentaModel
+@{
+    ViewBag.Title = "Mi Cuenta";
+}
+
+<link href="~/Content/validacionProveedor.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<div class="row panel-header">
+    <div class="col-sm-4 pull-left">
+        <img class="gap-logo" src="@Url.GetImage("logo-gap-color.png",false)" />
+    </div>
+
+    <div class="col-sm-4 t-a-c ">
+        <h1 class="h-title">
+            PORTAL DE PROVEEDORES
+        </h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row pb-0">
+        <div class="col-sm-12">
+            <h3 class="subtitle">
+                Mi cuenta
+            </h3>
+        </div>
+    </div>
+    <div class="formPrincipal">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" style="width:50%">
+                <a class="nav-link active" href="#tbInfoCuenta" role="tab" data-toggle="tab">Información de la cuenta</a>
+            </li>
+            <li class="nav-item" style="width:50%">
+                <a class="nav-link" href="#tbPassword" role="tab" data-toggle="tab">Contraseña</a>
+            </li>
+        </ul>
+        <div class="tab-content" style="background-color:white; padding: 15px;">
+            <div role="tabpanel" class="tab-pane fade in active show" id="tbInfoCuenta">
+                <div class="col100" style="font-size:14px;">
+                    Información de cuenta
+                </div>
+                @*~/Views/Shared/_InformacionCuenta.cshtml*@
+                @Html.Partial("_InformacionCuenta", Model.Proveedor)
+
+            </div>
+            <div role="tabpanel" class="tab-pane fade in active hide" id="tbPassword">
+                <div class="col100" style="font-size:14px;">
+                    Contraseña
+                </div>
+                @Html.Partial("_ActualizarPassword", Model.ActualizaPassword)
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        console.log("1", $("#Accion").val());
+        console.log("2", $("#Accion2").val());
+        if ($("#Accion").val() == 1) {
+            $("#tbPassword").removeClass("active");
+            $("#tbPassword").removeClass("show");
+            $("#tbPassword").addClass("hide");
+            $("#tbInfoCuenta").addClass("active show");
+            $("#tbInfoCuenta").addClass("show");
+        } else if ($("#Accion").val() == 2) {
+            $("#tbInfoCuenta").removeClass("active");
+            $("#tbInfoCuenta").removeClass("show");
+            $("#tbInfoCuenta").addClass("hide");
+            $("#tbPassword").removeClass("hide");
+            $("#tbPassword").addClass("active");
+            $("#tbPassword").addClass("show");
+        }
+
+
+        $("#tbInfoCuenta").click(function () {
+            $("#tbPassword").removeClass("active");
+            $("#tbPassword").removeClass("show");
+            $("#tbPassword").addClass("hide");
+            $("#tbInfoCuenta").addClass("active show");
+            $("#tbInfoCuenta").addClass("show");
+            //$("#tbInfoCuenta").addClass("active show");
+        });
+        $("#tbPassword").click(function () {
+            $("#tbInfoCuenta").removeClass("active");
+            $("#tbInfoCuenta").removeClass("show");
+            $("#tbInfoCuenta").addClass("hide");
+            $("#tbPassword").removeClass("hide");
+            $("#tbPassword").addClass("active");
+            $("#tbPassword").addClass("show");
+            //$("#tbPassword").addClass("active show");
+        });
+    });
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+@*<div class="row">
+        <div class="col-md-6 offset-3">
+            <div class="form-style">
+                <form action="@Url.Content("~/Seguridad/Recovery")" method="post">
+                    @Html.HiddenFor(d => d.Token)
+
+                    <label>Escribe tu contraeña:</label>
+                    @Html.PasswordFor(d => d.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(d => d.Password, null, new { style = "color:red;" })
+
+                    <label>Nueva contraseña:</label>
+                    @Html.PasswordFor(d => d.PasswordNueva, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(d => d.PasswordNueva, null, new { style = "color:red;" })
+
+                    <label>Confirmar contraseña:</label>
+                    @Html.PasswordFor(d => d.ConfirmarPassword, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(d => d.ConfirmarPassword, null, new { style = "color:red;" })
+                    <br />
+                    <div class="text-right">
+                        <button class="btn btn-primary">Recuperar</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>*@
+

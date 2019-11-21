@@ -1,0 +1,208 @@
+﻿body {
+    /*padding-top: 50px;
+    padding-bottom: 20px;*/
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+.bg-purple {
+    background-color: #432979 !important;
+    color: white;
+}
+.btn-purple {
+    color: #fff;
+    background-color: #6f5c99;
+    border-color: #eaeef2;
+}
+    .btn-purple:hover {
+        color: #fff;
+        background-color: #aca1c4;
+        border-color: #eaeef2;
+    }
+.btn-purple:not(:disabled):not(.disabled):active, .btn-purple:not(:disabled):not(.disabled).active, .show > .btn-purple.dropdown-toggle {
+    color: #fff;
+    background-color: #d194d16e;
+    border-color: #eaeef2;
+}
+.icon-color {
+ color:#432979;
+}
+
+/**Nuestros**/
+#wkslist {
+    list-style-type: none;
+    padding: 0;
+    padding-left: 10%;
+}
+
+.ulChk {
+    /*columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;*/
+}
+
+.sel-p {
+    padding-bottom: 30px;
+}
+
+.b-c-p {
+    border-color: #432979;
+}
+
+.b-c-p-h {
+    background-color: #432979 !important;
+    border-color: #432979 !important;
+}
+
+.btnStyle {
+    width: 100%;
+    background-color: #432979;
+    color: white;
+    height: 40px;
+    border-radius: 5px;
+}
+
+    .btnStyle:hover {
+        width: 100%;
+        background-color: #af40f6;
+        color: white;
+        height: 40px;
+        border-radius: 5px;
+    }
+
+.chkCondiciones {
+    list-style-type: none;
+}
+
+input[type="checkbox"] {
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+    background: lightgray;
+    height: 16px;
+    width: 16px;
+    border: 1px solid #c6c7cb;
+    margin-right: 5px;
+}
+
+    input[type="checkbox"]:checked {
+        background: #fff;
+    }
+
+    input[type="checkbox"]:hover {
+        filter: brightness(90%);
+    }
+
+    input[type="checkbox"]:disabled {
+        background: #e6e6e6;
+        opacity: 0.6;
+        pointer-events: none;
+    }
+
+    /*input[type="checkbox"]:after {
+        content: '';
+        position: relative;
+        left: 40%;
+        top: 20%;
+        width: 15%;
+        height: 40%;
+        border: solid #fff;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        display: none;
+    }*/
+    input[type="checkbox"]:after {
+        content: '';
+        position: relative;
+        left: 35%;
+        top: 10%;
+        width: 35%;
+        height: 70%;
+        border: solid #43ac3e;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        display: none;
+    }
+
+    input[type="checkbox"]:checked:after {
+        display: block;
+    }
+
+    input[type="checkbox"]:disabled:after {
+        border-color: #7b7b7b;
+    }
+
+.a-c {
+    color: black;
+    text-decoration: underline;
+    vertical-align: text-bottom;
+}
+
+.menu-color {
+    background-color: #432979;
+    border-color: #432979;
+}
+
+
+.menu-idioma {
+    color: white;
+}
+
+    .menu-idioma:active {
+        color: #999999;
+    }
+
+.m-b-1 {
+    margin-bottom: 30px !important;
+}
+
+.m-t-1 {
+    margin-top: 30px !important;
+}
+
+
+.btnStyle {
+    width: 100%;
+    background-color: #432979;
+    color: white;
+    height: 40px;
+    border-radius: 5px;
+}
+
+    .btnStyle:hover {
+        width: 100%;
+        background-color: #af40f6;
+        color: white;
+        height: 40px;
+        border-radius: 5px;
+    }
+
+.ulChk {
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+}
+
+.t-a-c {
+    text-align: center;
+}
+

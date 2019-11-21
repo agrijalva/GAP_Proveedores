@@ -1,0 +1,113 @@
+BEGIN:VCALENDAR
+PRODID:-//Microsoft Corporation//Outlook 16.0 MIMEDIR//EN
+VERSION:2.0
+METHOD:REQUEST
+X-MS-OLK-FORCEINSPECTOROPEN:TRUE
+BEGIN:VTIMEZONE
+TZID:Central Standard Time (Mexico)
+BEGIN:STANDARD
+DTSTART:16011028T020000
+RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=10
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0600
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:16010401T020000
+RRULE:FREQ=YEARLY;BYDAY=1SU;BYMONTH=4
+TZOFFSETFROM:-0600
+TZOFFSETTO:-0500
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+ATTENDEE;CN="Alejandro Grijalva Antonio";RSVP=TRUE:mailto:a.grijalva@alphas
+	oluciones.com
+ATTENDEE;CN="'David Islas'";RSVP=TRUE:mailto:d.islas@alphasoluciones.com
+ATTENDEE;CN=f.zamora@alphasoluciones.com;RSVP=TRUE:mailto:f.zamora@alphasol
+	uciones.com
+CLASS:PUBLIC
+CREATED:20191121T000534Z
+DESCRIPTION:Alpha Soluciones le está invitando a una reunión de Zoom prog
+	ramada. \n\nUnirse a la reunión Zoom \nhttps://zoom.us/j/7388605968 \n\nI
+	D de reunión: 738 860 5968 \n\nMóvil con un toque \n+14086380968\,\,7388
+	605968# Estados Unidos (San José) \n+16468769923\,\,7388605968# Estados U
+	nidos (Nueva York) \n\nMarcar según su ubicación \n        +1 408 638 09
+	68 Estados Unidos (San José) \n        +1 646 876 9923 Estados Unidos (Nu
+	eva York) \n        +1 669 900 6833 Estados Unidos (San José) \nID de reu
+	nión: 738 860 5968 \nEncuentre su número local: https://zoom.us/u/adfiGw
+	cWe3 \n\n
+DTEND;TZID="Central Standard Time (Mexico)":20191120T200000
+DTSTAMP:20191121T000534Z
+DTSTART;TZID="Central Standard Time (Mexico)":20191120T180000
+LAST-MODIFIED:20191121T000534Z
+LOCATION:https://zoom.us/j/7388605968
+ORGANIZER;CN="Denice Naranjo":mailto:d.naranjo@alphasoluciones.com
+PRIORITY:5
+SEQUENCE:0
+SUMMARY;LANGUAGE=es:Reunión de avance fase 1
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E008000000004005D91ACD9FD501000000000000000
+	01000000067209052C2A96344A7459EAE3AE8847D
+X-ALT-DESC;FMTTYPE=text/html:<html xmlns:v="urn:schemas-microsoft-com:vml" 
+	xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-mic
+	rosoft-com:office:word" xmlns:m="http://schemas.microsoft.com/office/2004/
+	12/omml" xmlns="http://www.w3.org/TR/REC-html40"><head><meta http-equiv=Co
+	ntent-Type content="text/html\; charset=iso-8859-1"><meta name=Generator c
+	ontent="Microsoft Word 15 (filtered medium)"><style><!--\n/* Font Definiti
+	ons */\n@font-face\n	{font-family:"Cambria Math"\;\n	panose-1:2 4 5 3 5 4 
+	6 3 2 4\;}\n@font-face\n	{font-family:Calibri\;\n	panose-1:2 15 5 2 2 2 4 
+	3 2 4\;}\n/* Style Definitions */\np.MsoNormal\, li.MsoNormal\, div.MsoNor
+	mal\n	{margin:0cm\;\n	margin-bottom:.0001pt\;\n	font-size:12.0pt\;\n	font-
+	family:"Times New Roman"\,serif\;}\na:link\, span.MsoHyperlink\n	{mso-styl
+	e-priority:99\;\n	color:blue\;\n	text-decoration:underline\;}\na:visited\,
+	 span.MsoHyperlinkFollowed\n	{mso-style-priority:99\;\n	color:purple\;\n	t
+	ext-decoration:underline\;}\np\n	{mso-style-priority:99\;\n	mso-margin-top
+	-alt:auto\;\n	margin-right:0cm\;\n	mso-margin-bottom-alt:auto\;\n	margin-l
+	eft:0cm\;\n	font-size:12.0pt\;\n	font-family:"Times New Roman"\,serif\;}\n
+	p.msonormal0\, li.msonormal0\, div.msonormal0\n	{mso-style-name:msonormal\
+	;\n	mso-style-priority:99\;\n	mso-margin-top-alt:auto\;\n	margin-right:0cm
+	\;\n	mso-margin-bottom-alt:auto\;\n	margin-left:0cm\;\n	font-size:12.0pt\;
+	\n	font-family:"Times New Roman"\,serif\;}\nspan.EstiloCorreo19\n	{mso-sty
+	le-type:personal-compose\;\n	font-family:"Calibri"\,sans-serif\;}\n.MsoChp
+	Default\n	{mso-style-type:export-only\;\n	font-size:10.0pt\;}\n@page WordS
+	ection1\n	{size:612.0pt 792.0pt\;\n	margin:70.85pt 3.0cm 70.85pt 3.0cm\;}\
+	ndiv.WordSection1\n	{page:WordSection1\;}\n--></style><!--[if gte mso 9]><
+	xml>\n<o:shapedefaults v:ext="edit" spidmax="1026" />\n</xml><![endif]--><
+	!--[if gte mso 9]><xml>\n<o:shapelayout v:ext="edit">\n<o:idmap v:ext="edi
+	t" data="1" />\n</o:shapelayout></xml><![endif]--></head><body lang=ES lin
+	k=blue vlink=purple><div class=WordSection1><p><span style='font-family:"C
+	alibri"\,sans-serif'>Alpha Soluciones le está invitando a una reunión de
+	 Zoom programada.</span> <o:p></o:p></p><p><span style='font-family:"Calib
+	ri"\,sans-serif'>Unirse a la reunión Zoom</span> <br><span style='font-fa
+	mily:"Calibri"\,sans-serif'><a href="https://zoom.us/j/7388605968">https:/
+	/zoom.us/j/7388605968</a></span> <o:p></o:p></p><p><span style='font-famil
+	y:"Calibri"\,sans-serif'>ID de reunión: 738 860 5968</span> <o:p></o:p></
+	p><p><span style='font-family:"Calibri"\,sans-serif'>Móvil con un toque</
+	span> <br><span style='font-family:"Calibri"\,sans-serif'>+14086380968\,\,
+	7388605968# Estados Unidos (San José)</span> <br><span style='font-family
+	:"Calibri"\,sans-serif'>+16468769923\,\,7388605968# Estados Unidos (Nueva 
+	York)</span> <o:p></o:p></p><p><span style='font-family:"Calibri"\,sans-se
+	rif'>Marcar según su ubicación</span> <br><span style='font-family:"Cali
+	bri"\,sans-serif'>&nbsp\;&nbsp\;&nbsp\;&nbsp\;&nbsp\;&nbsp\;&nbsp\; +1 408
+	 638 0968 Estados Unidos (San José)</span> <br><span style='font-family:"
+	Calibri"\,sans-serif'>&nbsp\;&nbsp\;&nbsp\;&nbsp\;&nbsp\;&nbsp\;&nbsp\; +1
+	 646 876 9923 Estados Unidos (Nueva York)</span> <br><span style='font-fam
+	ily:"Calibri"\,sans-serif'>&nbsp\;&nbsp\;&nbsp\;&nbsp\;&nbsp\;&nbsp\;&nbsp
+	\; +1 669 900 6833 Estados Unidos (San José)</span> <br><span style='font
+	-family:"Calibri"\,sans-serif'>ID de reunión: 738 860 5968</span> <br><sp
+	an style='font-family:"Calibri"\,sans-serif'>Encuentre su número local: <
+	a href="https://zoom.us/u/adfiGwcWe3">https://zoom.us/u/adfiGwcWe3</a></sp
+	an> <o:p></o:p></p></div></body></html>
+X-MICROSOFT-CDO-BUSYSTATUS:TENTATIVE
+X-MICROSOFT-CDO-IMPORTANCE:1
+X-MICROSOFT-CDO-INTENDEDSTATUS:BUSY
+X-MICROSOFT-DISALLOW-COUNTER:FALSE
+X-MS-OLK-AUTOSTARTCHECK:FALSE
+X-MS-OLK-CONFTYPE:0
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+END:VALARM
+END:VEVENT
+END:VCALENDAR
+

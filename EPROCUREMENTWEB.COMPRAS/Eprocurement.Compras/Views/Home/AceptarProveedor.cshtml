@@ -1,0 +1,536 @@
+﻿@model Eprocurement.Compras.Models.ProveedorRegistro
+
+@{
+    ViewBag.Title = "Aceptar proveedor";
+}
+<link href="~/Content/validacionProveedor.css" rel="stylesheet" />
+<link href="~/Content/Gestor.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<form action="/Home/Index" method="post" class="registro-form form-horizontal container" id="form_fact" name="form_fact">
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-sm-12 ">
+            <h3 class="subtitle">
+                Validación de datos
+            </h3>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-md-12">
+            <div class="accordion" id="accordionExample">
+                <div class="card card-border">
+                    <div class="card-header" id="headingOne">
+                        <span class="card-titulo">
+                            Detalles de la compañía
+                            <button class="btn btn-link collapsed float-right" type="button" data-toggle="collapse" data-target="#detallecompania" aria-expanded="false" aria-controls="collapseThree">
+                                <i class="fas fa-chevron-up collapse-color"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div id="detallecompania" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12" style="font-size:12px;">
+                                        <label class="label-formulario">Tipo de Empresa</label><br />
+                                        @Html.CheckBoxFor(m => m.Mexicana, new { @class = "" })
+                                        @Html.Label("Mexicana", new { @class = "" })&nbsp;&nbsp;&nbsp;&nbsp;
+                                        @Html.CheckBoxFor(m => m.Extranjera, new { @class = "" })
+                                        @Html.Label("Extranjera", new { @class = "" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.Label("empresa", "Nombre de la empresa", new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.NombreEmpresa, new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.Label("razonSocial", "Razón social", new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.RazonSocial, new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.Label("rfc", "RFC", new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.RFC, new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.Label("nif", "NIF", new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.NIF, new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" id="inpgro-tin">
+                                        <div class="form-group">
+                                            @Html.Label("TIN", "TIN", new { id = "lblTIN", @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.Direccion.TIN, new { @class = "form-control col-md-12" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.Label("codigo", "Código postal", new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.Direccion.CodigoPostal, new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" id="inpgro-Colonia">
+                                        <div class="form-group" >
+                                            @Html.Label("colonia", "Colonia", new { id = "lblColonia", @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.Direccion.Colonia, new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" id="inpgro-Municipio">
+                                        <div class="form-group" >
+                                            @Html.Label("municipio", "Municipio", new { id = "lblMunicipio", @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.Direccion.Municipio, new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" id="inpgro-Estado">
+                                        <div class="form-group" >
+                                            @Html.Label("estado", "Estado", new { id = "lblEstado", @class = "label-formulario" })
+                                            @*@Html.DropDownListFor(model => model.Direccion.IdEstado, new SelectList(ViewBag.EstadoList, "IdEstado", "Nombre"), "...", new { @class = "form-control col-md-12 disabled", @id = "EstadoProveedor" })*@
+                                            @Html.TextBoxFor(model => model.Direccion.Estado, new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.Label("pais", "País", new { @class = "label-formulario" })
+                                            @Html.DropDownListFor(model => model.Direccion.IdPais, new SelectList(ViewBag.PaisList, "IdPais", "Nombre"), "...", new { @class = "form-control col-md-12 disabled", @id = "PaisProveedor" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.Label("direccion", "Calle", new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.Direccion.Calle, new { @class = "form-control col-md-12" })
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.Label("zonaHoraria", "Zona horaria", new { @class = "label-formulario" })
+                                            @Html.DropDownListFor(model => model.IdZonaHoraria, new SelectList(ViewBag.ZonaHorariaList, "IdZonaHoraria", "Nombre"), "...", new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.Label("telefono", "Teléfono", new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.ProvTelefono, new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.Label("fax", "Fax", new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.ProvFax, new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.Label("paginaWeb", "Página web", new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.PaginaWeb, new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    @*<div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("tipoProveedor", "Tipo proveedor", new { @class = "label-formulario" })
+                @Html.DropDownListFor(model => model.IdTipoProveedor, new SelectList(ViewBag.TipoProveedorList, "IdTipoProveedor", "Tipo"), "...", new { @class = "form-control col-md-12 disabled" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("axNumeroProveedor", "Número AX", new { @class = "label-formulario" })
+                @Html.TextBoxFor(model => model.AXNumeroProveedor, new { @class = "form-control col-md-12 disabled" })
+            </div>
+        </div>*@
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.Label("nacionalidad", "Nacionalidad", new { @class = "label-formulario" })
+                                            @Html.DropDownListFor(model => model.IdNacionalidad, new SelectList(ViewBag.NacionalidadList, "IdNacionalidad", "Nombre"), "...", new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="accordion" id="accordionExample">
+                <div class="card card-border">
+                    <div class="card-header" id="headingOne">
+                        <span class="card-titulo">
+                            Detalles del contacto
+                            <button class="btn btn-link collapsed float-right" type="button" data-toggle="collapse" data-target="#detallecontacto" aria-expanded="false" aria-controls="collapseThree">
+                                <i class="fas fa-chevron-up collapse-color"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div id="detallecontacto" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.Label("contacto", "Contacto", new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.Contacto.NombreContacto, new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.Label("cargo", "Cargo", new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.Contacto.Cargo, new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.Label("nacionalidad", "Nacionalidad", new { @class = "label-formulario" })
+                                            @Html.DropDownListFor(model => model.Contacto.IdNacionalidad, new SelectList(ViewBag.NacionalidadList, "IdNacionalidad", "Nombre"), "...", new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.Label("teledonoDirecto", "Número de teléfono", new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.Contacto.TelefonoDirecto, new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.Label("movil", "Número de celular", new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.Contacto.TelefonoMovil, new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.Label("fax", "Fax", new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.Contacto.Fax, new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.Label("emailContacto", "Email", new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.Contacto.Email, new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.Label("paisContacto", "País", new { @class = "label-formulario" })
+                                            @Html.DropDownListFor(model => model.Contacto.IdPais, new SelectList(ViewBag.PaisList, "IdPais", "Nombre"), "...", new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.Label("zonaHorariaConctacto", "Zona horaria", new { @class = "label-formulario" })
+                                            @Html.DropDownListFor(model => model.Contacto.IdZonaHoraria, new SelectList(ViewBag.ZonaHorariaList, "IdZonaHoraria", "Nombre"), "...", new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.Label("idioma", "Idioma", new { @class = "label-formulario" })
+                                            @Html.DropDownListFor(model => model.Contacto.IdIdioma, new SelectList(ViewBag.IdiomaList, "IdIdioma", "NombreIdioma"), "...", new { @class = "form-control col-md-12 disabled" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="accordion" id="accordionExample">
+                <div class="card card-border">
+                    <div class="card-header" id="headingOne">
+                        <span class="card-titulo">
+                            Especialidades de la empresa
+                            <button class="btn btn-link collapsed float-right" type="button" data-toggle="collapse" data-target="#especialidadEmpresa" aria-expanded="false" aria-controls="collapseThree">
+                                <i class="fas fa-chevron-up collapse-color"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div id="especialidadEmpresa" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @Html.Label("", "Aeropuertos que puede atender*", new { @class = "label-formulario" })
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            @foreach (var aeropuerto in Model.AeropuertoList)
+                                            {
+                                                @Html.HiddenFor(model => aeropuerto.Id)
+                                                @Html.HiddenFor(model => aeropuerto.Nombre)
+                                                <div class="col-sm-4 mt-2" style="font-size:12px;">
+                                                    @Html.CheckBoxFor(model => aeropuerto.Checado, new { @value = aeropuerto.Checado })
+                                                    @Html.DisplayTextFor(model => aeropuerto.Nombre)
+                                                </div>
+                                            }
+                                        </div>
+                                            
+                                         @Html.Label("", "Giro (s) específicos de la empresa en los que esta calificada", new { @class = "control-label m-b-1 m-t-1" })
+                                        @foreach (var giro in Model.ProveedorGiroList)
+                                         {
+                                            @Html.HiddenFor(model => giro.IdProveedorGiro)
+                                            <div class="form-group col-md-12 mt-2">
+                                                <div class="col-md-10">
+                                                    @Html.DropDownListFor(x => giro.IdCatalogoGiro, new SelectList(ViewBag.GiroList, "IdGiro", "GiroNombre", giro.IdCatalogoGiro), "...", new { @class = "form-control col-md-12" })
+                                                </div>
+                                            </div>
+                                         }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-5">
+        <div class="col-sm-3">
+            <input id="btnDocumentacion" class="btnStyle btnWhite" type="button" value="Documentacion pendiente " />
+        </div>
+        <div class="col-sm-3">
+            <input type="button" class="btnStyle btnWhite" data-toggle="modal" data-target="#modalRechazar" value="Rechazar" />
+        </div>
+        <div class="col-sm-3">
+            <input id="btnCancelar" class="btnStyle btnWhite" type="button" value="Cancelar" />
+        </div>
+        <div class="col-sm-3">
+            <input id="btnAprobar" class="btnStyle" type="button" value="Guardar" />
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalRechazar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-purple">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Motivo del rechazo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label for="observaciones" class="col-form-label">Ingresa un comentario para el proveedor</label>
+                            <textarea class="form-control" id="observaciones"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btnStyle btnWhite" data-dismiss="modal">Cancelar</button>
+                    <button type="button" id="btnRechazar" class="btnStyle"><i class='fas fa-paper-plane'></i> Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ($("#Mexicana").is(':checked')) {
+            $("#ColoniaProveedor").removeClass("control-display-none");
+            $("#lblColonia").removeClass("control-display-none");
+            //$("#Direccion_Colonia").addClass("control-display-none");
+            $("#PaisProveedor option:disabled").removeAttr('disabled');
+
+
+            $("#lblEstado").removeClass("control-display-none");
+            $("#Direccion_Estado").removeClass("control-display-none");
+            $("#lblMunicipio").removeClass("control-display-none");
+            $("#Direccion_Municipio").removeClass("control-display-none");
+            $("#lblTIN").addClass("control-display-none");
+            $("#Direccion_TIN").addClass("control-display-none");
+                $("#PaisProveedor").val(1);
+            //$("#PaisProveedor").prop("disabled", true);
+
+            $("#inpgro-tin").hide();
+                $("#inpgro-Municipio").show();
+                $("#inpgro-Estado").show();
+                $("#inpgro-Colonia").show();
+        } else {
+            var value = 1;
+            $('#PaisProveedor option[value="'+value+'"]').attr("disabled", true);
+            $("#Extranjera").val(true);
+            //$("#Direccion_Colonia").removeClass("control-display-none");
+            $("#lblColonia").addClass("control-display-none");
+            $("#ColoniaProveedor").addClass("control-display-none");
+            //$("#Direccion_Colonia").addClass("control-display-none");
+            $("#lblEstado").addClass("control-display-none");
+            $("#Direccion_Estado").addClass("control-display-none");
+            $("#lblMunicipio").addClass("control-display-none");
+            $("#Direccion_Municipio").addClass("control-display-none");
+
+            $("#lblTIN").removeClass("control-display-none");
+            $("#Direccion_TIN").removeClass("control-display-none");
+
+            $("#PaisProveedor").prop("disabled", false);
+
+            $("#inpgro-tin").show();
+                $("#inpgro-Municipio").hide();
+                $("#inpgro-Estado").hide();
+                $("#inpgro-Colonia").hide();
+        }
+
+
+        var idProveedor = '@ViewBag.idProveedor';
+        var observaciones = "";
+        var estatus = 0;
+        var url = '@Url.Action("Index", "Home")'; 
+        var idPais = $('#PaisProveedor option:selected').val();
+        if (idPais == 1) {
+            var idEstado = $('#EstadoProveedor option:selected').val();
+            if (idEstado > 0) {                
+                $('#EstadoProveedor').val('@ViewBag.idEstado');
+                if ('@ViewBag.idEstado' > 0) {
+                    $('#MunicipioProveedor').val('@ViewBag.idMunicipio');
+                }
+            }
+        }
+
+        $("#PaisProveedor").change(function () {
+            var dID = $('#PaisProveedor option:selected').val();
+            $.getJSON("/Home/GetEstados", { idPais: dID },
+                function (data) {
+                    var select = $("#EstadoProveedor");
+                    var selectMunicipio = $("#MunicipioProveedor");
+                    select.empty();
+                    selectMunicipio.empty();
+                    select.append($('<option/>', {
+                        value: 0,
+                        text: "..."
+                    }));
+                    selectMunicipio.append($('<option/>', {
+                        value: 0,
+                        text: "..."
+                    }));
+                    $.each(data, function (index, itemData) {
+                        select.append($('<option/>', {
+                            value: itemData.IdEstado,
+                            text: itemData.Nombre
+                        }));
+                    });
+                });
+        });
+
+        $("#EstadoProveedor").change(function () {
+            var dID = $('#EstadoProveedor option:selected').val();
+            $.getJSON("/Home/GetMunicipios", { idEstado: dID },
+                function (data) {
+                    var select = $("#MunicipioProveedor");
+                    select.empty();
+                    select.append($('<option/>', {
+                        value: 0,
+                        text: "..."
+                    }));
+                    $.each(data, function (index, itemData) {
+                        select.append($('<option/>', {
+                            value: itemData.IdMunicipio,
+                            text: itemData.Nombre
+                        }));
+                    });
+                });
+        });
+
+
+        $("#btnRechazar").click(function () {
+             obs = $("#observaciones").val();
+            estatus = 2;
+
+            var jsonData = JSON.stringify({ idProveedor: idProveedor, observaciones: obs, estatus: estatus });
+            Swal.fire({
+                title: '¿Esta seguro de rechazar el proveedor?',
+
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#432979',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.value) {
+                     $.ajax({
+                            type: "POST",
+                            contentType: "application/json; charset=utf-8",
+                            url: "/Home/SetProveedorEstatus",
+                            data: jsonData,
+                            async: false,
+                            success: function (data) {
+                                if (data) {
+                                     console.log("Traigo Datos", data)
+                                    $('#modalRechazar').modal('hide');
+                                    Swal.fire({
+                                        position: 'middle',
+                                        icon: 'success',
+                                        title: 'El proveedor ha sifo rechazado con éxito',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                    setTimeout(function(){  window.location.href = url; }, 1500);
+                                }
+
+                            },
+                        });
+                }
+            })
+        });
+
+
+        $("#btnAprobar").click(function () {
+
+            obs = "";
+            estatus = 4;
+
+            var jsonData = JSON.stringify({ idProveedor: idProveedor, observaciones: obs, estatus: estatus });
+            Swal.fire({
+                title: '¿Esta seguro de aprobar el proveedor?',
+
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#432979',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.value) {
+                     $.ajax({
+                            type: "POST",
+                            contentType: "application/json; charset=utf-8",
+                            url: "/Home/SetProveedorEstatus",
+                            data: jsonData,
+                            async: false,
+                            success: function (data) {
+                                if (data) {
+                                     console.log("Traigo Datos", data)
+                                   Swal.fire({
+                                        position: 'middle',
+                                        icon: 'success',
+                                        title: 'El proveedor ha sido aprobado con éxito',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                    setTimeout(function(){  window.location.href = url; }, 1500);
+                                }
+
+                            },
+                        });
+                }
+            })
+
+
+        });
+
+    });
+</script>

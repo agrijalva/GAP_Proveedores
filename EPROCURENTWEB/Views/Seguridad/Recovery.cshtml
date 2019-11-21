@@ -1,0 +1,138 @@
+﻿@model EprocurementWeb.Models.UsuarioModel
+@{
+    ViewBag.Title = "Recuperación de contraseña";
+}
+
+<link href="~/Content/validacionProveedor.css" rel="stylesheet" />
+<div class="row panel-header">
+    <div class="col-sm-4 pull-left">
+        <img class="gap-logo" src="@Url.GetImage("logo-gap-color.png",false)" />
+    </div>
+
+    <div class="col-sm-4 t-a-c ">
+        <h1 class="h-title">
+            PORTAL DE PROVEEDORES
+        </h1>
+    </div>
+
+    <div class="col-sm-4">
+        <ul class="pull-right" style="list-style:none; float: right;">
+            <li style="display:inline;">
+                <a href="" class="setLang" data-lang="es-MX"><img src="@Url.GetImage("Mexico.png",false)" /></a>
+            </li>
+            <li style="display:inline;">
+                <a href="" class="setLang" data-lang="en-US"><img src="@Url.GetImage("usa.png", false)" /></a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+    @using (Html.BeginForm("Recovery", "Seguridad", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row pb-0">
+            <div class="col-sm-12">
+                <h3 class="subtitle">
+                    Recuperación de Contraseña
+                </h3>
+            </div>
+        </div>
+        <div class="formPrincipal">
+            @*<ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item" style="width:50%">
+                    <a class="nav-link active" href="#IB" role="tab" data-toggle="tab">Información de la cuenta</a>
+                </li>
+                <li class="nav-item" style="width:50%">
+                    <a class="nav-link" href="#IF" role="tab" data-toggle="tab">Contraseña</a>
+                </li>
+            </ul>*@
+            <div class="tab-content" style="background-color:white; padding: 15px;">
+                <div role="tabpanel" class="tab-pane fade in active show" id="IB">
+                    <div class="col100" style="font-size:14px;">
+                        Recuperar Contraseña
+                    </div>
+                    <div class="col100 mt-2">
+                        @Html.HiddenFor(model => model.Token)
+                        @*<div class="col25">
+                <div class="inputIF">
+                    @Html.LabelFor(model => model.Password, new { @class = "labelTexto control-label" })
+                </div>
+                <div class="inputIF">
+                    @Html.PasswordFor(model => model.Password, new { @class = "form-control inputIF" })
+                </div>
+            </div>*@
+                        <div class="col25">
+                            <div class="inputIF">
+                                @Html.LabelFor(model => model.PasswordNueva, new { @class = "labelTexto control-label" })
+                            </div>
+                            <div class="inputIF">
+                                @Html.PasswordFor(model => model.PasswordNueva, new { @class = "form-control inputIF" })
+                            </div>
+                        </div>
+                        <div class="col25">
+                            <div class="inputIF">
+                                @Html.LabelFor(model => model.ConfirmarPassword, new { @class = "labelTexto control-label" })
+                            </div>
+                            <div class="inputIF">
+                                @Html.PasswordFor(model => model.ConfirmarPassword, new { @class = "form-control inputIF" })
+                            </div>
+                        </div>
+                    </div>
+                    @if (@ViewBag.Error == "Sin error")
+                    {
+                        @Html.Label("Se actualizo su contraseña, favor de iniciar sesión aquí: ");
+                        @Html.ActionLink("Inicio de sesión", "Index", "Seguridad")
+
+                    }
+                    else
+                    {
+                        @ViewBag.Error
+                    }
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-sm-10">&nbsp;</div>
+                <div class="col-sm-2"><input type="submit" value="Aceptar" class="btnStyle" /></div>
+            </div>
+        </div>
+                    }
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+                @*<div class="row">
+                <div class="col-md-6 offset-3">
+                    <div class="form-style">
+                        <form action="@Url.Content("~/Seguridad/Recovery")" method="post">
+                            @Html.HiddenFor(d => d.Token)
+
+                            <label>Escribe tu contraeña:</label>
+                            @Html.PasswordFor(d => d.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(d => d.Password, null, new { style = "color:red;" })
+
+                            <label>Nueva contraseña:</label>
+                            @Html.PasswordFor(d => d.PasswordNueva, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(d => d.PasswordNueva, null, new { style = "color:red;" })
+
+                            <label>Confirmar contraseña:</label>
+                            @Html.PasswordFor(d => d.ConfirmarPassword, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(d => d.ConfirmarPassword, null, new { style = "color:red;" })
+                            <br />
+                            <div class="text-right">
+                                <button class="btn btn-primary">Recuperar</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>*@
+

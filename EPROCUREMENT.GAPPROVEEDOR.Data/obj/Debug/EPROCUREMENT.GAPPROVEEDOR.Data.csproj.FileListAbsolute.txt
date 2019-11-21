@@ -1,0 +1,15 @@
+C:\Users\HP\Documents\Visual Studio Projects\EPROCUREMENT\EPROCUREMENT.GAPPROVEEDOR.Data\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.dll.config
+C:\Users\HP\Documents\Visual Studio Projects\EPROCUREMENT\EPROCUREMENT.GAPPROVEEDOR.Data\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.dll
+C:\Users\HP\Documents\Visual Studio Projects\EPROCUREMENT\EPROCUREMENT.GAPPROVEEDOR.Data\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.pdb
+C:\Users\HP\Documents\Visual Studio Projects\EPROCUREMENT\EPROCUREMENT.GAPPROVEEDOR.Data\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.dll
+C:\Users\HP\Documents\Visual Studio Projects\EPROCUREMENT\EPROCUREMENT.GAPPROVEEDOR.Data\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.pdb
+C:\Users\HP\Documents\Visual Studio Projects\EPROCUREMENT\EPROCUREMENT.GAPPROVEEDOR.Data\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.csprojAssemblyReference.cache
+C:\Users\HP\Documents\Visual Studio Projects\EPROCUREMENT\EPROCUREMENT.GAPPROVEEDOR.Data\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.App_GlobalResources.ResourceConstants.resources
+C:\Users\HP\Documents\Visual Studio Projects\EPROCUREMENT\EPROCUREMENT.GAPPROVEEDOR.Data\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.App_GlobalResources.StoredProcedures.resources
+C:\Users\HP\Documents\Visual Studio Projects\EPROCUREMENT\EPROCUREMENT.GAPPROVEEDOR.Data\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.csproj.GenerateResource.cache
+C:\Users\HP\Documents\Visual Studio Projects\EPROCUREMENT\EPROCUREMENT.GAPPROVEEDOR.Data\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.csproj.CopyComplete
+C:\Users\HP\Documents\Visual Studio Projects\EPROCUREMENT\EPROCUREMENT.GAPPROVEEDOR.Data\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.dll
+C:\Users\HP\Documents\Visual Studio Projects\EPROCUREMENT\EPROCUREMENT.GAPPROVEEDOR.Data\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.pdb
+C:\Users\HP\Documents\Visual Studio Projects\EPROCUREMENT\EPROCUREMENT.GAPPROVEEDOR.Data\bin\Debug\Microsoft.Owin.dll
+C:\Users\HP\Documents\Visual Studio Projects\EPROCUREMENT\EPROCUREMENT.GAPPROVEEDOR.Data\bin\Debug\Owin.dll
+C:\Users\HP\Documents\Visual Studio Projects\EPROCUREMENT\EPROCUREMENT.GAPPROVEEDOR.Data\bin\Debug\Microsoft.Owin.xml

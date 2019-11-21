@@ -1,0 +1,65 @@
+﻿@model EPROCUREMENT.GAPPROVEEDOR.Entities.Proveedor.ProveedorInformacionFinanciera
+@using (Html.BeginForm("AgregarCuenta", "AltaProveedor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="col100 mt-2">
+        @Html.HiddenFor(model => model.ProveedorCuentaList[0].IdProveedor)
+        @Html.HiddenFor(model => model.ProveedorCuentaListRegistro)
+        <div class="col25">
+            <div class="inputIF">
+                @Html.Label("cuenta", @RHome.Account, new { @class = "labelTexto control-label" })
+            </div>
+            <div class="inputIF">
+                @Html.TextBoxFor(model => model.ProveedorCuentaList[0].Cuenta, new { @class = "form-control inputIF" })
+            </div>
+        </div>
+        <div class="col25">
+            <div class="inputIF">
+                @Html.Label("banco", @RHome.Bank, new { @class = "labelTexto control-label" })
+            </div>
+            <div class="inputIF">
+                @Html.DropDownListFor(model => model.ProveedorCuentaList[0].IdBanco, new SelectList(ViewBag.BancoList, "IdBanco", "Nombre"), "...", new { @class = "form-control inputIF", @id = "idBanco" })
+            </div>
+        </div>
+        <div class="col25">
+            <div class="inputIF">
+                @Html.Label("clabe", @RHome.CLABE, new { @class = "labelTexto control-label" })
+            </div>
+            <div class="inputIF">
+                @Html.TextBoxFor(model => model.ProveedorCuentaList[0].CLABE, new { @class = "form-control inputIF" })
+            </div>
+        </div>
+        <div class="col25">
+            <div class="inputIF">
+                @Html.Label("tipo", @RHome.Type, new { @class = "labelTexto control-label" })
+            </div>
+            <div class="inputIF">
+                @Html.DropDownListFor(model => model.ProveedorCuentaList[0].IdTipoCuenta, new SelectList(ViewBag.TipoCuentaList, "IdTipoCuenta", "Tipo"), "...", new { @class = "form-control inputIF", @id = "idTipoCuenta" })
+            </div>
+        </div>
+    </div>
+
+    <div class="col100 mt-5" style="font-size:14px;">
+        <b>Elige el (o los) aeropuertos que tomará como referencia la cuenta bancaria proporcionada</b>
+    </div>
+    <div class="col100 mt-3" style="font-size:12px;">
+        <div class="row">
+            @for (int idx = 0; idx < Model.ProveedorCuentaList[0].AeropuertoList.Count; idx++)
+            {
+                @Html.HiddenFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Id)
+                @Html.HiddenFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Nombre)
+            <div class="col-sm-4 mt-2">
+                @if(Model.ProveedorCuentaList[0].AeropuertoList[idx].Agregado) {
+                @Html.CheckBoxFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Checado, new { @disabled = "disabled" })
+                } else {
+                @Html.CheckBoxFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Checado)
+                }
+                @Html.DisplayTextFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Nombre)
+            </div>
+            }
+        </div>
+        <div class="row mt-4">
+            <div class="col-sm-9">&nbsp;</div>
+            <div class="col-sm-3"><input type="submit" value="Agregar" class="btnStyle" /></div>
+        </div>
+    </div>
+}
