@@ -76,9 +76,14 @@ namespace EprocurementWeb.Controllers
             {
                 ModelState.AddModelError("ErrorTipoEmpresa", "Debe seleccionar una opción");
             }
-            var giroTempList = proveedor.ProveedorGiroList;
-            proveedor.ProveedorGiroList = proveedor.ProveedorGiroList.Where(x => x.IdCatalogoGiro > 0).ToList();
-            ModelState["IdCatalogoGiro"].Errors.Clear();
+
+            for(var pos = 0; pos < proveedor.ProveedorGiroList.Count; pos++)
+            {
+                if(ModelState["ProveedorGiroList[" + pos + "].IdCatalogoGiro"] != null)
+                {
+                    ModelState["ProveedorGiroList[" + pos + "].IdCatalogoGiro"].Errors.Clear();
+                }
+            }
             if (ModelState.IsValid)
             {
                 BusinessLogic businessLogic = new BusinessLogic();
@@ -88,9 +93,6 @@ namespace EprocurementWeb.Controllers
                     return Redirect("/Home/Index#success");
                     //return RedirectToAction("Contact");
                 }
-            } else
-            {
-                proveedor.ProveedorGiroList = giroTempList;
             }
             return View(proveedor);
         }
