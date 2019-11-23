@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using EprocurementWeb.Content.Texts;
+using EprocurementWeb.GlobalResources;
 
 namespace EprocurementWeb.Models
 {

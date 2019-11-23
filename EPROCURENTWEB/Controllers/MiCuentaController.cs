@@ -12,7 +12,7 @@ namespace EprocurementWeb.Controllers
 {
     public class MiCuentaController : Controller
     {
-        public List<AeropuertoDTO> aeropuertoList;
+        public List<AeropuertoModel> aeropuertoList;
         public List<ZonaHorariaDTO> zonaHorariaList;
         public List<NacionalidadDTO> nacionalidadList;
         public List<GiroDTO> giroList;

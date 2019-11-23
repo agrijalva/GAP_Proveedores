@@ -124,15 +124,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RError.resx</DependentUpon>
     </Compile>
-    <Compile Include="Content\Texts\RHome.es-mx.Designer.cs">
-      <DependentUpon>RHome.es-mx.resx</DependentUpon>
+    <Compile Include="GlobalResources\RHome.Designer.cs">
+      <DependentUpon>RHome.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Content\Texts\RHome.Designer.cs">
+    <Compile Include="GlobalResources\RHome.en-US.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RHome.resx</DependentUpon>
+      <DependentUpon>RHome.en-US.resx</DependentUpon>
     </Compile>
     <Compile Include="Content\Texts\RGlobal.es-mx1.Designer.cs">
       <DependentUpon>RGlobal.es-mx.resx</DependentUpon>
@@ -164,16 +164,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EtiquetaForm.resx</DependentUpon>
     </Compile>
-    <Compile Include="GlobalResources\EtiquetaProveedor.Designer.cs" />
-    <Compile Include="GlobalResources\EtiquetaProveedor.en-US.Designer.cs" />
     <Compile Include="Helpers\GlobalHelper.cs" />
     <Compile Include="Models\ActualizaPasswordModel.cs" />
     <Compile Include="Models\CodigoPostalModel.cs" />
+    <Compile Include="Models\Comun\ErrorModel.cs" />
     <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\MiCuentaModel.cs" />
     <Compile Include="Models\PaisModel.cs" />
     <Compile Include="Models\ProveedorRegistro.cs" />
+    <Compile Include="Models\Catalogo\AeropuertoModel.cs" />
+    <Compile Include="Models\Proveedor\ProveedorContactoModel.cs" />
     <Compile Include="Models\Proveedor\ProveedorDireccionModel.cs" />
+    <Compile Include="Models\Proveedor\ProveedorEmpresaModel.cs" />
+    <Compile Include="Models\Proveedor\ProveedorGiroModel.cs" />
+    <Compile Include="Models\Proveedor\ProveedorModel.cs" />
+    <Compile Include="Models\Request\ProveedorRequestModel.cs" />
+    <Compile Include="Models\Request\RequestBaseModel.cs" />
+    <Compile Include="Models\Response\AeropuertoResponseModel.cs" />
+    <Compile Include="Models\Response\ProveedorResponseModel.cs" />
+    <Compile Include="Models\Response\ResponseBaseModel.cs" />
     <Compile Include="Models\UsuarioModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -349,13 +358,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>RError.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\Texts\RHome.es-mx.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>RHome.es-mx.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Content\Texts\RHome.resx">
+    <EmbeddedResource Include="GlobalResources\RHome.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RHome.Designer.cs</LastGenOutput>
+      <BrowseToURL>RHome</BrowseToURL>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GlobalResources\RHome.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RHome.en-US.Designer.cs</LastGenOutput>
+      <BrowseToURL>RHome</BrowseToURL>
     </EmbeddedResource>
     <EmbeddedResource Include="Content\Texts\RGlobal.es-mx.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -374,7 +385,6 @@
       <LastGenOutput>EtiquetaForm.Designer.cs</LastGenOutput>
       <BrowseToURL>EtiquetaForm</BrowseToURL>
     </EmbeddedResource>
-    <EmbeddedResource Include="GlobalResources\EtiquetaProveedor.en-US.resx" />
     <EmbeddedResource Include="GlobalResources\EtiquetaProveedor.resx" />
   </ItemGroup>
   <ItemGroup>

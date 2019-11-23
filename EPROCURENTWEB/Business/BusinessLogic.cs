@@ -87,9 +87,9 @@ namespace EprocurementWeb.Business
             }
             return lstPaises;
         }
-        public List<AeropuertoDTO> GetAeropuertosList()
+        public List<AeropuertoModel> GetAeropuertosList()
         {
-            var lstAeropuertos = new List<AeropuertoDTO>();
+            var lstAeropuertos = new List<AeropuertoModel>();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(urlApi + "api/Catalogo/");
@@ -101,7 +101,7 @@ namespace EprocurementWeb.Business
                     var readTask = result.Content.ReadAsStringAsync();
                     JavaScriptSerializer JSserializer = new JavaScriptSerializer();
 
-                    var response = JSserializer.Deserialize<AeropuertoResponseDTO>(readTask.Result);
+                    var response = JSserializer.Deserialize<AeropuertoResponseModel>(readTask.Result);
                     lstAeropuertos = response.AeropuertoList;
                 }
             }
@@ -263,10 +263,10 @@ namespace EprocurementWeb.Business
             return lstTipoProveedor;
         }
 
-        public ProveedorResponseDTO PostProveedor(ProveedorRegistro proveedor)
+        public ProveedorResponseModel PostProveedor(ProveedorModel proveedor)
         {
-            ProveedorResponseDTO response = null;
-            ProveedorRequesteDTO proveedorRequest = new ProveedorRequesteDTO { IdUsuario = 0, Proveedor = proveedor };
+            ProveedorResponseModel response = null;
+            ProveedorRequestModel proveedorRequest = new ProveedorRequestModel { IdUsuario = 0, Proveedor = proveedor };
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
@@ -280,7 +280,7 @@ namespace EprocurementWeb.Business
                 {
                     var readTask = result.Content.ReadAsStringAsync();
                     JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
-                    response = JSSerializer.Deserialize<ProveedorResponseDTO>(readTask.Result);
+                    response = JSSerializer.Deserialize<ProveedorResponseModel>(readTask.Result);
                 }
             }
             return response;
@@ -636,27 +636,27 @@ namespace EprocurementWeb.Business
             return codigoPostalItem;
         }
 
-        public bool PostTempProveedor(ProveedorRegistro proveedor)
-        {
-            ProveedorResponseDTO response = null;
-            ProveedorRequesteDTO proveedorRequest = new ProveedorRequesteDTO { IdUsuario = 0, Proveedor = proveedor };
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
-                var json = JsonConvert.SerializeObject(proveedorRequest);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var responseTask = client.PostAsync("InsertarTempProveedor", content);
-                responseTask.Wait();
+        //public bool PostTempProveedor(ProveedorRegistro proveedor)
+        //{
+        //    ProveedorResponseDTO response = null;
+        //    ProveedorRequesteDTO proveedorRequest = new ProveedorRequesteDTO { IdUsuario = 0, Proveedor = proveedor };
+        //    using (var client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+        //        var json = JsonConvert.SerializeObject(proveedorRequest);
+        //        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        //        var responseTask = client.PostAsync("InsertarTempProveedor", content);
+        //        responseTask.Wait();
 
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsStringAsync();
-                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
-                    response = JSSerializer.Deserialize<ProveedorResponseDTO>(readTask.Result);
-                }
-            }
-            return response.Success;
-        }
+        //        var result = responseTask.Result;
+        //        if (result.IsSuccessStatusCode)
+        //        {
+        //            var readTask = result.Content.ReadAsStringAsync();
+        //            JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+        //            response = JSSerializer.Deserialize<ProveedorResponseDTO>(readTask.Result);
+        //        }
+        //    }
+        //    return response.Success;
+        //}
     }
 }

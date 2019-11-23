@@ -77,5 +77,9 @@
     font-weight:600;
 }
 
+.field-validation-error {
+    color: #FF0000;
+}
+
 
 

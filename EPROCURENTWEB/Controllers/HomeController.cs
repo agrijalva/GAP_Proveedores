@@ -17,7 +17,7 @@ namespace EprocurementWeb.Controllers
 {
     public class HomeController : BaseController
     {
-        public List<AeropuertoDTO> aeropuertoList;
+        public List<AeropuertoModel> aeropuertoList;
         public List<ZonaHorariaDTO> zonaHorariaList;
         public List<NacionalidadDTO> nacionalidadList;
         public List<GiroDTO> giroList;
@@ -30,7 +30,7 @@ namespace EprocurementWeb.Controllers
         public ActionResult Index()
         {
             CargarCatalogos();
-            ProveedorRegistro proveedor = new ProveedorRegistro { Contacto = null, Direccion = null };
+            ProveedorModel proveedor = new ProveedorModel { Contacto = null, Direccion = null };
             proveedor.AeropuertoList = aeropuertoList;
             ViewBag.GiroList = giroList;
             ViewBag.ZonaHorariaList = zonaHorariaList;
@@ -47,7 +47,7 @@ namespace EprocurementWeb.Controllers
 
         [HttpPost, ActionName("Index")]
         [ValidateAntiForgeryToken]
-        public ActionResult GuardarProveedor(ProveedorRegistro proveedor)
+        public ActionResult GuardarProveedor(ProveedorModel proveedor)
         {
             proveedor.IdTipoProveedor = 1;
             proveedor.IdNacionalidad = 1;
@@ -62,14 +62,35 @@ namespace EprocurementWeb.Controllers
             ViewBag.EstadoList = estadoList;
             ViewBag.MunicipioList = municipioList;
             ViewBag.TipoProveedorList = tipoProveedorList;
-            proveedor.EmpresaList = proveedor.AeropuertoList.Where(a => a.Checado).Select(a => new ProveedorEmpresaDTO { IdCatalogoAeropuerto = a.Id }).ToList();
+            proveedor.EmpresaList = proveedor.AeropuertoList.Where(a => a.Checado).Select(a => new ProveedorEmpresaModel { IdCatalogoAeropuerto = a.Id }).ToList();
             ViewBag.colonias = new List<string>();
-            BusinessLogic businessLogic = new BusinessLogic();
-            ProveedorResponseDTO response = businessLogic.PostProveedor(proveedor);
-            if (response.Success)
+            if(proveedor.ProveedorGiroList == null || !proveedor.ProveedorGiroList.Exists(x => x.IdCatalogoGiro > 0))
             {
-                return Redirect("/Home/Index#success");
-                //return RedirectToAction("Contact");
+                ModelState.AddModelError("ErrorEmpresa", "Debe agregar al menos una empresa");
+            }
+            if (proveedor.AeropuertoList == null || !proveedor.AeropuertoList.Exists(x => x.Checado))
+            {
+                ModelState.AddModelError("ErrorAeropuerto", "Debe seleccionar al menos un aeropuerto");
+            }
+            if (!proveedor.Mexicana && !proveedor.Extranjera)
+            {
+                ModelState.AddModelError("ErrorTipoEmpresa", "Debe seleccionar una opción");
+            }
+            var giroTempList = proveedor.ProveedorGiroList;
+            proveedor.ProveedorGiroList = proveedor.ProveedorGiroList.Where(x => x.IdCatalogoGiro > 0).ToList();
+            ModelState["IdCatalogoGiro"].Errors.Clear();
+            if (ModelState.IsValid)
+            {
+                BusinessLogic businessLogic = new BusinessLogic();
+                ProveedorResponseModel response = businessLogic.PostProveedor(proveedor);
+                if (response.Success)
+                {
+                    return Redirect("/Home/Index#success");
+                    //return RedirectToAction("Contact");
+                }
+            } else
+            {
+                proveedor.ProveedorGiroList = giroTempList;
             }
             return View(proveedor);
         }
@@ -141,8 +162,8 @@ namespace EprocurementWeb.Controllers
             //}
 
 
-            ViewBag.Title = RHome.About;
-            ViewBag.Message = RHome.AboutMessage;
+            ViewBag.Title = EprocurementWeb.GlobalResources.RHome.About;
+            ViewBag.Message = @EprocurementWeb.GlobalResources.RHome.AboutMessage;
 
             return View();
         }
@@ -150,8 +171,8 @@ namespace EprocurementWeb.Controllers
         [HttpGet]
         public ActionResult Contact()
         {
-            ViewBag.Title = RHome.Contact;
-            ViewBag.Message = RHome.ContactMessage;
+            ViewBag.Title = @EprocurementWeb.GlobalResources.RHome.Contact;
+            ViewBag.Message = @EprocurementWeb.GlobalResources.RHome.ContactMessage;
             ViewBag.ContactResult = TempData["ContactResult"];
             ViewBag.ContactResultMessage = TempData["ContactResultMessage"] ?? "";
             return View();
@@ -160,17 +181,17 @@ namespace EprocurementWeb.Controllers
         [HttpPost]
         public ActionResult Contact(ContactModel model)
         {
-            ViewBag.Title = RHome.Contact;
-            ViewBag.Message = RHome.ContactMessage;
+            ViewBag.Title = @EprocurementWeb.GlobalResources.RHome.Contact;
+            ViewBag.Message = @EprocurementWeb.GlobalResources.RHome.ContactMessage;
             if (ModelState.IsValid)
             {
                 /* Do something with this information */
                 TempData["ContactResult"] = true;
-                TempData["ContactResultMessage"] = RHome.ContactMessageSendOk;
+                TempData["ContactResultMessage"] = @EprocurementWeb.GlobalResources.RHome.ContactMessageSendOk;
                 return RedirectToAction("Contact"); /* Post-Redirect-Get Pattern */
             }
             ViewBag.ContactResult = false;
-            ViewBag.ContactResultMessage = RHome.ContactMessageSendNok;
+            ViewBag.ContactResultMessage = @EprocurementWeb.GlobalResources.RHome.ContactMessageSendNok;
             return View(model);
         }
     }
