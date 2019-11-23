@@ -12,5 +12,6 @@ namespace EPROCUREMENT.GAPPROVEEDOR
     /// </summary>
     public class ProveedorResponseDTO: ResponseBaseDTO
     {
+        public int IdProveedor { get; set; }
     }
 }

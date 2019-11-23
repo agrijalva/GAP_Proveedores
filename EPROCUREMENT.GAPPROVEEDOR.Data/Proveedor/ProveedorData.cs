@@ -40,6 +40,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                     using (TransactionScope transactionScope = new TransactionScope())
                     {
                         var idProveedor = ExecuteComandProveedor(cmdProveedor, request.Proveedor);
+                        response.IdProveedor = idProveedor;
                         if (idProveedor > 0)
                         {
                             foreach (var proveedorGiro in request.Proveedor.ProveedorGiroList.Where(x => x.IdCatalogoGiro != 0).ToList())
@@ -303,18 +304,6 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                 using (var conexion = new SqlConnection(Helper.Connection()))
                 {
                     conexion.Open();
-                    //var valorValido = 0;
-                    //var password = "";
-                    //while (valorValido != 0)
-                    //{
-                    //    password = GenerarPassword(10);
-                    //    var cmdPassword = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_EstatusProveedor_INS, conexion);
-                    //    cmdPassword.CommandType = CommandType.StoredProcedure;
-                    //    cmdPassword.Parameters.Add(new SqlParameter("@NombreContacto", SqlDbType.NVarChar, 300)).Value = contacto.NombreContacto;
-                    //    cmdPassword.Parameters.Add(new SqlParameter("Result", SqlDbType.Int) { Direction = ParameterDirection.ReturnValue });
-                    //    cmdPassword.ExecuteNonQuery();
-                    //    var resultado = Convert.ToInt32(cmdPassword.Parameters["Result"].Value);
-                    //}
 
                     var cmdEstatus = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_EstatusProveedor_INS, conexion);
                     if (request.EstatusProveedor.IdEstatusProveedor == 4)
@@ -327,8 +316,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                         {
                             if (ExecuteComandEstatus(cmdEstatus, request.EstatusProveedor) > 0)
                             {
-
-                                new EmailData().EnviarEmailRegistro(request.EstatusProveedor.IdProveedor, idUsuario, request.EstatusProveedor.IdEstatusProveedor, request.EstatusProveedor.Observaciones);
+                                response.Password = userPassword;                                
                                 response.Success = true;
                             }
                         }
@@ -337,7 +325,6 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                     {
                         if (ExecuteComandEstatus(cmdEstatus, request.EstatusProveedor) > 0)
                         {
-                            new EmailData().EnviarEmailRegistro(request.EstatusProveedor.IdProveedor, 0, request.EstatusProveedor.IdEstatusProveedor, request.EstatusProveedor.Observaciones);
                             response.Success = true;
                         }
                     }
@@ -418,6 +405,43 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             response.RFC = reader["RFC"].ToString();
                             response.NombreEmpresa = reader["NombreEmpresa"].ToString();
                             response.Email = reader["Email"].ToString();
+                            response.RazonSocial = reader["RazonSocial"].ToString();
+                            response.Contacto = reader["NombreContacto"].ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+            }
+
+            return response;
+        }
+
+        public ProveedorUsuarioDTO GetProvedorDetallePorId(int idProveedor)
+        {
+            ProveedorUsuarioDTO response = null;
+
+            try
+            {
+                using (var conexion = new SqlConnection(Helper.Connection()))
+                {
+                    conexion.Open();
+                    var cmdProveedor = new SqlCommand("[dbo].[usp_EPROCUREMENT_Proveedor_GETInfoByIdProveedor]", conexion)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    cmdProveedor.Parameters.Add(new SqlParameter("@IdProveedor", idProveedor));
+                    using (SqlDataReader reader = cmdProveedor.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            response = new ProveedorUsuarioDTO();
+                            response.RFC = reader["RFC"].ToString();
+                            response.NombreEmpresa = reader["NombreEmpresa"].ToString();
+                            response.Email = reader["Email"].ToString();
+                            response.RazonSocial = reader["RazonSocial"].ToString();
+                            response.Contacto = reader["NombreContacto"].ToString();
                         }
                     }
                 }
