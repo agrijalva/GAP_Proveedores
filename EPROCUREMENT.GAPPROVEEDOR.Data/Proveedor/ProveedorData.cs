@@ -737,7 +737,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
         public static string GenerarPassword(int longitud)
         {
             string contrasenia = string.Empty;
-            string[] letras = { "_", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+            string[] letras = { "_", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
                                 "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
             Random EleccionAleatoria = new Random();
 
@@ -804,15 +804,15 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             request.Proveedor.Direccion.IdProveedor = idProveedor;
                             if (ExecuteComandDireccion(cmdDireccion, request.Proveedor.Direccion) < 1) { return response; }
 
-                            var cmdEstatus = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_EstatusProveedor_INS, conexion);
-                            var estatusProveedor = new HistoricoEstatusProveedorDTO
-                            {
-                                IdEstatusProveedor = 1,
-                                IdProveedor = idProveedor,
-                                IdUsuario = null,
-                                Observaciones = null
-                            };
-                            if (ExecuteComandEstatus(cmdEstatus, estatusProveedor) < 1) { return response; }
+                            //var cmdEstatus = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_EstatusProveedor_INS, conexion);
+                            //var estatusProveedor = new HistoricoEstatusProveedorDTO
+                            //{
+                            //    IdEstatusProveedor = 1,
+                            //    IdProveedor = idProveedor,
+                            //    IdUsuario = null,
+                            //    Observaciones = null
+                            //};
+                            //if (ExecuteComandEstatus(cmdEstatus, estatusProveedor) < 1) { return response; }
                             transactionScope.Complete();
                             response.Success = true;
                         }
@@ -835,6 +835,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             cmdProveedor.Parameters.Add(new SqlParameter("@ProvTelefono", SqlDbType.NVarChar, 50)).Value = proveedor.ProvTelefono;
             cmdProveedor.Parameters.Add(new SqlParameter("@PaginaWeb", SqlDbType.NVarChar, 500)).Value = proveedor.PaginaWeb;
             cmdProveedor.Parameters.Add(new SqlParameter("@IdZonaHoraria", proveedor.IdZonaHoraria));
+            cmdProveedor.Parameters.Add(new SqlParameter("@IdEstatusEdicion", 1));
             cmdProveedor.Parameters.Add(new SqlParameter("Result", SqlDbType.Int) { Direction = ParameterDirection.ReturnValue });
             cmdProveedor.ExecuteNonQuery();
             var idProveedor = Convert.ToInt32(cmdProveedor.Parameters["Result"].Value);

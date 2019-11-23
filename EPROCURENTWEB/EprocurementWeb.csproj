@@ -178,9 +178,11 @@
     <Compile Include="Models\Proveedor\ProveedorEmpresaModel.cs" />
     <Compile Include="Models\Proveedor\ProveedorGiroModel.cs" />
     <Compile Include="Models\Proveedor\ProveedorModel.cs" />
+    <Compile Include="Models\Request\ProveedorDetalleRequestModel.cs" />
     <Compile Include="Models\Request\ProveedorRequestModel.cs" />
     <Compile Include="Models\Request\RequestBaseModel.cs" />
     <Compile Include="Models\Response\AeropuertoResponseModel.cs" />
+    <Compile Include="Models\Response\ProveedorDetalleResponseModel.cs" />
     <Compile Include="Models\Response\ProveedorResponseModel.cs" />
     <Compile Include="Models\Response\ResponseBaseModel.cs" />
     <Compile Include="Models\UsuarioModel.cs" />
