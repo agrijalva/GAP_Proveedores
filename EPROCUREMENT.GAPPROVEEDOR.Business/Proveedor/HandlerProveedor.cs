@@ -121,7 +121,11 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Proveedor
                     {
                         new EmailData().EnviarEmailRechazadoCompras(proveedorUsuario);
                     }
-                    else if (request.EstatusProveedor.IdEstatusProveedor == 5 || request.EstatusProveedor.IdEstatusProveedor == 8 || request.EstatusProveedor.IdEstatusProveedor == 6)
+                    else if (request.EstatusProveedor.IdEstatusProveedor == 5)
+                    {
+
+                    }
+                    else if (request.EstatusProveedor.IdEstatusProveedor == 8 || request.EstatusProveedor.IdEstatusProveedor == 6)
                     {
                     }
                 }

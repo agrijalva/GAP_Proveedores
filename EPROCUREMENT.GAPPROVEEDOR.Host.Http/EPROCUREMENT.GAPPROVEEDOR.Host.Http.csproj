@@ -80,6 +80,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="EmailLayout\ModificacionProveedorCompras.htm" />
+    <Content Include="EmailLayout\NuevoProveedorCompras.htm" />
+    <Content Include="EmailLayout\NuevoProveedorUsuario.htm" />
+    <Content Include="EmailLayout\ProveedorAprobado.htm" />
+    <Content Include="EmailLayout\ProveedorAprobadoCompras.htm" />
+    <Content Include="EmailLayout\ProveedorRechazadoCompras.htm" />
     <Content Include="EmailLayout\RecuperarPassword.htm" />
     <Content Include="EmailLayout\UsuarioRechazado.htm" />
     <Content Include="EmailLayout\UssuarioAprobado.htm" />
