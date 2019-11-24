@@ -249,3 +249,4 @@ C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_P
 C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\obj\Debug\Eprocurement.Compras.csproj.CopyComplete
 C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\obj\Debug\Eprocurement.Compras.dll
 C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\obj\Debug\Eprocurement.Compras.pdb
+C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\obj\Debug\Eprocurement.Compras.csprojAssemblyReference.cache

@@ -1,10 +1,14 @@
 ﻿@model EprocurementWeb.Models.UsuarioModel
 @{
     ViewBag.Title = "Recuperacion de contraseña";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 
 <link href="~/Content/Styles/Login.css" rel="stylesheet" />
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/modernizr")
+@Scripts.Render("~/bundles/shared")
 <div class="background row" style="padding-bottom: 0px;">
     <div class="col-sm-7">
         <div class="pnl-logo">
