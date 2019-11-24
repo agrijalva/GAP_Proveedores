@@ -8,6 +8,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Entities
         public string NombreUsuario { get; set; }
         public string NombreCompania { get; set; }
         public int IdUsuarioRol { get; set; }
+        public int IdEstatus { get; set; }
         public DateTime? FechaRegistro { get; set; }
         public string Password { get; set; }
         public bool EsActivo { get; set; }

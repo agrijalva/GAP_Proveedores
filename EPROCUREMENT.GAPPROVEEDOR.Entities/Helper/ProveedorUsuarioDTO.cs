@@ -14,5 +14,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Entities
         public string Contacto { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string NumeroProveedorAX { get; set; }
+        public string ExtensionesConfiguradas { get; set; }
     }
 }

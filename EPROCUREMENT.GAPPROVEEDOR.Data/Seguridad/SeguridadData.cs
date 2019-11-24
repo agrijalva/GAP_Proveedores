@@ -34,6 +34,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             response.Usuario.IdProveedor = Convert.ToInt32(reader["IdProveedor"]);
                             response.Usuario.NombreCompania = reader["NombreCompania"].ToString();
                             response.Usuario.IdUsuarioRol = Convert.ToInt32(reader["IdUsuarioRol"]);
+                            response.Usuario.IdEstatus = Convert.ToInt32(reader["IdEstatus"]); 
                             response.Success = true;
                         }
                     }

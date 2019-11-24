@@ -89,7 +89,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             }
         }
 
-        public void EnviarEmailProveedorAprobado(ProveedorUsuarioDTO proveedorUsuario)
+        public void EnviarEmailProveedorAprobadoCompras(ProveedorUsuarioDTO proveedorUsuario)
         {
             string EmailOrigen = ConfigurationManager.AppSettings["EmailOrigen"];
             EmailDTO emailEntidad = new EmailDTO
@@ -100,7 +100,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                 RecipientsList = new List<DireccionEmailDTO>(),
                 Prioridad = EmailPrioridadDTO.Normal
             };
-            emailEntidad.Message = GetBodyProveedorAprobado(proveedorUsuario);
+            emailEntidad.Message = GetBodyProveedorAprobadoCompras(proveedorUsuario);
 
             emailEntidad.RecipientsList.Add(new DireccionEmailDTO { Address = proveedorUsuario.Email, DisplayName = proveedorUsuario.Contacto, UserIdentifier = 1 });
             var mailMessage = ObtenerMensajeEmail(emailEntidad, "Acceso al portal de Proveedores GAP.");
@@ -114,7 +114,32 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             }
         }
 
-        public void EnviarEmailProveedorAprobadoCompras(ProveedorUsuarioDTO proveedorUsuario)
+        public void EnviarEmailAprobadoTesoreria(ProveedorUsuarioDTO proveedorUsuario)
+        {
+            string EmailOrigen = ConfigurationManager.AppSettings["EmailOrigen"];
+            EmailDTO emailEntidad = new EmailDTO
+            {
+                Origin = EmailOrigen,
+                Subject = "Solicitud de Alta de Proveedor Aceptado.",
+                Html = true,
+                RecipientsList = new List<DireccionEmailDTO>(),
+                Prioridad = EmailPrioridadDTO.Normal
+            };
+            emailEntidad.Message = GetBodyAprobadoTesoreria(proveedorUsuario);
+
+            emailEntidad.RecipientsList.Add(new DireccionEmailDTO { Address = proveedorUsuario.Email, DisplayName = proveedorUsuario.Contacto, UserIdentifier = 1 });
+            var mailMessage = ObtenerMensajeEmail(emailEntidad, "Solicitud de Alta de Proveedor Aceptado.");
+            var cliente = ObtenerClienteSmtp();
+            try
+            {
+                cliente.Send(mailMessage);
+            }
+            catch (SmtpFailedRecipientException smtpFailedException)
+            {
+            }
+        }
+
+        public void EnviarEmailProveedorInfoBancaria(ProveedorUsuarioDTO proveedorUsuario)
         {
             string EmailOrigen = ConfigurationManager.AppSettings["EmailOrigen"];
             EmailDTO emailEntidad = new EmailDTO
@@ -125,9 +150,9 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                 RecipientsList = new List<DireccionEmailDTO>(),
                 Prioridad = EmailPrioridadDTO.Normal
             };
-            emailEntidad.Message = GetBodyProveedorAprobadoCompras(proveedorUsuario);
+            emailEntidad.Message = GetBodyProveedorInfoBancaria(proveedorUsuario);
 
-            emailEntidad.RecipientsList.Add(new DireccionEmailDTO { Address = proveedorUsuario.Email, DisplayName = proveedorUsuario.Contacto, UserIdentifier = 1 });
+            emailEntidad.RecipientsList.Add(new DireccionEmailDTO { Address = ConfigurationManager.AppSettings["EmailTesoreria"], DisplayName = ConfigurationManager.AppSettings["DisplayNameTesoreria"], UserIdentifier = 1 });
             var mailMessage = ObtenerMensajeEmail(emailEntidad, "Solicitud de Alta de proveedor Pre-Registro.");
             var cliente = ObtenerClienteSmtp();
             try
@@ -154,11 +179,36 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                 RecipientsList = new List<DireccionEmailDTO>(),
                 Prioridad = EmailPrioridadDTO.Normal
             };
-                emailEntidad.Message = GetBodyRechazadoCompras(proveedorUsuario);
+                emailEntidad.Message = GetBodyRechazado(proveedorUsuario);
 
 
 
             emailEntidad.RecipientsList.Add(new DireccionEmailDTO { Address = proveedorUsuario.Email, DisplayName = proveedorUsuario.NombreEmpresa, UserIdentifier = 1 });             
+            var mailMessage = ObtenerMensajeEmail(emailEntidad, "Solicitud de Alta de Proveedor Rechazada");
+            var cliente = ObtenerClienteSmtp();
+            try
+            {
+                cliente.Send(mailMessage);
+            }
+            catch (SmtpFailedRecipientException smtpFailedException)
+            {
+            }
+        }
+
+        public void EnviarEmailRechazadoTesoreria(ProveedorUsuarioDTO proveedorUsuario)
+        {
+            string EmailOrigen = ConfigurationManager.AppSettings["EmailOrigen"];
+            EmailDTO emailEntidad = new EmailDTO
+            {
+                Origin = EmailOrigen,
+                Subject = "Solicitud de Alta de Proveedor Rechazada",
+                Html = true,
+                RecipientsList = new List<DireccionEmailDTO>(),
+                Prioridad = EmailPrioridadDTO.Normal
+            };
+            emailEntidad.Message = GetBodyRechazado(proveedorUsuario);
+
+            emailEntidad.RecipientsList.Add(new DireccionEmailDTO { Address = proveedorUsuario.Email, DisplayName = proveedorUsuario.NombreEmpresa, UserIdentifier = 1 });
             var mailMessage = ObtenerMensajeEmail(emailEntidad, "Solicitud de Alta de Proveedor Rechazada");
             var cliente = ObtenerClienteSmtp();
             try
@@ -261,11 +311,11 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
         /// <param name="nombreCompañia">Nombre de la compañia</param>
         /// <param name="urlLogin">Url para el logueo</param>
         /// <returns>La estructura del correo</returns>
-        private string GetBodyProveedorAprobado(ProveedorUsuarioDTO proveedorUsuario)
+        private string GetBodyProveedorAprobadoCompras(ProveedorUsuarioDTO proveedorUsuario)
         {
             string url = ConfigurationManager.AppSettings["UrlLogin"];
             string hrefUrl = "<a href='" + url + "'>Click para ingresar</a>";
-            string layoutName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, App_GlobalResources.ResourceConstants.EmailLayout, "ProveedorAprobado.htm");
+            string layoutName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, App_GlobalResources.ResourceConstants.EmailLayout, "AprobadoCompras.htm");
             string message = File.ReadAllText(layoutName);
             var details = new StringBuilder();
             message = message.Replace("<!--contacto-->", proveedorUsuario.NombreEmpresa);
@@ -274,21 +324,30 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             message = message.Replace("<!--urlLoginProveedor-->", hrefUrl);
             return message;
         }
-        private string GetBodyProveedorAprobadoCompras(ProveedorUsuarioDTO proveedorUsuario)
+        private string GetBodyProveedorInfoBancaria(ProveedorUsuarioDTO proveedorUsuario)
         {
-            string layoutName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, App_GlobalResources.ResourceConstants.EmailLayout, "ProveedorAprobadoCompras.htm");
+            string layoutName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, App_GlobalResources.ResourceConstants.EmailLayout, "ProveedorInfoBancaria.htm");
             string message = File.ReadAllText(layoutName);
             var details = new StringBuilder();
             message = message.Replace("<!--razonSocial-->", proveedorUsuario.RazonSocial);
             return message;
         }
 
-        private string GetBodyRechazadoCompras(ProveedorUsuarioDTO proveedorUsuario)
+        private string GetBodyRechazado(ProveedorUsuarioDTO proveedorUsuario)
         {
-            string layoutName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, App_GlobalResources.ResourceConstants.EmailLayout, "ProveedorRechazadoCompras.htm");
+            string layoutName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, App_GlobalResources.ResourceConstants.EmailLayout, "ProveedorRechazado.htm");
             string message = File.ReadAllText(layoutName);
             var details = new StringBuilder();
             message = message.Replace("<!--contacto-->", proveedorUsuario.Contacto);
+            return message;
+        }
+        private string GetBodyAprobadoTesoreria(ProveedorUsuarioDTO proveedorUsuario)
+        {
+            string layoutName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, App_GlobalResources.ResourceConstants.EmailLayout, "AprobadoTesoreria.htm");
+            string message = File.ReadAllText(layoutName);
+            var details = new StringBuilder();
+            message = message.Replace("<!--numeroProveedorAX-->", proveedorUsuario.NumeroProveedorAX);
+            message = message.Replace("<!--extensionesConfigurados-->", proveedorUsuario.ExtensionesConfiguradas);
             return message;
         }
 

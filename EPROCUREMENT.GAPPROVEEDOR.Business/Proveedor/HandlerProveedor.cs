@@ -111,18 +111,30 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Proveedor
                 if (proveedorUsuario != null)
                 {
                     var emailData = new EmailData();
-                    if (request.EstatusProveedor.IdEstatusProveedor == 4)
+                    switch (request.EstatusProveedor.IdEstatusProveedor)
                     {
-                        proveedorUsuario.Password = response.Password;
-                        new EmailData().EnviarEmailProveedorAprobado(proveedorUsuario);
-                        new EmailData().EnviarEmailProveedorAprobadoCompras(proveedorUsuario);
-                    }
-                    else if (request.EstatusProveedor.IdEstatusProveedor == 2)
-                    {
-                        new EmailData().EnviarEmailRechazadoCompras(proveedorUsuario);
-                    }
-                    else if (request.EstatusProveedor.IdEstatusProveedor == 5 || request.EstatusProveedor.IdEstatusProveedor == 8 || request.EstatusProveedor.IdEstatusProveedor == 6)
-                    {
+                        case 1:
+                            new EmailData().EnviarEmailProveedorNuevo(proveedorUsuario);
+                            new EmailData().EnviarEmailProveedorNuevoCompras(proveedorUsuario);
+                            break;
+                        case 2:
+                            new EmailData().EnviarEmailRechazadoCompras(proveedorUsuario);
+                            break;
+                        case 4:
+                            proveedorUsuario.Password = response.Password;
+                            new EmailData().EnviarEmailProveedorAprobadoCompras(proveedorUsuario);
+                            break;
+                        case 5:
+                            new EmailData().EnviarEmailProveedorInfoBancaria(proveedorUsuario);
+                            break;
+                        case 6:
+                            new EmailData().EnviarEmailRechazadoTesoreria(proveedorUsuario);
+                            break;
+                        case 8:                            
+                            new EmailData().EnviarEmailAprobadoTesoreria(proveedorUsuario);
+                            break;
+                        default:
+                            break;
                     }
                 }
             }
