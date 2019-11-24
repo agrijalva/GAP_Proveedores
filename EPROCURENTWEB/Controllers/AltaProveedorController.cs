@@ -21,6 +21,9 @@ namespace EprocurementWeb.Controllers
         public ActionResult InformacionBF(int idProveedor)
         {
             ViewBag.Respuesta = "";
+            ViewBag.MenssageError = EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Generic;
+            ViewBag.MenssageErrorAirPort = EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Airport;
+            ViewBag.MenssageErrorDocument = EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Document;
             var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
             if (usuarioInfo != null)
             {

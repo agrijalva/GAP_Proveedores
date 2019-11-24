@@ -285,4 +285,13 @@
   <data name="TituloTerminos" xml:space="preserve">
     <value>Es necesario aceptar los términos y condiciones.</value>
   </data>
+  <data name="Message_Error_Required_Generic" xml:space="preserve">
+    <value>El campo es requerido</value>
+  </data>
+  <data name="Message_Error_Required_Airport" xml:space="preserve">
+    <value>Debe seleccionar al menos un aeropuerto</value>
+  </data>
+  <data name="Message_Error_Required_Document" xml:space="preserve">
+    <value>El documento es requerido</value>
+  </data>
 </root>

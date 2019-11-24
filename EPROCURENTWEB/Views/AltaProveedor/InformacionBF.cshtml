@@ -98,27 +98,28 @@
                     <div class="col100" style="font-size:12px;">
                         @for (int idx = 0; idx < Model.CatalogoDocumentoList.Count; idx++)
                         {
-                            <div class="col-sm-6 mt-2" style="border:solid 1px #c6c7cb; padding:10px;">
-                                <div class="col50">
-                                    <div class="inputIF" style="font-weight:600;">
-                                        @Html.DisplayFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)
-                                        @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdCatalogoDocumento)
-                                        @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdFormatoArchivo)
-                                        @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdFormulario)
-                                    </div>
-                                </div>
-                                <div class="col25">
-                                    @if (Model.CatalogoDocumentoList[idx].EsRequerido)
-                                    {
-                                        <input class="text-box single-line" required type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
-                                    }
-                                    else
-                                    {
-                                        <input class="text-box single-line" type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
-                                    }
-
+                        <div class="col-sm-6 mt-2" style="border:solid 1px #c6c7cb; padding:10px;">
+                            <div class="col50">
+                                <div class="inputIF" style="font-weight:600;">
+                                    @Html.DisplayFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)
+                                    @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdCatalogoDocumento)
+                                    @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdFormatoArchivo)
+                                    @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdFormulario)
                                 </div>
                             </div>
+                            <div class="col25">
+                                @if (Model.CatalogoDocumentoList[idx].EsRequerido)
+                                {
+                                    <input class="text-box single-line" required type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
+                                }
+                                else
+                                {
+                                    <input class="text-box single-line" type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
+                                }
+
+                            </div>
+                            @Html.Label((string)ViewBag.MenssageErrorDocument, new { @class = "text-danger", id = "errorDocument" + Model.CatalogoDocumentoList[idx].IdCatalogoDocumento, @style = "display:none;" })
+                        </div>
                         }
                     </div>
 
@@ -243,54 +244,68 @@ table.dataTable tbody tr {
         fn_buscar();
 
         $("#cuenta").on("change paste keyup", () => {
-            $("#cuenta").removeClass('is-invalid');
+            $('#errorCuenta').hide();
         });
 
         $("#clave").on("change paste keyup", () => {
-            $("#clave").removeClass('is-invalid');
+            $('#errorClave').hide();
         });
 
         $("#idBanco").change(() => {
-            $("#idBanco").removeClass('is-invalid');
+            $('#errorIdBanco').hide();
         });
 
         $("#idTipoCuenta").change(() => {
-            $("#idTipoCuenta").removeClass('is-invalid');
+            $('#errorIdIdTipoCuenta').hide();
+        });
+
+        $('input[type="checkbox"]').click(function () {
+            $("#errorAeropuerto").hide();
+        });
+
+        $('input[type="file"]').on('change', () => {
+            var docs = @Html.Raw(Json.Encode(Model.CatalogoDocumentoList));
+                for (var j = 0; j < docs.length; j++) {
+                    var fileInput = document.getElementById("CatalogoDocumentoList_" + j + "__File");
+                    if (docs[j].EsRequerido && fileInput.files.length < 1) {
+                        $('#errorDocument' + docs[j].IdCatalogoDocumento).show();
+                    } else {
+                        $('#errorDocument' + docs[j].IdCatalogoDocumento).hide();
+                    }
+                }
         });
 
         function validaCampos(cuenta,idBanco,clave,idTipoCuenta) {
             if (cuenta && cuenta.length) {
 
             } else {
-                $("#cuenta").addClass('is-invalid');
+                //$("#cuenta").addClass('is-invalid');
+                $('#errorCuenta').show();
             }
 
             if (idBanco && idBanco.length) {
 
             } else {
-                $("#idBanco").addClass('is-invalid');
+                $('#errorIdBanco').show();
             }
 
             if (clave && clave.length) {
 
             } else {
-                $("#clave").addClass('is-invalid');
+                $('#errorClave').show();
             }
 
             if (idTipoCuenta && idTipoCuenta.length) {
 
             } else {
-                $("#idTipoCuenta").addClass('is-invalid');
+                $('#errorIdIdTipoCuenta').show();
             }
         }
 
         $("#btnAgregarCuenta").click(function () {
             console.log(proveedorCuenta);
-
-            //IdProveedorCuenta: 1,
-            //                        IdProveedor: 4,
-
-                let Cuenta = $("#cuenta").val();
+            
+            let Cuenta = $("#cuenta").val();
             let IdBanco = $("#idBanco").val();
             let NombreBanco = $("#idBanco option:selected").text();
             let CLABE = $("#clave").val();
@@ -348,7 +363,8 @@ table.dataTable tbody tr {
                     $("#clave").val('');
                     $("#idTipoCuenta").val(0);
                 } else {
-                    alert('Debe seleccionar al menos un aeropuerto.');
+                    $("#errorAeropuerto").show();
+                    //alert('Debe seleccionar al menos un aeropuerto.');
                 }
             }
         });
@@ -369,6 +385,7 @@ table.dataTable tbody tr {
                     var fileInput = document.getElementById("CatalogoDocumentoList_" + j + "__File");
                     if (docs[j].EsRequerido && fileInput.files.length < 1) {
                         documentosInvalidos = true;
+                        $('#errorDocument' + docs[j].IdCatalogoDocumento).show();
                     }
                     for (i = 0; i < fileInput.files.length; i++) {
                         formData.append(docs[j].IdCatalogoDocumento, fileInput.files[i]);
@@ -376,7 +393,7 @@ table.dataTable tbody tr {
                 }
 
                 if (documentosInvalidos) {
-                    alert('Falta cargar los documentos.');
+                    //alert('Falta cargar los documentos.');
                 } else {
                     formData.append('cuenta', JSON.stringify({ ProveedorCuentaListRegistro: proveedorCuenta }));
 
