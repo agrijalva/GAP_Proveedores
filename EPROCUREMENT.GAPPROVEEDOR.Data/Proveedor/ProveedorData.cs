@@ -166,6 +166,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             cmdDocto.Parameters.Add(new SqlParameter("@IdCatalogoDocumento", proveedorDocumento.IdCatalogoDocumento));
                             cmdDocto.Parameters.Add(new SqlParameter("@DescripcionDocumento", SqlDbType.NVarChar, 560)).Value = proveedorDocumento.DescripcionDocumento;
                             cmdDocto.Parameters.Add(new SqlParameter("@DocumentoAutorizado", proveedorDocumento.DocumentoAutorizado));
+                            cmdDocto.Parameters.Add(new SqlParameter("@NombreArchivo", SqlDbType.VarChar, 200)).Value = proveedorDocumento.NombreArchivo;
                             cmdDocto.Parameters.Add(new SqlParameter("Result", SqlDbType.BigInt) { Direction = ParameterDirection.ReturnValue });
                             cmdDocto.ExecuteNonQuery();
                             if (Convert.ToInt32(cmdDocto.Parameters["Result"].Value) < 1)

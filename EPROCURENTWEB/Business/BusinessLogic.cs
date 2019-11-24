@@ -311,7 +311,7 @@ namespace EprocurementWeb.Business
                         //var extension = Path.GetExtension(file.File.FileName);
                         var InputFileName = Path.GetFileName(file.File.FileName);
                         InputFileName = file.IdCatalogoDocumento + "_" + InputFileName;
-                        var ServerSavePath = Path.Combine(rutaP + "\\" + InputFileName);
+                        var ServerSavePath = Path.Combine(rutaP + "\\" + file.NombreDocumento);
                         file.File.SaveAs(ServerSavePath);
                     }
                 }

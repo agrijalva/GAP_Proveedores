@@ -13,7 +13,7 @@
 
     <div class="col-sm-4 t-a-c ">
         <h1 class="h-title">
-            @RHome.ProvP
+            @EprocurementWeb.GlobalResources.RHome.ProvP
         </h1>
     </div>
 
@@ -33,7 +33,7 @@
     <div class="row pb-0">
         <div class="col-sm-12">
             <h3 class="subtitle">
-                @RHome.TitlePP
+                @EprocurementWeb.GlobalResources.RHome.TitlePP
             </h3>
         </div>
     </div>
@@ -48,22 +48,24 @@
                 <a class="nav-link" href="#IF" role="tab" data-toggle="tab">Información Financiera</a>
             </li>
         </ul>
-        <div class="tab-content" style="background-color:white; padding: 15px;">
-            <div role="tabpanel" class="tab-pane fade in active show" id="IB">
-                <div class="col100" style="font-size:14px;">
-                    <b>Por favor llena la siguiente información</b>
-                </div>
-                @Html.Partial("_CuentaBancaria", Model)
+        @model EPROCUREMENT.GAPPROVEEDOR.Entities.Proveedor.ProveedorInformacionFinanciera
+        @using (Html.BeginForm("InformacionBF", "AltaProveedor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="tab-content" style="background-color:white; padding: 15px;">
 
-                @model EPROCUREMENT.GAPPROVEEDOR.Entities.Proveedor.ProveedorInformacionFinanciera
+                <div role="tabpanel" class="tab-pane fade in active show" id="IB">
+                    <div class="col100" style="font-size:14px;">
+                        <b>Por favor llena la siguiente información</b>
+                    </div>
+                    @Html.Partial("_CuentaBancaria", Model)
 
-                @using (Html.BeginForm("CargarCuentas", "AltaProveedor", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
+                    @*@using (Html.BeginForm("CargarCuentas", "AltaProveedor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {*@
                     @Html.HiddenFor(m => m.RFC)
                     <b>Detalles de la compañia</b>
                     <div class="row mt-5">
                         <div class="col-sm-12">
-                            <table class="dataTable" width="100%">
+                            <table class="dataTable" id="tbProveedorCuenta" width="100%">
                                 <thead class="bg-light-purple">
                                     <tr>
                                         <td>Cuenta</td>
@@ -74,35 +76,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr style="display:none;"></tr>
                                     @foreach (var cuenta in Model.ProveedorCuentaListRegistro)
                                     {
-                                    <tr>
-                                        <td style="dislay: none;">@cuenta.Cuenta</td>
-                                        <td style="dislay: none;">@cuenta.NombreBanco</td>
-                                        <td style="dislay: none;">@cuenta.CLABE</td>
-                                        <td style="dislay: none;">@cuenta.TipoCuenta</td>
-                                        <td style="dislay: none;"><a href="">Ver</a></td>
-                                    </tr>
+                                        <tr>
+                                            <td style="dislay: none;">@cuenta.Cuenta</td>
+                                            <td style="dislay: none;">@cuenta.NombreBanco</td>
+                                            <td style="dislay: none;">@cuenta.CLABE</td>
+                                            <td style="dislay: none;">@cuenta.TipoCuenta</td>
+                                            <td style="dislay: none;"><a href="">Ver</a></td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
-                    <div class="row mt-4">
-                        <div class="col-sm-6">&nbsp;</div>
-                        <div class="col-sm-3"><input type="button" value="Cancelar" class="btnStyle btnWhite" /></div>
-                        <div class="col-sm-3"><input type="submit" value="Enviar" class="btnStyle" /></div>
-                        @ViewBag.Respuesta
-                    </div>
-                }
-            </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="IF">
 
-            <div role="tabpanel" class="tab-pane fade" id="IF">
-                @using (Html.BeginForm("InformacionBF", "AltaProveedor", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
                     <div class="col100" style="font-size:12px;">
-
                         @for (int idx = 0; idx < Model.CatalogoDocumentoList.Count; idx++)
                         {
                             <div class="col-sm-6 mt-2" style="border:solid 1px #c6c7cb; padding:10px;">
@@ -115,23 +108,31 @@
                                     </div>
                                 </div>
                                 <div class="col25">
-                                    <input class="text-box single-line" type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].File)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
+                                    @if (Model.CatalogoDocumentoList[idx].EsRequerido)
+                                    {
+                                        <input class="text-box single-line" required type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
+                                    }
+                                    else
+                                    {
+                                        <input class="text-box single-line" type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
+                                    }
+
                                 </div>
                             </div>
                         }
                     </div>
-                    <div class="row mt-4">
-                        <div class="col-sm-6">&nbsp;</div>
-                        <div class="col-sm-3"><input type="button" value="Cancelar" class="btnStyle btnWhite" /></div>
-                        <div class="col-sm-3"><input type="submit" value="Enviar" class="btnStyle" /></div>
-                    </div>
-                }
+
+                </div>
+
+                <hr />
+                <div class="row mt-4">
+                    <div class="col-sm-6">&nbsp;</div>
+                    <div class="col-sm-3"><input type="button" value="Cancelar" class="btnStyle btnWhite" /></div>
+                    <div class="col-sm-3"><input type="button" id="btnCargarCuentas" value="Enviar" class="btnStyle" /></div>
+                </div>
             </div>
-            <hr />
-
-
+        }
         </div>
-    </div>
 </div>
 
 <style>
@@ -223,6 +224,9 @@ table.dataTable tbody tr {
     });
 
     $(document).ready(function () {
+
+        let proveedorCuenta = [];
+
         if ('@ViewBag.Respuesta' != "") {
             Swal.fire({
                 position: 'middle',
@@ -232,12 +236,180 @@ table.dataTable tbody tr {
                 timer: 1500
             })
         }
-        $("#ProveedorCuentaList_0__Cuenta").val("");
-        $("#ProveedorCuentaList_0__CLABE").val("");
+        
         $("#idBanco").val(0);
         $("#idTipoCuenta").val(0);
 
         fn_buscar();
+
+        $("#cuenta").on("change paste keyup", () => {
+            $("#cuenta").removeClass('is-invalid');
+        });
+
+        $("#clave").on("change paste keyup", () => {
+            $("#clave").removeClass('is-invalid');
+        });
+
+        $("#idBanco").change(() => {
+            $("#idBanco").removeClass('is-invalid');
+        });
+
+        $("#idTipoCuenta").change(() => {
+            $("#idTipoCuenta").removeClass('is-invalid');
+        });
+
+        function validaCampos(cuenta,idBanco,clave,idTipoCuenta) {
+            if (cuenta && cuenta.length) {
+
+            } else {
+                $("#cuenta").addClass('is-invalid');
+            }
+
+            if (idBanco && idBanco.length) {
+
+            } else {
+                $("#idBanco").addClass('is-invalid');
+            }
+
+            if (clave && clave.length) {
+
+            } else {
+                $("#clave").addClass('is-invalid');
+            }
+
+            if (idTipoCuenta && idTipoCuenta.length) {
+
+            } else {
+                $("#idTipoCuenta").addClass('is-invalid');
+            }
+        }
+
+        $("#btnAgregarCuenta").click(function () {
+            console.log(proveedorCuenta);
+
+            //IdProveedorCuenta: 1,
+            //                        IdProveedor: 4,
+
+                let Cuenta = $("#cuenta").val();
+            let IdBanco = $("#idBanco").val();
+            let NombreBanco = $("#idBanco option:selected").text();
+            let CLABE = $("#clave").val();
+            let IdTipoCuenta = $("#idTipoCuenta").val();
+            let TipoCuenta = $("#idTipoCuenta option:selected").text();
+            let aeropuerto = '';
+            let AeropuertoList = [];
+
+            validaCampos(Cuenta, IdBanco, CLABE, IdTipoCuenta);
+
+            if (Cuenta && Cuenta.length
+                && IdBanco && IdBanco.length
+                && CLABE && CLABE.length
+                && IdTipoCuenta && IdTipoCuenta.length) {
+
+                $("input[type = 'checkbox']").each(function () {
+
+                    if (!$(this).is(':disabled')) {
+                        let c = $(this).is(":checked");
+                        if (c) {
+                            // por si quieren deschequearlos
+                            //$(this).prop("checked", false);
+
+                            $(this).attr("disabled", true);
+                            console.log('id');
+                            console.log($(this).attr('id'));
+                            let Id = $(this).attr('id');
+                            let Nombre = $(this).attr('hd');
+                            aeropuerto += Nombre + '<br />';
+                            console.log(aeropuerto);
+                            AeropuertoList.push({ Id, Nombre });
+                        }
+                    }
+                });
+
+                if (AeropuertoList && AeropuertoList.length) {
+                    proveedorCuenta.push({ Cuenta, IdBanco, NombreBanco, CLABE, IdTipoCuenta, TipoCuenta, AeropuertoList });
+
+                    $('#tbProveedorCuenta tr:last').after(
+                        '<tr><td>'
+                        + Cuenta + '</td><td>'
+                        + IdBanco + '</td><td>'
+                        + CLABE + '</td><td>'
+                        + IdTipoCuenta + '</td><td>'
+                        + aeropuerto
+                        + '</td></tr>'
+                    );
+
+                    console.log(Cuenta);
+                    console.log(IdBanco);
+                    console.log(CLABE);
+                    console.log(IdTipoCuenta);
+                    $("#cuenta").val('');
+                    $("#idBanco").val(0);
+                    $("#clave").val('');
+                    $("#idTipoCuenta").val(0);
+                } else {
+                    alert('Debe seleccionar al menos un aeropuerto.');
+                }
+            }
+        });
+
+        $('#btnCargarCuentas').click(() => {
+
+            if (proveedorCuenta && proveedorCuenta.length) {
+
+                var formData = new FormData();
+
+                var documentosInvalidos = false;
+
+                var docs = @Html.Raw(Json.Encode(Model.CatalogoDocumentoList));
+                console.log(docs.length);
+                console.log(docs);
+                for (var j = 0; j < docs.length; j++) {
+                    console.log(docs[j].IdCatalogoDocumento);
+                    var fileInput = document.getElementById("CatalogoDocumentoList_" + j + "__File");
+                    if (docs[j].EsRequerido && fileInput.files.length < 1) {
+                        documentosInvalidos = true;
+                    }
+                    for (i = 0; i < fileInput.files.length; i++) {
+                        formData.append(docs[j].IdCatalogoDocumento, fileInput.files[i]);
+                    }
+                }
+
+                if (documentosInvalidos) {
+                    alert('Falta cargar los documentos.');
+                } else {
+                    formData.append('cuenta', JSON.stringify({ ProveedorCuentaListRegistro: proveedorCuenta }));
+
+                    $.ajax({
+                        url: "/AltaProveedor/Upload",
+                        type: "POST",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        async: false,
+                        success: function (result) {
+                            console.log(result);
+
+                            $("#cuenta").val('');
+                            $("#idBanco").val(0);
+                            $("#clave").val('');
+                            $("#idTipoCuenta").val(0);
+                            $("#cuenta").removeClass('is-invalid');
+                            $("#idBanco").removeClass('is-invalid');
+                            $("#clave").removeClass('is-invalid');
+                            $("#idTipoCuenta").removeClass('is-invalid');
+
+                            for (var j = 0; j < docs.length; j++) {
+                                $("#CatalogoDocumentoList_" + j + "__File").val('');
+                            }
+                        },
+                    });
+                }
+            } else {
+                alert('Es necesario agregar las cuentas.')
+            }
+        });
     });
 
 </script>
