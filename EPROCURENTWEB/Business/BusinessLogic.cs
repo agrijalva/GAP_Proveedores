@@ -60,7 +60,7 @@ namespace EprocurementWeb.Business
                 {
                     var readTask = result.Content.ReadAsStringAsync();
                     JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
-                    response = JSSerializer.Deserialize<ProveedorDetalleResponseModel>(readTask.Result);                    
+                    response = JSSerializer.Deserialize<ProveedorDetalleResponseModel>(readTask.Result);
                 }
             }
             return response;
@@ -287,6 +287,51 @@ namespace EprocurementWeb.Business
 
         public bool GuardarDocumentos(string rfc, List<CatalogoDocumentoDTO> files)
         {
+            bool respuesta = false;
+
+            foreach (var file in files)
+            {
+                if (file != null)
+                {
+
+                    //var InputFileName = Path.GetFileName(file.File.FileName);
+                    //InputFileName = file.IdCatalogoDocumento + "_" + InputFileName;
+                    //var ServerSavePath = Path.Combine(rutaP + "\\" + file.NombreDocumento);
+                    //file.File.SaveAs(ServerSavePath);
+
+                    using (var client = new HttpClient())
+                    {
+                        client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+                        using (var content = new MultipartFormDataContent())
+                        {
+                            byte[] Bytes = new byte[file.File.InputStream.Length + 1];
+                            file.File.InputStream.Read(Bytes, 0, Bytes.Length);
+                            var fileContent = new ByteArrayContent(Bytes);
+                            fileContent.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment") { FileName = file.NombreDocumento };
+                            content.Add(fileContent);
+                            //var requestUri = urlApi + "api/Proveedor/Upload/";
+                            var result = client.PostAsync("Upload", content).Result;
+
+                            if (result.StatusCode == System.Net.HttpStatusCode.Created)
+                            {
+                                respuesta = true;
+
+                            }
+                            else
+                            {
+                                respuesta = false;
+                            }
+                        }
+                    }
+                }
+            }
+            respuesta = true;
+
+            return respuesta;
+        }
+
+        public bool GuardarDocumentosBack(string rfc, List<CatalogoDocumentoDTO> files)
+        {
             string ruta = Settings.Default["RutaDocumentos"].ToString();
             string rutaF = HttpContext.Current.Server.MapPath(ruta);
             string rutaP = rutaF + "\\" + rfc;
@@ -336,7 +381,7 @@ namespace EprocurementWeb.Business
                     string fn = Path.GetFileName(file);
                     string[] idDoc = fn.Split('_');
                     int id = idDoc.Length > 0 ? Convert.ToInt32(idDoc[0]) : 0;
-                    foreach(var doc in files)
+                    foreach (var doc in files)
                     {
                         if (doc.IdCatalogoDocumento == id)
                         {
