@@ -156,7 +156,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Proveedor
                 if (proveedorUsuario != null)
                 {
                     var emailData = new EmailData();
-                    new EmailData().EnviarEmailProveedorModificacionCompras(proveedorUsuario);
+                    new EmailData().EnviarEmailProveedorModificacion(proveedorUsuario);
                 }
             }
             else

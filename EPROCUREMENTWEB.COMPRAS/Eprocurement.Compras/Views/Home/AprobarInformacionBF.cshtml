@@ -95,14 +95,11 @@
              data: jsonData,
              async: false,
              success: function(data) {
-                 console.log("Traigo Datos", data)
                  $("#TableDocumento").html('');
                  $("#TableDocumento").append('<thead class="bg-light-purple"><tr>' +
-                     //'<td>IdProveedor</td>'+
                      '<td>Nombre</td>' +
                      '<td>Documento</td>' + '</tr></thead>'
                  );
-                  //("#Table").DataTable().destroy();
                  $("#TableDocumento").DataTable().clear().draw();
                  $("#TableDocumento").DataTable().destroy();
 
@@ -110,10 +107,8 @@
                  for (i = 0; i < data.length; i++) {
 
                      $("#TableDocumento").append('<tr>' +
-                         //'<td align="center" style="dislay: none;">' + data[i].IdProveedor + '</td>' +
                          '<td style="dislay: none;"><b>' + data[i].NombreDocumento + '</b></td>' +
                          '<td style="dislay: none;"><button class="btn-descargar">Descargar</button></tr>'
-                         //'<td style="dislay: none;">' + data[i].RutaDocumento + '</tr>'
                      );
                  }
                  $("#TableDocumento").append('</tbody>');
@@ -140,14 +135,12 @@
                  console.log("Traigo Datos", data)
                  $("#Table").html('');
                  $("#Table").append('<thead class="bg-light-purple"><tr>' +
-                     //'<td>IdProveedor</td>'+
                      '<td>Cuenta</td>' +
                      '<td>NombreBanco</td>' +
                      '<td>CLABE</td>' +
                      '<td>TipoCuenta</td>' + 
                      '<td>Aeropuertos</td>' + '</tr></thead>'
                  );
-                  //("#Table").DataTable().destroy();
                  $("#Table").DataTable().clear().draw();
                  $("#Table").DataTable().destroy();
 
@@ -155,7 +148,6 @@
                  for (i = 0; i < data.length; i++) {
 
                      $("#Table").append('<tr>' +
-                         //'<td align="center" style="dislay: none;">' + data[i].IdProveedor + '</td>' +
                          '<td style="dislay: none;"><b>' + data[i].Cuenta + '</b></td>' +
                          '<td style="dislay: none;">' + data[i].NombreBanco + '</td>' +
                          '<td style="dislay: none;">' + data[i].CLABE + '</td>' +
@@ -176,6 +168,7 @@
     }
 
     $(document).ready(function () {
+        var url = '@Url.Action("Index", "Home")'; 
         var idProveedor = $("#IdProveedor").val();
         console.log(idProveedor);
         fn_CargarCuentas(idProveedor);

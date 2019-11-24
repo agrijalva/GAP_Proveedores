@@ -9,18 +9,17 @@ namespace EprocurementWeb
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // routes.MapRoute(
+            //    name: "LocalizedDefault",
+            //    url: "{lang}/{controller}/{action}",
+            //    defaults: new { controller = "Home", action = "Index"},
+            //    constraints: new {lang="es-mx|fr-fr|en-us"}
+            //);
             routes.MapRoute(
-               name: "LocalizedDefault",
-               url: "{lang}/{controller}/{action}",
-               defaults: new { controller = "Home", action = "Index"},
-               constraints: new {lang="es-mx|fr-fr|en-us"}
-           );
-
-            routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}",
-                defaults: new { controller = "Seguridad", action = "Index", lang = "es-MX" }
-            );
+            name: "Default",
+            url: "{controller}/{action}",
+            defaults: new { controller = "Seguridad", action = "Index", lang = "es-MX" }
+        );
         }
     }
 }

@@ -16,34 +16,12 @@
 @using (Html.BeginForm("ActualizarProveedor", "MiCuenta", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    <div class="row panel-header">
-        <div class="col-sm-4 pull-left">
-            <img class="gap-logo" src="@Url.GetImage("logo-gap-color.png", false)" />
-        </div>
-
-        <div class="col-sm-4 t-a-c ">
-            <h1 class="h-title">
-                @EprocurementWeb.GlobalResources.RHome.ProvP
-            </h1>
-        </div>
-
-        <div class="col-sm-4">
-            <ul class="pull-right" style="list-style:none; float: right; display:none;">
-                <li style="display:inline;">
-                    <a href="" class="setLang" data-lang="es-MX"><img src="@Url.GetImage("Mexico.png", false)" /></a>
-                </li>
-                <li style="display:inline;">
-                    <a href="" class="setLang" data-lang="en-US"><img src="@Url.GetImage("usa.png", false)" /></a>
-                </li>
-            </ul>
-        </div>
-    </div>
 
     <div class="container">
         <div class="row pb-0">
             <div class="col-sm-12">
                 <h3 class="subtitle">
-                    @EprocurementWeb.GlobalResources.RHome.TitlePP
+                    Detalles de companía
                 </h3>
             </div>
         </div>

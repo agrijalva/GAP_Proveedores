@@ -2,11 +2,12 @@
 
 @{
     ViewBag.Title = "Información Bancaria - Financiera";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <link href="~/Content/Css/infoCuenta.css" rel="stylesheet" />
 <link href="~/Content/validacionProveedor.css" rel="stylesheet" />
-<div class="row panel-header">
+@*<div class="row panel-header">
     <div class="col-sm-4 pull-left">
         <img class="gap-logo" src="@Url.GetImage("logo-gap-color.png",false)" />
     </div>
@@ -27,19 +28,19 @@
             </li>
         </ul>
     </div>
-</div>
+</div>*@
 
-<div class="container">
-    <div class="row pb-0">
-        <div class="col-sm-12">
-            <h3 class="subtitle">
-                @EprocurementWeb.GlobalResources.RHome.TitlePP
-            </h3>
-        </div>
-    </div>
-
-
+<div class="row">
+   
     <div class="formPrincipal">
+        <div class="row pb-0">
+            <div class="col-sm-12">
+                <h3 class="subtitle">
+                    @EprocurementWeb.GlobalResources.RHome.TitlePP
+                </h3>
+            </div>
+        </div>
+
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item" style="width:50%">
                 <a class="nav-link active" href="#IB" role="tab" data-toggle="tab">Información Bancaria</a>
@@ -98,28 +99,28 @@
                     <div class="col100" style="font-size:12px;">
                         @for (int idx = 0; idx < Model.CatalogoDocumentoList.Count; idx++)
                         {
-                        <div class="col-sm-6 mt-2" style="border:solid 1px #c6c7cb; padding:10px;">
-                            <div class="col50">
-                                <div class="inputIF" style="font-weight:600;">
-                                    @Html.DisplayFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)
-                                    @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdCatalogoDocumento)
-                                    @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdFormatoArchivo)
-                                    @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdFormulario)
+                            <div class="col-sm-6 mt-2" style="border:solid 1px #c6c7cb; padding:10px;">
+                                <div class="col50">
+                                    <div class="inputIF" style="font-weight:600;">
+                                        @Html.DisplayFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)
+                                        @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdCatalogoDocumento)
+                                        @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdFormatoArchivo)
+                                        @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdFormulario)
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col25">
-                                @if (Model.CatalogoDocumentoList[idx].EsRequerido)
-                                {
-                                    <input class="text-box single-line" required type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
-                                }
-                                else
-                                {
-                                    <input class="text-box single-line" type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
-                                }
+                                <div class="col25">
+                                    @if (Model.CatalogoDocumentoList[idx].EsRequerido)
+                                    {
+                                        <input class="text-box single-line" required type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
+                                    }
+                                    else
+                                    {
+                                        <input class="text-box single-line" type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
+                                    }
 
+                                </div>
+                                @Html.Label((string)ViewBag.MenssageErrorDocument, new { @class = "text-danger", id = "errorDocument" + Model.CatalogoDocumentoList[idx].IdCatalogoDocumento, @style = "display:none;" })
                             </div>
-                            @Html.Label((string)ViewBag.MenssageErrorDocument, new { @class = "text-danger", id = "errorDocument" + Model.CatalogoDocumentoList[idx].IdCatalogoDocumento, @style = "display:none;" })
-                        </div>
                         }
                     </div>
 
@@ -133,7 +134,7 @@
                 </div>
             </div>
         }
-        </div>
+    </div>
 </div>
 
 <style>

@@ -18,13 +18,14 @@ namespace EprocurementWeb.Controllers
     {
         public ProveedorInformacionFinanciera cuenta = null;
         public List<ProveedorCuentaDTO>  ProveedorCuentaListRegistro = new List<ProveedorCuentaDTO>();
-        public ActionResult InformacionBF(int idProveedor)
+        public ActionResult InformacionBF()
         {
             ViewBag.Respuesta = "";
             ViewBag.MenssageError = EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Generic;
             ViewBag.MenssageErrorAirPort = EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Airport;
             ViewBag.MenssageErrorDocument = EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Document;
             var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
+            var idProveedor = 0;
             if (usuarioInfo != null)
             {
                 idProveedor = usuarioInfo.IdProveedor;

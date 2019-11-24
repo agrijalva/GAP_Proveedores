@@ -64,7 +64,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             }
         }
 
-        public void EnviarEmailProveedorModificacionCompras(ProveedorUsuarioDTO proveedorUsuario)
+        public void EnviarEmailProveedorModificacion(ProveedorUsuarioDTO proveedorUsuario)
         {
             //string EmailOrigen = "GAPProveedoresTest@gmail.com";
             EmailDTO emailEntidad = new EmailDTO
@@ -76,7 +76,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                 Prioridad = EmailPrioridadDTO.Normal
             };
 
-            emailEntidad.Message = GetBodyModificacionProveedorCompras(proveedorUsuario);
+            emailEntidad.Message = GetBodyModificacionProveedor(proveedorUsuario);
             emailEntidad.RecipientsList.Add(new DireccionEmailDTO { Address = ConfigurationManager.AppSettings["EmailCompras"], DisplayName = ConfigurationManager.AppSettings["DisplayNameCompras"], UserIdentifier = 1 });
             var mailMessage = ObtenerMensajeEmail(emailEntidad, "Solicitud de modificación de datos del proveedor");
             var cliente = ObtenerClienteSmtp();
@@ -195,6 +195,56 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             }
         }
 
+        public void EnviarEmailModificacionRechazadaCompras(ProveedorUsuarioDTO proveedorUsuario)
+        {
+            string EmailOrigen = ConfigurationManager.AppSettings["EmailOrigen"];
+            EmailDTO emailEntidad = new EmailDTO
+            {
+                Origin = EmailOrigen,
+                Subject = "Solicitud de modificación de datos del proveedor Rechazada",
+                Html = true,
+                RecipientsList = new List<DireccionEmailDTO>(),
+                Prioridad = EmailPrioridadDTO.Normal
+            };
+            emailEntidad.Message = GetBodyRechazadoModificacion(proveedorUsuario);
+
+            emailEntidad.RecipientsList.Add(new DireccionEmailDTO { Address = proveedorUsuario.Email, DisplayName = proveedorUsuario.NombreEmpresa, UserIdentifier = 1 });
+            var mailMessage = ObtenerMensajeEmail(emailEntidad, "Solicitud de modificación de datos del proveedor Rechazada");
+            var cliente = ObtenerClienteSmtp();
+            try
+            {
+                cliente.Send(mailMessage);
+            }
+            catch (SmtpFailedRecipientException smtpFailedException)
+            {
+            }
+        }
+
+        public void EnviarEmailModificacionAprobadaCompras(ProveedorUsuarioDTO proveedorUsuario)
+        {
+            string EmailOrigen = ConfigurationManager.AppSettings["EmailOrigen"];
+            EmailDTO emailEntidad = new EmailDTO
+            {
+                Origin = EmailOrigen,
+                Subject = "Solicitud de modificación de datos del proveedor Aceptada.",
+                Html = true,
+                RecipientsList = new List<DireccionEmailDTO>(),
+                Prioridad = EmailPrioridadDTO.Normal
+            };
+            emailEntidad.Message = GetBodyModificacionAprobada(proveedorUsuario);
+                       
+            emailEntidad.RecipientsList.Add(new DireccionEmailDTO { Address = proveedorUsuario.Email, DisplayName = proveedorUsuario.NombreEmpresa, UserIdentifier = 1 });
+            var mailMessage = ObtenerMensajeEmail(emailEntidad, "Solicitud de modificación de datos del proveedor Aceptada.");
+            var cliente = ObtenerClienteSmtp();
+            try
+            {
+                cliente.Send(mailMessage);
+            }
+            catch (SmtpFailedRecipientException smtpFailedException)
+            {
+            }
+        }
+
         public void EnviarEmailRechazadoTesoreria(ProveedorUsuarioDTO proveedorUsuario)
         {
             string EmailOrigen = ConfigurationManager.AppSettings["EmailOrigen"];
@@ -210,6 +260,56 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
             emailEntidad.RecipientsList.Add(new DireccionEmailDTO { Address = proveedorUsuario.Email, DisplayName = proveedorUsuario.NombreEmpresa, UserIdentifier = 1 });
             var mailMessage = ObtenerMensajeEmail(emailEntidad, "Solicitud de Alta de Proveedor Rechazada");
+            var cliente = ObtenerClienteSmtp();
+            try
+            {
+                cliente.Send(mailMessage);
+            }
+            catch (SmtpFailedRecipientException smtpFailedException)
+            {
+            }
+        }
+
+        public void EnviarEmailModificacionRechazadaTesoreria(ProveedorUsuarioDTO proveedorUsuario)
+        {
+            string EmailOrigen = ConfigurationManager.AppSettings["EmailOrigen"];
+            EmailDTO emailEntidad = new EmailDTO
+            {
+                Origin = EmailOrigen,
+                Subject = "Solicitud de modificación de datos del proveedor Rechazada ",
+                Html = true,
+                RecipientsList = new List<DireccionEmailDTO>(),
+                Prioridad = EmailPrioridadDTO.Normal
+            };
+            emailEntidad.Message = GetBodyRechazadoModificacion(proveedorUsuario);
+
+            emailEntidad.RecipientsList.Add(new DireccionEmailDTO { Address = proveedorUsuario.Email, DisplayName = proveedorUsuario.NombreEmpresa, UserIdentifier = 1 });
+            var mailMessage = ObtenerMensajeEmail(emailEntidad, "Solicitud de modificación de datos del proveedor Rechazada ");
+            var cliente = ObtenerClienteSmtp();
+            try
+            {
+                cliente.Send(mailMessage);
+            }
+            catch (SmtpFailedRecipientException smtpFailedException)
+            {
+            }
+        }
+
+        public void EnviarEmailModificacionAprobadaTesoreria(ProveedorUsuarioDTO proveedorUsuario)
+        {
+            string EmailOrigen = ConfigurationManager.AppSettings["EmailOrigen"];
+            EmailDTO emailEntidad = new EmailDTO
+            {
+                Origin = EmailOrigen,
+                Subject = "Solicitud de modificación de datos del proveedor Aceptada.",
+                Html = true,
+                RecipientsList = new List<DireccionEmailDTO>(),
+                Prioridad = EmailPrioridadDTO.Normal
+            };
+            emailEntidad.Message = GetBodyModificacionAprobada(proveedorUsuario);
+
+            emailEntidad.RecipientsList.Add(new DireccionEmailDTO { Address = proveedorUsuario.Email, DisplayName = proveedorUsuario.NombreEmpresa, UserIdentifier = 1 });
+            var mailMessage = ObtenerMensajeEmail(emailEntidad, "Solicitud de modificación de datos del proveedor Aceptada.a");
             var cliente = ObtenerClienteSmtp();
             try
             {
@@ -288,9 +388,9 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             message = message.Replace("<!--razonSocial-->", proveedorUsuario.RazonSocial);
             return message;
         }
-        private string GetBodyModificacionProveedorCompras(ProveedorUsuarioDTO proveedorUsuario)
+        private string GetBodyModificacionProveedor(ProveedorUsuarioDTO proveedorUsuario)
         {
-            string layoutName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, App_GlobalResources.ResourceConstants.EmailLayout, "ModificacionProveedorCompras.htm");
+            string layoutName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, App_GlobalResources.ResourceConstants.EmailLayout, "ModificacionProveedor.htm");
             string message = File.ReadAllText(layoutName);
             var details = new StringBuilder();
             message = message.Replace("<!--razonSocial-->", proveedorUsuario.RazonSocial);
@@ -341,12 +441,30 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             message = message.Replace("<!--contacto-->", proveedorUsuario.Contacto);
             return message;
         }
+        private string GetBodyRechazadoModificacion(ProveedorUsuarioDTO proveedorUsuario)
+        {
+            string layoutName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, App_GlobalResources.ResourceConstants.EmailLayout, "ModificacionRechazada.htm");
+            string message = File.ReadAllText(layoutName);
+            var details = new StringBuilder();
+            message = message.Replace("<!--contacto-->", proveedorUsuario.Contacto);
+            return message;
+        }
         private string GetBodyAprobadoTesoreria(ProveedorUsuarioDTO proveedorUsuario)
         {
             string layoutName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, App_GlobalResources.ResourceConstants.EmailLayout, "AprobadoTesoreria.htm");
             string message = File.ReadAllText(layoutName);
             var details = new StringBuilder();
             message = message.Replace("<!--numeroProveedorAX-->", proveedorUsuario.NumeroProveedorAX);
+            message = message.Replace("<!--extensionesConfigurados-->", proveedorUsuario.ExtensionesConfiguradas);
+            return message;
+        }
+
+        private string GetBodyModificacionAprobada(ProveedorUsuarioDTO proveedorUsuario)
+        {
+            string layoutName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, App_GlobalResources.ResourceConstants.EmailLayout, "ModificacionAceptada.htm");
+            string message = File.ReadAllText(layoutName);
+            var details = new StringBuilder();
+            message = message.Replace("<!--contacto-->", proveedorUsuario.Contacto);
             message = message.Replace("<!--extensionesConfigurados-->", proveedorUsuario.ExtensionesConfiguradas);
             return message;
         }

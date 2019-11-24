@@ -31,10 +31,10 @@ namespace EprocurementWeb.Controllers
                     ViewBag.Error = "Usuario o contraseña invalida";
                     return View("Index");
                 }
-                if (usuarioDTO.IdEstatus == 4 || usuarioDTO.IdEstatus == 5 || usuarioDTO.IdEstatus == 7)
+                if (usuarioDTO.IdEstatus == 3 ||  usuarioDTO.IdEstatus == 4 || usuarioDTO.IdEstatus == 5 || usuarioDTO.IdEstatus == 7)
                 {
                     Session["User"] = usuarioDTO;
-                    return RedirectToAction("InformacionBF", "AltaProveedor", new { idProveedor = usuarioDTO.IdProveedor });
+                    return RedirectToAction("InformacionBF", "AltaProveedor");
                 }
 
                 else if (usuarioDTO.IdEstatus == 1 || usuarioDTO.IdEstatus == 2 || usuarioDTO.IdEstatus == 3 || usuarioDTO.IdEstatus == 6)
@@ -146,6 +146,14 @@ namespace EprocurementWeb.Controllers
             }
 
             return View();
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult GetInoformacionUsuario()
+        {
+            UsuarioDTO usuario = null;
+            usuario = new ValidaSession().ObtenerUsuarioSession();
+            return Json(usuario, JsonRequestBehavior.AllowGet);
         }
     }
 }

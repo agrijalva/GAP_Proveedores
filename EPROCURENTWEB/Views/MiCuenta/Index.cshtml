@@ -1,31 +1,21 @@
 ﻿@model EprocurementWeb.Models.MiCuentaModel
 @{
     ViewBag.Title = "Mi Cuenta";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <link href="~/Content/validacionProveedor.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-<div class="row panel-header">
-    <div class="col-sm-4 pull-left">
-        <img class="gap-logo" src="@Url.GetImage("logo-gap-color.png",false)" />
-    </div>
-
-    <div class="col-sm-4 t-a-c ">
-        <h1 class="h-title">
-            PORTAL DE PROVEEDORES
-        </h1>
-    </div>
-</div>
-
 <div class="container">
-    <div class="row pb-0">
-        <div class="col-sm-12">
-            <h3 class="subtitle">
-                Mi cuenta
-            </h3>
-        </div>
-    </div>
+    
     <div class="formPrincipal">
+        <div class="row pb-0">
+            <div class="col-sm-12">
+                <h3 class="subtitle">
+                    Mi cuenta
+                </h3>
+            </div>
+        </div>
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item" style="width:50%">
                 <a class="nav-link active" href="#tbInfoCuenta" role="tab" data-toggle="tab" id="tabInfoCuenta">Información de la cuenta</a>
@@ -38,14 +28,20 @@
         <div class="tab-content" style="background-color:white; padding: 15px;">
             <div role="tabpanel" class="tab-pane fade in " id="tbInfoCuenta">
                 <div class="col100" style="font-size:14px;">
-                    Información de cuenta
+                    
                 </div>
                 @Html.Partial("_InformacionCuenta", Model.Proveedor)
 
             </div>
             <div role="tabpanel" class="tab-pane fade in " id="tbPassword">
                 <div class="col100" style="font-size:14px;">
-                    Contraseña
+                    <div class="row pb-0">
+                        <div class="col-sm-12">
+                            <h3 class="subtitle">
+                                Contraseña
+                            </h3>
+                        </div>
+                    </div>
                 </div>
                 @Html.Partial("_ActualizarPassword", Model.ActualizaPassword)
             </div>
