@@ -1,22 +1,10 @@
 ﻿@model EprocurementWeb.Models.UsuarioModel
 @{
     ViewBag.Title = "Bienvenido";
-    Layout = null;
+    Layout = "~/Views/Shared/_LayoutInit.cshtml";
 }
 
 <link href="~/Content/Styles/Login.css" rel="stylesheet" />
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/shared")
-
-</head>
-
 <div class="background row" style="padding-bottom: 0px;">
     <div class="col-sm-7">
         <div class="pnl-logo">

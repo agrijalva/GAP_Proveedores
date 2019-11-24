@@ -1,14 +1,11 @@
 ﻿@model EprocurementWeb.Models.UsuarioModel
 @{
     ViewBag.Title = "Recuperación de contraseña";
-    Layout = null;
+    Layout = "~/Views/Shared/_LayoutInit.cshtml";
 }
 
 <link href="~/Content/validacionProveedor.css" rel="stylesheet" />
-@Styles.Render("~/Content/css")
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/modernizr")
-@Scripts.Render("~/bundles/shared")
+
 <div class="row panel-header">
     <div class="col-sm-4 pull-left">
         <img class="gap-logo" src="@Url.GetImage("logo-gap-color.png",false)" />
