@@ -83,12 +83,12 @@
     <Content Include="EmailLayout\ModificacionProveedorCompras.htm" />
     <Content Include="EmailLayout\NuevoProveedorCompras.htm" />
     <Content Include="EmailLayout\NuevoProveedorUsuario.htm" />
-    <Content Include="EmailLayout\ProveedorAprobado.htm" />
-    <Content Include="EmailLayout\ProveedorAprobadoCompras.htm" />
-    <Content Include="EmailLayout\ProveedorRechazadoCompras.htm" />
+    <Content Include="EmailLayout\AprobadoCompras.htm" />
+    <Content Include="EmailLayout\ProveedorInfoBancaria.htm" />
+    <Content Include="EmailLayout\ProveedorRechazado.htm" />
     <Content Include="EmailLayout\RecuperarPassword.htm" />
     <Content Include="EmailLayout\UsuarioRechazado.htm" />
-    <Content Include="EmailLayout\UssuarioAprobado.htm" />
+    <Content Include="EmailLayout\AprobadoTesoreria.htm" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
