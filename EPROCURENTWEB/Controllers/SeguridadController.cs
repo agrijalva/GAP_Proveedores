@@ -31,14 +31,24 @@ namespace EprocurementWeb.Controllers
                     ViewBag.Error = "Usuario o contraseña invalida";
                     return View("Index");
                 }
+                if (usuarioDTO.IdEstatus == 4 || usuarioDTO.IdEstatus == 5 || usuarioDTO.IdEstatus == 7)
+                {
+                    Session["User"] = usuarioDTO;
+                    return RedirectToAction("InformacionBF", "AltaProveedor", new { idProveedor = usuarioDTO.IdProveedor });
+                }
 
-                Session["User"] = usuarioDTO;
+                else if (usuarioDTO.IdEstatus == 1 || usuarioDTO.IdEstatus == 2 || usuarioDTO.IdEstatus == 3 || usuarioDTO.IdEstatus == 6)
+                {
+                    ViewBag.Error = "El usuario no está activo o fue rechazado";
+                    return View("Index");
+                }
 
-                return RedirectToAction("InformacionBF", "AltaProveedor", new { idProveedor = usuarioDTO.IdProveedor });
+                ViewBag.Error = "Usuario o contraseña invalida";
+                return View("Index");
             }
             catch (Exception ex)
             {
-                ViewBag.Error = ex.Message;
+                ViewBag.Error = "Se generó un problema al procesar el acceso";
                 return View();
             }
 
