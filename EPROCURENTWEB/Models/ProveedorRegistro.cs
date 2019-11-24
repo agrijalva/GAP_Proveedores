@@ -6,8 +6,8 @@ using EPROCUREMENT.GAPPROVEEDOR.Entities;
 
 namespace EprocurementWeb.Models
 {
-    public class ProveedorRegistro : ProveedorDTO
+    public class ProveedorRegistro : ProveedorModel
     {
-        public List<AeropuertoDTO> AeropuertoList { get; set; }
+        public List<AeropuertoModel> AeropuertoList { get; set; }
     }
 }

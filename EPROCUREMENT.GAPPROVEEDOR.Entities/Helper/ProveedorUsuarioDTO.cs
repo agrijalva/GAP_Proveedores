@@ -10,6 +10,8 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Entities
     {
         public string RFC { get; set; }
         public string NombreEmpresa { get; set; }
+        public string RazonSocial { get; set; }
+        public string Contacto { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
     }

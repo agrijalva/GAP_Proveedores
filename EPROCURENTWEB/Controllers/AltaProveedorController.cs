@@ -10,6 +10,7 @@ using System.IO;
 using EprocurementWeb.Filters;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
+using EprocurementWeb.Models;
 
 namespace EprocurementWeb.Controllers
 {
@@ -31,7 +32,7 @@ namespace EprocurementWeb.Controllers
             var aeropuertos = business.GetAeropuertosList();
             ViewBag.BancoList = business.GetBancoList();
             ViewBag.TipoCuentaList = business.GetTipoCuentaList();
-            ProveedorDetalleRequestDTO request = new ProveedorDetalleRequestDTO();
+            ProveedorDetalleRequestModel request = new ProveedorDetalleRequestModel();
             request.IdProveedor = idProveedor;
             var response = business.GetProveedorElemento(request).Proveedor;
             var aeropuertosAsignados = response.EmpresaList;
@@ -84,7 +85,7 @@ namespace EprocurementWeb.Controllers
             var aeropuertos = business.GetAeropuertosList();
             ViewBag.BancoList = bancoList;
             ViewBag.TipoCuentaList = tipoCuentaList;
-            ProveedorDetalleRequestDTO request = new ProveedorDetalleRequestDTO();
+            ProveedorDetalleRequestModel request = new ProveedorDetalleRequestModel();
             if (cuenta.ProveedorCuentaList != null)
             {
                 request.IdProveedor = cuenta.ProveedorCuentaList.First().IdProveedor;
@@ -180,7 +181,7 @@ namespace EprocurementWeb.Controllers
                     });
                 }
 
-                ProveedorDetalleRequestDTO request = new ProveedorDetalleRequestDTO();
+                ProveedorDetalleRequestModel request = new ProveedorDetalleRequestModel();
                 var response = business.GetProveedorElemento(request).Proveedor;
                 cuenta.RFC = response.RFC;
 
@@ -252,7 +253,7 @@ namespace EprocurementWeb.Controllers
             //        }
             // }
             //}
-            ProveedorDetalleRequestDTO request = new ProveedorDetalleRequestDTO();
+            ProveedorDetalleRequestModel request = new ProveedorDetalleRequestModel();
             request.IdProveedor = idProveedor;
             var response = business.GetProveedorElemento(request).Proveedor;
             var aeropuertosAsignados = response.EmpresaList;
@@ -312,7 +313,7 @@ namespace EprocurementWeb.Controllers
                     //}
                 }
             }
-            ProveedorDetalleRequestDTO request = new ProveedorDetalleRequestDTO();
+            ProveedorDetalleRequestModel request = new ProveedorDetalleRequestModel();
             request.IdProveedor = idProveedor;
             var response = business.GetProveedorElemento(request).Proveedor;
             var aeropuertosAsignados = response.EmpresaList;
@@ -340,7 +341,7 @@ namespace EprocurementWeb.Controllers
         {
             BusinessLogic business = new BusinessLogic();
             var proveedorDocumento = business.GetCatalogoDocumentoList();
-            ProveedorDetalleRequestDTO request = new ProveedorDetalleRequestDTO();
+            ProveedorDetalleRequestModel request = new ProveedorDetalleRequestModel();
             request.IdProveedor = idProveedor;
             var response = business.GetProveedorElemento(request).Proveedor;
             ProveedorInformacionFinanciera cuenta = new ProveedorInformacionFinanciera();

@@ -42,9 +42,9 @@ namespace EprocurementWeb.Business
             return response;
         }
 
-        public ProveedorDetalleResponseDTO GetProveedorElemento(ProveedorDetalleRequestDTO request)
+        public ProveedorDetalleResponseModel GetProveedorElemento(ProveedorDetalleRequestModel request)
         {
-            ProveedorDetalleResponseDTO response = new ProveedorDetalleResponseDTO();
+            ProveedorDetalleResponseModel response = new ProveedorDetalleResponseModel();
 
 
             using (var client = new HttpClient())
@@ -60,8 +60,7 @@ namespace EprocurementWeb.Business
                 {
                     var readTask = result.Content.ReadAsStringAsync();
                     JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
-                    response = JSSerializer.Deserialize<ProveedorDetalleResponseDTO>(readTask.Result);
-
+                    response = JSSerializer.Deserialize<ProveedorDetalleResponseModel>(readTask.Result);                    
                 }
             }
             return response;
@@ -636,27 +635,27 @@ namespace EprocurementWeb.Business
             return codigoPostalItem;
         }
 
-        //public bool PostTempProveedor(ProveedorRegistro proveedor)
-        //{
-        //    ProveedorResponseDTO response = null;
-        //    ProveedorRequesteDTO proveedorRequest = new ProveedorRequesteDTO { IdUsuario = 0, Proveedor = proveedor };
-        //    using (var client = new HttpClient())
-        //    {
-        //        client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
-        //        var json = JsonConvert.SerializeObject(proveedorRequest);
-        //        var content = new StringContent(json, Encoding.UTF8, "application/json");
-        //        var responseTask = client.PostAsync("InsertarTempProveedor", content);
-        //        responseTask.Wait();
+        public bool PostTempProveedor(ProveedorModel proveedor)
+        {
+            ProveedorResponseModel response = null;
+            ProveedorRequestModel proveedorRequest = new ProveedorRequestModel { IdUsuario = 0, Proveedor = proveedor };
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+                var json = JsonConvert.SerializeObject(proveedorRequest);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var responseTask = client.PostAsync("InsertarTempProveedor", content);
+                responseTask.Wait();
 
-        //        var result = responseTask.Result;
-        //        if (result.IsSuccessStatusCode)
-        //        {
-        //            var readTask = result.Content.ReadAsStringAsync();
-        //            JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
-        //            response = JSSerializer.Deserialize<ProveedorResponseDTO>(readTask.Result);
-        //        }
-        //    }
-        //    return response.Success;
-        //}
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+                    response = JSSerializer.Deserialize<ProveedorResponseModel>(readTask.Result);
+                }
+            }
+            return response.Success;
+        }
     }
 }

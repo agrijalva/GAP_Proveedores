@@ -5,9 +5,12 @@ using System.Web;
 
 namespace EprocurementWeb.Models
 {
-    public class MiCuentaModel
+    public class ProveedorDetalleResponseModel: ResponseBaseModel
     {
-        public ActualizaPasswordModel ActualizaPassword { get; set; }
+
+        /// <summary>
+        /// Representa el objeto del proveedor
+        /// </summary>
         public ProveedorModel Proveedor { get; set; }
     }
 }
