@@ -43,7 +43,7 @@
         </div>
         <div class="row mt-5">
             <div class="col-sm-3">
-                <input id="btnDocumentacion" class="btnStyle btnWhite" type="button" value="Documentacion pendiente " />
+                <input id="btnDocumentacion" class="btnStyle btnWhite" type="button" data-toggle="modal" data-target="#modalDocumentacion" value="Documentacion pendiente " />
             </div>
             <div class="col-sm-3">
                 <input type="button" class="btnStyle btnWhite" data-toggle="modal" data-target="#modalRechazar" value="Rechazar" />
@@ -58,7 +58,7 @@
     </div>
 
 </div>
-<!-- Modal -->
+<!-- Modal Rechazo -->
 <div class="modal fade" id="modalRechazar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -79,6 +79,32 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 <button type="button" id="btnRechazar" class="btnStyle"><i class='fas fa-paper-plane'></i>Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Documentación pendiente -->
+<div class="modal fade" id="modalDocumentacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-purple">
+                <h5 class="modal-title" id="exampleModalLongTitle">Describa la documentación:</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label for="observaciones" class="col-form-label">Ingrese la documentación pendiente</label>
+                        <textarea class="form-control" id="txtDocumentacion"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="btnDocPendiente" class="btnStyle"><i class='fas fa-paper-plane'></i>Enviar</button>
             </div>
         </div>
     </div>
@@ -132,13 +158,12 @@
              data: jsonData,
              async: false,
              success: function(data) {
-                 console.log("Traigo Datos", data)
                  $("#Table").html('');
                  $("#Table").append('<thead class="bg-light-purple"><tr>' +
                      '<td>Cuenta</td>' +
                      '<td>NombreBanco</td>' +
                      '<td>CLABE</td>' +
-                     '<td>TipoCuenta</td>' + 
+                     '<td>TipoCuenta</td>' +
                      '<td>Aeropuertos</td>' + '</tr></thead>'
                  );
                  $("#Table").DataTable().clear().draw();
@@ -151,7 +176,7 @@
                          '<td style="dislay: none;"><b>' + data[i].Cuenta + '</b></td>' +
                          '<td style="dislay: none;">' + data[i].NombreBanco + '</td>' +
                          '<td style="dislay: none;">' + data[i].CLABE + '</td>' +
-                         '<td style="dislay: none;">' + data[i].TipoCuenta + '</td>' + 
+                         '<td style="dislay: none;">' + data[i].TipoCuenta + '</td>' +
                          '<td style="dislay: none;"><a href="">Ver</a></td>' + '</tr>'
                      );
                  }
@@ -168,7 +193,7 @@
     }
 
     $(document).ready(function () {
-        var url = '@Url.Action("Index", "Home")'; 
+        var url = '@Url.Action("Index", "Home")';
         var idProveedor = $("#IdProveedor").val();
         console.log(idProveedor);
         fn_CargarCuentas(idProveedor);
@@ -240,7 +265,6 @@
                             async: false,
                             success: function (data) {
                                 if (data) {
-                                     console.log("Traigo Datos", data)
                                     $('#modalRechazar').modal('hide');
                                     Swal.fire({
                                         position: 'middle',
@@ -258,11 +282,52 @@
             })
         });
 
+        $("#btnDocPendiente").click(function () {
+            obs = $("#txtDocumentacion").val();
+            console.log($("#txtDocumentacion").val());
+            estatus = 7;
+
+            var jsonData = JSON.stringify({ idProveedor: idProveedor, observaciones: obs, estatus: estatus });
+            Swal.fire({
+                title: '¿Esta seguro de enviar la documentación pendiente?',
+
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#432979',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.value) {
+                     $.ajax({
+                            type: "POST",
+                            contentType: "application/json; charset=utf-8",
+                            url: "/Home/SetProveedorEstatus",
+                            data: jsonData,
+                            async: false,
+                            success: function (data) {
+                                if (data) {
+                                    $('#modalDocumentacion').modal('hide');
+                                    Swal.fire({
+                                        position: 'middle',
+                                        icon: 'success',
+                                        title: 'La documentación pendiente ha sido enviada con éxito',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                    setTimeout(function(){  window.location.href = url; }, 1500);
+                                }
+
+                            },
+                        });
+                }
+            })
+        });
     });
 </script>
 
 <style>
-    .btn-descargar{
+    .btn-descargar {
         border-radius: 24px;
         background-color: #f7f6f9;
         font-size: 12px;
@@ -270,8 +335,8 @@
         font-stretch: normal;
         font-style: normal;
         text-align: center;
-        color:#432979;
-        border:none;
-        padding:4px 16px;
+        color: #432979;
+        border: none;
+        padding: 4px 16px;
     }
 </style>

@@ -322,7 +322,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             }
                         }
                     }
-                    else if (request.EstatusProveedor.IdEstatusProveedor == 2)
+                    else if (request.EstatusProveedor.IdEstatusProveedor == 2 || request.EstatusProveedor.IdEstatusProveedor == 7)
                     {
                         if (ExecuteComandEstatus(cmdEstatus, request.EstatusProveedor) > 0)
                         {

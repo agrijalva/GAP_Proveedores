@@ -130,6 +130,10 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Proveedor
                         case 6:
                             new EmailData().EnviarEmailRechazadoTesoreria(proveedorUsuario);
                             break;
+                        case 7:
+                            proveedorUsuario.Observaciones = request.EstatusProveedor.Observaciones;
+                            new EmailData().EnviarEmailDocumentacionPendiente(proveedorUsuario);
+                            break;
                         case 8:                            
                             new EmailData().EnviarEmailAprobadoTesoreria(proveedorUsuario);
                             break;

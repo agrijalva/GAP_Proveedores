@@ -87,6 +87,7 @@
     <Content Include="EmailLayout\AprobadoCompras.htm" />
     <Content Include="EmailLayout\ProveedorInfoBancaria.htm" />
     <Content Include="EmailLayout\ModificacionRechazada.htm" />
+    <Content Include="EmailLayout\DocumentacionPendiente.htm" />
     <Content Include="EmailLayout\ProveedorRechazado.htm" />
     <Content Include="EmailLayout\RecuperarPassword.htm" />
     <Content Include="EmailLayout\UsuarioRechazado.htm" />

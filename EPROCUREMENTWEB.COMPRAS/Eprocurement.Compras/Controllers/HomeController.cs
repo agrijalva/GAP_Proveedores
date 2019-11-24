@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Eprocurement.Compras.Models;
 using EPROCUREMENT.GAPPROVEEDOR.Entities.Proveedor;
+using Eprocurement.Compras.Filters;
 
 namespace Eprocurement.Compras.Controllers
 {
@@ -47,6 +48,8 @@ namespace Eprocurement.Compras.Controllers
         {
             CargarCatalogos();
 
+            var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
+            ViewBag.IdUsuarioRol = usuarioInfo.IdUsuarioRol;
             ViewBag.AeropuertoList = aeropuertoList;
             ViewBag.GiroList = giroList;
             ViewBag.TipoProveedorList = tipoProveedorList;
@@ -124,15 +127,28 @@ namespace Eprocurement.Compras.Controllers
         {
             try
             {
+                var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
+                var proveedorEstatus = new List<ProveedorEstatusDTO>();
                 BusinessLogic businessLogic = new BusinessLogic();
                 ProveedorEstatusRequestDTO request = new ProveedorEstatusRequestDTO();
                 request.ProveedorFiltro = new ProveedorFiltroDTO { IdTipoProveedor = idTipoProveedor, IdGiroProveedor = idGiroProveedor, IdAeropuerto = idAeropuerto, NombreEmpresa = nombreEmpresa, RFC = rfc, Email = email };
-                string[] estatus = { "1", "2", "3", "4" }; 
-
-                var response = businessLogic.GetProveedorEstatusList(request);
-                var proveedorEstatus = (from t in response.ProveedorList
-                                        where estatus.Contains(t.IdEstatus.ToString())
-                                        select t).ToList();
+                //string[] estatus = { "1", "2", "3", "4" };
+                if (usuarioInfo.IdUsuarioRol == 3)
+                {
+                    string[] estatus = { "5", "6", "7", "8" };
+                    var response = businessLogic.GetProveedorEstatusList(request);
+                    proveedorEstatus = (from t in response.ProveedorList
+                                            where estatus.Contains(t.IdEstatus.ToString())
+                                            select t).ToList();
+                } else
+                {
+                    string[] estatus = { "1", "2", "3", "4", "5", "6", "7", "8" };
+                    var response = businessLogic.GetProveedorEstatusList(request);
+                    proveedorEstatus = (from t in response.ProveedorList
+                                            where estatus.Contains(t.IdEstatus.ToString())
+                                            select t).ToList();
+                }
+                   
 
 
                 //from person in people

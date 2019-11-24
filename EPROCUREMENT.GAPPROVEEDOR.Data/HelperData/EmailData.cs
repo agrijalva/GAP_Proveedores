@@ -320,6 +320,31 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             }
         }
 
+        public void EnviarEmailDocumentacionPendiente(ProveedorUsuarioDTO proveedorUsuario)
+        {
+            string EmailOrigen = ConfigurationManager.AppSettings["EmailOrigen"];
+            EmailDTO emailEntidad = new EmailDTO
+            {
+                Origin = EmailOrigen,
+                Subject = "Notificacion de documentación pendiente.",
+                Html = true,
+                RecipientsList = new List<DireccionEmailDTO>(),
+                Prioridad = EmailPrioridadDTO.Normal
+            };
+            emailEntidad.Message = GetBodyDocumentacionPendiente(proveedorUsuario);
+
+            emailEntidad.RecipientsList.Add(new DireccionEmailDTO { Address = proveedorUsuario.Email, DisplayName = proveedorUsuario.NombreEmpresa, UserIdentifier = 1 });
+            var mailMessage = ObtenerMensajeEmail(emailEntidad, "Notificacion de documentación pendiente.");
+            var cliente = ObtenerClienteSmtp();
+            try
+            {
+                cliente.Send(mailMessage);
+            }
+            catch (SmtpFailedRecipientException smtpFailedException)
+            {
+            }
+        }
+
         //public void EnviarEmailRecuperar(int idProveedor, int idUsuario, int idEstatus, string comentarios)
         //{
         //    string EmailOrigen = "GAPProveedoresTest@gmail.com";
@@ -466,6 +491,15 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             var details = new StringBuilder();
             message = message.Replace("<!--contacto-->", proveedorUsuario.Contacto);
             message = message.Replace("<!--extensionesConfigurados-->", proveedorUsuario.ExtensionesConfiguradas);
+            return message;
+        }
+        private string GetBodyDocumentacionPendiente(ProveedorUsuarioDTO proveedorUsuario)
+        {
+            string layoutName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, App_GlobalResources.ResourceConstants.EmailLayout, "DocumentacionPendiente.htm");
+            string message = File.ReadAllText(layoutName);
+            var details = new StringBuilder();
+            message = message.Replace("<!--contacto-->", proveedorUsuario.Contacto);
+            message = message.Replace("<!--observaciones-->", proveedorUsuario.Observaciones);
             return message;
         }
 
