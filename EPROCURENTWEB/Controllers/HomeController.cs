@@ -42,6 +42,7 @@ namespace EprocurementWeb.Controllers
             ViewBag.TipoProveedorList = tipoProveedorList;
             proveedor.Mexicana = true;
             ViewBag.colonias = new List<string>();
+            ViewBag.errorResultado = 0;
             return View(proveedor);
         }
 
@@ -49,50 +50,62 @@ namespace EprocurementWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult GuardarProveedor(ProveedorModel proveedor)
         {
-            proveedor.IdTipoProveedor = 1;
-            proveedor.IdNacionalidad = 1;
-            proveedor.Direccion.DireccionValidada = true;
-            //proveedor.Direccion.IdPais = proveedor.i
-            CargarCatalogos();
-            ViewBag.GiroList = giroList;
-            ViewBag.ZonaHorariaList = zonaHorariaList;
-            ViewBag.NacionalidadList = nacionalidadList;
-            ViewBag.PaisList = paisList;
-            ViewBag.IdiomaList = idiomaList;
-            ViewBag.EstadoList = estadoList;
-            ViewBag.MunicipioList = municipioList;
-            ViewBag.TipoProveedorList = tipoProveedorList;
-            proveedor.EmpresaList = proveedor.AeropuertoList.Where(a => a.Checado).Select(a => new ProveedorEmpresaModel { IdCatalogoAeropuerto = a.Id }).ToList();
-            ViewBag.colonias = new List<string>();
-            if(proveedor.ProveedorGiroList == null || !proveedor.ProveedorGiroList.Exists(x => x.IdCatalogoGiro > 0))
+            try
             {
-                ModelState.AddModelError("ErrorEmpresa", "Debe agregar al menos una empresa");
-            }
-            if (proveedor.AeropuertoList == null || !proveedor.AeropuertoList.Exists(x => x.Checado))
-            {
-                ModelState.AddModelError("ErrorAeropuerto", "Debe seleccionar al menos un aeropuerto");
-            }
-            if (!proveedor.Mexicana && !proveedor.Extranjera)
-            {
-                ModelState.AddModelError("ErrorTipoEmpresa", "Debe seleccionar una opción");
-            }
+                proveedor.IdTipoProveedor = 1;
+                proveedor.IdNacionalidad = 1;
+                proveedor.Direccion.DireccionValidada = true;
+                //proveedor.Direccion.IdPais = proveedor.i
+                CargarCatalogos();
+                ViewBag.GiroList = giroList;
+                ViewBag.ZonaHorariaList = zonaHorariaList;
+                ViewBag.NacionalidadList = nacionalidadList;
+                ViewBag.PaisList = paisList;
+                ViewBag.IdiomaList = idiomaList;
+                ViewBag.EstadoList = estadoList;
+                ViewBag.MunicipioList = municipioList;
+                ViewBag.TipoProveedorList = tipoProveedorList;
+                ViewBag.errorResultado = 0;
+                proveedor.EmpresaList = proveedor.AeropuertoList.Where(a => a.Checado).Select(a => new ProveedorEmpresaModel { IdCatalogoAeropuerto = a.Id }).ToList();
+                ViewBag.colonias = new List<string>();
+                if (proveedor.ProveedorGiroList == null || !proveedor.ProveedorGiroList.Exists(x => x.IdCatalogoGiro > 0))
+                {
+                    ModelState.AddModelError("ErrorEmpresa", "Debe agregar al menos una empresa");
+                }
+                if (proveedor.AeropuertoList == null || !proveedor.AeropuertoList.Exists(x => x.Checado))
+                {
+                    ModelState.AddModelError("ErrorAeropuerto", "Debe seleccionar al menos un aeropuerto");
+                }
+                if (!proveedor.Mexicana && !proveedor.Extranjera)
+                {
+                    ModelState.AddModelError("ErrorTipoEmpresa", "Debe seleccionar una opción");
+                }
 
-            for(var pos = 0; pos < proveedor.ProveedorGiroList.Count; pos++)
-            {
-                if(ModelState["ProveedorGiroList[" + pos + "].IdCatalogoGiro"] != null)
+                for (var pos = 0; pos < proveedor.ProveedorGiroList.Count; pos++)
                 {
-                    ModelState["ProveedorGiroList[" + pos + "].IdCatalogoGiro"].Errors.Clear();
+                    if (ModelState["ProveedorGiroList[" + pos + "].IdCatalogoGiro"] != null)
+                    {
+                        ModelState["ProveedorGiroList[" + pos + "].IdCatalogoGiro"].Errors.Clear();
+                    }
+                }
+                if (ModelState.IsValid)
+                {
+                    BusinessLogic businessLogic = new BusinessLogic();
+                    ProveedorResponseModel response = businessLogic.PostProveedor(proveedor);
+                    if (response.Success)
+                    {
+                        return Redirect("/Home/Index#success");
+                        //return RedirectToAction("Contact");
+                    }
+                    else
+                    {
+                        ViewBag.errorResultado = 1;
+                    }
                 }
             }
-            if (ModelState.IsValid)
+            catch
             {
-                BusinessLogic businessLogic = new BusinessLogic();
-                ProveedorResponseModel response = businessLogic.PostProveedor(proveedor);
-                if (response.Success)
-                {
-                    return Redirect("/Home/Index#success");
-                    //return RedirectToAction("Contact");
-                }
+
             }
             return View(proveedor);
         }
@@ -195,6 +208,23 @@ namespace EprocurementWeb.Controllers
             ViewBag.ContactResult = false;
             ViewBag.ContactResultMessage = @EprocurementWeb.GlobalResources.RHome.ContactMessageSendNok;
             return View(model);
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult ValidaRFC(string rfc)
+        {
+            var resultado = string.Empty;
+            BusinessLogic businessLogic = new BusinessLogic();
+            ProveedorFiltroRequestModel request = new ProveedorFiltroRequestModel { Filtro = rfc };
+            var response = businessLogic.ObtenerProveedorFiltro(request);
+            if(response.Success)
+            {
+                if(response.Proveedor != null)
+                {
+                    resultado = "El RFC: " + rfc + " ya se encuentra registrado.";
+                }
+            }
+            return Json(resultado, JsonRequestBehavior.AllowGet);
         }
     }
 }

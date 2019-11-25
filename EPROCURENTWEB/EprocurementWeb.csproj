@@ -124,6 +124,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RError.resx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\GestionController.cs" />
     <Compile Include="GlobalResources\RHome.Designer.cs">
       <DependentUpon>RHome.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -178,11 +179,14 @@
     <Compile Include="Models\Proveedor\ProveedorEmpresaModel.cs" />
     <Compile Include="Models\Proveedor\ProveedorGiroModel.cs" />
     <Compile Include="Models\Proveedor\ProveedorModel.cs" />
+    <Compile Include="Models\Proveedor\ProveedorUsuarioModel.cs" />
     <Compile Include="Models\Request\ProveedorDetalleRequestModel.cs" />
+    <Compile Include="Models\Request\ProveedorFiltroRequestModel.cs" />
     <Compile Include="Models\Request\ProveedorRequestModel.cs" />
     <Compile Include="Models\Request\RequestBaseModel.cs" />
     <Compile Include="Models\Response\AeropuertoResponseModel.cs" />
     <Compile Include="Models\Response\ProveedorDetalleResponseModel.cs" />
+    <Compile Include="Models\Response\ProveedorFiltroResponseModel.cs" />
     <Compile Include="Models\Response\ProveedorResponseModel.cs" />
     <Compile Include="Models\Response\ResponseBaseModel.cs" />
     <Compile Include="Models\UsuarioModel.cs" />
@@ -344,6 +348,10 @@
     <Content Include="Views\Shared\_InformacionCuenta.cshtml" />
     <Content Include="Views\Shared\_CuentaBancaria.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Gestion\Index.cshtml" />
+    <Content Include="Views\Gestion\SolicitudFacturacion.cshtml" />
+    <Content Include="Views\Gestion\SolicitudCotizacion.cshtml" />
+    <Content Include="Views\Gestion\OrdenCompra.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

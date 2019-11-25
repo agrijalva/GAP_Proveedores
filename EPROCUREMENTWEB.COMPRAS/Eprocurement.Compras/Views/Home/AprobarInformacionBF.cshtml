@@ -42,16 +42,22 @@
             </div>
         </div>
         <div class="row mt-5">
-            <div class="col-sm-3">
-                <input id="btnDocumentacion" class="btnStyle btnWhite" type="button" data-toggle="modal" data-target="#modalDocumentacion" value="Documentacion pendiente " />
+            <div class="col-md-3">
+                @*<a href="@Url.Action("AprobarTesoreria", "Tesoreria")" class="btnStyle btnWhite">
+                    <span>Documentacion pendiente</span>
+                </a>*@
+                <input id="btnDocumentacion" class="btnStyle btnWhite" type="button" data-toggle="modal" data-target="#modalDocumentacion" value="Documentacion pendiente" />
             </div>
-            <div class="col-sm-3">
+            <div class="col-md-3">
                 <input type="button" class="btnStyle btnWhite" data-toggle="modal" data-target="#modalRechazar" value="Rechazar" />
             </div>
-            <div class="col-sm-3">
-                <input id="btnCancelar" class="btnStyle btnWhite" type="button" value="Cancelar" />
+            <div class="col-md-3">
+                <a href="@Url.Action("AprobarTesoreria", "Tesoreria")">
+                    <input id="btnCancelar" class="btnStyle btnWhite" type="button" value="Cancelar" />
+                </a>
+                
             </div>
-            <div class="col-sm-3">
+            <div class="col-md-3">
                 <input id="btnAprobar" class="btnStyle" type="button" value="Aceptar" />
             </div>
         </div>
@@ -71,14 +77,14 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12">
-                        <label for="observaciones" class="col-form-label">Ingresa un comentario para el proveedor</label>
+                        <label for="observaciones" class="col-form-label label-b">Ingresa un comentario para el proveedor</label><br />
                         <textarea class="form-control" id="observaciones"></textarea>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" id="btnRechazar" class="btnStyle"><i class='fas fa-paper-plane'></i>Enviar</button>
+                <button type="button" class="btnStyle btnWhite btn-modal-cancelar" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="btnRechazar" class="btnStyle btn-modal-aceptar"><i class='fas fa-paper-plane'></i> Enviar</button>
             </div>
         </div>
     </div>
@@ -89,7 +95,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header bg-purple">
-                <h5 class="modal-title" id="exampleModalLongTitle">Describa la documentación:</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Descripción de la información a solicitar</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -97,14 +103,14 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12">
-                        <label for="observaciones" class="col-form-label">Ingrese la documentación pendiente</label>
-                        <textarea class="form-control" id="txtDocumentacion"></textarea>
+                        <label for="observaciones" class="col-form-label label-b">Ingrese una descripción de la información a solicitar</label>
+                        <textarea class="form-control" id="txtDocumentacion" placeholder="Ej. Descripción de la información a solicitar"></textarea>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" id="btnDocPendiente" class="btnStyle"><i class='fas fa-paper-plane'></i>Enviar</button>
+                <button type="button" class="btnStyle btnWhite btn-modal-cancelar" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="btnDocPendiente" class="btnStyle btn-modal-aceptar"><i class='fas fa-paper-plane'></i> Enviar</button>
             </div>
         </div>
     </div>

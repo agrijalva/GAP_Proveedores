@@ -768,5 +768,29 @@ namespace EprocurementWeb.Business
             }
             return response.Success;
         }
+
+        public ProveedorFiltroResponseModel ObtenerProveedorFiltro(ProveedorFiltroRequestModel request)
+        {
+            var responseFilter = new ProveedorFiltroResponseModel();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+                var json = JsonConvert.SerializeObject(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var responseTask = client.PostAsync("ProveedorFiltro", content);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+                    responseFilter = JSSerializer.Deserialize<ProveedorFiltroResponseModel>(readTask.Result);
+                    
+                }
+            }
+            return responseFilter;
+        }
+
     }
 }

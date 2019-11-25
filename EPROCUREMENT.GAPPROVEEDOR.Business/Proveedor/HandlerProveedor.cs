@@ -208,5 +208,13 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Proveedor
 
             return response;
         }
+
+        public ProveedorFiltroResponseDTO GetProvedorPorFiltro(ProveedorFiltroRequestDTO request)
+        {
+            var response = new ProveedorFiltroResponseDTO();
+            response = proveedorData.GetProvedorPorFiltro(request);
+
+            return response;
+        }
     }
 }

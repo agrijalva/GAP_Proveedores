@@ -542,7 +542,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             return response;
         }
 
-        public ProveedorUsuarioDTO GetProvedorUsuarioPorRFC(string email)
+        public ProveedorUsuarioDTO GetProvedorUsuarioPorEmail(string email)
         {
             ProveedorUsuarioDTO response = new ProveedorUsuarioDTO();
 
@@ -566,6 +566,42 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             response.Email = reader["Email"].ToString();
                             response.RazonSocial = reader["RazonSocial"].ToString();
                             response.Contacto = reader["NombreContacto"].ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+            }
+
+            return response;
+        }
+
+        public ProveedorFiltroResponseDTO GetProvedorPorFiltro(ProveedorFiltroRequestDTO request)
+        {
+            ProveedorFiltroResponseDTO response = new ProveedorFiltroResponseDTO();
+            ProveedorUsuarioDTO proveedorUsuario = null;
+
+            try
+            {
+                using (var conexion = new SqlConnection(Helper.Connection()))
+                {
+                    conexion.Open();
+                    var cmdReset = new SqlCommand("[dbo].[usp_EPROCUREMENT_Proveedor_GETIByRFC]", conexion)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    cmdReset.Parameters.Add(new SqlParameter("@RFC", SqlDbType.NVarChar, 100)).Value = request.Filtro;
+                    using (SqlDataReader reader = cmdReset.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            proveedorUsuario = new ProveedorUsuarioDTO();
+                            proveedorUsuario.RFC = reader["RFC"].ToString();
+                            proveedorUsuario.NombreEmpresa = reader["NombreEmpresa"].ToString();
+                            proveedorUsuario.RazonSocial = reader["RazonSocial"].ToString();
+                            response.Proveedor = proveedorUsuario;
+                            response.Success = true;
                         }
                     }
                 }

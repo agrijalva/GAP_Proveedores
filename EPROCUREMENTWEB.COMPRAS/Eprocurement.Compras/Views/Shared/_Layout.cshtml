@@ -25,7 +25,21 @@
                 </div>
 
                 <div class="col-sm-4">
-                    <span class="g-user">USUARIO</span>
+                    <table width="100%" class="panel-user-control">
+                        <tr>
+                            <td style="border:none" valign="middle">
+                                <div class="g-user">Usuario</div>
+                            </td>
+                            <td width="32px" style="border:none">
+                                <img class="padding-user" src="~/Content/Images/user-photo.png" width="25" />
+                            </td>
+                            <td width="32px" style="border:none; border-left:solid 1px #f9f9f9;">
+                                <a href="@Url.Action("Index", "SeguridadAD")">
+                                    <img class="padding-user cursor" src="~/Content/Images/shutdow-icon.png" width="25" />
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
