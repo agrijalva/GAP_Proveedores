@@ -10,7 +10,9 @@
             <div class="card-body">
                 <div class="row">
                     @Html.Hidden("IdUsuarioRol", (int)ViewBag.IdUsuarioRol)
-                    <div class="col-md-12 h-filtro">Filtrar por</div>
+                    <div class="col-md-12 h-filtro">
+                        Filtrar por
+                    </div> 
                     <div class="form-group col-md-4">
                         @Html.Label("rfc", "RFC", new { @class = "control-label text-right " })
                         @Html.TextBox("rfc", "", new { @class = "form-control" })
@@ -201,7 +203,7 @@
                          '<td style="dislay: none;">' + data[i].Email + '</td>' +
                          '<td style="dislay: none; color:'+ color +';">' + data[i].Estatus + '</td>' +
                          //'<td style="dislay: none;">' + data[i].Estatus + '</td>' +
-                         '<td align="right" style="dislay: none;"><div class="btn-circle"><a href="#" class="fas fa-refresh icon-color"></a></div></td>' +
+                         '<td align="right" style="dislay: none;"><img src="/Content/Images/component.png" width="30" /></td>' +
                          //'<td style="dislay: none;">' + data[i].AXNumeroProveedor + '</td>' +
                          '<td style="dislay: none;"><div class="btn-circle">' + link + '</div></td>' + '</tr>'
                      );

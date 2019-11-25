@@ -204,3 +204,7 @@ table.dataTable tbody tr {
 .panel-user-control {
     height: 40px;
 }
+
+a:hover {
+    text-decoration: none !important;
+}
