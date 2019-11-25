@@ -287,6 +287,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             proveedorDocumento.DocumentoAutorizado = Convert.ToBoolean(reader["DocumentoAutorizado"]);
                             proveedorDocumento.DescripcionDocumento = reader["NombreDocumento"].ToString();
                             proveedorDocumento.NombreArchivo = reader["NombreArchivo"].ToString();
+                            proveedorDocumento.TipoArchivo = proveedorDocumento.NombreArchivo.Split('.').Last();
                             response.ProveedorDocumentoList.Add(proveedorDocumento);
                         }
                     }
