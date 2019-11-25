@@ -9,5 +9,6 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Entities
     public class ProveedorCuentaRequestDTO: RequestBaseDTO
     {
         public List<ProveedorCuentaDTO> ProveedorCuentaList { get; set; }
+        public int IdProveedor { get; set; }
     }
 }

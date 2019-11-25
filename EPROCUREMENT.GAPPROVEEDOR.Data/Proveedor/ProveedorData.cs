@@ -85,6 +85,113 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             return response;
         }
 
+        /// <summary>
+        /// Obtiene un listado de cuentas de proveedores
+        /// </summary>
+        /// <param name="request">Un objeto de tipo ProveedorCuentaRequestDTO con los filtros</param>
+        /// <returns>Un obejeto de tipo ProveedorCuentaResponseDTO</returns>
+        public ProveedorCuentaResponseDTO GetProveedorCuentaList(ProveedorCuentaRequestDTO request)
+        {
+            ProveedorCuentaResponseDTO response = new ProveedorCuentaResponseDTO()
+            {
+                ProveedorCuentaList = new List<ProveedorCuentaDTO>()
+            };
+
+            ProveedorCuentaDTO proveedorCuenta = null;
+
+            try
+            {
+                using (var conexion = new SqlConnection(Helper.Connection()))
+                {
+                    conexion.Open();
+                    var cmd = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_ProveedorCuenta_GETLByIdProveedor, conexion)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    cmd.Parameters.Add(new SqlParameter("@IdProveedor", SqlDbType.Int)).Value = request.IdProveedor;
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            proveedorCuenta = new ProveedorCuentaDTO();
+                            proveedorCuenta.IdProveedorCuenta = Convert.ToInt32(reader["IdProveedorCuenta"]);
+                            proveedorCuenta.Cuenta = reader["Cuenta"].ToString();
+                            proveedorCuenta.IdBanco = Convert.ToInt32(reader["IdBanco"]);
+                            proveedorCuenta.NombreBanco = reader["NombreBanco"].ToString();
+                            proveedorCuenta.CLABE = reader["CLABE"].ToString();
+                            proveedorCuenta.IdTipoCuenta = Convert.ToInt32(reader["IdTipoCuenta"]);
+                            proveedorCuenta.IdProveedor = Convert.ToInt32(reader["IdProveedor"]);
+                            proveedorCuenta.TipoCuenta = reader["Tipo"].ToString();
+                            response.ProveedorCuentaList.Add(proveedorCuenta);
+
+                        }
+                    }
+                }
+                response.Success = true;
+                return response;
+            }
+            catch (Exception exception)
+            {
+                response.Success = false;
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Obtiene un listado de aeropuertos de los proveedores
+        /// </summary>
+        /// <param name="request">Un objeto de tipo ProveedorCuentaRequestDTO con los filtros</param>
+        /// <returns>Un obejeto de tipo ProveedorCuentaResponseDTO</returns>
+        public ProveedorCuentaResponseDTO GetProveedorCuentaAeropuertoList(ProveedorCuentaRequestDTO request)
+        {
+            ProveedorCuentaResponseDTO response = new ProveedorCuentaResponseDTO()
+            {
+                ProveedorCuentaList = new List<ProveedorCuentaDTO>()
+            };
+
+            AeropuertoDTO aeropuerto = null;
+
+            try
+            {
+                using (var conexion = new SqlConnection(Helper.Connection()))
+                {
+                    conexion.Open();
+                    foreach (var proveedorCuenta in request.ProveedorCuentaList)
+                    {
+                        proveedorCuenta.AeropuertoList = new List<AeropuertoDTO>();
+                        
+                        var cmd = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_Aeropuerto_GETLByIdProveedorCuenta, conexion)
+                        {
+                            CommandType = CommandType.StoredProcedure
+                        };
+
+                        cmd.Parameters.Add(new SqlParameter("@IdProveedorCuenta", SqlDbType.Int)).Value = proveedorCuenta.IdProveedorCuenta;
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                aeropuerto = new AeropuertoDTO();
+                                aeropuerto.Id = reader["IdCatalogoAeropuerto"].ToString();
+                                aeropuerto.Nombre = reader["NAME"].ToString();
+                                proveedorCuenta.AeropuertoList.Add(aeropuerto);
+                            }
+                        }
+                        response.ProveedorCuentaList.Add(proveedorCuenta);
+                    }
+                }
+                response.Success = true;
+                return response;
+            }
+            catch (Exception exception)
+            {
+                response.Success = false;
+            }
+
+            return response;
+        }
+
         public ProveedorCuentaResponseDTO GuardarProveedorCuenta(ProveedorCuentaRequestDTO request)
         {
             ProveedorCuentaResponseDTO response = new ProveedorCuentaResponseDTO()
@@ -141,6 +248,57 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             catch (Exception exception)
             {
             }
+            return response;
+        }
+
+        /// <summary>
+        /// Obtiene un listado de documentos de proveedores
+        /// </summary>
+        /// <param name="request">Un objeto de tipo ProveedorCuentaRequestDTO con los filtros</param>
+        /// <returns>Un obejeto de tipo ProveedorCuentaResponseDTO</returns>
+        public ProveedorDocumentoResponseDTO GetProveedorDocumentoList(ProveedorDocumentoRequestDTO request)
+        {
+            ProveedorDocumentoResponseDTO response = new ProveedorDocumentoResponseDTO()
+            {
+                ProveedorDocumentoList = new List<ProveedorDocumentoDTO>()
+            };
+
+            ProveedorDocumentoDTO proveedorDocumento = null;
+
+            try
+            {
+                using (var conexion = new SqlConnection(Helper.Connection()))
+                {
+                    conexion.Open();
+                    var cmd = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_ProveedorDocumento_GETLByIdProveedor, conexion)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    cmd.Parameters.Add(new SqlParameter("@IdProveedor", SqlDbType.Int)).Value = request.IdProveedor;
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            proveedorDocumento = new ProveedorDocumentoDTO();
+                            proveedorDocumento.IdProveedorDocumento = Convert.ToInt32(reader["IdProveedorDocumento"]);
+                            proveedorDocumento.IdCatalogoDocumento = Convert.ToInt32(reader["IdCatalogoDocumento"]);
+                            proveedorDocumento.FechaAlta = Convert.ToDateTime(reader["FechaAlta"]);
+                            proveedorDocumento.DocumentoAutorizado = Convert.ToBoolean(reader["DocumentoAutorizado"]);
+                            proveedorDocumento.DescripcionDocumento = reader["NombreDocumento"].ToString();
+                            proveedorDocumento.NombreArchivo = reader["NombreArchivo"].ToString();
+                            response.ProveedorDocumentoList.Add(proveedorDocumento);
+                        }
+                    }
+                }
+                response.Success = true;
+                return response;
+            }
+            catch (Exception exception)
+            {
+                response.Success = false;
+            }
+
             return response;
         }
 
@@ -916,7 +1074,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                 using (var conexion = new SqlConnection(Helper.Connection()))
                 {
                     conexion.Open();
-                    var cmd = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorDocumento_GETLByIdProveedor]", conexion)
+                    var cmd = new SqlCommand("[dbo].[usp_EPROCUREMENT_CatalogoDocumento_GETLByIdProveedor]", conexion)
                     {
                         CommandType = CommandType.StoredProcedure
                     };

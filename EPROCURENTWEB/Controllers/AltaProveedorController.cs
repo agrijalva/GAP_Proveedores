@@ -25,6 +25,7 @@ namespace EprocurementWeb.Controllers
             ViewBag.MenssageErrorAirPort = EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Airport;
             ViewBag.MenssageErrorDocument = EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Document;
             var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
+            ViewBag.UsuarioEstatus = usuarioInfo.IdEstatus;
             var idProveedor = 0;
             if (usuarioInfo != null)
             {
@@ -32,6 +33,30 @@ namespace EprocurementWeb.Controllers
             }
             Session["IdProveedor"] = idProveedor;
             BusinessLogic business = new BusinessLogic();
+
+            if (usuarioInfo.IdEstatus == 5)
+            {
+                ProveedorCuentaRequestDTO proveedorCuentaRequest = new ProveedorCuentaRequestDTO
+                {
+                    IdProveedor = idProveedor
+                };
+                var proveedorCuentaResponse = business.GetProveedorCuentaList(proveedorCuentaRequest);
+                ProveedorCuentaRequestDTO proveedorCuentaAeropuertoRequest = new ProveedorCuentaRequestDTO
+                {
+                    ProveedorCuentaList = proveedorCuentaResponse.ProveedorCuentaList
+                };
+                var proveedorCuentaAeropuertoResponse = business.GetProveedorCuentaAeropuertoList(proveedorCuentaAeropuertoRequest);
+                ViewBag.ProveedorCuentaList = proveedorCuentaAeropuertoResponse.ProveedorCuentaList;
+
+                ProveedorDocumentoRequestDTO proveedorDocumentoRequest = new ProveedorDocumentoRequestDTO
+                {
+                    IdProveedor = idProveedor
+                };
+
+                var proveedorDocumentoResponse = business.GetProveedorDocumentoList(proveedorDocumentoRequest);
+                ViewBag.ProveedorDocumentoList = proveedorDocumentoResponse.ProveedorDocumentoList;
+            }
+
             Session["ProveedorCuentaListRegistro"] = new List<ProveedorCuentaDTO>();
             var aeropuertos = business.GetAeropuertosList();
             ViewBag.BancoList = business.GetBancoList();
@@ -55,6 +80,7 @@ namespace EprocurementWeb.Controllers
             cuenta.ProveedorCuentaListRegistro = new List<ProveedorCuentaDTO>();
             cuenta.CuentaBancaria = new ProveedorCuentaDTO();
             cuenta.CuentaBancaria.AeropuertoList = cuenta.ProveedorCuentaList[0].AeropuertoList;
+            
             Session["ProveedorCuentaListRegistro"] = new List<ProveedorCuentaDTO>();
             return View(cuenta);
         }
