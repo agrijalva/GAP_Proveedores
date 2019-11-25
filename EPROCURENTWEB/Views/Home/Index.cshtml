@@ -337,8 +337,8 @@
                                             <span style="font-size:14px; font-weight:bold;">
                                                 @Html.Label("", @EprocurementWeb.GlobalResources.RHome.ProveedorGiros, new { @class = "control-label m-b-1" })
                                             </span>&nbsp;&nbsp;
-                                            @*@Html.ValidationMessage("ErrorEmpresa", new { @class = "label-formulario field-validation-error" })*@
-
+                                            @Html.ValidationMessage("ErrorEmpresa", new { @class = "label-formulario field-validation-error" })
+                                            @Html.Hidden("errorResultado", (int)ViewBag.errorResultado)
                                             @for (int idx = 0; idx < 5; idx++)
                                             {
                                                 @*@Html.HiddenFor(model => model.ProveedorGiroList[idx].IdProveedorGiro)*@
@@ -483,6 +483,17 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+        if ($("#errorResultado").val() == 1) {
+            Swal.fire({
+                position: 'middle',
+                icon: 'error',
+                title: '¡Registro de proveedor!',
+                html: '<p class="text">Se genero un error al procesar la informacion..</p> ' +
+                    '</br> <p class="text">Favor de intentarlo mas tarde.',
+                showConfirmButton: true,
+                timer: 3000
+            })
+        }
          var url = '@Url.Action("Contact", "Home")';
         if (window.location.hash == "#success" ){
             Swal.fire({
