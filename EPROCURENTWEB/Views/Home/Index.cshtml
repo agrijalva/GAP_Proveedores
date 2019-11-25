@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = @EprocurementWeb.GlobalResources.RHome.Title;
-    Layout = null;
+    Layout = "~/Views/Shared/_LayoutInit.cshtml";
 }
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -37,13 +37,6 @@
                 </li>
             </ul>
         </div>
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-            <meta charset="utf-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            @Styles.Render("~/Content/css")
-            @Scripts.Render("~/bundles/jquery")
-            @Scripts.Render("~/bundles/modernizr")
-            @Scripts.Render("~/bundles/shared")
 
     </div>
 
@@ -566,23 +559,6 @@
             $(".check input:checkbox").prop('checked', chall);
         });
 
-        /// Cargar Paises
-        //$.ajax({
-        //    url: "/Home/GetPaisesList",
-        //    type: "GET",
-        //    contentType: "application/json; charset=utf-8",
-        //    datatype: JSON,
-        //    success: function (result) {
-        //        $(result).each(function () {
-        //            $("#pais").append($("<option></option>").val(this.IdPais).html(this.Nombre));
-        //        });
-        //        $(result).each(function () {
-        //            $("#paisConctacto").append($("<option></option>").val(this.IdPais).html(this.Nombre));
-        //        });
-        //    },
-        //    error: function (data) { }
-        //});
-
         ///// Cargar Aeropuertos
         //$.ajax({
         //    url: "/Home/GetAeropuertosList",
@@ -681,7 +657,8 @@
             //$("#PaisProveedor").prop("disabled", true);
 
             $("#inpgro-tin").hide();
-        } else {
+        }
+        else {
             var value = 1;
             $('#PaisProveedor option[value="'+value+'"]').attr("disabled", true);
             $("#Extranjera").val(true);
@@ -718,9 +695,13 @@
             }
         });
 
+        $("#RFC").on("change", function () {
+            console.log(this.value);
+            ValidaRFC(this.value);            
+        });
+
         $("#Mexicana").on("change", function () {
             if ($(this).is(':checked')) {
-                console.log(1)
                 //$("#PaisProveedor").prop("disabled", true);
                 $("#PaisProveedor").val(1);
                 $("#Extranjera").prop("checked", false);
@@ -744,7 +725,6 @@
 
             } else {
                 console.log(2)
-                var value = 1;
                 $("#lblMunicipio").addClass("control-display-none");
                 $("#Direccion_Municipio").addClass("control-display-none");
                 $('#PaisProveedor option[value="' + value + '"]').attr("disabled", true);
@@ -835,6 +815,22 @@
                         $("#ColoniaProveedor").val(data.colonias[0])
                     }
 
+                });
+        }
+
+        function ValidaRFC(rfc) {
+            $.getJSON("/Home/ValidaRFC", { rfc: rfc },
+                function (data) {
+                    if (data != '') {
+                        $("#RFC").val('');
+                        Swal.fire({
+                            position: 'middle',
+                            icon: 'warning',
+                            title: '¡Validación de RFC!',
+                            html: '<p class="text">' + data + '</p> ',
+                            showConfirmButton: true
+                        });
+                    }
                 });
         }
 

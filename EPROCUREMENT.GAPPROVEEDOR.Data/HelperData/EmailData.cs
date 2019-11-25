@@ -391,7 +391,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             };
 
             ProveedorUsuarioDTO proveedorUsuario = null;
-            proveedorUsuario = new ProveedorData().GetProvedorUsuarioPorRFC(usuario.Email);
+            proveedorUsuario = new ProveedorData().GetProvedorUsuarioPorEmail(usuario.Email);
             emailEntidad.Message = GetBodyRecuperarPassword(proveedorUsuario, usuario.Token);
             emailEntidad.RecipientsList.Add(new DireccionEmailDTO { Address = proveedorUsuario.Email, DisplayName = proveedorUsuario.NombreEmpresa, UserIdentifier = 1 });
             var mailMessage = ObtenerMensajeEmail(emailEntidad, "Hola");

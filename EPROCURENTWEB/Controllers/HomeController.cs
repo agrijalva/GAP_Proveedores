@@ -196,5 +196,22 @@ namespace EprocurementWeb.Controllers
             ViewBag.ContactResultMessage = @EprocurementWeb.GlobalResources.RHome.ContactMessageSendNok;
             return View(model);
         }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult ValidaRFC(string rfc)
+        {
+            var resultado = string.Empty;
+            BusinessLogic businessLogic = new BusinessLogic();
+            ProveedorFiltroRequestModel request = new ProveedorFiltroRequestModel { Filtro = rfc };
+            var response = businessLogic.ObtenerProveedorFiltro(request);
+            if(response.Success)
+            {
+                if(response.Proveedor != null)
+                {
+                    resultado = "El RFC: " + rfc + " ya se encuentra registrado.";
+                }
+            }
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
     }
 }

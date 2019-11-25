@@ -74,6 +74,14 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
         }
 
         [HttpPost]
+        [Route("ProveedorFiltro")]
+        public ProveedorFiltroResponseDTO GetProvedorPorFiltro([FromBody]ProveedorFiltroRequestDTO request)
+        {
+            var response = new HandlerProveedor().GetProvedorPorFiltro(request);
+            return response;
+        }
+
+        [HttpPost]
         [Route("InsertarTempProveedor")]
         public ProveedorResponseDTO GuardarTempProveedor([FromBody]ProveedorRequesteDTO request)
         {
