@@ -70,6 +70,7 @@ html, body {
 
 .btn-radius, .btn-radius:hover{
     border-radius: 60px !important;
+    border:none;
 }
 
 .a-options a{
