@@ -282,13 +282,13 @@
                                                 @Html.ValidationMessageFor(model => model.Contacto.IdZonaHoraria, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.Contacto.IdIdioma, new { @class = "label-formulario" })
-                                                @Html.DropDownListFor(model => model.Contacto.IdIdioma, new SelectList(ViewBag.IdiomaList, "IdIdioma", "NombreIdioma"), "...", new { @class = "form-control col-md-12" })
-                                                @Html.ValidationMessageFor(model => model.Contacto.IdIdioma, "", new { @class = "label-formulario field-validation-error" })
-                                            </div>
-                                        </div>
+                                        @*<div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Contacto.IdIdioma, new { @class = "label-formulario" })
+                @Html.DropDownListFor(model => model.Contacto.IdIdioma, new SelectList(ViewBag.IdiomaList, "IdIdioma", "NombreIdioma"), "...", new { @class = "form-control col-md-12" })
+                @Html.ValidationMessageFor(model => model.Contacto.IdIdioma, "", new { @class = "label-formulario field-validation-error" })
+            </div>
+        </div>*@
                                     </div>
                                 </div>
                             </div>
