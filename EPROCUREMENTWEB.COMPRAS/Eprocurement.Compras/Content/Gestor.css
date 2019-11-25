@@ -2,6 +2,10 @@
     background-color: #f6f6f8;
 }
 
+*:focus {
+    outline: none !important;
+}
+
 .panel-header {
     background-color: white;
     height: 55px;
@@ -24,8 +28,12 @@
     font-weight:bold;
     float:right;
     font-size:12px;
-    padding-top:15px;
-    text-transform:uppercase;
+    padding-top:5px;
+}
+
+.padding-user {
+    margin-right: 8px;
+    margin-left: 8px;
 }
 
 .row-nav {
@@ -187,4 +195,16 @@ table.dataTable tbody tr {
 
 .form-group {
     margin-bottom: 0px !important;
+}
+
+.cursor{
+    cursor:pointer;
+}
+
+.panel-user-control {
+    height: 40px;
+}
+
+a:hover {
+    text-decoration: none !important;
 }

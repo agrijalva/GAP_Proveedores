@@ -146,6 +146,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\component.png" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.min.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap4.css" />
@@ -310,6 +311,12 @@
     <Content Include="Content\Images\logo-gap-color.png" />
     <Content Include="Content\Images\proveedores%402x.jpg" />
     <Content Include="Content\Images\proveedores%403x.jpg" />
+    <Content Include="Content\Images\shutdow-icon%402x.png" />
+    <Content Include="Content\Images\shutdow-icon%403x.png" />
+    <Content Include="Content\Images\shutdow-icon.png" />
+    <Content Include="Content\Images\user-photo%402x.png" />
+    <Content Include="Content\Images\user-photo%403x.png" />
+    <Content Include="Content\Images\user-photo.png" />
     <Content Include="Content\StyleIBF.css" />
     <Content Include="Content\Styles\Login.css" />
     <Content Include="favicon.ico" />

@@ -22,6 +22,45 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#observaciones{
+    max-width:none !important;
+    height:180px;
+}
+
+.label-b{
+    font-size:12px;
+    font-weight: 600;
+}
+
+.modal-body{
+    padding-top:5px;
+}
+
+.modal-title {
+    width: 153px;
+    height: 13px;
+    font-size: 16px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 0.81;
+    letter-spacing: 0.12px;
+    color: #ffffff;
+}
+
+.modal-header {
+    padding: 10px 16px;
+    border-bottom: 1px solid #432979 !important;
+    /*border-bottom: none !important;*/
+}
+
+    .modal-header .close {
+        padding-top: 5px !important;
+        color:white !important;
+    }
+
+
 .bg-purple {
     background-color: #432979 !important;
     color: white;
@@ -206,3 +245,10 @@ input[type="checkbox"] {
     text-align: center;
 }
 
+.btn-modal-cancelar {
+    width: 40% !important;
+}
+
+.btn-modal-aceptar {
+    width: 60% !important;
+}
