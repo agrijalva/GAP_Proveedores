@@ -124,6 +124,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RError.resx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\GestionController.cs" />
     <Compile Include="GlobalResources\RHome.Designer.cs">
       <DependentUpon>RHome.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -347,6 +348,7 @@
     <Content Include="Views\Shared\_InformacionCuenta.cshtml" />
     <Content Include="Views\Shared\_CuentaBancaria.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Gestion\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
