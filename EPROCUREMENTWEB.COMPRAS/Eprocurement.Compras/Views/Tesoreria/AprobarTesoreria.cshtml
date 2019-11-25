@@ -106,7 +106,7 @@
 
                      var link = '@Html.ActionLink(" ", "AceptarProveedor", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
                      link = link.replace('_idProv_', data[i].IdProveedor);
-                     console.log("link", link);
+                     //console.log("link", link);
 
                      var color = ''
                      switch (data[i].IdEstatus) {
@@ -156,7 +156,7 @@
              data: jsonData,
              async: false,
              success: function(data) {
-                 console.log("Traigo Datos", data)
+                 //console.log("Traigo Datos", data)
                  $("#Table").html('');
                  $("#Table").append('<thead class="bg-light-purple"><tr>' +
                      //'<td>IdProveedor</td>'+
@@ -172,6 +172,7 @@
                  $("#Table").DataTable().destroy();
 
                  $("#Table").append('<tbody>');
+                 console.log( "Data", data );
                  for (i = 0; i < data.length; i++) {
 
                      @*var link = '@Html.ActionLink(" ", "About", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
@@ -179,14 +180,27 @@
 
                      var link = '@Html.ActionLink(" ", "AprobarInformacionBF", "Home", new { idProveedor ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
                      link = link.replace('_idProv_', data[i].IdProveedor);
-                     console.log("link", link);
+                     //console.log("link", link);
 
+
+                     var color = ''
+                     switch (data[i].IdEstatus) {
+                         case 5: color = '#43ac3e';
+                             break;
+                         case 6: color = '#de343c';
+                             break;
+                         case 7: color = '#f9a32f';
+                             break;
+                         case 8: color = '#43ac3e';
+                             break;
+                     }
                      $("#Table").append('<tr>' +
                          //'<td align="center" style="dislay: none;">' + data[i].IdProveedor + '</td>' +
                          '<td style="dislay: none;"><b>' + data[i].RFC + '</b></td>' +
                          '<td style="dislay: none;">' + data[i].NombreEmpresa + '</td>' +
                          '<td style="dislay: none;">' + data[i].Email + '</td>' +
-                         '<td style="dislay: none;">' + data[i].Estatus + '</td>' +
+                         '<td style="dislay: none; color:'+ color +';">' + data[i].Estatus + '</td>' +
+                         //'<td style="dislay: none;">' + data[i].Estatus + '</td>' +
                          '<td align="right" style="dislay: none;"><div class="btn-circle"><a href="#" class="fas fa-refresh icon-color"></a></div></td>' +
                          //'<td style="dislay: none;">' + data[i].AXNumeroProveedor + '</td>' +
                          '<td style="dislay: none;"><div class="btn-circle">' + link + '</div></td>' + '</tr>'
