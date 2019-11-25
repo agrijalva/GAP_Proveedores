@@ -215,6 +215,7 @@
     <Content Include="Content\Images\logo-gap-color%403x.png" />
     <Content Include="Content\Images\logo-gap-color.png" />
     <Content Include="Content\Images\Mexico.png" />
+    <Content Include="Content\Images\pdf-icon.png" />
     <Content Include="Content\Images\proveedores%402x.jpg" />
     <Content Include="Content\Images\proveedores%403x.jpg" />
     <Content Include="Content\Images\proveedores.jpg" />

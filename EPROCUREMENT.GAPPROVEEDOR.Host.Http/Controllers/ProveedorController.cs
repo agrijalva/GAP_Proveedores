@@ -134,6 +134,11 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
 
             string r = rutaF + "\\" + image;
 
+            if (!File.Exists(r))
+            {
+                r = rutaF + "\\notfound.jpg";
+            }
+
             Byte[] b = File.ReadAllBytes(r);   // You can use your own method over here.         
             MemoryStream ms = new MemoryStream(b);
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
@@ -142,10 +147,12 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
             if(division.Last() == "pdf")
             {
                 response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
+                response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
             }
             else
             {
                 response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
+                response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
             }
             
             return response;

@@ -13,3 +13,8 @@ C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\bin\
 C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.csproj.CoreCompileInputs.cache
 C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.dll
 C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.pdb
+C:\Users\Usuario\Source\Repos\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.dll
+C:\Users\Usuario\Source\Repos\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.pdb
+C:\Users\Usuario\Source\Repos\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.csprojAssemblyReference.cache
+C:\Users\Usuario\Source\Repos\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.dll
+C:\Users\Usuario\Source\Repos\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.pdb

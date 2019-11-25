@@ -15,5 +15,6 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Entities
         public string DescripcionDocumento { get; set; }
         public bool DocumentoAutorizado { get; set; }
         public string NombreArchivo { get; set; }
+        public string TipoArchivo { get; set; }
     }
 }

@@ -183,7 +183,18 @@
                                         <td>@cuenta.DescripcionDocumento</td>
                                         <td>@cuenta.FechaAlta.ToString("dd MMM yyyy")</td>
                                         <td>@(cuenta.DocumentoAutorizado ? "Si": "No")</td>
-                                        <td><a href="http://localhost:54535/api/Proveedor/Documento?image=@cuenta.NombreArchivo">Ver</a></td>
+                                        <td>
+                                            <a href="http://localhost:54535/api/Proveedor/Documento?image=@cuenta.NombreArchivo" download="archivo">
+                                                @if(cuenta.TipoArchivo == "pdf")
+                                                {
+                                                    <img class="icon" src="~/Content/Images/pdf-icon.png" />
+                                                }
+                                                else
+                                                {
+                                                    <img class="icon" src="http://localhost:54535/api/Proveedor/Documento?image=@cuenta.NombreArchivo" />
+                                                }
+                                            </a>
+                                        </td>
                                     </tr>
                                 }
                             </tbody>
@@ -213,6 +224,10 @@
     color: #68686a;
     width: 100%;
     text-align:left;
+}
+
+.icon{
+    height:40px;
 }
 
 .dataTable tbody {
