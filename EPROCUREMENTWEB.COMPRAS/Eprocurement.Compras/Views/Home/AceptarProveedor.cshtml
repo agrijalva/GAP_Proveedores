@@ -303,7 +303,10 @@
             <input type="button" class="btnStyle btnWhite" data-toggle="modal" data-target="#modalRechazar" value="Rechazar" />
         </div>
         <div class="col-sm-3">
-            <input id="btnCancelar" class="btnStyle btnWhite" type="button" value="Cancelar" />
+            @*<input id="btnCancelar" class="btnStyle btnWhite" type="button" value="Cancelar" />*@
+            <a href="@Url.Action("Index", "Home")">
+                <input id="btnCancelar" class="btnStyle btnWhite" type="button" value="Cancelar" />
+            </a>
         </div>
         <div class="col-sm-3">
             <input id="btnAprobar" class="btnStyle" type="button" value="Guardar" />
