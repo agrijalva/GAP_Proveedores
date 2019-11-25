@@ -52,16 +52,16 @@
         @model EPROCUREMENT.GAPPROVEEDOR.Entities.Proveedor.ProveedorInformacionFinanciera
         @using (Html.BeginForm("InformacionBF", "AltaProveedor", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            <div class="tab-content" style="background-color:white; padding: 15px;">
+        <div class="tab-content" style="background-color:white; padding: 15px;">
 
-                <div role="tabpanel" class="tab-pane fade in active show" id="IB">
+            <div role="tabpanel" class="tab-pane fade in active show" id="IB">
+                @if (ViewBag.UsuarioEstatus == 4)
+                {
                     <div class="col100" style="font-size:14px;">
                         <b>Por favor llena la siguiente información</b>
                     </div>
                     @Html.Partial("_CuentaBancaria", Model)
 
-                    @*@using (Html.BeginForm("CargarCuentas", "AltaProveedor", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                    {*@
                     @Html.HiddenFor(m => m.RFC)
                     <b>Detalles de la compañia</b>
                     <div class="row mt-5">
@@ -92,10 +92,50 @@
                             </table>
                         </div>
                     </div>
+                }
+                else
+                {
+                    @Html.HiddenFor(m => m.RFC)
+                    <b>Detalles de la compañia</b>
+                    <div class="row mt-5">
+                        <div class="col-sm-12">
+                            <table class="dataTable" id="tbProveedorCuenta" width="100%">
+                                <thead class="bg-light-purple">
+                                    <tr>
+                                        <td>Cuenta</td>
+                                        <td>NombreBancco</td>
+                                        <td>Clabe</td>
+                                        <td>Tipo</td>
+                                        <td>Aeropuertos</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="display:none;"></tr>
+                                    @foreach (var cuenta in ViewBag.ProveedorCuentaList)
+                                    {
+                                        <tr>
+                                            <td>@cuenta.Cuenta</td>
+                                            <td>@cuenta.NombreBanco</td>
+                                            <td>@cuenta.CLABE</td>
+                                            <td>@cuenta.TipoCuenta</td>
+                                            <td>
+                                                @foreach(var aeropuerto in cuenta.AeropuertoList)
+                                                {
+                                                    @aeropuerto.Nombre <br />
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
 
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="IF">
-
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="IF">
+                @if (ViewBag.UsuarioEstatus == 4)
+                {
                     <div class="col100" style="font-size:12px;">
                         @for (int idx = 0; idx < Model.CatalogoDocumentoList.Count; idx++)
                         {
@@ -123,16 +163,46 @@
                             </div>
                         }
                     </div>
-
-                </div>
-
-                <hr />
-                <div class="row mt-4">
-                    <div class="col-sm-6">&nbsp;</div>
-                    <div class="col-sm-3"><input type="button" value="Cancelar" class="btnStyle btnWhite" /></div>
-                    <div class="col-sm-3"><input type="button" id="btnCargarCuentas" value="Enviar" class="btnStyle" /></div>
-                </div>
+                }
+                else
+                {
+                    <div class="col100" style="font-size:12px;">
+                        <table class="dataTable" id="tbProveedorCuenta" width="100%">
+                            <thead class="bg-light-purple">
+                                <tr>
+                                    <td>Nombre del documento</td>
+                                    <td>Fecha</td>
+                                    <td>Autorizado</td>
+                                    <td>Archivo</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var cuenta in ViewBag.ProveedorDocumentoList)
+                                {
+                                    <tr>
+                                        <td>@cuenta.DescripcionDocumento</td>
+                                        <td>@cuenta.FechaAlta.ToString("dd MMM yyyy")</td>
+                                        <td>@(cuenta.DocumentoAutorizado ? "Si": "No")</td>
+                                        <td><a href="http://localhost:54535/api/Proveedor/Documento?image=@cuenta.NombreArchivo">Ver</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
             </div>
+
+            <hr />
+            @if (ViewBag.UsuarioEstatus == 4)
+            {
+            <div class="row mt-4">
+                <div class="col-sm-6">&nbsp;</div>
+                <div class="col-sm-3"><input type="button" value="Cancelar" class="btnStyle btnWhite" /></div>
+                <div class="col-sm-3"><input type="button" id="btnCargarCuentas" value="Enviar" class="btnStyle" /></div>
+            </div>
+            }
+            
+        </div>
         }
     </div>
 </div>
@@ -226,7 +296,7 @@ table.dataTable tbody tr {
     });
 
     $(document).ready(function () {
-
+        
         let proveedorCuenta = [];
 
         if ('@ViewBag.Respuesta' != "") {

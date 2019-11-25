@@ -8,6 +8,6 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Entities
 {
     public class ProveedorCuentaResponseDTO: ResponseBaseDTO
     {
-
+        public List<ProveedorCuentaDTO> ProveedorCuentaList { get; set; }
     }
 }

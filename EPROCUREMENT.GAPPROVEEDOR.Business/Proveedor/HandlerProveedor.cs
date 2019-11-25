@@ -56,6 +56,36 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Proveedor
             return response;
         }
 
+        public ProveedorCuentaResponseDTO GetProveedorCuentaList(ProveedorCuentaRequestDTO request)
+        {
+            var response = proveedorData.GetProveedorCuentaList(request);
+            if (!response.Success)
+            {
+                response.ErrorList = new List<ErrorDTO> { new ErrorDTO { Codigo = "", Mensaje = string.Format("No fue posible recuperar datos disponibles o no se encontro alguna solicitud en proceso") } };
+            }
+            return response;
+        }
+
+        public ProveedorDocumentoResponseDTO GetProveedorDocumentoList(ProveedorDocumentoRequestDTO request)
+        {
+            var response = proveedorData.GetProveedorDocumentoList(request);
+            if (!response.Success)
+            {
+                response.ErrorList = new List<ErrorDTO> { new ErrorDTO { Codigo = "", Mensaje = string.Format("No fue posible recuperar datos disponibles o no se encontro alguna solicitud en proceso") } };
+            }
+            return response;
+        }
+
+        public ProveedorCuentaResponseDTO GetProveedorCuentaAeropuertoList(ProveedorCuentaRequestDTO request)
+        {
+            var response = proveedorData.GetProveedorCuentaAeropuertoList(request);
+            if (!response.Success)
+            {
+                response.ErrorList = new List<ErrorDTO> { new ErrorDTO { Codigo = "", Mensaje = string.Format("No fue posible recuperar datos disponibles o no se encontro alguna solicitud en proceso") } };
+            }
+            return response;
+        }
+
         public ProveedorDocumentoResponseDTO GuardarProveedorDocumento(ProveedorDocumentoRequestDTO request)
         {
             var response = proveedorData.GuardarProveedorDocumento(request);
