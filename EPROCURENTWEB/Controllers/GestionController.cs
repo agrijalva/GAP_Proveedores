@@ -13,5 +13,23 @@ namespace EprocurementWeb.Controllers
         {
             return View();
         }
+
+        // GET: SolicitudFacturacion
+        public ActionResult SolicitudFacturacion()
+        {
+            return View();
+        }
+
+        // GET: SolicitudCotizacion
+        public ActionResult SolicitudCotizacion()
+        {
+            return View();
+        }
+
+        // GET: OrdenCompra
+        public ActionResult OrdenCompra()
+        {
+            return View();
+        }
     }
 }

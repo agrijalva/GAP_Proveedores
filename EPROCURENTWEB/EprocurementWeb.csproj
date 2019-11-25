@@ -349,6 +349,9 @@
     <Content Include="Views\Shared\_CuentaBancaria.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Gestion\Index.cshtml" />
+    <Content Include="Views\Gestion\SolicitudFacturacion.cshtml" />
+    <Content Include="Views\Gestion\SolicitudCotizacion.cshtml" />
+    <Content Include="Views\Gestion\OrdenCompra.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
