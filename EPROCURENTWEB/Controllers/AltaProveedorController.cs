@@ -25,7 +25,7 @@ namespace EprocurementWeb.Controllers
             ViewBag.MenssageErrorAirPort = EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Airport;
             ViewBag.MenssageErrorDocument = EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Document;
             var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
-            ViewBag.UsuarioEstatus = usuarioInfo.IdEstatus;
+            ViewBag.UsuarioInfo = usuarioInfo;
             var idProveedor = 0;
             if (usuarioInfo != null)
             {
