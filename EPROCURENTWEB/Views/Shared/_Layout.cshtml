@@ -43,16 +43,20 @@
                     <ul class="navbar-nav">
                         <li class="nav-item active">
                             @*@Html.ActionLink("Facturas", "InformacionBF", "AltaProveedor", new { @class = "nav-link" })*@
-                            <a class="nav-link" href="Index">Facturas <span class="sr-only"></span></a>
+                            @*<a class="nav-link" href="Index">Facturas <span class="sr-only"></span></a>*@
+                            <a href="@Url.Action("Index", "Gestion")">Facturas</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="SolicitudFacturacion">Solicitud de facturación <span class="sr-only"></span></a>
+                            @*<a class="nav-link" href="SolicitudFacturacion">Solicitud de facturación <span class="sr-only"></span></a>*@
+                            <a href="@Url.Action("SolicitudFacturacion", "Gestion")">Solicitud de facturación</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="SolicitudCotizacion">Solicitud de cotización <span class="sr-only"></span></a>
+                            @*<a class="nav-link" href="SolicitudCotizacion">Solicitud de cotización <span class="sr-only"></span></a>*@
+                            <a href="@Url.Action("SolicitudCotizacion", "Gestion")">Solicitud de cotización</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="OrdenCompra">Órden de compra<span class="sr-only"></span></a>
+                            @*<a class="nav-link" href="OrdenCompra">Órden de compra<span class="sr-only"></span></a>*@
+                            <a href="@Url.Action("OrdenCompra", "Gestion")">Órden de compra</a>
                         </li>
                         @*<li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="Gestion/SolicitudFacturacion" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
