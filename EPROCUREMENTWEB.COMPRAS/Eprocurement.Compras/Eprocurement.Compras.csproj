@@ -307,6 +307,7 @@
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\Gestor.css" />
     <Content Include="Content\Images\apreton-manos.jpg" />
+    <Content Include="Content\Images\descargar.png" />
     <Content Include="Content\Images\logo-gap-color%402x.png" />
     <Content Include="Content\Images\logo-gap-color%403x.png" />
     <Content Include="Content\Images\logo-gap-color.png" />

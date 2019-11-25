@@ -167,7 +167,7 @@
                 else
                 {
                     <div class="col100" style="font-size:12px;">
-                        <table class="dataTable" id="tbProveedorCuenta" width="100%">
+                        <table class="dataTable" id="tbProveedorCuenta" width="100%" style="display:none;">
                             <thead class="bg-light-purple">
                                 <tr>
                                     <td>Nombre del documento</td>
@@ -185,20 +185,27 @@
                                         <td>@(cuenta.DocumentoAutorizado ? "Si": "No")</td>
                                         <td>
                                             <a href="http://localhost:54535/api/Proveedor/Documento?image=@cuenta.NombreArchivo" download="archivo">
-                                                @if(cuenta.TipoArchivo == "pdf")
-                                                {
-                                                    <img class="icon" src="~/Content/Images/pdf-icon.png" />
-                                                }
-                                                else
-                                                {
-                                                    <img class="icon" src="http://localhost:54535/api/Proveedor/Documento?image=@cuenta.NombreArchivo" />
-                                                }
+                                                <img src="~/Content/Images/descargar.png" width="30" />
                                             </a>
                                         </td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
+
+                        @foreach (var cuenta in ViewBag.ProveedorDocumentoList)
+                        {
+                        <div class="col-sm-6 mt-2" style="border:solid 1px #c6c7cb; padding:10px;">
+                            <div class="row">
+                                <div class="col-sm-10"> <label style="font-weight:600;"> @cuenta.DescripcionDocumento</label> </div>
+                                <div class="col-sm-2">
+                                    <a href="http://localhost:54535/api/Proveedor/Documento?image=@cuenta.NombreArchivo" download="archivo">
+                                        <img src="~/Content/Images/descargar.png" width="30" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        }
                     </div>
                 }
             </div>

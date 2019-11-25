@@ -8,8 +8,8 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <div class="row">
     <div class="col-md-12">
-        <div class="card mt-4">
-            <div class="card-body">
+        <div class="mt-4">
+            <div class="">
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item" style="width:50%">
                         <a class="nav-link active" href="#tbInfoBancaria" role="tab" data-toggle="tab">Información Bancaria</a>
@@ -34,8 +34,10 @@
                         <div class="col100" style="font-size:14px;">
                             Información Financiera
                         </div>
-                        <table id="TableDocumento">
-                        </table>
+                        @*<table id="TableDocumento">
+                        </table>*@
+
+                        <div id="PanelDocumentos" style="font-size:12px;"></div>
                     </div>
 
                 </div>
@@ -136,11 +138,25 @@
                  $("#TableDocumento").DataTable().destroy();
 
                  $("#TableDocumento").append('<tbody>');
+                 console.log("Documentos", data);
                  for (i = 0; i < data.length; i++) {
 
                      $("#TableDocumento").append('<tr>' +
                          '<td style="dislay: none;"><b>' + data[i].NombreDocumento + '</b></td>' +
                          '<td style="dislay: none;"><button class="btn-descargar">Descargar</button></tr>'
+                     );
+
+                     $("#PanelDocumentos").append(
+                         '<div class="col-sm-6 mt-2" style="border:solid 1px #c6c7cb; padding:10px;">'+
+                            '<div class="row">'+
+                                '<div class="col-sm-10"> <label style="font-weight:600;">' + data[i].NombreDocumento + '</label> </div>'+
+                                '<div class="col-sm-2">'+
+                                    '<a href="http://localhost:54535/api/Proveedor/Documento?image=" download="archivo">'+
+                                        '<img src="/Content/Images/descargar.png" width="30" />'+
+                                    '</a>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'
                      );
                  }
                  $("#TableDocumento").append('</tbody>');
