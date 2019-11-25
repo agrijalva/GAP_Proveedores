@@ -207,6 +207,7 @@
     <Content Include="Content\Css\infoCuenta.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\fonts\Open_Sans\LICENSE.txt" />
+    <Content Include="Content\Gestor.css" />
     <Content Include="Content\Images\fr-fr\eiffel.jpg" />
     <Content Include="Content\Images\fr-fr\welcome.jpg" />
     <Content Include="Content\Images\France.png" />

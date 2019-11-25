@@ -10,6 +10,7 @@
     @Scripts.Render("~/bundles/modernizr")
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css" />
+    <link href="~/Content/Gestor.css" rel="stylesheet" />
 </head>
 <body>
     <div class="col-sm-12">
@@ -44,19 +45,19 @@
                         <li class="nav-item active">
                             @*@Html.ActionLink("Facturas", "InformacionBF", "AltaProveedor", new { @class = "nav-link" })*@
                             @*<a class="nav-link" href="Index">Facturas <span class="sr-only"></span></a>*@
-                            <a href="@Url.Action("Index", "Gestion")">Facturas</a>
+                            <a class="nav-link" href="@Url.Action("Index", "Gestion")">Facturas</a>
                         </li>
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             @*<a class="nav-link" href="SolicitudFacturacion">Solicitud de facturación <span class="sr-only"></span></a>*@
-                            <a href="@Url.Action("SolicitudFacturacion", "Gestion")">Solicitud de facturación</a>
+                            <a class="nav-link" href="@Url.Action("SolicitudFacturacion", "Gestion")">Solicitud de facturación</a>
                         </li>
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             @*<a class="nav-link" href="SolicitudCotizacion">Solicitud de cotización <span class="sr-only"></span></a>*@
-                            <a href="@Url.Action("SolicitudCotizacion", "Gestion")">Solicitud de cotización</a>
+                            <a class="nav-link" href="@Url.Action("SolicitudCotizacion", "Gestion")">Solicitud de cotización</a>
                         </li>
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             @*<a class="nav-link" href="OrdenCompra">Órden de compra<span class="sr-only"></span></a>*@
-                            <a href="@Url.Action("OrdenCompra", "Gestion")">Órden de compra</a>
+                            <a class="nav-link" href="@Url.Action("OrdenCompra", "Gestion")">Órden de compra</a>
                         </li>
                         @*<li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="Gestion/SolicitudFacturacion" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
