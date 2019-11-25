@@ -50,12 +50,12 @@
             </li>
         </ul>
         @model EPROCUREMENT.GAPPROVEEDOR.Entities.Proveedor.ProveedorInformacionFinanciera
-        @using (Html.BeginForm("InformacionBF", "AltaProveedor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("InformacionBF", "AltaProveedor", FormMethod.Get))
         {
         <div class="tab-content" style="background-color:white; padding: 15px;">
 
             <div role="tabpanel" class="tab-pane fade in active show" id="IB">
-                @if (ViewBag.UsuarioEstatus == 4)
+                @if (ViewBag.UsuarioInfo.IdEstatus == 4)
                 {
                     <div class="col100" style="font-size:14px;">
                         <b>Por favor llena la siguiente información</b>
@@ -134,7 +134,7 @@
 
             </div>
             <div role="tabpanel" class="tab-pane fade" id="IF">
-                @if (ViewBag.UsuarioEstatus == 4)
+                @if (ViewBag.UsuarioInfo.IdEstatus == 4)
                 {
                     <div class="col100" style="font-size:12px;">
                         @for (int idx = 0; idx < Model.CatalogoDocumentoList.Count; idx++)
@@ -193,7 +193,7 @@
             </div>
 
             <hr />
-            @if (ViewBag.UsuarioEstatus == 4)
+            @if (ViewBag.UsuarioInfo.IdEstatus == 4)
             {
             <div class="row mt-4">
                 <div class="col-sm-6">&nbsp;</div>
@@ -479,18 +479,21 @@ table.dataTable tbody tr {
                         success: function (result) {
                             console.log(result);
 
-                            $("#cuenta").val('');
-                            $("#idBanco").val(0);
-                            $("#clave").val('');
-                            $("#idTipoCuenta").val(0);
-                            $("#cuenta").removeClass('is-invalid');
-                            $("#idBanco").removeClass('is-invalid');
-                            $("#clave").removeClass('is-invalid');
-                            $("#idTipoCuenta").removeClass('is-invalid');
+                            //window.location.href = '/AltaProveedor/InformacionBF/' + '@ViewBag.UsuarioInfo.IdProveedor';
+                            window.location.href = '/AltaProveedor/InformacionBF/';
 
-                            for (var j = 0; j < docs.length; j++) {
-                                $("#CatalogoDocumentoList_" + j + "__File").val('');
-                            }
+                            //$("#cuenta").val('');
+                            //$("#idBanco").val(0);
+                            //$("#clave").val('');
+                            //$("#idTipoCuenta").val(0);
+                            //$("#cuenta").removeClass('is-invalid');
+                            //$("#idBanco").removeClass('is-invalid');
+                            //$("#clave").removeClass('is-invalid');
+                            //$("#idTipoCuenta").removeClass('is-invalid');
+
+                            //for (var j = 0; j < docs.length; j++) {
+                            //    $("#CatalogoDocumentoList_" + j + "__File").val('');
+                            //}
                         },
                     });
                 }
