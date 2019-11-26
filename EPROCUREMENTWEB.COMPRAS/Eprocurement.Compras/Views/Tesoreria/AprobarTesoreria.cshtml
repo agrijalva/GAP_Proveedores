@@ -39,7 +39,7 @@
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <button id="buscar" class="btn btn-search btn-purple float-right">
+                        <button id="buscar" class="btn btn-search btn-purple float-right" onclick="fn_buscarTesoreria()">
                             <i class="fas fa-search"></i> Buscar
                         </button>
                     </div>
@@ -166,7 +166,7 @@
                      '<td>Proveedor</td>' +
                      '<td>Email</td>' +
                      '<td>Estatus</td>' +
-                     '<td  align="right">Estatus AX</td>' +
+                     '<td  align="center">Estatus AX</td>' +
                      '<td>Ver</td></tr></thead>'
                  );
                   //("#Table").DataTable().destroy();
@@ -201,9 +201,9 @@
                          '<td style="dislay: none;"><b>' + data[i].RFC + '</b></td>' +
                          '<td style="dislay: none;">' + data[i].NombreEmpresa + '</td>' +
                          '<td style="dislay: none;">' + data[i].Email + '</td>' +
-                         '<td style="dislay: none; color:'+ color +';">' + data[i].Estatus + '</td>' +
+                         '<td style="dislay: none; color:'+ color +';" width="180"><b>' + data[i].Estatus + '</b></td>' +
                          //'<td style="dislay: none;">' + data[i].Estatus + '</td>' +
-                         '<td align="right" style="dislay: none;"><img src="/Content/Images/component.png" width="30" /></td>' +
+                         '<td align="center" style="dislay: none;"><img src="/Content/Images/component.png" width="30" /></td>' +
                          //'<td style="dislay: none;">' + data[i].AXNumeroProveedor + '</td>' +
                          '<td style="dislay: none;"><div class="btn-circle">' + link + '</div></td>' + '</tr>'
                      );

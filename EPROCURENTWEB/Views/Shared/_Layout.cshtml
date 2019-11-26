@@ -13,8 +13,8 @@
     <link href="~/Content/Gestor.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="col-sm-12">
-        <div class="row panel-header">
+    <div class="" style="width:100%; background-color:white;">
+        <div class="row panel-header" style="width:100%;">
             <div class="col-sm-4">
                 <img class="gap-logo" src="~/Content/Images/logo-gap-color.png" />
             </div>
@@ -25,18 +25,27 @@
                 </h1>
             </div>
 
-            <div class="col-sm-4">
+            <div class="" style="flex: 0 0 33.333333%; max-width: 33.333333%;">
                 <table width="100%" class="panel-user-control">
                     <tr>
-                        <td style="border:none" valign="middle">
+                        @*<td style="border:none" valign="middle">
                             <div class="g-user" id="userInfo">Usuario</div>
-                            @*<span id="userInfo" class="g-user"></span>*@
                         </td>
                         <td width="32px" style="border:none">
                             <img class="padding-user" src="~/Content/Images/user-photo.png" width="25" />
+                        </td>*@
+                        <td>
+                            <div class="menu-user">
+                                <span style="font-weight:600; font-size:12px;" id="userInfo"></span> <img class="padding-user" src="~/Content/Images/user-photo.png" width="25" />
+                                <ul>
+                                    <li><a href="@Url.Action("Index", "MiCuenta")">Mi cuenta</a></li>
+                                    <li><a href="">Contactos</a></li>
+                                    <li><a href="@Url.Action("Index", "Seguridad")">Cerrar sesión</a></li>
+                                </ul>
+                            </div>
                         </td>
                         <td width="32px" style="border:none; border-left:solid 1px #f9f9f9;">
-                            <a href="@Url.Action("Index", "SeguridadAD")">
+                            <a href="@Url.Action("Index", "Seguridad")">
                                 <img class="padding-user cursor" src="~/Content/Images/shutdow-icon.png" width="25" />
                             </a>
                         </td>
@@ -46,7 +55,7 @@
         </div>
     </div>
 
-    <div class="col-sm-12 row-nav">
+    <div class="row-nav" style="width:100%;">
         <div class="container">
             <nav class="navbar navbar-expand-lg">
                 @*<a class="navbar-brand" href="#">Navbar</a>*@
