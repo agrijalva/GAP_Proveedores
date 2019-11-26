@@ -339,18 +339,27 @@
                                             </span>&nbsp;&nbsp;
                                             @Html.ValidationMessage("ErrorEmpresa", new { @class = "label-formulario field-validation-error" })
                                             @Html.Hidden("errorResultado", (int)ViewBag.errorResultado)
-                                            @for (int idx = 0; idx < 5; idx++)
+                                            @Html.Hidden("cantidadGiro", (int)ViewBag.cantidadGiro)
+
+                                            
+                                            @for (int idx = 0; idx < ViewBag.GiroList.Count; idx++)
                                             {
-                                                @*@Html.HiddenFor(model => model.ProveedorGiroList[idx].IdProveedorGiro)*@
                                                 <div class="form-group col-md-6 ">
                                                     <div class="col-md-12">
-                                                        @Html.DropDownListFor(x => x.ProveedorGiroList[idx].IdCatalogoGiro, new SelectList(ViewBag.GiroList, "IdGiro", "GiroNombre"), @EprocurementWeb.GlobalResources.RHome.DefaultSelect, new { @class = "form-control" })
+                                                        @if (idx == 0)
+                                                        {
+                                                            @Html.DropDownListFor(x => x.ProveedorGiroList[idx].IdCatalogoGiro, new SelectList(ViewBag.GiroList, "IdGiro", "GiroNombre"), @EprocurementWeb.GlobalResources.RHome.DefaultSelect, new { @class = "form-control" })
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.DropDownListFor(x => x.ProveedorGiroList[idx].IdCatalogoGiro, new SelectList(ViewBag.GiroList, "IdGiro", "GiroNombre"), @EprocurementWeb.GlobalResources.RHome.DefaultSelect, new { @class = "form-control control-display-none" })
+                                                        }
                                                     </div>
                                                 </div>
                                             }
                                             <div class="row">
                                                 <div class="col-sm-12">
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btnStyleGray col-md-3">Agregar</button>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="btnGiro" class="btnStyleGray col-md-3">Agregar</button>
                                                 </div>
                                             </div>
 
@@ -495,7 +504,41 @@
             })
         }
          var url = '@Url.Action("Contact", "Home")';
-        if (window.location.hash == "#success" ){
+        
+        $("#btnGiro").click(function () {
+            console.log($("#cantidadGiro").val());
+            for (var p = 0; p < $("#cantidadGiro").val(); p++) {
+                var nombre = "#ProveedorGiroList_" + p + "__IdCatalogoGiro";
+                console.log($(nombre + ' option:selected').val());
+                if ($(nombre).hasClass("control-display-none")) {
+                    bloquearOpciones(p);
+                    $(nombre).removeClass("control-display-none");
+                    break;
+                } else if ($(nombre + ' option:selected').val() < 1) {
+                    Swal.fire({
+                        position: 'middle',
+                        icon: 'warning',
+                        title: '¡Seleccion de Giro!',
+                        html: '<p class="text">Aun tiene opciones disponibles.</p> ',
+                        showConfirmButton: true,
+                        timer: 3000
+                    })
+                    break;
+                }
+                //$('#PaisProveedor option[value="'+value+'"]').attr("disabled", true);
+            }
+        });
+
+        function bloquearOpciones(posicion) {
+            var nombre = "#ProveedorGiroList_" + posicion + "__IdCatalogoGiro";
+            for (p = 0; p < posicion; p++) {
+                var nombreValor = "#ProveedorGiroList_" + p + "__IdCatalogoGiro";
+                $(nombre + ' option[value="' + $(nombreValor + ' option:selected').val() + '"]').attr("disabled", true);
+            }
+        }
+
+
+        if (window.location.hash == "#success") {
             Swal.fire({
                 position: 'middle',
                 icon: 'success',
@@ -516,10 +559,6 @@
 
             //location.hash = '#';
         }
-
-
-
-
 
         $("#PaisProveedor").change(function () {
             var dID = $('#PaisProveedor option:selected').val();
