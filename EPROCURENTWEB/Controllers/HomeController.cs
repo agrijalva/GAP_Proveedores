@@ -65,7 +65,14 @@ namespace EprocurementWeb.Controllers
                 proveedor.Direccion.DireccionValidada = true;
                 //proveedor.Direccion.IdPais = proveedor.i
                 CargarCatalogos();
-                ViewBag.GiroList = giroList;
+                ViewBag.GiroList = giroList; if (giroList != null)
+                {
+                    ViewBag.cantidadGiro = giroList.Count;
+                }
+                else
+                {
+                    ViewBag.cantidadGiro = 0;
+                }
                 ViewBag.ZonaHorariaList = zonaHorariaList;
                 ViewBag.NacionalidadList = nacionalidadList;
                 ViewBag.PaisList = paisList;

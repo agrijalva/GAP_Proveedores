@@ -9,8 +9,7 @@ namespace EprocurementWeb.Models
 {
     public class ProveedorModel
     {
-        public int IdProveedor { get; set; }
-        //[StringLength(200, ErrorMessageResourceName = "Mensaje_Error_StringLength", ErrorMessageResourceType = typeof(RHome), MinimumLength = 5)]
+        public int IdProveedor { get; set; }        
 
         [Required(ErrorMessageResourceType = typeof(RHome), ErrorMessageResourceName = "Mensaje_Error_Required")]
         [Display(ResourceType = typeof(RHome), Name = "NameOfCompany")] 
@@ -20,6 +19,7 @@ namespace EprocurementWeb.Models
         [Display(ResourceType = typeof(RHome), Name = "BName")]
         public string RazonSocial { get; set; }
 
+        [StringLength(13, ErrorMessageResourceName = "Mensaje_Error_StringLength", ErrorMessageResourceType = typeof(RHome), MinimumLength = 12)]
         [Required(ErrorMessageResourceType = typeof(RHome), ErrorMessageResourceName = "Mensaje_Error_Required")]
         [Display(ResourceType = typeof(RHome), Name = "RFC")]
         public string RFC { get; set; }

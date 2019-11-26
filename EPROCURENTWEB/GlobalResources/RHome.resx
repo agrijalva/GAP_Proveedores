@@ -294,4 +294,7 @@
   <data name="Message_Error_Required_Document" xml:space="preserve">
     <value>El documento es requerido</value>
   </data>
+  <data name="Mensaje_Error_StringLength" xml:space="preserve">
+    <value>El campo {0} debe tener mínimo {2} y máximo {1} caracteres</value>
+  </data>
 </root>

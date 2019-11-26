@@ -746,8 +746,12 @@
         });
 
         $("#RFC").on("change", function () {
-            console.log(this.value);
-            ValidaRFC(this.value);            
+            var value = $(this).val();
+            console.log(value.length);
+            if (value.length == 12 || value.length == 13) {
+                console.log(value.length);
+                ValidaRFC(value); 
+            }           
         });
 
         $("#Mexicana").on("change", function () {

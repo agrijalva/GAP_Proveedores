@@ -282,4 +282,7 @@
   <data name="TituloTerminos" xml:space="preserve">
     <value>Es necesario aceptar los términos y condiciones.</value>
   </data>
+  <data name="Mensaje_Error_StringLength" xml:space="preserve">
+    <value>Solo se permiten minimo {0} y maximo {1} caracteres</value>
+  </data>
 </root>

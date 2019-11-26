@@ -367,6 +367,15 @@ namespace EprocurementWeb.GlobalResources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El campo {0} debe tener mínimo {2} y máximo {1} caracteres.
+        /// </summary>
+        public static string Mensaje_Error_StringLength {
+            get {
+                return ResourceManager.GetString("Mensaje_Error_StringLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Mensaje.
         /// </summary>
         public static string Message {
