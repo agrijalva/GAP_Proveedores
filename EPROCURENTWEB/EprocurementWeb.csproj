@@ -282,6 +282,9 @@
     <Content Include="scripts\bootstrap.js.map" />
     <Content Include="scripts\bootstrap.bundle.min.js.map" />
     <Content Include="scripts\bootstrap.bundle.js.map" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -1,9 +1,15 @@
 ﻿@model EprocurementWeb.Models.UsuarioModel
 @{
     ViewBag.Title = "Recuperación de contraseña";
-    Layout = "~/Views/Shared/_LayoutInit.cshtml";
+    Layout = null; /* "~/Views/Shared/_LayoutInit.cshtml";*/
 }
 
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/modernizr")
+@Scripts.Render("~/bundles/shared")
+@Scripts.Render("~/bundles/bootstrap")
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <link href="~/Content/validacionProveedor.css" rel="stylesheet" />
 
 <div class="row panel-header">

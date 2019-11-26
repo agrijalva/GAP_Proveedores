@@ -48,6 +48,7 @@
     <Compile Include="Catalogo\BancoDTO.cs" />
     <Compile Include="Catalogo\CatalogoDocumentoDTO.cs" />
     <Compile Include="Catalogo\EstadoDTO.cs" />
+    <Compile Include="Catalogo\EstatusProveedorDTO.cs" />
     <Compile Include="Catalogo\FormatoArchivoDTO.cs" />
     <Compile Include="Catalogo\GiroDTO.cs" />
     <Compile Include="Catalogo\IdiomaDTO.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Proveedor\TmpProveedoDTO.cs" />
     <Compile Include="Request\ActualizaPasswordRequestDTO.cs" />
     <Compile Include="Request\EstadoRequestDTO.cs" />
+    <Compile Include="Request\EstatusProveedorRequestDTO.cs" />
     <Compile Include="Request\FormatoArchivoRequestDTO.cs" />
     <Compile Include="Request\LoginUsuarioRequestDTO.cs" />
     <Compile Include="Request\ProveedorAprobarRequestDTO.cs" />
