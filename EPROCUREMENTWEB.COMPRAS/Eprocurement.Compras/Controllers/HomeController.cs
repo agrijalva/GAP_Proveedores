@@ -251,6 +251,12 @@ namespace Eprocurement.Compras.Controllers
             {
                 ProveedorInformacionFinanciera informacionFinanciera = new ProveedorInformacionFinanciera();
                 informacionFinanciera = new BusinessLogic().GetProveedorInfoFinanciera(idProveedor);
+
+                ProveedorCuentaResponseDTO proveedorCuentaResponse = new BusinessLogic().GetProveedorCuentaAeropuertoList(new ProveedorCuentaRequestDTO
+                {
+                    ProveedorCuentaList = informacionFinanciera.ProveedorCuentaList
+                });
+
                 //informacionFinanciera.ProveedorCuentaListRegistro = new List<ProveedorCuentaDTO>();
                 //informacionFinanciera.ProveedorCuentaListRegistro.Add(new ProveedorCuentaDTO {
                 //    CLABE = "123456789012345678",
@@ -259,7 +265,7 @@ namespace Eprocurement.Compras.Controllers
                 //    TipoCuenta = "Débito"
                 //});
 
-                return Json(informacionFinanciera.ProveedorCuentaList, JsonRequestBehavior.AllowGet);
+                return Json(proveedorCuentaResponse.ProveedorCuentaList, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -281,7 +287,14 @@ namespace Eprocurement.Compras.Controllers
                 //    RutaDocumento = "localhost"
                 //});
 
-                return Json(informacionFinanciera.CatalogoDocumentoList, JsonRequestBehavior.AllowGet);
+                ProveedorDocumentoRequestDTO proveedorDocumentoRequest = new ProveedorDocumentoRequestDTO
+                {
+                    IdProveedor = idProveedor
+                };
+
+                var proveedorDocumentoResponse = new BusinessLogic().GetProveedorDocumentoList(proveedorDocumentoRequest);
+
+                return Json(proveedorDocumentoResponse.ProveedorDocumentoList, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

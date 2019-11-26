@@ -35,7 +35,7 @@
                             Información Financiera
                         </div>
                         @*<table id="TableDocumento">
-                        </table>*@
+                            </table>*@
 
                         <div id="PanelDocumentos" style="font-size:12px;"></div>
                     </div>
@@ -46,8 +46,8 @@
         <div class="row mt-5">
             <div class="col-md-3">
                 @*<a href="@Url.Action("AprobarTesoreria", "Tesoreria")" class="btnStyle btnWhite">
-                    <span>Documentacion pendiente</span>
-                </a>*@
+                        <span>Documentacion pendiente</span>
+                    </a>*@
                 <input id="btnDocumentacion" class="btnStyle btnWhite" type="button" data-toggle="modal" data-target="#modalDocumentacion" value="Documentacion pendiente" />
             </div>
             <div class="col-md-3">
@@ -57,7 +57,7 @@
                 <a href="@Url.Action("AprobarTesoreria", "Tesoreria")">
                     <input id="btnCancelar" class="btnStyle btnWhite" type="button" value="Cancelar" />
                 </a>
-                
+
             </div>
             <div class="col-md-3">
                 <input id="btnAprobar" class="btnStyle" type="button" value="Aceptar" />
@@ -118,8 +118,34 @@
     </div>
 </div>
 
+<!-- Modal Aeropuertos -->
+<div class="modal fade" id="modalAeropuertos" tabindex="-1" role="dialog" aria-labelledby="aeropuertoModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-purple">
+                <h5 class="modal-title" id="aeropuertoModalCenterTitle">Aeropuertos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div id="aeropuertosContainer" class="col-sm-12">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btnStyle btn-modal-aceptar">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script type="text/javascript">
+    var proveedorCuentaList = [];
+
     var fn_CargarDoctos = function (idProveedor) {
         var jsonData = JSON.stringify({ idProveedor: idProveedor });
          $.ajax({
@@ -151,7 +177,7 @@
                             '<div class="row">'+
                                 '<div class="col-sm-10"> <label style="font-weight:600;">' + data[i].NombreDocumento + '</label> </div>'+
                                 '<div class="col-sm-2">'+
-                                    '<a href="http://localhost:54535/api/Proveedor/Documento?image=" download="archivo">'+
+                                    '<a href="http://localhost:54535/api/Proveedor/Documento?image=' + data[i].NombreArchivo + '" download="archivo">'+
                                         '<img src="/Content/Images/descargar.png" width="30" />'+
                                     '</a>'+
                                 '</div>'+
@@ -179,9 +205,12 @@
              url: '@Url.Action("GetDetalleCuentaList", "Home")',
              data: jsonData,
              async: false,
-             success: function(data) {
+             success: function (data) {
+                 proveedorCuentaList = data;
+                 console.log(proveedorCuentaList);
                  $("#Table").html('');
                  $("#Table").append('<thead class="bg-light-purple"><tr>' +
+                     '<td style="display:none">IdProveedorCuenta</td>' +
                      '<td>Cuenta</td>' +
                      '<td>NombreBanco</td>' +
                      '<td>CLABE</td>' +
@@ -195,11 +224,13 @@
                  for (i = 0; i < data.length; i++) {
 
                      $("#Table").append('<tr>' +
-                         '<td style="dislay: none;"><b>' + data[i].Cuenta + '</b></td>' +
-                         '<td style="dislay: none;">' + data[i].NombreBanco + '</td>' +
-                         '<td style="dislay: none;">' + data[i].CLABE + '</td>' +
-                         '<td style="dislay: none;">' + data[i].TipoCuenta + '</td>' +
-                         '<td style="dislay: none;"><a href="">Ver</a></td>' + '</tr>'
+                         //'<td style="display:none"><b>' + data[i].TipoCuenta + '</b></td>' +
+                         '<td style="display:none">' + data[i].IdProveedorCuenta + '</td>' +
+                         '<td><b>' + data[i].Cuenta + '</b></td>' +
+                         '<td>' + data[i].NombreBanco + '</td>' +
+                         '<td>' + data[i].CLABE + '</td>' +
+                         '<td>' + data[i].TipoCuenta + '</td>' +
+                         '<td><a class="verAeropuertos" href="#" >Ver</a></td>' + '</tr>'
                      );
                  }
                  $("#Table").append('</tbody>');
@@ -217,9 +248,30 @@
     $(document).ready(function () {
         var url = '@Url.Action("AprobarTesoreria", "Tesoreria")';
         var idProveedor = $("#IdProveedor").val();
+        
         console.log(idProveedor);
         fn_CargarCuentas(idProveedor);
         fn_CargarDoctos(idProveedor);
+
+        var table = $('#Table').DataTable();
+ 
+        $('#Table tbody').on( 'click', '.verAeropuertos', function () {
+            var data = table.row($(this).closest('tr')).data()[0];
+            console.log(data);
+            console.log(proveedorCuentaList);
+            let seleccionado = proveedorCuentaList.filter(cuenta => cuenta.IdProveedorCuenta == data);
+            console.log('elemento seleccionado');
+            console.log(seleccionado);
+            console.log(seleccionado[0].AeropuertoList);
+            
+            let aeropuertos = '';
+            for (let i = 0; i < seleccionado[0].AeropuertoList.length; i++) {
+                aeropuertos += (i + 1) + ' ' + seleccionado[0].AeropuertoList[i].Nombre + '<br />';
+            }
+            $('#aeropuertosContainer').html(aeropuertos);
+
+            $('#modalAeropuertos').modal('show');
+        });
 
         $("#btnAprobar").click(function () {
             obs = "";
