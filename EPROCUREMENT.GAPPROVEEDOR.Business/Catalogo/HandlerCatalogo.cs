@@ -30,6 +30,16 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Catalogo
             return response;
         }
 
+        public EstatusProveedorResponseDTO GetEstatusProveedorList()
+        {
+            EstatusProveedorResponseDTO response = catalogoData.GetEstatusProveedorList();
+            if (!response.Success)
+            {
+                response.ErrorList = new List<ErrorDTO> { new ErrorDTO { Codigo = "", Mensaje = string.Format("No fue posible recuperar datos disponibles o no se encontro alguna solicitud en proceso") } };
+            }
+            return response;
+        }
+        
         /// <summary>
         /// Metodo para obtener una lista de Aeropuertos
         /// </summary>
