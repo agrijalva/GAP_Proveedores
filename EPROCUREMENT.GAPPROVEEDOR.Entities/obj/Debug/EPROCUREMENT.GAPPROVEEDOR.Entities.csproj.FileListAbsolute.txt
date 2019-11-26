@@ -18,3 +18,4 @@ C:\Users\Usuario\Source\Repos\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities
 C:\Users\Usuario\Source\Repos\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.csprojAssemblyReference.cache
 C:\Users\Usuario\Source\Repos\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.dll
 C:\Users\Usuario\Source\Repos\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.pdb
+C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.csproj.CoreCompileInputs.cache

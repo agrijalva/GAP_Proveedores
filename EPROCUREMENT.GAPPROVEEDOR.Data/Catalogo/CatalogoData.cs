@@ -60,6 +60,45 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             return response;
         }
 
+        public EstatusProveedorResponseDTO GetEstatusProveedorList()
+        {
+            EstatusProveedorResponseDTO response = new EstatusProveedorResponseDTO();
+            response.EstatusProveedorList = new List<EstatusProveedorDTO>();
+            EstatusProveedorDTO estatus = null;
+
+            try
+            {
+
+                using (var conexion = new SqlConnection(Helper.Connection()))
+                {
+                    conexion.Open();
+                    var cmd = new SqlCommand("[dbo].[usp_EPROCUREMENT_EstatusProveedor_GETL]", conexion)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            estatus = new EstatusProveedorDTO();
+                            estatus.IdEstatusProveedor = Convert.ToInt32(reader["IdEstatusProveedor"]);
+                            estatus.Estatus = reader["Estatus"].ToString();
+                            estatus.EstatusDescripcion = reader["EstatusDescripcion"].ToString();
+                            response.EstatusProveedorList.Add(estatus);
+                        }
+                    }
+                }
+                response.Success = true;
+            }
+            catch (Exception exception)
+            {
+
+            }
+
+            return response;
+        }
+        
         /// <summary>
         /// Obtiene un listado de Giro
         /// </summary>

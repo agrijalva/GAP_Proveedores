@@ -1083,6 +1083,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                         while (reader.Read())
                         {
                             proveedorCuenta = new ProveedorCuentaDTO();
+                            proveedorCuenta.IdProveedorCuenta = Convert.ToInt32(reader["IdProveedorCuenta"]);
                             proveedorCuenta.Cuenta = reader["Cuenta"].ToString();
                             proveedorCuenta.CLABE = reader["CLABE"].ToString();
                             proveedorCuenta.NombreBanco = reader["NombreBanco"].ToString();

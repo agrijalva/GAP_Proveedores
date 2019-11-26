@@ -17,6 +17,14 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
             return paisResponseDTO;
         }
 
+        [HttpGet]
+        [Route("EstatusProveedorGetList")]
+        public EstatusProveedorResponseDTO GetEstatusProveedorList()
+        {
+            var paisResponseDTO = new HandlerCatalogo().GetEstatusProveedorList();
+
+            return paisResponseDTO;
+        }
         // GET: api/Aeropuerto
         [HttpGet]
         [Route("AeropuertoGetList")]

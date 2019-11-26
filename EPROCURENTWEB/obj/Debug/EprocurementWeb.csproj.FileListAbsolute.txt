@@ -172,3 +172,4 @@ C:\Users\Usuario\Source\Repos\GAP_Proveedores\EPROCURENTWEB\obj\Debug\en-US\Epro
 C:\Users\Usuario\Source\Repos\GAP_Proveedores\EPROCURENTWEB\obj\Debug\EprocurementWeb.csproj.CopyComplete
 C:\Users\Usuario\Source\Repos\GAP_Proveedores\EPROCURENTWEB\obj\Debug\EprocurementWeb.dll
 C:\Users\Usuario\Source\Repos\GAP_Proveedores\EPROCURENTWEB\obj\Debug\EprocurementWeb.pdb
+C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCURENTWEB\obj\Debug\EprocurementWeb.csproj.CoreCompileInputs.cache

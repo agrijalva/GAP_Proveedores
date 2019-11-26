@@ -315,3 +315,4 @@ C:\Users\Usuario\Source\Repos\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Host.Htt
 C:\Users\Usuario\Source\Repos\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Host.Http\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Host.Http.csproj.CopyComplete
 C:\Users\Usuario\Source\Repos\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Host.Http\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Host.Http.dll
 C:\Users\Usuario\Source\Repos\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Host.Http\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Host.Http.pdb
+C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Host.Http\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Host.Http.csproj.CoreCompileInputs.cache
