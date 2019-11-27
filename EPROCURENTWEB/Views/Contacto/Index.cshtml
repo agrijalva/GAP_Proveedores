@@ -90,7 +90,15 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             })
-                            setTimeout(function () { window.location.href = url; }, 1500);
+                            setTimeout(function () { fn_consulta();; }, 1500);
+                        } else {
+                            Swal.fire({
+                                position: 'middle',
+                                icon: 'error',
+                                title: 'Ocurrio un error al procesar la solicitud',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
                         }
 
                     },
@@ -125,14 +133,24 @@
                      var btnEliminar = '<input type="button" class="fas fa-eye icon-color" onclick="fn_eliminar(_idContacto_)" />';
                      linkEdit = linkEdit.replace('_idContacto_', data[i].IdContacto);
                      btnEliminar = btnEliminar.replace('_idContacto_', data[i].IdContacto)
-
-                     $("#Table").append('<tr>' +
-                         '<td style="dislay: none;"><b>' + data[i].NombreContacto + '</b></td>' +
-                         '<td style="dislay: none;">' + data[i].Email + '</td>' +
-                         '<td style="dislay: none;">' + data[i].Tipo + '</td>' +
-                         '<td style="dislay: none;"><div class="btn-circle">' + linkEdit + '</div></td>' +
-                         '<td style="dislay: none;"><div class="btn-circle">' + btnEliminar + '</div></td>' + '</tr>'
-                     );
+                     if (data[i].ContactoPrincipal == 0) {
+                         $("#Table").append('<tr>' +
+                             '<td style="dislay: none;"><b>' + data[i].NombreContacto + '</b></td>' +
+                             '<td style="dislay: none;">' + data[i].Email + '</td>' +
+                             '<td style="dislay: none;">' + data[i].Tipo + '</td>' +
+                             '<td style="dislay: none;"><div class="btn-circle">' + linkEdit + '</div></td>' +
+                             '<td style="dislay: none;"><div class="btn-circle">' + btnEliminar + '</div></td>' + '</tr>'
+                         );
+                     }
+                     else {
+                         $("#Table").append('<tr>' +
+                             '<td style="dislay: none;"><b>' + data[i].NombreContacto + '</b></td>' +
+                             '<td style="dislay: none;">' + data[i].Email + '</td>' +
+                             '<td style="dislay: none;">' + data[i].Tipo + '</td>' +
+                             '<td style="dislay: none;"><div class="btn-circle">' + linkEdit + '</div></td>' +
+                             '<td style="dislay: none;"><div></div></td>' + '</tr>'
+                         );
+                     }
                  }
                  $("#Table").append('</tbody>');
 

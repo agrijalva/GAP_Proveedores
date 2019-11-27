@@ -136,6 +136,14 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
             return response;
         }
 
+        [HttpPost]
+        [Route("DeleteContacto")]
+        public ContactoResponseDTO DeleteContacto([FromBody]ContactoRequestDTO request)
+        {
+            var response = new HandlerProveedor().DeleteContacto(request);
+            return response;
+        }
+
         [HttpGet]
         [Route("Documento")]
         public HttpResponseMessage Documento(string image)

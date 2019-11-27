@@ -481,6 +481,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             contacto.IdZonaHoraria = Convert.ToInt32(reader["IdZonaHoraria"]);
                             contacto.IdPais = Convert.ToInt32(reader["IdPais"]);
                             contacto.IdIdioma = Convert.ToInt32(reader["IdIdioma"]);
+                            contacto.ContactoPrincipal = Convert.ToInt32(reader["ContactoPrincipal"]);
                             response.ContactoList.Add(contacto);
                         }
                     }
@@ -583,7 +584,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                 using (var conexion = new SqlConnection(Helper.Connection()))
                 {
                     conexion.Open();
-                    var cmdContacto = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorContacto_DEL]]", conexion);
+                    var cmdContacto = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorContacto_DEL]", conexion);
                     var contacto = request.Contacto;
                     cmdContacto.CommandType = CommandType.StoredProcedure;
                     cmdContacto.Parameters.Add(new SqlParameter("@IdContacto", contacto.IdContacto));

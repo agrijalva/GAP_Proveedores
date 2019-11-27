@@ -136,7 +136,7 @@ namespace EprocurementWeb.Controllers
             }
             catch(Exception ex)
             {
-
+                ModelState.AddModelError("ErrorGeneral", "Se generó un error al procesar la solicitud.");
             }
 
             return View(contactoItem);
@@ -183,7 +183,7 @@ namespace EprocurementWeb.Controllers
             }
             catch (Exception ex)
             {
-
+                ModelState.AddModelError("ErrorGeneral", "Se generó un error al procesar la solicitud.");
             }
 
             return View(contactoItem);
@@ -193,18 +193,31 @@ namespace EprocurementWeb.Controllers
         {
             try
             {
-                //BusinessLogic businessLogic = new BusinessLogic();
+                BusinessLogic businessLogic = new BusinessLogic();
+                var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
+                ContactoRequestDTO request = new ContactoRequestDTO();
+                request.Contacto = new ProveedorContactoDTO
+                {
+                    IdContacto = idContacto,
+                    IdProveedor = usuarioInfo.IdProveedor
+                };
+
+                var response = businessLogic.DeleteContacto(request);
+                if (response.Success)
+                {
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
                 //ProveedorAprobarRequestDTO request = new ProveedorAprobarRequestDTO();
                 //request.EstatusProveedor = new HistoricoEstatusProveedorDTO { IdProveedor = idProveedor, IdEstatusProveedor = estatus, IdUsuario = 3, Observaciones = observaciones };
 
                 //var response = businessLogic.SetProveedorEstatus(request);
-                return Json(true, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
 
                 return null;
             }
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
     }
 }

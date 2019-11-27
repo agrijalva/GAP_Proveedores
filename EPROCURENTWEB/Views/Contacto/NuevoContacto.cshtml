@@ -24,6 +24,8 @@
                         <div>
                             <div class="card-body">
                                 <div class="row">
+
+                                    @Html.ValidationMessage("ErrorGeneral", new { @class = "label-formulario field-validation-error" })
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             @Html.HiddenFor(model => model.IdProveedor)
