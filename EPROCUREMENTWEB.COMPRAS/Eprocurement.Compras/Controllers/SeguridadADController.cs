@@ -35,7 +35,7 @@ namespace Eprocurement.Compras.Controllers
                     if (usuarioDTO == null)
                     {
                         ViewBag.Error = "Usuario o contraseña invalida";
-                        return View("Index");
+                        return View("Index", "SeguridadAD");
                     }
 
                     Session["User"] = usuarioDTO;
@@ -43,27 +43,23 @@ namespace Eprocurement.Compras.Controllers
                     if (usuarioDTO.IdUsuarioRol == 2)
                     {
                         return RedirectToAction("Index", "Home");
-
                     }
                     else
                     {
                         return RedirectToAction("AprobarTesoreria", "Tesoreria");
-
                     }
-
-
                 }
                 catch (Exception ex)
                 {
                     ViewBag.Error = ex.Message;
-                    return View();
+                    return View("Index");
                 }
             }
 
             else
             {
                 ViewBag.Error = authenticationResult.ErrorMessage;
-                return View();
+                return View("Index");
             }
         }
 

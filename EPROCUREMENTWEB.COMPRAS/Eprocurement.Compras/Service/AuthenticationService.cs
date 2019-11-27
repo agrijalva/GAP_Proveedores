@@ -5,6 +5,7 @@ using EPROCUREMENT.GAPPROVEEDOR.Entities.Seguridad;
 using Microsoft.Owin.Security;
 using Newtonsoft.Json;
 using System;
+using System.Configuration;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Security.Claims;
@@ -14,7 +15,7 @@ namespace Eprocurement.Compras.Service
 {
     public class AuthenticationService
     {
-        private string GapActiveDirectory = "10.255.127.11";
+        private string GapActiveDirectory = ConfigurationManager.AppSettings["GapActiveDirectory"].ToString();
 
         private readonly IAuthenticationManager authenticationManager;
 
@@ -30,8 +31,6 @@ namespace Eprocurement.Compras.Service
             using (PrincipalContext principalContext = new PrincipalContext(ContextType.Domain, GapActiveDirectory))
             {
                 bool isValid = principalContext.ValidateCredentials(username, password);
-                //HARCODE
-                isValid = true;
                 if (isValid)
                 {
                     if (HttpContext.Current.Request.IsLocal)
@@ -48,7 +47,28 @@ namespace Eprocurement.Compras.Service
                             }
                             else
                             {
-                                val = "Acceso Invalido, Usuario local no existente";
+                                UsuarioDTO usuario = new BusinessLogic().AddUsuarioItem(username, password);
+                                if(usuarioDTO != null)
+                                {
+                                    UsuarioDTO u = new BusinessLogic().LoginUsuarioItem(username, password);
+                                    if (u != null)
+                                    {
+                                        var identity = CreateIdentity(username, usuarioDTO.IdUsuarioRol.ToString(), JsonConvert.SerializeObject(u));
+                                        authenticationManager.SignOut(LoginAuthentication.ApplicationCookie);
+                                        authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, identity);
+                                        return new AuthenticationResult();
+                                    }
+                                    else
+                                    {
+                                        val = "Acceso Invalido, Usuario local no existente";
+                                        return new AuthenticationResult(val);
+                                    }
+                                }
+                                else
+                                {
+                                    val = "Acceso Invalido, Usuario local no existente";
+                                    return new AuthenticationResult(val);
+                                }
                             }
                         }
                         catch (Exception ex)
@@ -73,14 +93,38 @@ namespace Eprocurement.Compras.Service
                         try
                         {
                             UsuarioDTO usuarioDTO = new BusinessLogic().LoginUsuarioItem(username, password);
-
-                            // if not, insert
-
-                            var identity = CreateIdentity(username, usuarioDTO.IdUsuarioRol.ToString(), JsonConvert.SerializeObject(usuarioDTO));
-                            authenticationManager.SignOut(LoginAuthentication.ApplicationCookie);
-                            authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, identity);
-
-                            return new AuthenticationResult();
+                            if (usuarioDTO != null)
+                            {
+                                var identity = CreateIdentity(username, usuarioDTO.IdUsuarioRol.ToString(), JsonConvert.SerializeObject(usuarioDTO));
+                                authenticationManager.SignOut(LoginAuthentication.ApplicationCookie);
+                                authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, identity);
+                                return new AuthenticationResult();
+                            }
+                            else
+                            {
+                                UsuarioDTO usuario = new BusinessLogic().AddUsuarioItem(username, password);
+                                if (usuarioDTO != null)
+                                {
+                                    UsuarioDTO u = new BusinessLogic().LoginUsuarioItem(username, password);
+                                    if (u != null)
+                                    {
+                                        var identity = CreateIdentity(username, usuarioDTO.IdUsuarioRol.ToString(), JsonConvert.SerializeObject(u));
+                                        authenticationManager.SignOut(LoginAuthentication.ApplicationCookie);
+                                        authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, identity);
+                                        return new AuthenticationResult();
+                                    }
+                                    else
+                                    {
+                                        val = "Acceso Invalido, Usuario local no existente";
+                                        return new AuthenticationResult(val);
+                                    }
+                                }
+                                else
+                                {
+                                    val = "Acceso Invalido, Usuario local no existente";
+                                    return new AuthenticationResult(val);
+                                }
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -111,8 +155,6 @@ namespace Eprocurement.Compras.Service
             identity.AddClaim(new Claim(ClaimTypes.Name, userPrincipal));
             identity.AddClaim(new Claim(ClaimTypes.Role, rol));
             identity.AddClaim(new Claim(ClaimTypes.UserData, propiedadesUsuario));
-            //identity.AddClaim(new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", userPrincipal));
-            //identity.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", userPrincipal));
 
             return identity;
         }

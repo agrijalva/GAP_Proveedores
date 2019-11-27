@@ -27,6 +27,16 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Seguridad
             return response;
         }
 
+        public LoginUsuarioResponseDTO AddUsuario(LoginUsuarioRequestDTO request)
+        {
+            var response = seguridadData.AddUsuario(request);
+            if (!response.Success)
+            {
+                response.ErrorList = new List<ErrorDTO> { new ErrorDTO { Codigo = "", Mensaje = string.Format("No fue posible recuperar datos disponibles o no se encontro alguna solicitud en proceso") } };
+            }
+            return response;
+        }
+
         public ResetPasswordResponseDTO RecuperarPasswordUsuario(ResetPasswordRequestDTO request)
         {
             var response = seguridadData.RecuperarPasswordUsuario(request);
