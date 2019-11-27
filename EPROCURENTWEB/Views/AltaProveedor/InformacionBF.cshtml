@@ -5,265 +5,278 @@
     Layout = null;  /*"~/Views/Shared/_LayoutInit.cshtml";*/
 }
 
-@Styles.Render("~/Content/css")
+
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/modernizr")
-@Scripts.Render("~/bundles/shared")
 @Scripts.Render("~/bundles/bootstrap")
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<link href="~/Content/Styles/Site.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
 <link href="~/Content/Css/infoCuenta.css" rel="stylesheet" />
 <link href="~/Content/validacionProveedor.css" rel="stylesheet" />
-<div class="row panel-header">
-    <div class="col-sm-4 pull-left">
-        <img class="gap-logo" src="@Url.GetImage("logo-gap-color.png",false)" />
-    </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
 
-    <div class="col-sm-4 t-a-c ">
-        <h1 class="h-title">
-            @EprocurementWeb.GlobalResources.RHome.ProvP
-        </h1>
-    </div>
-
-    <div class="col-sm-4">
-        <ul class="pull-right" style="list-style:none; float: right; display:none;">
-            <li style="display:inline;">
-                <a href="" class="setLang" data-lang="es-MX"><img src="@Url.GetImage("Mexico.png",false)" /></a>
-            </li>
-            <li style="display:inline;">
-                <a href="" class="setLang" data-lang="en-US"><img src="@Url.GetImage("usa.png", false)" /></a>
-            </li>
-        </ul>
-    </div>
-</div>
-
-<div class="container">
-
-    <div class="formPrincipal">
-        <div class="row pb-0">
-            <div class="col-sm-12">
-                <h3 class="subtitle">
-                    @EprocurementWeb.GlobalResources.RHome.TitlePP
-                </h3>
-            </div>
+</head>
+<body>
+    <div class="row panel-header">
+        <div class="col-sm-4 pull-left">
+            <img class="gap-logo" src="@Url.GetImage("logo-gap-color.png",false)" />
         </div>
 
-        <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item" style="width:50%">
-                <a class="nav-link active" href="#IB" role="tab" data-toggle="tab">Información Bancaria</a>
-            </li>
-            <li class="nav-item" style="width:50%">
-                <a class="nav-link" href="#IF" role="tab" data-toggle="tab">Información Financiera</a>
-            </li>
-        </ul>
-        @model EPROCUREMENT.GAPPROVEEDOR.Entities.Proveedor.ProveedorInformacionFinanciera
-        @using (Html.BeginForm("InformacionBF", "AltaProveedor", FormMethod.Get))
-        {
-            <div class="tab-content" style="background-color:white; padding: 15px;">
+        <div class="col-sm-4 t-a-c ">
+            <h1 class="h-title">
+                @EprocurementWeb.GlobalResources.RHome.ProvP
+            </h1>
+        </div>
 
-                <div role="tabpanel" class="tab-pane fade in active show" id="IB">
-                    @if (ViewBag.UsuarioInfo.IdEstatus == 4)
-                    {
-                        <div class="col100" style="font-size:14px;">
-                            <b>Por favor llena la siguiente información</b>
-                        </div>
-                        @Html.Partial("_CuentaBancaria", Model)
+        <div class="col-sm-4">
+            <ul class="pull-right" style="list-style:none; float: right; display:none;">
+                <li style="display:inline;">
+                    <a href="" class="setLang" data-lang="es-MX"><img src="@Url.GetImage("Mexico.png",false)" /></a>
+                </li>
+                <li style="display:inline;">
+                    <a href="" class="setLang" data-lang="en-US"><img src="@Url.GetImage("usa.png", false)" /></a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-                        @Html.HiddenFor(m => m.RFC)
-                        <b>Detalles de la compañia</b>
-                        <div class="row mt-5">
-                            <div class="col-sm-12">
-                                <table class="dataTable" id="tbProveedorCuenta" width="100%">
-                                    <thead class="bg-light-purple">
-                                        <tr>
-                                            <td>Cuenta</td>
-                                            <td>NombreBancco</td>
-                                            <td>Clabe</td>
-                                            <td>Tipo</td>
-                                            <td>Aeropuertos</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr style="display:none;"></tr>
-                                        @foreach (var cuenta in Model.ProveedorCuentaListRegistro)
-                                        {
-                                            <tr>
-                                                <td style="dislay: none;">@cuenta.Cuenta</td>
-                                                <td style="dislay: none;">@cuenta.NombreBanco</td>
-                                                <td style="dislay: none;">@cuenta.CLABE</td>
-                                                <td style="dislay: none;">@cuenta.TipoCuenta</td>
-                                                <td style="dislay: none;"><a href="">Ver</a></td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
+    <div class="container">
+
+        <div class="formPrincipal">
+            <div class="row pb-0">
+                <div class="col-sm-12">
+                    <h3 class="subtitle">
+                        @EprocurementWeb.GlobalResources.RHome.TitlePP
+                    </h3>
+                </div>
+            </div>
+
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item" style="width:50%">
+                    <a class="nav-link active" href="#IB" role="tab" data-toggle="tab">Información Bancaria</a>
+                </li>
+                <li class="nav-item" style="width:50%">
+                    <a class="nav-link" href="#IF" role="tab" data-toggle="tab">Información Financiera</a>
+                </li>
+            </ul>
+            @model EPROCUREMENT.GAPPROVEEDOR.Entities.Proveedor.ProveedorInformacionFinanciera
+            @using (Html.BeginForm("InformacionBF", "AltaProveedor", FormMethod.Get))
+            {
+                <div class="tab-content" style="background-color:white; padding: 15px;">
+
+                    <div role="tabpanel" class="tab-pane fade in active show" id="IB">
+                        @if (ViewBag.UsuarioInfo.IdEstatus == 4)
+                        {
+                            <div class="col100" style="font-size:14px;">
+                                <b>Por favor llena la siguiente información</b>
                             </div>
-                        </div>
-                    }
-                    else
-                    {
-                        @Html.HiddenFor(m => m.RFC)
-                        <b>Detalles de la compañia</b>
-                        <div class="row mt-5">
-                            <div class="col-sm-12">
-                                <table class="dataTable" id="tbProveedorCuenta" width="100%">
+                            @Html.Partial("_CuentaBancaria", Model)
+
+                            @Html.HiddenFor(m => m.RFC)
+                            <b>Detalles de la compañia</b>
+                            <div class="row mt-5">
+                                <div class="col-sm-12">
+                                    <table class="dataTable" id="tbProveedorCuenta" width="100%">
+                                        <thead class="bg-light-purple">
+                                            <tr>
+                                                <td>Cuenta</td>
+                                                <td>NombreBancco</td>
+                                                <td>Clabe</td>
+                                                <td>Tipo</td>
+                                                <td>Aeropuertos</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr style="display:none;"></tr>
+                                            @foreach (var cuenta in Model.ProveedorCuentaListRegistro)
+                                            {
+                                                <tr>
+                                                    <td style="dislay: none;">@cuenta.Cuenta</td>
+                                                    <td style="dislay: none;">@cuenta.NombreBanco</td>
+                                                    <td style="dislay: none;">@cuenta.CLABE</td>
+                                                    <td style="dislay: none;">@cuenta.TipoCuenta</td>
+                                                    <td style="dislay: none;"><a href="">Ver</a></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            @Html.HiddenFor(m => m.RFC)
+                            <b>Detalles de la compañia</b>
+                            <div class="row mt-5">
+                                <div class="col-sm-12">
+                                    <table class="dataTable" id="tbProveedorCuenta" width="100%">
+                                        <thead class="bg-light-purple">
+                                            <tr>
+                                                <td>Cuenta</td>
+                                                <td>NombreBancco</td>
+                                                <td>Clabe</td>
+                                                <td>Tipo</td>
+                                                <td>Aeropuertos</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr style="display:none;"></tr>
+                                            @foreach (var cuenta in ViewBag.ProveedorCuentaList)
+                                            {
+                                                <tr>
+                                                    <td>@cuenta.Cuenta</td>
+                                                    <td>@cuenta.NombreBanco</td>
+                                                    <td>@cuenta.CLABE</td>
+                                                    <td>@cuenta.TipoCuenta</td>
+                                                    <td>
+                                                        @foreach (var aeropuerto in cuenta.AeropuertoList)
+                                                        {
+                                                            @aeropuerto.Nombre <br />
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="IF">
+                        @if (ViewBag.UsuarioInfo.IdEstatus == 4)
+                        {
+                            <div class="col100" style="font-size:12px;">
+                                @for (int idx = 0; idx < Model.CatalogoDocumentoList.Count; idx++)
+                                {
+                                    <div class="col-sm-6 mt-2" style="border:solid 1px #c6c7cb; padding:10px;">
+                                        <div class="col50">
+                                            <div class="inputIF" style="font-weight:600;">
+                                                @Html.DisplayFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)
+                                                @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdCatalogoDocumento)
+                                                @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdFormatoArchivo)
+                                                @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdFormulario)
+                                            </div>
+                                        </div>
+                                        <div class="col25">
+                                            @if (Model.CatalogoDocumentoList[idx].EsRequerido)
+                                            {
+                                                <input class="text-box single-line" required type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
+                                            }
+                                            else
+                                            {
+                                                <input class="text-box single-line" type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
+                                            }
+
+                                        </div>
+                                        @Html.Label((string)ViewBag.MenssageErrorDocument, new { @class = "text-danger", id = "errorDocument" + Model.CatalogoDocumentoList[idx].IdCatalogoDocumento, @style = "display:none;" })
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col100" style="font-size:12px;">
+                                <table class="dataTable" id="tbProveedorCuenta" width="100%" style="display:none;">
                                     <thead class="bg-light-purple">
                                         <tr>
-                                            <td>Cuenta</td>
-                                            <td>NombreBancco</td>
-                                            <td>Clabe</td>
-                                            <td>Tipo</td>
-                                            <td>Aeropuertos</td>
+                                            <td>Nombre del documento</td>
+                                            <td>Fecha</td>
+                                            <td>Autorizado</td>
+                                            <td>Archivo</td>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr style="display:none;"></tr>
-                                        @foreach (var cuenta in ViewBag.ProveedorCuentaList)
+                                        @foreach (var cuenta in ViewBag.ProveedorDocumentoList)
                                         {
                                             <tr>
-                                                <td>@cuenta.Cuenta</td>
-                                                <td>@cuenta.NombreBanco</td>
-                                                <td>@cuenta.CLABE</td>
-                                                <td>@cuenta.TipoCuenta</td>
+                                                <td>@cuenta.DescripcionDocumento</td>
+                                                <td>@cuenta.FechaAlta.ToString("dd MMM yyyy")</td>
+                                                <td>@(cuenta.DocumentoAutorizado ? "Si" : "No")</td>
                                                 <td>
-                                                    @foreach (var aeropuerto in cuenta.AeropuertoList)
-                                                    {
-                                                        @aeropuerto.Nombre <br />
-                                                    }
+                                                    <a href="http://localhost:54535/api/Proveedor/Documento?image=@cuenta.NombreArchivo" download="archivo">
+                                                        <img src="~/Content/Images/descargar.png" width="30" />
+                                                    </a>
                                                 </td>
                                             </tr>
                                         }
                                     </tbody>
                                 </table>
-                            </div>
-                        </div>
-                    }
 
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="IF">
-                    @if (ViewBag.UsuarioInfo.IdEstatus == 4)
-                    {
-                        <div class="col100" style="font-size:12px;">
-                            @for (int idx = 0; idx < Model.CatalogoDocumentoList.Count; idx++)
-                            {
-                                <div class="col-sm-6 mt-2" style="border:solid 1px #c6c7cb; padding:10px;">
-                                    <div class="col50">
-                                        <div class="inputIF" style="font-weight:600;">
-                                            @Html.DisplayFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)
-                                            @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdCatalogoDocumento)
-                                            @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdFormatoArchivo)
-                                            @Html.HiddenFor(m => m.CatalogoDocumentoList[idx].IdFormulario)
-                                        </div>
-                                    </div>
-                                    <div class="col25">
-                                        @if (Model.CatalogoDocumentoList[idx].EsRequerido)
-                                        {
-                                            <input class="text-box single-line" required type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
-                                        }
-                                        else
-                                        {
-                                            <input class="text-box single-line" type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
-                                        }
-
-                                    </div>
-                                    @Html.Label((string)ViewBag.MenssageErrorDocument, new { @class = "text-danger", id = "errorDocument" + Model.CatalogoDocumentoList[idx].IdCatalogoDocumento, @style = "display:none;" })
-                                </div>
-                            }
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="col100" style="font-size:12px;">
-                            <table class="dataTable" id="tbProveedorCuenta" width="100%" style="display:none;">
-                                <thead class="bg-light-purple">
-                                    <tr>
-                                        <td>Nombre del documento</td>
-                                        <td>Fecha</td>
-                                        <td>Autorizado</td>
-                                        <td>Archivo</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var cuenta in ViewBag.ProveedorDocumentoList)
-                                    {
-                                        <tr>
-                                            <td>@cuenta.DescripcionDocumento</td>
-                                            <td>@cuenta.FechaAlta.ToString("dd MMM yyyy")</td>
-                                            <td>@(cuenta.DocumentoAutorizado ? "Si" : "No")</td>
-                                            <td>
+                                @foreach (var cuenta in ViewBag.ProveedorDocumentoList)
+                                {
+                                    <div class="col-sm-6 mt-2" style="border:solid 1px #c6c7cb; padding:10px;">
+                                        <div class="row">
+                                            <div class="col-sm-10"> <label style="font-weight:600;"> @cuenta.DescripcionDocumento</label> </div>
+                                            <div class="col-sm-2">
                                                 <a href="http://localhost:54535/api/Proveedor/Documento?image=@cuenta.NombreArchivo" download="archivo">
                                                     <img src="~/Content/Images/descargar.png" width="30" />
                                                 </a>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-
-                            @foreach (var cuenta in ViewBag.ProveedorDocumentoList)
-                            {
-                                <div class="col-sm-6 mt-2" style="border:solid 1px #c6c7cb; padding:10px;">
-                                    <div class="row">
-                                        <div class="col-sm-10"> <label style="font-weight:600;"> @cuenta.DescripcionDocumento</label> </div>
-                                        <div class="col-sm-2">
-                                            <a href="http://localhost:54535/api/Proveedor/Documento?image=@cuenta.NombreArchivo" download="archivo">
-                                                <img src="~/Content/Images/descargar.png" width="30" />
-                                            </a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
+                                }
+                            </div>
+                        }
+                    </div>
+
+                    <hr />
+                    @if (ViewBag.UsuarioInfo.IdEstatus == 4)
+                    {
+                        <div class="row mt-4">
+                            <div class="col-sm-6">&nbsp;</div>
+                            <div class="col-sm-3"><input type="button" value="Cancelar" class="btnStyle btnWhite" /></div>
+                            <div class="col-sm-3"><input type="button" id="btnCargarCuentas" value="Enviar" class="btnStyle" /></div>
                         </div>
                     }
+
                 </div>
-
-                <hr />
-                @if (ViewBag.UsuarioInfo.IdEstatus == 4)
-                {
-                    <div class="row mt-4">
-                        <div class="col-sm-6">&nbsp;</div>
-                        <div class="col-sm-3"><input type="button" value="Cancelar" class="btnStyle btnWhite" /></div>
-                        <div class="col-sm-3"><input type="button" id="btnCargarCuentas" value="Enviar" class="btnStyle" /></div>
-                    </div>
-                }
-
-            </div>
-        }
+            }
+        </div>
     </div>
-</div>
 
-<style>
-    .dataTable {
-        font-size: 14px;
-        color: #68686a;
-        width: 100%;
-        text-align: left;
-    }
-
-    .icon {
-        height: 40px;
-    }
-
-    .dataTable tbody {
-        /*background-color: red !important;*/
-    }
-
-    table.dataTable thead tr td {
-        height: 40px;
-    }
-
-    table.dataTable tbody tr {
-        background-color: transparent !important;
-    }
-
-        table.dataTable tbody tr td {
-            background-color: white;
-            border-top: solid 5px #f6f6f8;
+    <style>
+        .dataTable {
+            font-size: 14px;
+            color: #68686a;
+            width: 100%;
             text-align: left;
-            font-size: 12px;
         }
-</style>
 
-<script type="text/javascript">
+        .icon {
+            height: 40px;
+        }
+
+        .dataTable tbody {
+            /*background-color: red !important;*/
+        }
+
+        table.dataTable thead tr td {
+            height: 40px;
+        }
+
+        table.dataTable tbody tr {
+            background-color: transparent !important;
+        }
+
+            table.dataTable tbody tr td {
+                background-color: white;
+                border-top: solid 5px #f6f6f8;
+                text-align: left;
+                font-size: 12px;
+            }
+    </style>
+
+    <script type="text/javascript">
     var fn_buscar = function () {
         var tipoProveedor = $('#tipoProveedor').val() == '' ? null : $('#tipoProveedor').val();
          var idGiroProveedor = $('#giro').val() == '' ? null : $('#giro').val();
@@ -531,4 +544,6 @@
         });
     });
 
-</script>
+    </script>
+</body>
+</html>

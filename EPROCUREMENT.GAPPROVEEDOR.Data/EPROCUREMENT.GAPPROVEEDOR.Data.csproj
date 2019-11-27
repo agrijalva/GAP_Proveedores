@@ -42,6 +42,8 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -63,6 +65,12 @@
       <DependentUpon>StoredProcedures.resx</DependentUpon>
     </Compile>
     <Compile Include="Catalogo\CatalogoData.cs" />
+    <Compile Include="Connected Services\DynamicsAXService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicAXService\DynamicServiceData.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="HelperData\EmailData.cs" />
     <Compile Include="HelperData\UtileriaData.cs" />
@@ -90,7 +98,51 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Connected Services\DynamicsAXService\DXS_VendorGroupService.wsdl" />
+    <None Include="Connected Services\DynamicsAXService\DXS_VendorGroupService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\DynamicsAXService\DXS_VendorGroupService1.wsdl" />
+    <None Include="Connected Services\DynamicsAXService\DXS_VendorGroupService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\DynamicsAXService\DXS_VendorGroupService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\DynamicsAXService\DXS_VendorGroupService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\DynamicsAXService\DXS_VendorGroupService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\DynamicsAXService\DXS_VendorGroupService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\DynamicsAXService\DXS_VendorGroupService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\DynamicsAXService\DXS_VendorGroupService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\DynamicsAXService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\DynamicsAXService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\DynamicsAXService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\DynamicsAXService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
