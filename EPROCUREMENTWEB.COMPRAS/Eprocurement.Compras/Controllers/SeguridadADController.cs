@@ -1,9 +1,10 @@
 ﻿using Eprocurement.Compras.Business;
 using Eprocurement.Compras.Models;
+using Eprocurement.Compras.Service;
 using EPROCUREMENT.GAPPROVEEDOR.Entities;
+using EPROCUREMENT.GAPPROVEEDOR.Entities.Seguridad;
+using Microsoft.Owin.Security;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -21,38 +22,51 @@ namespace Eprocurement.Compras.Controllers
         [HttpPost]
         public ActionResult Login(UsuarioModel usuario)
         {
-            try
+            IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
+            var authenticationService = new AuthenticationService(authenticationManager);
+
+            AuthenticationResult authenticationResult = authenticationService.SignIn(usuario.NombreUsuario, usuario.Password);
+
+            if (authenticationResult.IsSuccess)
             {
-                UsuarioDTO usuarioDTO = new BusinessLogic().LoginUsuarioItem(usuario.NombreUsuario, usuario.Password);
-                if (usuarioDTO == null)
+                try
                 {
-                    ViewBag.Error = "Usuario o contraseña invalida";
-                    return View("Index");
+                    UsuarioDTO usuarioDTO = new BusinessLogic().LoginUsuarioItem(usuario.NombreUsuario, usuario.Password);
+                    if (usuarioDTO == null)
+                    {
+                        ViewBag.Error = "Usuario o contraseña invalida";
+                        return View("Index");
+                    }
+
+                    Session["User"] = usuarioDTO;
+
+                    if (usuarioDTO.IdUsuarioRol == 2)
+                    {
+                        return RedirectToAction("Index", "Home");
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("AprobarTesoreria", "Tesoreria");
+
+                    }
+
+
                 }
-
-                Session["User"] = usuarioDTO;
-
-                if(usuarioDTO.IdUsuarioRol == 2)
+                catch (Exception ex)
                 {
-                    return RedirectToAction("Index", "Home");
-
+                    ViewBag.Error = ex.Message;
+                    return View();
                 }
-                else
-                {
-                    return RedirectToAction("AprobarTesoreria", "Tesoreria");
-
-                }
-
-                
             }
-            catch (Exception ex)
+
+            else
             {
-                ViewBag.Error = ex.Message;
+                ViewBag.Error = authenticationResult.ErrorMessage;
                 return View();
             }
-
         }
 
-       
+
     }
 }

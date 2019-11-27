@@ -503,3 +503,14 @@ C:\Users\Usuario\source\repos\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocureme
 C:\Users\Usuario\source\repos\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\obj\Debug\Eprocurement.Compras.csproj.CopyComplete
 C:\Users\Usuario\source\repos\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\obj\Debug\Eprocurement.Compras.dll
 C:\Users\Usuario\source\repos\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\obj\Debug\Eprocurement.Compras.pdb
+C:\Users\Usuario\source\repos\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.dll
+C:\Users\Usuario\source\repos\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\Usuario\source\repos\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Security.dll
+C:\Users\Usuario\source\repos\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\Usuario\source\repos\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Owin.dll
+C:\Users\Usuario\source\repos\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.xml
+C:\Users\Usuario\source\repos\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Security.xml
+C:\Users\Usuario\source\repos\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\Usuario\source\repos\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\Usuario\source\repos\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Usuario\source\repos\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Host.SystemWeb.xml
