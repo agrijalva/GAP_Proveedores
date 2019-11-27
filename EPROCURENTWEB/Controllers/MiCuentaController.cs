@@ -76,59 +76,37 @@ namespace EprocurementWeb.Controllers
             return View(miCuenta);
         }
 
+        public ActionResult ActualizarPassword()
+        {
+            ActualizaPasswordModel actualizaPassword = new ActualizaPasswordModel();
+            
+            return View(actualizaPassword);
+        }
+
         [HttpPost]
         public ActionResult ActualizarPassword(ActualizaPasswordModel actualizaPassword)
         {
             try
             {
-                CargarCatalogosAceptar();
-                MiCuentaModel miCuenta = new MiCuentaModel
-                {
-                    Proveedor = new ProveedorModel(),
-                    ActualizaPassword = actualizaPassword
-                };
-
-                ViewBag.GiroList = giroList;
-                ViewBag.ZonaHorariaList = zonaHorariaList;
-                ViewBag.NacionalidadList = nacionalidadList;
-                ViewBag.PaisList = paisList;
-                ViewBag.IdiomaList = idiomaList;
-                ViewBag.TipoProveedorList = tipoProveedorList;
-                ViewBag.idProveedor = 0;
-                ViewBag.accionForm = 2;
-                var proveedor = ObtenerProveedor();
-                ViewBag.idProveedor = proveedor.IdProveedor;
-                ViewBag.EstadoList = estadoList;
-                ViewBag.MunicipioList = municipioList;
-                ViewBag.idEstado = proveedor.Direccion.IdEstado;
-                ViewBag.idMunicipio = proveedor.Direccion.IdMunicipio;
-                ViewBag.colonias = new List<string>();
-                CodigoPostalModel infoCodigo;
-                if (proveedor.Direccion.IdPais == 1)
-                {
-                    infoCodigo = new BusinessLogic().RecuperaCodigoPostalInfo(proveedor.Direccion.CodigoPostal);
-                    ViewBag.colonias = infoCodigo.colonias;
-                }
-                miCuenta.Proveedor = proveedor;
-
                 if (ModelState.IsValid)
                 {
                     var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
                     if (new SeguridadBusiness().ResetPasswordUsuario(actualizaPassword, usuarioInfo.IdUsuario))
                     {
-                        return Redirect("/MiCuenta/Index#psuccess");
+                        return Redirect("/MiCuenta/ActualizarPassword#success");
                     }
                     else
                     {
+                        return Redirect("/MiCuenta/ActualizarPassword#errorSuccess");
                         ModelState.AddModelError("ErrorGenerico", "Se genero un error al procesar la solicitud");
                     }
                 }
             }
             catch
             {
-
+                return Redirect("/MiCuenta/ActualizarPassword#errorSuccess");
             }
-            return View("Index");
+            return View(actualizaPassword);
         }
 
         [HttpPost]

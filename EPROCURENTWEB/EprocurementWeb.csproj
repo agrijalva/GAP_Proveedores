@@ -453,6 +453,7 @@
     <Content Include="Views\Contacto\Index.cshtml" />
     <Content Include="Views\Contacto\EditarContacto.cshtml" />
     <Content Include="Views\Contacto\NuevoContacto.cshtml" />
+    <Content Include="Views\MiCuenta\ActualizarPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

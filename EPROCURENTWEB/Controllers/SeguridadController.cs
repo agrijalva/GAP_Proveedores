@@ -130,11 +130,11 @@ namespace EprocurementWeb.Controllers
                 //usuarioInfo.Token = usuario.Token;
                 if (!new BusinessLogic().RecuperarPasswordUsuario(usuario, false))
                 {
-                    return Redirect("/Seguridad/Recovery#success");
+                    return Redirect("/Seguridad/Recovery#errorSuccess");
                     ViewBag.Error = "Error al generar la solicitud";
                 } else
                 {
-                    return Redirect("/Seguridad/Recovery#errorSuccess");
+                    return Redirect("/Seguridad/Recovery#success");
                     ViewBag.Error = "Sin error";
                 }
                 //}
