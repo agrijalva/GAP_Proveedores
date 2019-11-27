@@ -141,9 +141,9 @@
                      '<td>RFC</td>' +
                      '<td>Proveedor</td>' +
                      '<td>Email</td>' +
-                     '<td>Estatus</td>' +
-                     '<td>Aeropuertos</td>' +
-                     '<td>Giros</td>' +
+                     '<td width="200">Estatus</td>' +
+                     '<td align="center">Aeropuertos</td>' +
+                     '<td align="center">Giros</td>' +
                      '<td>Ver</td></tr></thead>'
                  );
                   //("#Table").DataTable().destroy();
@@ -181,8 +181,8 @@
                          '<td style="dislay: none;">' + data[i].NombreEmpresa + '</td>' +
                          '<td style="dislay: none;">' + data[i].Email + '</td>' +
                          '<td style="dislay: none; color:' + color + ';"><b>' + data[i].Estatus + '<b></td>' +
-                         '<td style="dislay: none;"><div class="btn-circle">' + btnAeropuerto + '</div></td>' +
-                         '<td style="dislay: none;"><div class="btn-circle">' + btnGiros + '</div></td>' +
+                         '<td style="dislay: none;" align="center"><div class="btn-circle">' + btnAeropuerto + '</div></td>' +
+                         '<td style="dislay: none;" align="center"><div class="btn-circle">' + btnGiros + '</div></td>' +
                          '<td style="dislay: none;"><div class="btn-circle">' + link + '</div></td>' + '</tr>'
                      );
                  }
