@@ -204,7 +204,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Css\infoCuenta.css" />
+    <Content Include="Content\Css2\infoCuenta.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\fonts\Open_Sans\LICENSE.txt" />
     <Content Include="Content\Gestor.css" />
@@ -222,6 +222,10 @@
     <Content Include="Content\Images\proveedores.jpg" />
     <Content Include="Content\Images\shutdow-icon.png" />
     <Content Include="Content\Images\user-photo.png" />
+    <Content Include="Content\Scripts\bootstrap.bundle.js" />
+    <Content Include="Content\Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Content\Scripts\bootstrap.js" />
+    <Content Include="Content\Scripts\bootstrap.min.js" />
     <Content Include="Content\Styles\Login.css" />
     <Content Include="Content\Scripts\es-mx\jquery.validate.extension.js" />
     <Content Include="Content\Scripts\fr-fr\jquery.validate.extension.js" />
@@ -253,6 +257,10 @@
     <Content Include="Content\fonts\Open_Sans\OpenSans-Regular.ttf" />
     <Content Include="Content\fonts\Open_Sans\OpenSans-SemiBold.ttf" />
     <Content Include="Content\fonts\Open_Sans\OpenSans-SemiBoldItalic.ttf" />
+    <Content Include="Content\Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Content\Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Content\Scripts\bootstrap.js.map" />
+    <Content Include="Content\Scripts\bootstrap.min.js.map" />
     <None Include="Content\Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Content\Scripts\jquery-1.10.2.js" />
     <Content Include="Content\Scripts\jquery-1.10.2.min.js" />
@@ -287,7 +295,14 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="scripts\jquery-3.0.0.min.map" />
+    <Content Include="scripts\jquery-3.0.0.slim.min.map" />
     <None Include="scripts\jquery-3.4.1.intellisense.js" />
+    <None Include="scripts\jquery-3.0.0-vsdoc.js" />
+    <Content Include="scripts\jquery-3.0.0.js" />
+    <Content Include="scripts\jquery-3.0.0.min.js" />
+    <Content Include="scripts\jquery-3.0.0.slim.js" />
+    <Content Include="scripts\jquery-3.0.0.slim.min.js" />
     <Content Include="scripts\jquery-3.4.1.js" />
     <Content Include="scripts\jquery-3.4.1.min.js" />
     <Content Include="scripts\jquery-3.4.1.slim.js" />
@@ -412,6 +427,9 @@
       <Project>{82b84451-2b68-477a-8175-aea7244947de}</Project>
       <Name>EPROCUREMENT.GAPPROVEEDOR.Entities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="scripts\index.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
