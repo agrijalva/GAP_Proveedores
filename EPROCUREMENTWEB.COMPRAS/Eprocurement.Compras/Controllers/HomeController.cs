@@ -195,9 +195,11 @@ namespace Eprocurement.Compras.Controllers
         {
             try
             {
+
+                var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
                 BusinessLogic businessLogic = new BusinessLogic();
                 ProveedorAprobarRequestDTO request = new ProveedorAprobarRequestDTO();
-                request.EstatusProveedor = new HistoricoEstatusProveedorDTO { IdProveedor = idProveedor, IdEstatusProveedor = estatus, IdUsuario = 3, Observaciones = observaciones };
+                request.EstatusProveedor = new HistoricoEstatusProveedorDTO { IdProveedor = idProveedor, IdEstatusProveedor = estatus, IdUsuario = usuarioInfo.IdUsuario, Observaciones = observaciones };
 
                 var response = businessLogic.SetProveedorEstatus(request);
                 return Json(response.Success, JsonRequestBehavior.AllowGet);
