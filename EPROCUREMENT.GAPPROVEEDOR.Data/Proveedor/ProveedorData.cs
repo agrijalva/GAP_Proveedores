@@ -734,6 +734,41 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             return response;
         }
 
+        public ProveedorUsuarioDTO GetProvedorUsuarioPorRFC(string rfc)
+        {
+            ProveedorUsuarioDTO response = new ProveedorUsuarioDTO();
+
+            try
+            {
+                using (var conexion = new SqlConnection(Helper.Connection()))
+                {
+                    conexion.Open();
+                    var cmdReset = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorUsuario_GETIByRFC]", conexion)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    cmdReset.Parameters.Add(new SqlParameter("@RFC", SqlDbType.NVarChar, 300)).Value = rfc;
+                    using (SqlDataReader reader = cmdReset.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            response = new ProveedorUsuarioDTO();
+                            response.RFC = reader["RFC"].ToString();
+                            response.NombreEmpresa = reader["NombreEmpresa"].ToString();
+                            response.Email = reader["Email"].ToString();
+                            response.RazonSocial = reader["RazonSocial"].ToString();
+                            response.Contacto = reader["NombreContacto"].ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+            }
+
+            return response;
+        }
+
         public ProveedorFiltroResponseDTO GetProvedorPorFiltro(ProveedorFiltroRequestDTO request)
         {
             ProveedorFiltroResponseDTO response = new ProveedorFiltroResponseDTO();
