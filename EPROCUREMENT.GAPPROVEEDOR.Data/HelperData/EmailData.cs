@@ -391,10 +391,10 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             };
 
             ProveedorUsuarioDTO proveedorUsuario = null;
-            proveedorUsuario = new ProveedorData().GetProvedorUsuarioPorEmail(usuario.Email);
+            proveedorUsuario = new ProveedorData().GetProvedorUsuarioPorRFC(usuario.NombreUsuario);
             emailEntidad.Message = GetBodyRecuperarPassword(proveedorUsuario, usuario.Token);
             emailEntidad.RecipientsList.Add(new DireccionEmailDTO { Address = proveedorUsuario.Email, DisplayName = proveedorUsuario.NombreEmpresa, UserIdentifier = 1 });
-            var mailMessage = ObtenerMensajeEmail(emailEntidad, "Hola");
+            var mailMessage = ObtenerMensajeEmail(emailEntidad, "Recuperación de Contraseña");
             var cliente = ObtenerClienteSmtp();
             try
             {

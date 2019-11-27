@@ -91,7 +91,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             conexion.Open();
                             var cmdReset = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_RecoveryPassword_UPD, conexion);
                             cmdReset.CommandType = CommandType.StoredProcedure;
-                            cmdReset.Parameters.Add(new SqlParameter("@Email", SqlDbType.NVarChar, 300)).Value = request.Usuario.Email;
+                            cmdReset.Parameters.Add(new SqlParameter("@RFC", SqlDbType.NVarChar, 300)).Value = request.Usuario.NombreUsuario;
                             cmdReset.Parameters.Add(new SqlParameter("@TokenRecovery", SqlDbType.NVarChar, 1000)).Value = request.Usuario.Token;
                             cmdReset.Parameters.Add(new SqlParameter("Result", SqlDbType.BigInt) { Direction = ParameterDirection.ReturnValue });
                             cmdReset.ExecuteNonQuery();

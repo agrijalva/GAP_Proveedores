@@ -654,11 +654,11 @@ namespace EprocurementWeb.Business
             return usuarioDTO;
         }
 
-        public string RecuperarPasswordUsuario(string email, bool esSolicitud)
+        public string RecuperarPasswordUsuario(string nombreUsuario, bool esSolicitud)
         {
             UsuarioDTO usuarioDTO = new UsuarioDTO
             {
-                Email = email
+                NombreUsuario = nombreUsuario
             };
             ResetPasswordRequestDTO loginUsuario = new ResetPasswordRequestDTO { Usuario = usuarioDTO, EsSolicitud = esSolicitud };
             string token = null;

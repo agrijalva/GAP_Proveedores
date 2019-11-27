@@ -7,6 +7,7 @@
 <link href="~/Content/Styles/Login.css" rel="stylesheet" />
 <link href="~/Content/Styles/Site.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/modernizr")
@@ -51,10 +52,10 @@
                         </div>
                         <div class="col-sm-8">
                             <div class="inputIF">
-                                @Html.LabelFor(model => model.Email, new { @class = "labelTexto control-label" })
+                                @Html.LabelFor(model => model.NombreUsuario, new { @class = "labelTexto control-label" })
                             </div>
                             <div class="inputIF">
-                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control inputIF" })
+                                @Html.TextBoxFor(model => model.NombreUsuario, new { @class = "form-control inputIF" })
                             </div>
                         </div>
                     </div>
@@ -73,3 +74,29 @@
     </div>
 </body>
 </html>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (window.location.hash == "#success") {
+            Swal.fire({
+                position: 'middle',
+                icon: 'success',
+                title: '¡Recuperación de contraseña!',
+                html: '<p class="text">Se ha iniciado el proceso de recuperación.</p> ' +
+                    '</br> <p class="text">Hemos enviado un email a su correo para continuar con el proceso.</p>',
+                showConfirmButton: true,
+                timer: 3000
+            })
+        }
+        if (window.location.hash == "#errorSuccess") {
+            Swal.fire({
+                position: 'middle',
+                icon: 'error',
+                title: '¡Recuperación de contraseña!',
+                html: '<p class="text">Se generó un error al iniciar el proceso de recuperación.</p> ' +
+                    '</br> <p class="text">Inténtelo mas tarde.</p>',
+                showConfirmButton: true,
+                timer: 5000
+            })
+        }
+    });
+</script>
