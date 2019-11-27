@@ -23,6 +23,7 @@ namespace Eprocurement.Compras.Controllers
         public List<EstadoDTO> estadoList;
         public List<MunicipioDTO> municipioList;
         public List<TipoProveedorDTO> tipoProveedorList;
+        public List<EstatusProveedorDTO> estatusProveedorGetList;
 
         private void CargarCatalogos()
         {
@@ -30,6 +31,7 @@ namespace Eprocurement.Compras.Controllers
             aeropuertoList = businessLogic.GetAeropuertosList();
             giroList = businessLogic.GetGirosList();
             tipoProveedorList = businessLogic.GetTipoProveedorList();
+            estatusProveedorGetList = businessLogic.GetEstatusProveedorList();
         }
 
         private void CargarCatalogosAceptar()
@@ -42,6 +44,7 @@ namespace Eprocurement.Compras.Controllers
             paisList = businessLogic.GetPaisesList();
             idiomaList = businessLogic.GetIdiomaList();
             tipoProveedorList = businessLogic.GetTipoProveedorList();
+            estatusProveedorGetList = businessLogic.GetEstatusProveedorList();
         }
 
         public ActionResult Index()
@@ -53,6 +56,7 @@ namespace Eprocurement.Compras.Controllers
             ViewBag.AeropuertoList = aeropuertoList;
             ViewBag.GiroList = giroList;
             ViewBag.TipoProveedorList = tipoProveedorList;
+            ViewBag.EstatusProveedorGetList = estatusProveedorGetList;
             return View();
         }
 
@@ -70,6 +74,7 @@ namespace Eprocurement.Compras.Controllers
             ViewBag.MunicipioList = municipioList;
             ViewBag.TipoProveedorList = tipoProveedorList;
             ViewBag.idProveedor = idProvider;
+            ViewBag.EstatusProveedorGetList = estatusProveedorGetList;
             try
             {
                 BusinessLogic businessLogic = new BusinessLogic();
@@ -123,7 +128,7 @@ namespace Eprocurement.Compras.Controllers
             }
             return View(proveedor);
         }
-        public JsonResult GetProveedorEstatusList(int? idTipoProveedor, int? idGiroProveedor, string idAeropuerto, string nombreEmpresa, string rfc, string email)
+        public JsonResult GetProveedorEstatusList(int? idTipoProveedor, int? idGiroProveedor, string idAeropuerto, string nombreEmpresa, string rfc, string email, int? idEstatus)
         {
             try
             {
@@ -131,7 +136,7 @@ namespace Eprocurement.Compras.Controllers
                 var proveedorEstatus = new List<ProveedorEstatusDTO>();
                 BusinessLogic businessLogic = new BusinessLogic();
                 ProveedorEstatusRequestDTO request = new ProveedorEstatusRequestDTO();
-                request.ProveedorFiltro = new ProveedorFiltroDTO { IdTipoProveedor = idTipoProveedor, IdGiroProveedor = idGiroProveedor, IdAeropuerto = idAeropuerto, NombreEmpresa = nombreEmpresa, RFC = rfc, Email = email };
+                request.ProveedorFiltro = new ProveedorFiltroDTO { IdTipoProveedor = idTipoProveedor, IdGiroProveedor = idGiroProveedor, IdAeropuerto = idAeropuerto, NombreEmpresa = nombreEmpresa, RFC = rfc, Email = email, IdEstatus = idEstatus };
                 //string[] estatus = { "1", "2", "3", "4" };
                 if (usuarioInfo.IdUsuarioRol == 3)
                 {
@@ -142,11 +147,23 @@ namespace Eprocurement.Compras.Controllers
                                             select t).ToList();
                 } else
                 {
-                    string[] estatus = { "1", "2", "3", "4", "5", "6", "7", "8" };
                     var response = businessLogic.GetProveedorEstatusList(request);
-                    proveedorEstatus = (from t in response.ProveedorList
+                    if (idEstatus == null)
+                    {
+                        string[] estatus = { "1", "2", "3", "4", "5", "6", "7", "8" };
+                        proveedorEstatus = (from t in response.ProveedorList
                                             where estatus.Contains(t.IdEstatus.ToString())
                                             select t).ToList();
+                    }
+                    else
+                    {
+                        string[] estatus = { idEstatus.ToString() };
+                        proveedorEstatus = (from t in response.ProveedorList
+                                            where estatus.Contains(t.IdEstatus.ToString())
+                                            select t).ToList();
+                    }
+                    
+                    
                 }
                    
 

@@ -36,10 +36,12 @@
                         @Html.TextBox("email", "", new { @class = "form-control" })*@
                     </div>
                     <div class="form-group col-md-4">
-                        <label class="control-label text-right">Estatus</label>
-                        <select class="form-control">
-                            <option>...</option>
-                        </select>
+                        @Html.Label("estatus", "Estatus", new { @class = "control-label text-right " })
+                        @Html.DropDownList("estatus", new SelectList(ViewBag.EstatusProveedorGetList, "IdEstatusProveedor", "EstatusDescripcion"), "Seleccione una opción", new { @class = "form-control" })
+                        @*<label class="control-label text-right">Estatus</label>
+        <select class="form-control">
+            <option>...</option>
+        </select>*@
                     </div>
                     <div class="form-group col-md-4">
                         <button id="buscar" class="btn btn-search btn-purple float-right">
@@ -76,11 +78,13 @@
     var fn_buscar = function() {
          var tipoProveedor = $('#tipoProveedor').val() == '' ? null : $('#tipoProveedor').val();
          var idGiroProveedor = $('#giro').val() == '' ? null : $('#giro').val();
-         var idAeropuerto = $('#aeropuerto').val() == '' ? null : $('#aeropuerto').val();
+        var idAeropuerto = $('#aeropuerto').val() == '' ? null : $('#aeropuerto').val();
+        var idEstatus = $('#estatus').val() == '' ? null : $('#estatus').val();
          var email = $('#email').val() == '' ? null : $('#email').val();
          var nombreEmpresa = $('#proveedor').val() == '' ? null : $('#proveedor').val();
-         var rfc = $('#rfc').val() == '' ? null : $('#rfc').val();
-         var jsonData = JSON.stringify({ idTipoProveedor: tipoProveedor, idGiroProveedor: idGiroProveedor, idAeropuerto: idAeropuerto, nombreEmpresa: nombreEmpresa, rfc: rfc, email: email });
+        var rfc = $('#rfc').val() == '' ? null : $('#rfc').val();
+        console.log(idEstatus);
+        var jsonData = JSON.stringify({ idTipoProveedor: tipoProveedor, idGiroProveedor: idGiroProveedor, idAeropuerto: idAeropuerto, nombreEmpresa: nombreEmpresa, rfc: rfc, email: email, idEstatus: idEstatus });
          $.ajax({
              type: "POST",
              contentType: "application/json; charset=utf-8",

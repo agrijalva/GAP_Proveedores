@@ -40,6 +40,27 @@ namespace Eprocurement.Compras.Business
             return response;
         }
 
+        public List<EstatusProveedorDTO> GetEstatusProveedorList()
+        {
+            var estatusProveedorList = new List<EstatusProveedorDTO>();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/Catalogo/");
+                var responseTask = client.GetAsync("EstatusProveedorGetList");
+                responseTask.Wait();
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JavaScriptSerializer JSserializer = new JavaScriptSerializer();
+
+                    var response = JSserializer.Deserialize<EstatusProveedorResponseDTO>(readTask.Result);
+                    estatusProveedorList = response.EstatusProveedorList;
+                }
+            }
+            return estatusProveedorList;
+        }
+
         public ProveedorDetalleResponseDTO GetProveedorElemento(ProveedorDetalleRequestDTO request)
         {
             ProveedorDetalleResponseDTO response = new ProveedorDetalleResponseDTO();

@@ -33,9 +33,9 @@
                                 <div class="row">
                                     <div class="col-sm-12" style="font-size:12px;">
                                         <label class="label-formulario">Tipo de Empresa</label><br />
-                                        @Html.CheckBoxFor(m => m.Mexicana, new { @class = "" })
+                                        @Html.CheckBoxFor(m => m.Mexicana, new { @class = "", @disabled = "disabled" })
                                         @Html.Label("Mexicana", new { @class = "" })&nbsp;&nbsp;&nbsp;&nbsp;
-                                        @Html.CheckBoxFor(m => m.Extranjera, new { @class = "" })
+                                        @Html.CheckBoxFor(m => m.Extranjera, new { @class = "", @disabled = "disabled" })
                                         @Html.Label("Extranjera", new { @class = "" })
                                     </div>
                                 </div>
@@ -269,7 +269,7 @@
                                                 @Html.HiddenFor(model => aeropuerto.Id)
                                                 @Html.HiddenFor(model => aeropuerto.Nombre)
                                                 <div class="col-sm-4 mt-2" style="font-size:12px;">
-                                                    @Html.CheckBoxFor(model => aeropuerto.Checado, new { @value = aeropuerto.Checado })
+                                                    @Html.CheckBoxFor(model => aeropuerto.Checado, new { @value = aeropuerto.Checado, @disabled = "disabled"  })
                                                     @Html.DisplayTextFor(model => aeropuerto.Nombre)
                                                 </div>
                                             }
@@ -281,7 +281,7 @@
                                             @Html.HiddenFor(model => giro.IdProveedorGiro)
                                             <div class="form-group col-md-12 mt-2">
                                                 <div class="col-md-10">
-                                                    @Html.DropDownListFor(x => giro.IdCatalogoGiro, new SelectList(ViewBag.GiroList, "IdGiro", "GiroNombre", giro.IdCatalogoGiro), "...", new { @class = "form-control col-md-12" })
+                                                    @Html.DropDownListFor(x => giro.IdCatalogoGiro, new SelectList(ViewBag.GiroList, "IdGiro", "GiroNombre", giro.IdCatalogoGiro), "...", new { @class = "form-control col-md-12", @disabled = "disabled" })
                                                 </div>
                                             </div>
                                          }
@@ -296,22 +296,28 @@
     </div>
     
     <div class="row mt-5">
-        <div class="col-sm-3">
-            <input id="btnDocumentacion" class="btnStyle btnWhite" type="button" value="Documentacion pendiente " />
-        </div>
-        <div class="col-sm-3">
-            <input type="button" class="btnStyle btnWhite" data-toggle="modal" data-target="#modalRechazar" value="Rechazar" />
-        </div>
+        @if (Model.IdEstatus == 1)
+        {
+            <div class="col-sm-3">
+                <input id="btnDocumentacion" class="btnStyle btnWhite" type="button" value="Documentacion pendiente " />
+            </div>
+            <div class="col-sm-3">
+                <input type="button" class="btnStyle btnWhite" data-toggle="modal" data-target="#modalRechazar" value="Rechazar" />
+            </div>
+        }
         <div class="col-sm-3">
             @*<input id="btnCancelar" class="btnStyle btnWhite" type="button" value="Cancelar" />*@
             <a href="@Url.Action("Index", "Home")">
                 <input id="btnCancelar" class="btnStyle btnWhite" type="button" value="Cancelar" />
             </a>
         </div>
-        <div class="col-sm-3">
-            <input id="btnAprobar" class="btnStyle" type="button" value="Guardar" />
+        @if (Model.IdEstatus == 1)
+        {
+            <div class="col-sm-3">
+                <input id="btnAprobar" class="btnStyle" type="button" value="Guardar" />
+            </div>
+        }
         </div>
-    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="modalRechazar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

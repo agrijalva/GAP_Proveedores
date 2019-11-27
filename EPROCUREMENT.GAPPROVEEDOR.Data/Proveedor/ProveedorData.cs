@@ -678,6 +678,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                     proveedor.IdNacionalidad = Convert.ToInt32(reader["IdNacionalidad"]);
                     proveedor.Mexicana = Convert.ToInt32(reader["TipoEmpresa"]) == 1;
                     proveedor.Extranjera = Convert.ToInt32(reader["TipoEmpresa"]) != 1;
+                    proveedor.IdEstatus = Convert.ToInt32(reader["IdEstatus"]);
                 }
             }
             return proveedor;
