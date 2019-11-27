@@ -448,6 +448,161 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             return response;
         }
 
+        public ContactoResponseDTO GetContactoProveedorList(ContactoRequestDTO request)
+        {
+            ContactoResponseDTO response = new ContactoResponseDTO()
+            {
+                ContactoList = new List<ProveedorContactoDTO>()
+            };
+
+            try
+            {
+                using (var conexion = new SqlConnection(Helper.Connection()))
+                {
+                    conexion.Open();
+                    var cmdContacto = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorContacto_GETLByIdProveedor]", conexion);
+                    var contacto = new ProveedorContactoDTO();
+                    cmdContacto.CommandType = CommandType.StoredProcedure;
+                    cmdContacto.Parameters.Add(new SqlParameter("@idProveedor", request.IdProveedor));
+                    using (SqlDataReader reader = cmdContacto.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            contacto = new ProveedorContactoDTO();
+                            contacto.IdContacto = Convert.ToInt32(reader["IdContacto"]);
+                            contacto.IdProveedor = request.IdProveedor;
+                            contacto.NombreContacto = reader["NombreContacto"].ToString();
+                            contacto.Cargo = reader["Cargo"].ToString();
+                            contacto.IdNacionalidad = Convert.ToInt32(reader["IdNacionalidad"]);
+                            contacto.TelefonoDirecto = reader["TelefonoDirecto"].ToString();
+                            contacto.TelefonoMovil = reader["TelefonoMovil"].ToString();
+                            contacto.Fax = reader["Fax"].ToString();
+                            contacto.Email = reader["Email"].ToString();
+                            contacto.IdZonaHoraria = Convert.ToInt32(reader["IdZonaHoraria"]);
+                            contacto.IdPais = Convert.ToInt32(reader["IdPais"]);
+                            contacto.IdIdioma = Convert.ToInt32(reader["IdIdioma"]);
+                            response.ContactoList.Add(contacto);
+                        }
+                    }
+
+                }
+                response.Success = true;
+            }
+            catch (Exception exception)
+            {
+                response.Success = false;
+            }
+
+            return response;
+        }
+
+        public ContactoResponseDTO InsertContacto(ContactoRequestDTO request)
+        {
+            ContactoResponseDTO response = new ContactoResponseDTO();
+
+            try
+            {
+                using (var conexion = new SqlConnection(Helper.Connection()))
+                {
+                    conexion.Open();
+                    var cmdContacto = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorContacto_INS]", conexion);
+                    var contacto = request.Contacto;
+                    cmdContacto.CommandType = CommandType.StoredProcedure;
+                    cmdContacto.Parameters.Add(new SqlParameter("@IdProveedor", contacto.IdProveedor));
+                    cmdContacto.Parameters.Add(new SqlParameter("@NombreContacto", SqlDbType.NVarChar, 300)).Value = contacto.NombreContacto;
+                    cmdContacto.Parameters.Add(new SqlParameter("@Cargo", SqlDbType.NVarChar, 250)).Value = contacto.Cargo;
+                    cmdContacto.Parameters.Add(new SqlParameter("@IdNacionalidad", contacto.IdNacionalidad));
+                    cmdContacto.Parameters.Add(new SqlParameter("@TelefonoDirecto", SqlDbType.NVarChar, 50)).Value = contacto.TelefonoDirecto;
+                    cmdContacto.Parameters.Add(new SqlParameter("@TelefonoMovil", SqlDbType.NVarChar, 50)).Value = contacto.TelefonoMovil;
+                    cmdContacto.Parameters.Add(new SqlParameter("@Fax", SqlDbType.NVarChar, 50)).Value = contacto.Fax;
+                    cmdContacto.Parameters.Add(new SqlParameter("@Email", SqlDbType.NVarChar, 250)).Value = contacto.Email;
+                    cmdContacto.Parameters.Add(new SqlParameter("@IdZonaHoraria", contacto.IdZonaHoraria));
+                    cmdContacto.Parameters.Add(new SqlParameter("@IdPais", contacto.IdPais));
+                    cmdContacto.Parameters.Add(new SqlParameter("@IdIdioma", contacto.IdIdioma));
+                    cmdContacto.Parameters.Add(new SqlParameter("@ContactoPrincipal", contacto.ContactoPrincipal));
+                    cmdContacto.Parameters.Add(new SqlParameter("Result", SqlDbType.Int) { Direction = ParameterDirection.ReturnValue });
+                    cmdContacto.ExecuteNonQuery();
+                    var resultado = Convert.ToInt32(cmdContacto.Parameters["Result"].Value);
+
+                    response.Success = resultado > 0;
+                }
+            }
+            catch (Exception exception)
+            {
+                response.Success = false;
+            }
+
+            return response;
+        }
+
+        public ContactoResponseDTO UpdateContacto(ContactoRequestDTO request)
+        {
+            ContactoResponseDTO response = new ContactoResponseDTO();
+
+            try
+            {
+                using (var conexion = new SqlConnection(Helper.Connection()))
+                {
+                    conexion.Open();
+                    var cmdContacto = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorContacto_UPD]", conexion);
+                    var contacto = request.Contacto;
+                    cmdContacto.CommandType = CommandType.StoredProcedure;
+                    cmdContacto.Parameters.Add(new SqlParameter("@IdContacto", contacto.IdContacto));
+                    cmdContacto.Parameters.Add(new SqlParameter("@IdProveedor", contacto.IdProveedor));
+                    cmdContacto.Parameters.Add(new SqlParameter("@NombreContacto", SqlDbType.NVarChar, 300)).Value = contacto.NombreContacto;
+                    cmdContacto.Parameters.Add(new SqlParameter("@Cargo", SqlDbType.NVarChar, 250)).Value = contacto.Cargo;
+                    cmdContacto.Parameters.Add(new SqlParameter("@IdNacionalidad", contacto.IdNacionalidad));
+                    cmdContacto.Parameters.Add(new SqlParameter("@TelefonoDirecto", SqlDbType.NVarChar, 50)).Value = contacto.TelefonoDirecto;
+                    cmdContacto.Parameters.Add(new SqlParameter("@TelefonoMovil", SqlDbType.NVarChar, 50)).Value = contacto.TelefonoMovil;
+                    cmdContacto.Parameters.Add(new SqlParameter("@Fax", SqlDbType.NVarChar, 50)).Value = contacto.Fax;
+                    cmdContacto.Parameters.Add(new SqlParameter("@Email", SqlDbType.NVarChar, 250)).Value = contacto.Email;
+                    cmdContacto.Parameters.Add(new SqlParameter("@IdZonaHoraria", contacto.IdZonaHoraria));
+                    cmdContacto.Parameters.Add(new SqlParameter("@IdPais", contacto.IdPais));
+                    cmdContacto.Parameters.Add(new SqlParameter("@IdIdioma", contacto.IdIdioma));
+                    cmdContacto.Parameters.Add(new SqlParameter("Result", SqlDbType.Int) { Direction = ParameterDirection.ReturnValue });
+                    cmdContacto.ExecuteNonQuery();
+                    var resultado = Convert.ToInt32(cmdContacto.Parameters["Result"].Value);
+
+                    response.Success = resultado > 0;                
+                }
+            }
+            catch (Exception exception)
+            {
+                response.Success = false;
+            }
+
+            return response;
+        }
+
+        public ContactoResponseDTO DeleteContacto(ContactoRequestDTO request)
+        {
+            ContactoResponseDTO response = new ContactoResponseDTO();
+
+            try
+            {
+                using (var conexion = new SqlConnection(Helper.Connection()))
+                {
+                    conexion.Open();
+                    var cmdContacto = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorContacto_DEL]]", conexion);
+                    var contacto = request.Contacto;
+                    cmdContacto.CommandType = CommandType.StoredProcedure;
+                    cmdContacto.Parameters.Add(new SqlParameter("@IdContacto", contacto.IdContacto));
+                    cmdContacto.Parameters.Add(new SqlParameter("@IdProveedor", contacto.IdProveedor));
+                    cmdContacto.Parameters.Add(new SqlParameter("Result", SqlDbType.Int) { Direction = ParameterDirection.ReturnValue });
+                    cmdContacto.ExecuteNonQuery();
+                    var resultado = Convert.ToInt32(cmdContacto.Parameters["Result"].Value);
+
+                    response.Success = resultado > 0;
+                }
+            }
+            catch (Exception exception)
+            {
+                response.Success = false;
+            }
+
+            return response;
+        }
+
         /// <summary>
         /// Registra el estatus del proveedor
         /// </summary>
@@ -743,6 +898,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                     contacto.IdZonaHoraria = Convert.ToInt32(reader["IdZonaHoraria"]);
                     contacto.IdPais = Convert.ToInt32(reader["IdPais"]);
                     contacto.IdIdioma = Convert.ToInt32(reader["IdIdioma"]);
+                    contacto.ContactoPrincipal = Convert.ToInt32(reader["ContactoPrincipal"]);
                 }
             }
 
@@ -851,6 +1007,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             cmdContacto.Parameters.Add(new SqlParameter("@IdZonaHoraria", contacto.IdZonaHoraria));
             cmdContacto.Parameters.Add(new SqlParameter("@IdPais", contacto.IdPais));
             cmdContacto.Parameters.Add(new SqlParameter("@IdIdioma", contacto.IdIdioma));
+            cmdContacto.Parameters.Add(new SqlParameter("@ContactoPrincipal", 1));
             cmdContacto.Parameters.Add(new SqlParameter("Result", SqlDbType.Int) { Direction = ParameterDirection.ReturnValue });
             cmdContacto.ExecuteNonQuery();
             var resultado = Convert.ToInt32(cmdContacto.Parameters["Result"].Value);
@@ -944,6 +1101,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             var resultado = Convert.ToInt32(cmdEstatus.Parameters["Result"].Value);
             return resultado;
         }
+
         private int ExecuteComandUsuario(SqlCommand cmdUsuario, int idProveedor, string password)
         {
             cmdUsuario.CommandType = CommandType.StoredProcedure;
