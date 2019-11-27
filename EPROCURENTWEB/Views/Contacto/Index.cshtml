@@ -3,21 +3,20 @@
     ViewBag.Title = "Contactos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <link href="~/Content/Gestor.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <div class="row">
     <div class="col-md-12">
-        <div class="card mt-3">
-            <div class="card-body">
+        <div class="card1 mt-3">
+            <div class="card-body1">
                 <div class="row">
                     <div class="col-sm-10">
-                        Contactos
+                        <b>Contactos</b>
                     </div>
                     <div class="col-sm-2">
-
-                        @Html.ActionLink("Agregar", "NuevoContacto", "Contacto")
+                        <a href="@Url.Action("NuevoContacto", "Contacto")" class="ntb-agregarcontacto"><i class="fa fa-plus"></i> Agregar</a>
+                        @*@Html.ActionLink("Agregar", "NuevoContacto", "Contacto")*@
                     </div>
                     </div>
                 </div>
@@ -129,8 +128,8 @@
                  $("#Table").append('<tbody>');
                  for (i = 0; i < data.length; i++) {
 
-                     var linkEdit = '@Html.ActionLink(" ", "EditarContacto", "Contacto", new { idContacto = "_idContacto_" }, new { @class = "fas fa-eye icon-color" })';
-                     var btnEliminar = '<input type="button" class="fas fa-eye icon-color" onclick="fn_eliminar(_idContacto_)" />';
+                     var linkEdit = '@Html.ActionLink(" ", "EditarContacto", "Contacto", new { idContacto = "_idContacto_" }, new { @class = "fas fa-edit icon-color" })';
+                     var btnEliminar = '<input type="button" value="x" class="BTN-DELETE-CONTACTO icon-color" onclick="fn_eliminar(_idContacto_)" />';
                      linkEdit = linkEdit.replace('_idContacto_', data[i].IdContacto);
                      btnEliminar = btnEliminar.replace('_idContacto_', data[i].IdContacto)
                      if (data[i].ContactoPrincipal == 0) {

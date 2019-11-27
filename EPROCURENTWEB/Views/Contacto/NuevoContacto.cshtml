@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="~/Content/validacionProveedor.css" rel="stylesheet" />
+<link href="~/Content/Gestor.css" rel="stylesheet" />
 @using (Html.BeginForm("NuevoContacto", "Contacto", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
@@ -94,12 +95,16 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-sm-12 mt-3"></div>
         <div class="col-sm-6">&nbsp;</div>
         <div class="col-sm-3">
-            <button class="btnStyle btnWhite" type="submit">Cancelar</button>
+            <a href="@Url.Action("Index", "Contacto")">
+                <button class="btnStyle btnWhite" type="button">Cancelar</button>
+            </a>
+            @*<button class="btnStyle btnWhite" type="submit">Cancelar</button>*@
         </div>
         <div class="col-sm-3">
-            <button class="btnStyle" type="submit">Aceptar</button>
+            <button class="btnStyle" type="submit"><i class="fa fa-plus"></i>  Agregar</button>
         </div>
     </div>
 }

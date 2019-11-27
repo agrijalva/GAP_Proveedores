@@ -18,3 +18,7 @@ C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_P
 C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.csproj.CoreCompileInputs.cache
 C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.dll
 C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.pdb
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.dll
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.pdb
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.dll
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.pdb
