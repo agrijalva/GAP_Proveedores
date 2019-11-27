@@ -128,6 +128,7 @@ namespace Eprocurement.Compras.Controllers
             }
             return View(proveedor);
         }
+
         public JsonResult GetProveedorEstatusList(int? idTipoProveedor, int? idGiroProveedor, string idAeropuerto, string nombreEmpresa, string rfc, string email, int? idEstatus)
         {
             try
@@ -248,9 +249,34 @@ namespace Eprocurement.Compras.Controllers
                 return Json(new List<AeropuertoDTO>(), JsonRequestBehavior.AllowGet);
             }
             return Json(proveedor.AeropuertoList, JsonRequestBehavior.AllowGet);
+        }
 
+        public JsonResult GetGiros(int idProvider)
+        {
+            var girosProveedor = new List<GiroDTO>();
+            try
+            {
+                BusinessLogic businessLogic = new BusinessLogic();
+                ProveedorDetalleRequestDTO request = new ProveedorDetalleRequestDTO();
+                request.IdProveedor = idProvider;
+                var giroList = businessLogic.GetGirosList();
+                if (giroList != null && giroList.Count > 0)
+                {
+                    var response = businessLogic.GetProveedorElemento(request).Proveedor;
+                    if (response != null && response.ProveedorGiroList != null && response.ProveedorGiroList.Count > 0)
+                    {
+                        girosProveedor = (from a in giroList
+                                         join b in response.ProveedorGiroList on a.IdGiro equals b.IdCatalogoGiro
+                                         select  a).ToList();
+                    }                    
+                }
 
-
+            }
+            catch (Exception ex)
+            {
+                return Json(new List<GiroDTO>(), JsonRequestBehavior.AllowGet);
+            }
+            return Json(girosProveedor, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult About(int idProvider)

@@ -74,7 +74,7 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal Aeropuertos-->
 <div class="modal fade" id="modalAeropuertos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -87,6 +87,27 @@
             <div class="modal-body">
                 <br />
                 <div id="wkslist"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btnStyle btnWhite btn-modal-cancelar" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Giros-->
+<div class="modal fade" id="modalGiros" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-purple">
+                <h5 class="modal-title" id="exampleModalLongTitle">Giros configurados</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <br />
+                <div id="wkslistGiros"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btnStyle btnWhite btn-modal-cancelar" data-dismiss="modal">Cancelar</button>
@@ -134,9 +155,11 @@
 
                      var link = '@Html.ActionLink(" ", "AceptarProveedor", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
                      var btnAeropuerto = '<input type="button" class="fas fa-eye icon-color" data-toggle="modal" data-target="#modalAeropuertos" onclick="fn_verAerpoerto(_idProv_)" />';
+                     var btnGiros = '<input type="button" class="fas fa-eye icon-color" data-toggle="modal" data-target="#modalGiros" onclick="fn_verGiros(_idProv_)" />';                    
 
                      link = link.replace('_idProv_', data[i].IdProveedor);
                      btnAeropuerto = btnAeropuerto.replace('_idProv_', data[i].IdProveedor)
+                     btnGiros = btnGiros.replace('_idProv_', data[i].IdProveedor)
 
                      var color = ''
                      switch (data[i].IdEstatus) {
@@ -159,7 +182,7 @@
                          '<td style="dislay: none;">' + data[i].Email + '</td>' +
                          '<td style="dislay: none; color:' + color + ';"><b>' + data[i].Estatus + '<b></td>' +
                          '<td style="dislay: none;"><div class="btn-circle">' + btnAeropuerto + '</div></td>' +
-                         '<td style="dislay: none;"><div class="btn-circle">' + btnAeropuerto + '</div></td>' +
+                         '<td style="dislay: none;"><div class="btn-circle">' + btnGiros + '</div></td>' +
                          '<td style="dislay: none;"><div class="btn-circle">' + link + '</div></td>' + '</tr>'
                      );
                  }
@@ -198,6 +221,29 @@
             error: function (data) { }
         });
     }
+
+    var fn_verGiros = function (idProveedor) {
+        /// Cargar Aeropuertos
+        var jsonData = JSON.stringify({ idProvider: idProveedor });
+        $('#wkslistGiros').empty();
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: '@Url.Action("GetGiros", "Home")',
+            data: jsonData,
+            async: false,
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (key, value) {
+                    var div = $('<div class="row"><div class="col-sm-12"><select class="form-control"><option>' + value.GiroNombre + '</option ></select > ' +
+                        '</div></div>');
+                    $('#wkslistGiros').append(div);
+                });
+            },
+            error: function (data) { }
+        });
+    }
+
     $("#buscar").click(function () {
         fn_buscar();
     });
