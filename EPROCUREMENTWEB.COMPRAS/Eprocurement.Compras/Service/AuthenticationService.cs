@@ -155,6 +155,8 @@ namespace Eprocurement.Compras.Service
             identity.AddClaim(new Claim(ClaimTypes.Name, userPrincipal));
             identity.AddClaim(new Claim(ClaimTypes.Role, rol));
             identity.AddClaim(new Claim(ClaimTypes.UserData, propiedadesUsuario));
+            identity.AddClaim(new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", userPrincipal));
+            identity.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", userPrincipal));
 
             return identity;
         }
