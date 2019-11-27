@@ -157,6 +157,7 @@ namespace EprocurementWeb.Controllers
         [HttpPost]
         public ActionResult Upload()
         {
+            var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
             // Logica anterior
             BusinessLogic business = new BusinessLogic();
             int idProveedor = new ValidaSession().RecuperaIdProveedorSession();
@@ -177,7 +178,7 @@ namespace EprocurementWeb.Controllers
                         registro.IdProveedor = idProveedor;
                         cuenta.ProveedorCuentaList = new List<ProveedorCuentaDTO>();
                         cuenta.ProveedorCuentaList.Add(registro);
-                        ProveedorCuentaRequestDTO requestg = new ProveedorCuentaRequestDTO { IdUsuario = 3, ProveedorCuentaList = cuenta.ProveedorCuentaList };
+                        ProveedorCuentaRequestDTO requestg = new ProveedorCuentaRequestDTO { IdUsuario = Convert.ToUInt64(usuarioInfo.IdUsuario), ProveedorCuentaList = cuenta.ProveedorCuentaList };
                         var responseg = business.GuardarProveedorCuenta(requestg);
                     }
                 }
@@ -215,15 +216,20 @@ namespace EprocurementWeb.Controllers
                 var response = business.GetProveedorElemento(request).Proveedor;
                 cuenta.RFC = response.RFC;
 
-                ProveedorDocumentoRequestDTO requestPC = new ProveedorDocumentoRequestDTO { IdUsuario = 3, ProveedorDocumentoList = provDoctos };
+                ProveedorDocumentoRequestDTO requestPC = new ProveedorDocumentoRequestDTO { IdUsuario = Convert.ToUInt64(usuarioInfo.IdUsuario), ProveedorDocumentoList = provDoctos };
                 var responsePC = business.GuardarProveedorCuenta(requestPC);
                 if (responsePC.Success)
                 {
                     bool respuestaDoc = business.GuardarDocumentos(cuenta.RFC, cuenta.CatalogoDocumentoList);
                     if (respuestaDoc)
                     {
-                        ProveedorAprobarRequestDTO requestAprobador = new ProveedorAprobarRequestDTO { EstatusProveedor = new HistoricoEstatusProveedorDTO { IdEstatusProveedor = 5, IdProveedor = idProveedor, IdUsuario = 3 } };
+                        ProveedorAprobarRequestDTO requestAprobador = new ProveedorAprobarRequestDTO { EstatusProveedor = new HistoricoEstatusProveedorDTO { IdEstatusProveedor = 5, IdProveedor = idProveedor, IdUsuario = usuarioInfo.IdUsuario } };
                         var responseAprobar = business.SetProveedorEstatus(requestAprobador);
+                        if (responseAprobar.Success)
+                        {
+                            usuarioInfo.IdEstatus = 5;
+                            Session["User"] = usuarioInfo;
+                        }
                     }
                 }
 
