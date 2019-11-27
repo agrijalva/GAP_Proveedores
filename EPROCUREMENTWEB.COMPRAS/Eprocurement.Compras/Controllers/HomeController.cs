@@ -255,10 +255,11 @@ namespace Eprocurement.Compras.Controllers
             return View();
         }
 
-        public ActionResult AprobarInformacionBF(int idProveedor)
+        public ActionResult AprobarInformacionBF(int idProveedor, int idEstatus)
         {
             ProveedorInformacionFinanciera informacionFinanciera = new ProveedorInformacionFinanciera();
             ViewBag.IdProveedor = idProveedor;
+            ViewBag.IdEstatus = idEstatus;
             return View(informacionFinanciera);
         }
 

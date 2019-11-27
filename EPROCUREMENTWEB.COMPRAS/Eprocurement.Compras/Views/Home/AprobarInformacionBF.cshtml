@@ -44,25 +44,31 @@
             </div>
         </div>
         <div class="row mt-5">
-            <div class="col-md-3">
-                @*<a href="@Url.Action("AprobarTesoreria", "Tesoreria")" class="btnStyle btnWhite">
-                        <span>Documentacion pendiente</span>
-                    </a>*@
-                <input id="btnDocumentacion" class="btnStyle btnWhite" type="button" data-toggle="modal" data-target="#modalDocumentacion" value="Documentacion pendiente" />
-            </div>
-            <div class="col-md-3">
-                <input type="button" class="btnStyle btnWhite" data-toggle="modal" data-target="#modalRechazar" value="Rechazar" />
-            </div>
+            @if ((int)ViewBag.IdEstatus == 5)
+            {
+                <div class="col-md-3">
+                    @*<a href="@Url.Action("AprobarTesoreria", "Tesoreria")" class="btnStyle btnWhite">
+                    <span>Documentacion pendiente</span>
+                </a>*@
+                    <input id="btnDocumentacion" class="btnStyle btnWhite" type="button" data-toggle="modal" data-target="#modalDocumentacion" value="Documentacion pendiente" />
+                </div>
+                <div class="col-md-3">
+                    <input type="button" class="btnStyle btnWhite" data-toggle="modal" data-target="#modalRechazar" value="Rechazar" />
+                </div>
+            }
             <div class="col-md-3">
                 <a href="@Url.Action("AprobarTesoreria", "Tesoreria")">
                     <input id="btnCancelar" class="btnStyle btnWhite" type="button" value="Cancelar" />
                 </a>
 
             </div>
-            <div class="col-md-3">
-                <input id="btnAprobar" class="btnStyle" type="button" value="Aceptar" />
+            @if ((int)ViewBag.IdProveedor == 5)
+            {
+                <div class="col-md-3">
+                    <input id="btnAprobar" class="btnStyle" type="button" value="Aceptar" />
+                </div>
+            }
             </div>
-        </div>
     </div>
 
 </div>
