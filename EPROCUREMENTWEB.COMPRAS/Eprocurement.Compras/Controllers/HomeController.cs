@@ -224,6 +224,35 @@ namespace Eprocurement.Compras.Controllers
             return Json(municipioList, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetAeropuertos(int idProvider)
+        {
+            ProveedorRegistro proveedor;
+            try
+            {
+                BusinessLogic businessLogic = new BusinessLogic();
+                ProveedorDetalleRequestDTO request = new ProveedorDetalleRequestDTO();
+                request.IdProveedor = idProvider;
+
+                var response = businessLogic.GetProveedorElemento(request).Proveedor;
+                var empresaList = response.EmpresaList;
+                aeropuertoList = businessLogic.GetAeropuertosList();
+                proveedor = new ProveedorRegistro
+                {
+                    AeropuertoList = aeropuertoList.Select(a => new AeropuertoDTO { Id = a.Id, Nombre = a.Nombre, Checado = empresaList.Where(el => el.IdCatalogoAeropuerto == a.Id).Count() > 0 ? true : false }).ToList(),
+                };
+                proveedor.AeropuertoList = proveedor.AeropuertoList.Where(x => x.Checado).ToList();
+    
+            }
+            catch (Exception ex)
+            {
+                return Json(new List<AeropuertoDTO>(), JsonRequestBehavior.AllowGet);
+            }
+            return Json(proveedor.AeropuertoList, JsonRequestBehavior.AllowGet);
+
+
+
+        }
+
         public ActionResult About(int idProvider)
         {
             try
