@@ -154,8 +154,8 @@
                  for (i = 0; i < data.length; i++) {
 
                      var link = '@Html.ActionLink(" ", "AceptarProveedor", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
-                     var btnAeropuerto = '<input type="button" class="fas fa-eye icon-color" data-toggle="modal" data-target="#modalAeropuertos" onclick="fn_verAerpoerto(_idProv_)" />';
-                     var btnGiros = '<input type="button" class="fas fa-eye icon-color" data-toggle="modal" data-target="#modalGiros" onclick="fn_verGiros(_idProv_)" />';                    
+                     var btnAeropuerto = '<input type="button" value="Ver" class="btn-ver" data-toggle="modal" data-target="#modalAeropuertos" onclick="fn_verAerpoerto(_idProv_)" />';
+                     var btnGiros = '<input type="button" value="Ver" class="btn-ver" data-toggle="modal" data-target="#modalGiros" onclick="fn_verGiros(_idProv_)" />';                    
 
                      link = link.replace('_idProv_', data[i].IdProveedor);
                      btnAeropuerto = btnAeropuerto.replace('_idProv_', data[i].IdProveedor)

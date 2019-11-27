@@ -296,6 +296,7 @@
     </div>
     
     <div class="row mt-5">
+        <b>-- @Model.IdEstatus --</b>
         @if (Model.IdEstatus == 1)
         {
             <div class="col-sm-3">
@@ -311,13 +312,14 @@
                 <input id="btnCancelar" class="btnStyle btnWhite" type="button" value="Cancelar" />
             </a>
         </div>
-        @if (Model.IdEstatus == 1)
+        @* Se puso = 0 para seguir con las pruebas *@
+        @if (Model.IdEstatus == 0)
         {
             <div class="col-sm-3">
                 <input id="btnAprobar" class="btnStyle" type="button" value="Guardar" />
             </div>
         }
-        </div>
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="modalRechazar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
