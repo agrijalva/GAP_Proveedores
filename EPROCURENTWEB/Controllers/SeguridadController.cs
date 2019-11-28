@@ -36,7 +36,7 @@ namespace EprocurementWeb.Controllers
                     Session["User"] = usuarioDTO;
                     return RedirectToAction("InformacionBF", "AltaProveedor");
                 }
-                if (usuarioDTO.IdEstatus == 8)
+                if (usuarioDTO.IdEstatus == 8 || usuarioDTO.IdEstatus == 9 || usuarioDTO.IdEstatus == 10)
                 {
                     Session["User"] = usuarioDTO;
                     return RedirectToAction("Index", "Gestion");

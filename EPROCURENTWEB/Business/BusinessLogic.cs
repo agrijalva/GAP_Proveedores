@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EprocurementWeb.Properties;
 using System.IO;
+using EPROCUREMENT.GAPPROVEEDOR.Entities.Proveedor;
 
 namespace EprocurementWeb.Business
 {
@@ -374,27 +375,27 @@ namespace EprocurementWeb.Business
             return response;
         }
 
-        public ProveedorDocumentoResponseDTO GetProveedorDocumentoList(ProveedorDocumentoRequestDTO request)
-        {
-            ProveedorDocumentoResponseDTO response = new ProveedorDocumentoResponseDTO();
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
-                var json = JsonConvert.SerializeObject(request);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var responseTask = client.PostAsync("GetProveedorDocumentoList", content);
-                responseTask.Wait();
+        //public ProveedorDocumentoResponseDTO GetProveedorDocumentoList(ProveedorDocumentoRequestDTO request)
+        //{
+        //    ProveedorDocumentoResponseDTO response = new ProveedorDocumentoResponseDTO();
+        //    using (var client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+        //        var json = JsonConvert.SerializeObject(request);
+        //        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        //        var responseTask = client.PostAsync("GetProveedorDocumentoList", content);
+        //        responseTask.Wait();
 
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsStringAsync();
-                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
-                    response = JSSerializer.Deserialize<ProveedorDocumentoResponseDTO>(readTask.Result);
-                }
-            }
-            return response;
-        }
+        //        var result = responseTask.Result;
+        //        if (result.IsSuccessStatusCode)
+        //        {
+        //            var readTask = result.Content.ReadAsStringAsync();
+        //            JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+        //            response = JSSerializer.Deserialize<ProveedorDocumentoResponseDTO>(readTask.Result);
+        //        }
+        //    }
+        //    return response;
+        //}
 
         public bool GuardarDocumentosBack(string rfc, List<CatalogoDocumentoDTO> files)
         {
@@ -859,6 +860,53 @@ namespace EprocurementWeb.Business
                 }
             }
             return response;
+        }
+
+        public ProveedorDocumentoResponseDTO GetProveedorDocumentoList(ProveedorDocumentoRequestDTO request)
+        {
+            ProveedorDocumentoResponseDTO response = new ProveedorDocumentoResponseDTO();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+                var json = JsonConvert.SerializeObject(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var responseTask = client.PostAsync("GetProveedorDocumentoList", content);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+                    response = JSSerializer.Deserialize<ProveedorDocumentoResponseDTO>(readTask.Result);
+                }
+            }
+            return response;
+        }
+
+        public ProveedorInformacionFinanciera GetProveedorInfoFinanciera(int idProveedor)
+        {
+            List<EstadoDTO> lstEstado = new List<EstadoDTO>();
+            ProveedorInformacionFinancieraRequestDTO estado = new ProveedorInformacionFinancieraRequestDTO { IdProveedor = idProveedor };
+            ProveedorInformacionFinanciera proveedor = new ProveedorInformacionFinanciera();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+                var json = JsonConvert.SerializeObject(estado);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var responseTask = client.PostAsync("ProveedorInfoFinanciera", content);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+                    var response = JSSerializer.Deserialize<ProveedorInformacionFinanciera>(readTask.Result);
+                    proveedor = response;
+                }
+            }
+            return proveedor;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using EPROCUREMENT.GAPPROVEEDOR.Entities;
+using EPROCUREMENT.GAPPROVEEDOR.Entities.Proveedor;
 using EprocurementWeb.Business;
 using EprocurementWeb.Filters;
 using EprocurementWeb.Models;
@@ -52,6 +53,9 @@ namespace EprocurementWeb.Controllers
             ViewBag.TipoProveedorList = tipoProveedorList;
             ViewBag.idProveedor = 0;
             ViewBag.accionForm = 1;
+            ViewBag.cantidadGiro = giroList.Count;
+            var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
+            ViewBag.IdEstatus = usuarioInfo.IdEstatus;
             try
             {
                 var proveedor = ObtenerProveedor();
@@ -60,6 +64,12 @@ namespace EprocurementWeb.Controllers
                 ViewBag.MunicipioList = municipioList;
                 ViewBag.idEstado = proveedor.Direccion.IdEstado;
                 ViewBag.idMunicipio = proveedor.Direccion.IdMunicipio;
+                foreach(var giro in giroList)
+                {
+                    giro.Registrado = proveedor.ProveedorGiroList.Exists(x => x.IdCatalogoGiro == giro.IdGiro);
+                };
+
+                ViewBag.GiroList = (from g in giroList orderby g.Registrado descending select g).ToList();
                 ViewBag.colonias = new List<string>();
                 CodigoPostalModel infoCodigo;
                 if (proveedor.Direccion.IdPais == 1)
@@ -109,16 +119,75 @@ namespace EprocurementWeb.Controllers
             return View(actualizaPassword);
         }
 
+        public JsonResult GetDetalleCuentaList(int idProveedor)
+        {
+            try
+            {
+                ProveedorInformacionFinanciera informacionFinanciera = new ProveedorInformacionFinanciera();
+                informacionFinanciera = new BusinessLogic().GetProveedorInfoFinanciera(idProveedor);
+
+                ProveedorCuentaResponseDTO proveedorCuentaResponse = new BusinessLogic().GetProveedorCuentaAeropuertoList(new ProveedorCuentaRequestDTO
+                {
+                    ProveedorCuentaList = informacionFinanciera.ProveedorCuentaList
+                });
+
+                //informacionFinanciera.ProveedorCuentaListRegistro = new List<ProveedorCuentaDTO>();
+                //informacionFinanciera.ProveedorCuentaListRegistro.Add(new ProveedorCuentaDTO {
+                //    CLABE = "123456789012345678",
+                //    Cuenta = "1234567890",
+                //    NombreBanco = "BBVA",
+                //    TipoCuenta = "Débito"
+                //});
+
+                return Json(proveedorCuentaResponse.ProveedorCuentaList, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+        }
+
+        public JsonResult GetDocumentosList(int idProveedor)
+        {
+            try
+            {
+                ProveedorInformacionFinanciera informacionFinanciera = new ProveedorInformacionFinanciera();
+                informacionFinanciera = new BusinessLogic().GetProveedorInfoFinanciera(idProveedor);
+                //informacionFinanciera.CatalogoDocumentoList = new List<CatalogoDocumentoDTO>();
+                //informacionFinanciera.CatalogoDocumentoList.Add(new CatalogoDocumentoDTO
+                //{
+                //    NombreDocumento = "PDF",
+                //    RutaDocumento = "localhost"
+                //});
+
+                ProveedorDocumentoRequestDTO proveedorDocumentoRequest = new ProveedorDocumentoRequestDTO
+                {
+                    IdProveedor = idProveedor
+                };
+
+                var proveedorDocumentoResponse = new BusinessLogic().GetProveedorDocumentoList(proveedorDocumentoRequest);
+
+                return Json(proveedorDocumentoResponse.ProveedorDocumentoList, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+        }
+
         [HttpPost]
         public ActionResult ActualizarProveedor(ProveedorModel proveedor)
         {
             try
             {
+                var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
+                ViewBag.IdEstatus = usuarioInfo.IdEstatus;
                 ViewBag.accionForm = 1;
                 proveedor.IdTipoProveedor = 1;
                 proveedor.IdNacionalidad = 1;
                 proveedor.Direccion.DireccionValidada = true;
-                //proveedor.Direccion.IdPais = proveedor.i
                 CargarCatalogos();
                 ViewBag.GiroList = giroList;
                 ViewBag.ZonaHorariaList = zonaHorariaList;
@@ -130,6 +199,7 @@ namespace EprocurementWeb.Controllers
                 ViewBag.TipoProveedorList = tipoProveedorList;
                 proveedor.EmpresaList = proveedor.AeropuertoList.Where(a => a.Checado).Select(a => new ProveedorEmpresaModel { IdCatalogoAeropuerto = a.Id }).ToList();
                 ViewBag.colonias = new List<string>();
+                ViewBag.cantidadGiro = giroList.Count;
                 if (proveedor.ProveedorGiroList == null || !proveedor.ProveedorGiroList.Exists(x => x.IdCatalogoGiro > 0))
                 {
                     ModelState.AddModelError("ErrorEmpresa", "Debe agregar al menos una empresa");
@@ -153,7 +223,6 @@ namespace EprocurementWeb.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
                     proveedor.IdProveedor = usuarioInfo.IdProveedor;
                     if (new BusinessLogic().PostTempProveedor(proveedor))
                     {
@@ -168,9 +237,10 @@ namespace EprocurementWeb.Controllers
             }
             catch (Exception ex)
             {
+                ModelState.AddModelError("ErrorGenerico", "Se genero un error al procesar la solicitud");
             }
 
-            MiCuentaModel model = new MiCuentaModel { Proveedor = proveedor, ActualizaPassword = new ActualizaPasswordModel() };
+            MiCuentaModel model = new MiCuentaModel { Proveedor = proveedor };
 
             return View("Index", model);
         }

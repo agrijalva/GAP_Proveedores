@@ -1193,16 +1193,10 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                         if (resultado > 0)
                         {
                             var idProveedor = request.Proveedor.IdProveedor;
-                            //var cmdGiroDelete = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorGiro_DEL]", conexion);
-                            //if (ExecuteComandDelete(cmdGiroDelete, idProveedor) < 1) { return response; }
+                            var cmdGiroDelete = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorGiro_DEL]", conexion);
+                            if (ExecuteComandDelete(cmdGiroDelete, idProveedor) < 1) { return response; }
                             var cmdEmpresaDelete = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorEmpresa_DEL]", conexion);
                             if (ExecuteComandDelete(cmdEmpresaDelete, idProveedor) < 1) { return response; }
-
-                            //foreach (var proveedorGiro in request.Proveedor.ProveedorGiroList)
-                            //{
-                            //    var cmdGiro = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_ProveedorGiro_INS, conexion);
-                            //    if (ExecuteComandGiro(cmdGiro, proveedorGiro.IdCatalogoGiro, idProveedor) < 1) { return response; }
-                            //}
 
                             foreach (var empresa in request.Proveedor.EmpresaList)
                             {
@@ -1215,19 +1209,25 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             request.Proveedor.Contacto.IdProveedor = idProveedor;
                             if (ExecuteComandContacto(cmdContacto, request.Proveedor.Contacto) < 1) { return response; }
 
+                            foreach (var proveedorGiro in request.Proveedor.ProveedorGiroList.Where(x => x.IdCatalogoGiro != 0).ToList())
+                            {
+                                var cmdGiro = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_ProveedorGiro_INS, conexion);
+                                if (ExecuteComandGiro(cmdGiro, proveedorGiro.IdCatalogoGiro, idProveedor) < 1) { return response; }
+                            }
+
                             var cmdDireccion = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorDireccion_UPD]", conexion);
                             request.Proveedor.Direccion.IdProveedor = idProveedor;
                             if (ExecuteComandDireccion(cmdDireccion, request.Proveedor.Direccion) < 1) { return response; }
 
-                            //var cmdEstatus = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_EstatusProveedor_INS, conexion);
-                            //var estatusProveedor = new HistoricoEstatusProveedorDTO
-                            //{
-                            //    IdEstatusProveedor = 1,
-                            //    IdProveedor = idProveedor,
-                            //    IdUsuario = null,
-                            //    Observaciones = null
-                            //};
-                            //if (ExecuteComandEstatus(cmdEstatus, estatusProveedor) < 1) { return response; }
+                            var cmdEstatus = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_EstatusProveedor_INS, conexion);
+                            var estatusProveedor = new HistoricoEstatusProveedorDTO
+                            {
+                                IdEstatusProveedor = 9,
+                                IdProveedor = idProveedor,
+                                IdUsuario = null,
+                                Observaciones = null
+                            };
+                            if (ExecuteComandEstatus(cmdEstatus, estatusProveedor) < 1) { return response; }
                             transactionScope.Complete();
                             response.Success = true;
                         }
