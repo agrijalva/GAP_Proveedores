@@ -104,7 +104,8 @@ namespace Eprocurement.Compras.Controllers
                     RazonSocial = response.RazonSocial,
                     RFC = response.RFC     ,
                     Mexicana = response.Mexicana,
-                    Extranjera = response.Extranjera
+                    Extranjera = response.Extranjera,
+                    IdEstatus = response.IdEstatus
                 };
                 proveedor.AeropuertoList = proveedor.AeropuertoList.Where(x => x.Checado).ToList();
                 ViewBag.EstadoList = estadoList;
@@ -151,7 +152,7 @@ namespace Eprocurement.Compras.Controllers
                     var response = businessLogic.GetProveedorEstatusList(request);
                     if (idEstatus == null)
                     {
-                        string[] estatus = { "1", "2", "3", "4", "5", "6", "7", "8" };
+                        string[] estatus = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
                         proveedorEstatus = (from t in response.ProveedorList
                                             where estatus.Contains(t.IdEstatus.ToString())
                                             select t).ToList();

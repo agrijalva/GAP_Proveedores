@@ -296,8 +296,9 @@
     </div>
     
     <div class="row mt-5">
-        <b>-- @Model.IdEstatus --</b>
-        @if (Model.IdEstatus == 1)
+        @Html.Hidden("IdEstatus", Model.IdEstatus)
+        
+        @if (Model.IdEstatus == 1 || Model.IdEstatus == 9)
         {
             <div class="col-sm-3">
                 <input id="btnDocumentacion" class="btnStyle btnWhite" type="button" value="Documentacion pendiente " />
@@ -313,7 +314,7 @@
             </a>
         </div>
         @* Se puso = 0 para seguir con las pruebas *@
-        @if (Model.IdEstatus == 0)
+        @if (Model.IdEstatus == 1 || Model.IdEstatus == 9)
         {
             <div class="col-sm-3">
                 <input id="btnAprobar" class="btnStyle" type="button" value="Guardar" />
@@ -457,8 +458,12 @@
 
 
         $("#btnRechazar").click(function () {
-             obs = $("#observaciones").val();
+            obs = $("#observaciones").val();
+            var idEstatus = $("#IdEstatus").val();
             estatus = 2;
+            if (idEstatus == 9) {
+                estatus = 8;
+            }
 
             var jsonData = JSON.stringify({ idProveedor: idProveedor, observaciones: obs, estatus: estatus });
             Swal.fire({
@@ -501,9 +506,13 @@
 
         $("#btnAprobar").click(function () {
 
+            var idEstatus = $("#IdEstatus").val();
+            console.log($("#IdEstatus").val());
             obs = "";
             estatus = 4;
-
+            if (idEstatus == 9) {
+                estatus = 8;
+            }
             var jsonData = JSON.stringify({ idProveedor: idProveedor, observaciones: obs, estatus: estatus });
             Swal.fire({
                 title: '¿Esta seguro de aprobar el proveedor?',
