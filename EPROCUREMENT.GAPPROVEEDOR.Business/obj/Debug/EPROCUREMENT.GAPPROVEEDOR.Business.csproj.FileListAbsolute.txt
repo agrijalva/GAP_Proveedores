@@ -56,20 +56,6 @@ C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_P
 C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.csproj.CopyComplete
 C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.dll
 C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.pdb
-C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.dll
-C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.pdb
-C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.dll
-C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.dll
-C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\Microsoft.Owin.dll
-C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\Owin.dll
-C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.pdb
-C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.dll.config
-C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.pdb
-C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\Microsoft.Owin.xml
-C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.csprojAssemblyReference.cache
-C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.csproj.CopyComplete
-C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.dll
-C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.pdb
 C:\Users\Usuario\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.dll
 C:\Users\Usuario\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.pdb
 C:\Users\Usuario\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.dll
@@ -84,3 +70,17 @@ C:\Users\Usuario\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Busi
 C:\Users\Usuario\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.csproj.CopyComplete
 C:\Users\Usuario\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.dll
 C:\Users\Usuario\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.pdb
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.dll
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.pdb
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.dll
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.dll
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\Microsoft.Owin.dll
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\Owin.dll
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.pdb
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.dll.config
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.pdb
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\Microsoft.Owin.xml
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.csprojAssemblyReference.cache
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.csproj.CopyComplete
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.dll
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.pdb
