@@ -536,3 +536,4 @@ C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENTWEB.COM
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\obj\Debug\Eprocurement.Compras.csproj.CopyComplete
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\obj\Debug\Eprocurement.Compras.dll
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\obj\Debug\Eprocurement.Compras.pdb
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\obj\Debug\Eprocurement.Compras.csprojAssemblyReference.cache
