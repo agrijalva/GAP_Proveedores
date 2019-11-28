@@ -104,7 +104,8 @@ namespace Eprocurement.Compras.Controllers
                     RazonSocial = response.RazonSocial,
                     RFC = response.RFC     ,
                     Mexicana = response.Mexicana,
-                    Extranjera = response.Extranjera
+                    Extranjera = response.Extranjera,
+                    IdEstatus = response.IdEstatus
                 };
                 proveedor.AeropuertoList = proveedor.AeropuertoList.Where(x => x.Checado).ToList();
                 ViewBag.EstadoList = estadoList;
