@@ -49,17 +49,21 @@
     </div>
 
     <div class="container">
-        @using (Html.BeginForm("Recovery", "Seguridad", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            <div class="row pb-0">
-                <div class="col-sm-12">
-                    <h3 class="subtitle">
-                        Recuperación de Contraseña
-                    </h3>
-                </div>
-            </div>
-            <div class="formPrincipal">
-                @*<ul class="nav nav-tabs" role="tablist">
+        <div class="row">
+            <div class="col-md-12 mt-5">&nbsp;</div>
+            <div class="col-md-3">&nbsp;</div>
+            <div class="col-md-6">
+                @using (Html.BeginForm("Recovery", "Seguridad", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="row pb-0">
+                        <div class="col-sm-12">
+                            <h3 class="subtitle">
+                                Recuperación de Contraseña
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="formPrincipal">
+                        @*<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item" style="width:50%">
                             <a class="nav-link active" href="#IB" role="tab" data-toggle="tab">Información de la cuenta</a>
                         </li>
@@ -67,14 +71,14 @@
                             <a class="nav-link" href="#IF" role="tab" data-toggle="tab">Contraseña</a>
                         </li>
                     </ul>*@
-                <div class="tab-content" style="background-color:white; padding: 15px;">
-                    <div role="tabpanel" class="tab-pane fade in active show" id="IB">
-                        <div class="col100" style="font-size:14px;">
-                            Recuperar Contraseña
-                        </div>
-                        <div class="col100 mt-2">
-                            @Html.HiddenFor(model => model.Token)
-                            @*<div class="col25">
+                        <div class="tab-content" style="background-color:white; padding: 15px;">
+                            <div role="tabpanel" class="tab-pane fade in active show" id="IB">
+                                <div class="col100" style="font-size:14px;">
+                                    Recuperar Contraseña
+                                </div>
+                                <div class="col100 mt-2">
+                                    @Html.HiddenFor(model => model.Token)
+                                    @*<div class="col25">
                                     <div class="inputIF">
                                         @Html.LabelFor(model => model.Password, new { @class = "labelTexto control-label" })
                                     </div>
@@ -82,42 +86,44 @@
                                         @Html.PasswordFor(model => model.Password, new { @class = "form-control inputIF" })
                                     </div>
                                 </div>*@
-                            <div class="col25">
-                                <div class="inputIF">
-                                    @Html.LabelFor(model => model.PasswordNueva, new { @class = "labelTexto control-label" })
+                                    <div class="col25">
+                                        <div class="inputIF">
+                                            @Html.LabelFor(model => model.PasswordNueva, new { @class = "labelTexto control-label" })
+                                        </div>
+                                        <div class="inputIF">
+                                            @Html.PasswordFor(model => model.PasswordNueva, new { @class = "form-control inputIF" })
+                                        </div>
+                                    </div>
+                                    <div class="col25">
+                                        <div class="inputIF">
+                                            @Html.LabelFor(model => model.ConfirmarPassword, new { @class = "labelTexto control-label" })
+                                        </div>
+                                        <div class="inputIF">
+                                            @Html.PasswordFor(model => model.ConfirmarPassword, new { @class = "form-control inputIF" })
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="inputIF">
-                                    @Html.PasswordFor(model => model.PasswordNueva, new { @class = "form-control inputIF" })
-                                </div>
-                            </div>
-                            <div class="col25">
-                                <div class="inputIF">
-                                    @Html.LabelFor(model => model.ConfirmarPassword, new { @class = "labelTexto control-label" })
-                                </div>
-                                <div class="inputIF">
-                                    @Html.PasswordFor(model => model.ConfirmarPassword, new { @class = "form-control inputIF" })
-                                </div>
+                                @if (@ViewBag.Error == "Sin error")
+                                {
+                                    @Html.Label("Se actualizo su contraseña, favor de iniciar sesión aquí: ");
+                                    @Html.ActionLink("Inicio de sesión", "Index", "Seguridad")
+
+                                }
+                                else
+                                {
+                                    @ViewBag.Error
+                                }
                             </div>
                         </div>
-                        @if (@ViewBag.Error == "Sin error")
-                        {
-                            @Html.Label("Se actualizo su contraseña, favor de iniciar sesión aquí: ");
-                            @Html.ActionLink("Inicio de sesión", "Index", "Seguridad")
 
-                        }
-                        else
-                        {
-                            @ViewBag.Error
-                        }
+                        <div class="row mt-4">
+                            <div class="col-sm-10">&nbsp;</div>
+                            <div class="col-sm-2"><input type="submit" value="Aceptar" class="btnStyle" /></div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="row mt-4">
-                    <div class="col-sm-10">&nbsp;</div>
-                    <div class="col-sm-2"><input type="submit" value="Aceptar" class="btnStyle" /></div>
-                </div>
+                }
             </div>
-        }
+        </div>
     </div>
 
 </body>
