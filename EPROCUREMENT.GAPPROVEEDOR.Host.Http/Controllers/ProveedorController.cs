@@ -98,6 +98,33 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
         }
 
         [HttpPost]
+        [Route("AprobarProveedorPorCompras")]
+        public ProveedorEstatusResponseDTO AprobarProveedorPorCompras(int idProveedor = 0)
+        {
+            ProveedorEstatusResponseDTO response = new ProveedorEstatusResponseDTO
+            {
+                Success = false,
+                ErrorList = new List<ErrorDTO>()
+            };
+            response.ErrorList.Add(new ErrorDTO { Mensaje = "idProveedor invalido", Codigo = "401" });
+
+            if (idProveedor > 0)
+            {
+                ProveedorAprobarRequestDTO request = new ProveedorAprobarRequestDTO
+                {
+                    EstatusProveedor = new HistoricoEstatusProveedorDTO
+                    {
+                        IdEstatusProveedor = 4,
+                        IdProveedor = idProveedor
+                    }
+                };
+                response = new HandlerProveedor().EstatusProveedorInsertar(request);
+            }
+            
+            return response;
+        }
+
+        [HttpPost]
         [Route("ProveedorFiltro")]
         public ProveedorFiltroResponseDTO GetProvedorPorFiltro([FromBody]ProveedorFiltroRequestDTO request)
         {
