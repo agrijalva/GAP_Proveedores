@@ -227,6 +227,8 @@ namespace EprocurementWeb.Controllers
                     if (new BusinessLogic().PostTempProveedor(proveedor))
                     {
                         //    ViewBag.Respuesta = "Se ha actualizado su contraseña";
+                        usuarioInfo.IdEstatus = 9;
+                        Session["User"] = usuarioInfo;
                         return Redirect("/MiCuenta/Index#isuccess");
                     }
                     else
