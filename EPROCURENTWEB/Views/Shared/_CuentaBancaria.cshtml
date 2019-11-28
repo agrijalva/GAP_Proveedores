@@ -1,10 +1,10 @@
 ﻿@model EPROCUREMENT.GAPPROVEEDOR.Entities.Proveedor.ProveedorInformacionFinanciera
 @*@using (Html.BeginForm("AgregarCuenta", "AltaProveedor", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {*@
-    <div class="col100 mt-2">
+    <div class="row mt-2">
         @Html.HiddenFor(model => model.ProveedorCuentaList[0].IdProveedor)
         @Html.HiddenFor(model => model.ProveedorCuentaListRegistro)
-        <div class="col25">
+        <div class="col-sm-3">
             <div class="inputIF">
                 @Html.Label("cuenta", @EprocurementWeb.GlobalResources.RHome.Account, new { @class = "labelTexto control-label" })
             </div>
@@ -13,7 +13,7 @@
                 @Html.Label((string)ViewBag.MenssageError, new { @class = "text-danger", id = "errorCuenta", @style = "display:none;" })
             </div>
         </div>
-        <div class="col25">
+        <div class="col-sm-3">
             <div class="inputIF">
                 @Html.Label("banco", @EprocurementWeb.GlobalResources.RHome.Bank, new { @class = "labelTexto control-label" })
             </div>
@@ -22,7 +22,7 @@
                 @Html.Label((string)ViewBag.MenssageError, new { @class = "text-danger", id = "errorIdBanco", @style = "display:none;" })
             </div>
         </div>
-        <div class="col25">
+        <div class="col-sm-3">
             <div class="inputIF">
                 @Html.Label("clabe", @EprocurementWeb.GlobalResources.RHome.CLABE, new { @class = "labelTexto control-label" })
             </div>
@@ -31,7 +31,7 @@
                 @Html.Label((string)ViewBag.MenssageError, new { @class = "text-danger", id = "errorClave", @style = "display:none;" })
             </div>
         </div>
-        <div class="col25">
+        <div class="col-sm-3">
             <div class="inputIF">
                 @Html.Label("tipo", @EprocurementWeb.GlobalResources.RHome.Type, new { @class = "labelTexto control-label" })
             </div>

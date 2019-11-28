@@ -120,6 +120,29 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
             var response = new HandlerProveedor().GetProveedorInfoFinanciera(request);
             return response;
         }
+        [HttpPost]
+        [Route("ContactoProveedorList")]
+        public ContactoResponseDTO GetContactoProveedorList([FromBody]ContactoRequestDTO request)
+        {
+            var response = new HandlerProveedor().GetContactoProveedorList(request);
+            return response;
+        }
+
+        [HttpPost]
+        [Route("UpdateContacto")]
+        public ContactoResponseDTO UpdateContacto([FromBody]ContactoRequestDTO request)
+        {
+            var response = new HandlerProveedor().UpdateContacto(request);
+            return response;
+        }
+
+        [HttpPost]
+        [Route("DeleteContacto")]
+        public ContactoResponseDTO DeleteContacto([FromBody]ContactoRequestDTO request)
+        {
+            var response = new HandlerProveedor().DeleteContacto(request);
+            return response;
+        }
 
         [HttpGet]
         [Route("Documento")]

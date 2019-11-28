@@ -2,7 +2,7 @@
     ViewBag.Title = "Compras";
 }
 
-    <link href="~/Content/Gestor.css" rel="stylesheet" />
+<link href="~/Content/Gestor.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <div class="row">
     <div class="col-md-12">
@@ -18,13 +18,13 @@
                         @Html.Label("proveedor", "Proveedor", new { @class = "control-label text-right " })<br />
                         @Html.TextBox("proveedor", "", new { @class = "form-control" })
                         @*@Html.Label("tipoProveedor", "Tipo proveedor", new { @class = "control-label text-right " })<br />
-                        @Html.DropDownList("tipoProveedor", new SelectList(ViewBag.TipoProveedorList, "IdTipoProveedor", "Tipo"), "Seleccione una opción", new { @class = "form-control" })*@
+                            @Html.DropDownList("tipoProveedor", new SelectList(ViewBag.TipoProveedorList, "IdTipoProveedor", "Tipo"), "Seleccione una opción", new { @class = "form-control" })*@
                     </div>
                     <div class="form-group col-md-4">
                         @Html.Label("email", "Correo Electrónico", new { @class = "control-label text-right " })
                         @Html.TextBox("email", "", new { @class = "form-control" })
                         @*@Html.Label("giro", "Giro", new { @class = "control-label text-right " })<br />
-                        @Html.DropDownList("giro", new SelectList(ViewBag.GiroList, "IdGiro", "GiroNombre"), "Seleccione una opción", new { @class = "form-control" })*@
+                            @Html.DropDownList("giro", new SelectList(ViewBag.GiroList, "IdGiro", "GiroNombre"), "Seleccione una opción", new { @class = "form-control" })*@
                     </div>
                 </div>
 
@@ -33,13 +33,15 @@
                         @Html.Label("aeropuerto", "Aeropuerto", new { @class = "control-label text-right " })
                         @Html.DropDownList("aeropuerto", new SelectList(ViewBag.AeropuertoList, "Id", "Nombre"), "Seleccione una opción", new { @class = "form-control" })
                         @*@Html.Label("email", "Correo Electrónico", new { @class = "control-label text-right " })
-                        @Html.TextBox("email", "", new { @class = "form-control" })*@
+                            @Html.TextBox("email", "", new { @class = "form-control" })*@
                     </div>
                     <div class="form-group col-md-4">
-                        <label class="control-label text-right">Estatus</label>
-                        <select class="form-control">
-                            <option>...</option>
-                        </select>
+                        @Html.Label("estatus", "Estatus", new { @class = "control-label text-right " })
+                        @Html.DropDownList("estatus", new SelectList(ViewBag.EstatusProveedorGetList, "IdEstatusProveedor", "EstatusDescripcion"), "Seleccione una opción", new { @class = "form-control" })
+                        @*<label class="control-label text-right">Estatus</label>
+                            <select class="form-control">
+                                <option>...</option>
+                            </select>*@
                     </div>
                     <div class="form-group col-md-4">
                         <button id="buscar" class="btn btn-search btn-purple float-right">
@@ -59,28 +61,72 @@
     <div class="col-sm-12">
         <table id="Table">
             @*<thead>
-                <tr>
-                    <td>IdProveedor</td>
-                    <td>Proveedor</td>
-                    <td>RFC</td>
-                    <td>Email</td>
-                    <td>Estatus</td>
-                    <td>Accion</td>
-                </tr>
-            </thead>*@
+                    <tr>
+                        <td>IdProveedor</td>
+                        <td>Proveedor</td>
+                        <td>RFC</td>
+                        <td>Email</td>
+                        <td>Estatus</td>
+                        <td>Accion</td>
+                    </tr>
+                </thead>*@
         </table>
-    </div>   
+    </div>
+</div>
+
+<!-- Modal Aeropuertos-->
+<div class="modal fade" id="modalAeropuertos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-purple">
+                <h5 class="modal-title" id="exampleModalLongTitle">Aeropuertos configurados</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <br />
+                <div id="wkslist"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btnStyle btnWhite btn-modal-cancelar" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Giros-->
+<div class="modal fade" id="modalGiros" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-purple">
+                <h5 class="modal-title" id="exampleModalLongTitle">Giros configurados</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <br />
+                <div id="wkslistGiros"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btnStyle btnWhite btn-modal-cancelar" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
     var fn_buscar = function() {
          var tipoProveedor = $('#tipoProveedor').val() == '' ? null : $('#tipoProveedor').val();
          var idGiroProveedor = $('#giro').val() == '' ? null : $('#giro').val();
-         var idAeropuerto = $('#aeropuerto').val() == '' ? null : $('#aeropuerto').val();
+        var idAeropuerto = $('#aeropuerto').val() == '' ? null : $('#aeropuerto').val();
+        var idEstatus = $('#estatus').val() == '' ? null : $('#estatus').val();
          var email = $('#email').val() == '' ? null : $('#email').val();
          var nombreEmpresa = $('#proveedor').val() == '' ? null : $('#proveedor').val();
-         var rfc = $('#rfc').val() == '' ? null : $('#rfc').val();
-         var jsonData = JSON.stringify({ idTipoProveedor: tipoProveedor, idGiroProveedor: idGiroProveedor, idAeropuerto: idAeropuerto, nombreEmpresa: nombreEmpresa, rfc: rfc, email: email });
+        var rfc = $('#rfc').val() == '' ? null : $('#rfc').val();
+        console.log(idEstatus);
+        var jsonData = JSON.stringify({ idTipoProveedor: tipoProveedor, idGiroProveedor: idGiroProveedor, idAeropuerto: idAeropuerto, nombreEmpresa: nombreEmpresa, rfc: rfc, email: email, idEstatus: idEstatus });
          $.ajax({
              type: "POST",
              contentType: "application/json; charset=utf-8",
@@ -95,18 +141,25 @@
                      '<td>RFC</td>' +
                      '<td>Proveedor</td>' +
                      '<td>Email</td>' +
-                     '<td>Estatus</td>' +
+                     '<td width="200">Estatus</td>' +
+                     '<td align="center">Aeropuertos</td>' +
+                     '<td align="center">Giros</td>' +
                      '<td>Ver</td></tr></thead>'
                  );
                   //("#Table").DataTable().destroy();
                  $("#Table").DataTable().clear().draw();
                  $("#Table").DataTable().destroy();
-             
+
                  $("#Table").append('<tbody>');
                  for (i = 0; i < data.length; i++) {
-                 
+
                      var link = '@Html.ActionLink(" ", "AceptarProveedor", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
+                     var btnAeropuerto = '<input type="button" value="Ver" class="btn-ver" data-toggle="modal" data-target="#modalAeropuertos" onclick="fn_verAerpoerto(_idProv_)" />';
+                     var btnGiros = '<input type="button" value="Ver" class="btn-ver" data-toggle="modal" data-target="#modalGiros" onclick="fn_verGiros(_idProv_)" />';                    
+
                      link = link.replace('_idProv_', data[i].IdProveedor);
+                     btnAeropuerto = btnAeropuerto.replace('_idProv_', data[i].IdProveedor)
+                     btnGiros = btnGiros.replace('_idProv_', data[i].IdProveedor)
 
                      var color = ''
                      switch (data[i].IdEstatus) {
@@ -127,12 +180,14 @@
                          '<td style="dislay: none;"><b>' + data[i].RFC + '</b></td>' +
                          '<td style="dislay: none;">' + data[i].NombreEmpresa + '</td>' +
                          '<td style="dislay: none;">' + data[i].Email + '</td>' +
-                         '<td style="dislay: none; color:'+ color +';"><b>' + data[i].Estatus + '<b></td>' +
+                         '<td style="dislay: none; color:' + color + ';"><b>' + data[i].Estatus + '<b></td>' +
+                         '<td style="dislay: none;" align="center"><div class="btn-circle">' + btnAeropuerto + '</div></td>' +
+                         '<td style="dislay: none;" align="center"><div class="btn-circle">' + btnGiros + '</div></td>' +
                          '<td style="dislay: none;"><div class="btn-circle">' + link + '</div></td>' + '</tr>'
-                     );                 
+                     );
                  }
                  $("#Table").append('</tbody>');
-              
+
                  $('#Table').DataTable({
                         "paging": false,
                          "bScrollInfinite": true,
@@ -140,18 +195,62 @@
                  });
 
                  $("#Table").css("width","100%");
-             
+
              },
          });
     }
+    var fn_verAerpoerto = function (idProveedor) {
+        /// Cargar Aeropuertos
+        var jsonData = JSON.stringify({ idProvider: idProveedor });
+        $('#wkslist').empty();
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: '@Url.Action("GetAeropuertos", "Home")',
+            data: jsonData,
+            async: false,
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (key, value) {
+                    var div = $('<div class="row"><div class="col-sm-12"><input type="checkbox" checked="true" disabled=true name="' + key + '" id="' + key + '" />' +
+                        '<label for="' + key + '"></label></div></div>');
+                    div.find('label').text(value.Nombre);
+                    $('#wkslist').append(div);
+                });
+            },
+            error: function (data) { }
+        });
+    }
+
+    var fn_verGiros = function (idProveedor) {
+        /// Cargar Aeropuertos
+        var jsonData = JSON.stringify({ idProvider: idProveedor });
+        $('#wkslistGiros').empty();
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: '@Url.Action("GetGiros", "Home")',
+            data: jsonData,
+            async: false,
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (key, value) {
+                    var div = $('<div class="row"><div class="col-sm-12"><select class="form-control"><option>' + value.GiroNombre + '</option ></select > ' +
+                        '</div></div>');
+                    $('#wkslistGiros').append(div);
+                });
+            },
+            error: function (data) { }
+        });
+    }
+
     $("#buscar").click(function () {
-        fn_buscar(); 
+        fn_buscar();
     });
 
     $(document).ready(function() {
-        fn_buscar(); 
+        fn_buscar();
     });
-
 </script>
 
 

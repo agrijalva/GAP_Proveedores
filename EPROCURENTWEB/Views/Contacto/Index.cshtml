@@ -1,0 +1,165 @@
+﻿
+@{
+    ViewBag.Title = "Contactos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/Gestor.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<div class="row">
+    <div class="col-md-12">
+        <div class="card1 mt-3">
+            <div class="card-body1">
+                <div class="row">
+                    <div class="col-sm-10">
+                        <b>Contactos</b>
+                    </div>
+                    <div class="col-sm-2">
+                        <a href="@Url.Action("NuevoContacto", "Contacto")" class="ntb-agregarcontacto"><i class="fa fa-plus"></i> Agregar</a>
+                        @*@Html.ActionLink("Agregar", "NuevoContacto", "Contacto")*@
+                    </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-sm-12">
+        <table id="Table"></table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        fn_consulta();
+
+        if (window.location.hash == "#updateSuccess") {
+            Swal.fire({
+                position: 'middle',
+                icon: 'success',
+                title: '¡Modificación Exitosa!',
+                html: '<p class="text">Modificación de Contacto.</p> ' +
+                    '</br> <p class="text">Se actualizo la información correctamente</p>',
+                showConfirmButton: true,
+                timer: 3000
+            })
+        }
+
+        if (window.location.hash == "#insertSuccess") {
+            Swal.fire({
+                position: 'middle',
+                icon: 'success',
+                title: '¡Registro Exitoso!',
+                html: '<p class="text">Registro de Contacto.</p> ' +
+                    '</br> <p class="text">Se ha registrado la información correctamente</p>',
+                showConfirmButton: true,
+                timer: 3000
+            })
+        }       
+
+    });
+
+    var fn_eliminar = function (idContacto) {
+        console.log(idContacto);
+
+            var jsonData = JSON.stringify({ idContacto: idContacto });
+        Swal.fire({
+            title: '¿Esta seguro de eliminar el contacto?',
+
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#432979',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/Contacto/EliminarContacto",
+                    data: jsonData,
+                    async: false,
+                    success: function (data) {
+                        if (data) {
+                            Swal.fire({
+                                position: 'middle',
+                                icon: 'success',
+                                title: 'El contacto ha sido eliminado con éxito',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            setTimeout(function () { fn_consulta();; }, 1500);
+                        } else {
+                            Swal.fire({
+                                position: 'middle',
+                                icon: 'error',
+                                title: 'Ocurrio un error al procesar la solicitud',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }
+
+                    },
+                });
+            }
+        })
+    }
+
+    var fn_consulta = function () {
+         $.ajax({
+             type: "POST",
+             contentType: "application/json; charset=utf-8",
+             url: '@Url.Action("GetContactos", "Contacto")',
+             async: false,
+             success: function(data) {
+                 console.log("Traigo Datos", data)
+                 $("#Table").html('');
+                 $("#Table").append('<thead class="bg-light-purple"><tr>' +
+                     '<td>Nombre</td>' +
+                     '<td>Correo Electrónico</td>' +
+                     '<td>Tipo</td>' +
+                     '<td>Editar</td>' +
+                     '<td>Eliminar</td></tr></thead>'
+                 );
+                 $("#Table").DataTable().clear().draw();
+                 $("#Table").DataTable().destroy();
+
+                 $("#Table").append('<tbody>');
+                 for (i = 0; i < data.length; i++) {
+
+                     var linkEdit = '@Html.ActionLink(" ", "EditarContacto", "Contacto", new { idContacto = "_idContacto_" }, new { @class = "fas fa-edit icon-color" })';
+                     var btnEliminar = '<input type="button" value="x" class="BTN-DELETE-CONTACTO icon-color" onclick="fn_eliminar(_idContacto_)" />';
+                     linkEdit = linkEdit.replace('_idContacto_', data[i].IdContacto);
+                     btnEliminar = btnEliminar.replace('_idContacto_', data[i].IdContacto)
+                     if (data[i].ContactoPrincipal == 0) {
+                         $("#Table").append('<tr>' +
+                             '<td style="dislay: none;"><b>' + data[i].NombreContacto + '</b></td>' +
+                             '<td style="dislay: none;">' + data[i].Email + '</td>' +
+                             '<td style="dislay: none;">' + data[i].Tipo + '</td>' +
+                             '<td style="dislay: none;"><div class="btn-circle">' + linkEdit + '</div></td>' +
+                             '<td style="dislay: none;"><div class="btn-circle">' + btnEliminar + '</div></td>' + '</tr>'
+                         );
+                     }
+                     else {
+                         $("#Table").append('<tr>' +
+                             '<td style="dislay: none;"><b>' + data[i].NombreContacto + '</b></td>' +
+                             '<td style="dislay: none;">' + data[i].Email + '</td>' +
+                             '<td style="dislay: none;">' + data[i].Tipo + '</td>' +
+                             '<td style="dislay: none;"><div class="btn-circle">' + linkEdit + '</div></td>' +
+                             '<td style="dislay: none;"><div></div></td>' + '</tr>'
+                         );
+                     }
+                 }
+                 $("#Table").append('</tbody>');
+
+                 $('#Table').DataTable({
+                        "paging": false,
+                         "bScrollInfinite": true,
+                         "bScrollCollapse": true
+                     });
+
+             },
+         });
+        }
+</script>

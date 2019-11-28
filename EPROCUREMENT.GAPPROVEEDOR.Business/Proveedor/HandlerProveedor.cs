@@ -134,7 +134,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Proveedor
         {
             var estatus = request.EstatusProveedor.IdEstatusProveedor;
             var response = proveedorData.EstatusProveedorInsertar(request);
-            
+
             if (response.Success)
             {
                 var proveedorUsuario = proveedorData.GetProvedorDetallePorId(request.EstatusProveedor.IdProveedor);
@@ -164,7 +164,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Proveedor
                             proveedorUsuario.Observaciones = request.EstatusProveedor.Observaciones;
                             new EmailData().EnviarEmailDocumentacionPendiente(proveedorUsuario);
                             break;
-                        case 8:                            
+                        case 8:
                             new EmailData().EnviarEmailAprobadoTesoreria(proveedorUsuario);
                             break;
                         default:
@@ -214,6 +214,44 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Proveedor
             var response = new ProveedorFiltroResponseDTO();
             response = proveedorData.GetProvedorPorFiltro(request);
 
+            return response;
+        }
+
+        public ContactoResponseDTO GetContactoProveedorList(ContactoRequestDTO request)
+        {
+            var response = proveedorData.GetContactoProveedorList(request);
+            if (!response.Success)
+            {
+                response.ErrorList = new List<ErrorDTO> { new ErrorDTO { Codigo = "", Mensaje = string.Format("No fue posible recuperar datos disponibles o no se encontro alguna solicitud en proceso") } };
+            }
+            return response;
+        }
+
+        public ContactoResponseDTO UpdateContacto(ContactoRequestDTO request)
+        {
+            ContactoResponseDTO response = new ContactoResponseDTO();
+            if (request.Contacto.IdContacto > 0)
+            {
+                response = proveedorData.UpdateContacto(request);
+            }
+            else
+            {
+                response = proveedorData.InsertContacto(request);
+            }
+            if (!response.Success)
+            {
+                response.ErrorList = new List<ErrorDTO> { new ErrorDTO { Codigo = "", Mensaje = string.Format("No fue posible recuperar datos disponibles o no se encontro alguna solicitud en proceso") } };
+            }
+            return response;
+        }
+
+        public ContactoResponseDTO DeleteContacto(ContactoRequestDTO request)
+        {
+            ContactoResponseDTO response = proveedorData.DeleteContacto(request);
+            if (!response.Success)
+            {
+                response.ErrorList = new List<ErrorDTO> { new ErrorDTO { Codigo = "", Mensaje = string.Format("No fue posible recuperar datos disponibles o no se encontro alguna solicitud en proceso") } };
+            }
             return response;
         }
     }

@@ -105,7 +105,7 @@
 
                      @*var link = '@Html.ActionLink(" ", "About", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
                      link = link.replace('_idProv_', data[i].IdProveedor);*@
-
+                     
                      var link = '@Html.ActionLink(" ", "AceptarProveedor", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
                      link = link.replace('_idProv_', data[i].IdProveedor);
                      //console.log("link", link);
@@ -180,8 +180,9 @@
                      @*var link = '@Html.ActionLink(" ", "About", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
                      link = link.replace('_idProv_', data[i].IdProveedor);*@
 
-                     var link = '@Html.ActionLink(" ", "AprobarInformacionBF", "Home", new { idProveedor ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
+                     var link = '@Html.ActionLink(" ", "AprobarInformacionBF", "Home", new { idProveedor ="_idProv_", idEstatus = "_idEst_" }, new { @class = "fas fa-eye icon-color" })';
                      link = link.replace('_idProv_', data[i].IdProveedor);
+                     link = link.replace('_idEst_', data[i].IdEstatus);
                      //console.log("link", link);
 
 

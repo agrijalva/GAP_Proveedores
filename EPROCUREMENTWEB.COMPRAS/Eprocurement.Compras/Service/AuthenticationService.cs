@@ -30,8 +30,8 @@ namespace Eprocurement.Compras.Service
 
             using (PrincipalContext principalContext = new PrincipalContext(ContextType.Domain, GapActiveDirectory))
             {
-                bool isValid = principalContext.ValidateCredentials(username, password);
-                isValid = true;
+                //bool isValid = principalContext.ValidateCredentials(username, password);
+                bool isValid = true;
                 if (isValid)
                 {
                     if (HttpContext.Current.Request.IsLocal)

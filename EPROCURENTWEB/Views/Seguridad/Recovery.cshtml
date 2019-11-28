@@ -122,40 +122,32 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-@*<div class="row">
-        <div class="col-md-6 offset-3">
-            <div class="form-style">
-                <form action="@Url.Content("~/Seguridad/Recovery")" method="post">
-                    @Html.HiddenFor(d => d.Token)
-
-                    <label>Escribe tu contraeña:</label>
-                    @Html.PasswordFor(d => d.Password, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(d => d.Password, null, new { style = "color:red;" })
-
-                    <label>Nueva contraseña:</label>
-                    @Html.PasswordFor(d => d.PasswordNueva, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(d => d.PasswordNueva, null, new { style = "color:red;" })
-
-                    <label>Confirmar contraseña:</label>
-                    @Html.PasswordFor(d => d.ConfirmarPassword, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(d => d.ConfirmarPassword, null, new { style = "color:red;" })
-                    <br />
-                    <div class="text-right">
-                        <button class="btn btn-primary">Recuperar</button>
-                    </div>
-
-                </form>
-            </div>
-        </div>
-    </div>*@
+<script type="text/javascript">
+    $(document).ready(function () {        
+        var url = '@Url.Action("Index", "Seguridad")';
+        if (window.location.hash == "#success") {
+            Swal.fire({
+                position: 'middle',
+                icon: 'success',
+                title: '¡Recuperación de contraseña!',
+                html: '<p class="text">Se ha actualizado la contraseña correctamente.</p> ' +
+                    '</br> <p class="text">Favor de iniciar sesión </p>',
+                showConfirmButton: true,
+                timer: 3000
+            })
+            setTimeout(function () { window.location.href = url; }, 1500);
+        }
+        if (window.location.hash == "#errorSuccess") {
+            Swal.fire({
+                position: 'middle',
+                icon: 'error',
+                title: '¡Recuperación de contraseña!',
+                html: '<p class="text">Se generó un error al intentar actualizar la contraseña.</p> ' +
+                    '</br> <p class="text">Inténtelo mas tarde.</p>',
+                showConfirmButton: true,
+                timer: 5000
+            })
+        }
+    });
+</script>
 

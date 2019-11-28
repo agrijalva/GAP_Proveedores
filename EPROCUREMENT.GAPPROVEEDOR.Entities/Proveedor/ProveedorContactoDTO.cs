@@ -20,5 +20,9 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Entities
         public int IdZonaHoraria { get; set; }
         public int IdPais { get; set; }
         public int IdIdioma { get; set; }
+        public string Tipo { get; set; }
+        public int ContactoPrincipal { get; set; }
+
+        
     }
 }
