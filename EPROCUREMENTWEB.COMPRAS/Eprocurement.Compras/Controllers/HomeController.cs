@@ -151,7 +151,7 @@ namespace Eprocurement.Compras.Controllers
                     var response = businessLogic.GetProveedorEstatusList(request);
                     if (idEstatus == null)
                     {
-                        string[] estatus = { "1", "2", "3", "4", "5", "6", "7", "8" };
+                        string[] estatus = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
                         proveedorEstatus = (from t in response.ProveedorList
                                             where estatus.Contains(t.IdEstatus.ToString())
                                             select t).ToList();
