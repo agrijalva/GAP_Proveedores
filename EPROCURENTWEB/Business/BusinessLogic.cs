@@ -879,6 +879,10 @@ namespace EprocurementWeb.Business
                     var readTask = result.Content.ReadAsStringAsync();
                     JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
                     response = JSSerializer.Deserialize<ProveedorDocumentoResponseDTO>(readTask.Result);
+                    foreach(var documento in response.ProveedorDocumentoList)
+                    {
+                        documento.NombreArchivo = ConfigurationManager.AppSettings["urlApi"] + "api/Proveedor/Documento?image=" + documento.NombreArchivo;
+                    }
                 }
             }
             return response;

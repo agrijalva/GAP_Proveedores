@@ -203,7 +203,7 @@
                                                 <td>@cuenta.FechaAlta.ToString("dd MMM yyyy")</td>
                                                 <td>@(cuenta.DocumentoAutorizado ? "Si" : "No")</td>
                                                 <td>
-                                                    <a href="http://localhost:54535/api/Proveedor/Documento?image=@cuenta.NombreArchivo" download="archivo">
+                                                    <a href="@cuenta.NombreArchivo" download="archivo">
                                                         <img src="~/Content/Images/descargar.png" width="30" />
                                                     </a>
                                                 </td>
@@ -218,7 +218,7 @@
                                         <div class="row">
                                             <div class="col-sm-10"> <label style="font-weight:600;"> @cuenta.DescripcionDocumento</label> </div>
                                             <div class="col-sm-2">
-                                                <a href="http://localhost:54535/api/Proveedor/Documento?image=@cuenta.NombreArchivo" download="archivo">
+                                                <a href="@cuenta.NombreArchivo" download="archivo">
                                                     <img src="~/Content/Images/descargar.png" width="30" />
                                                 </a>
                                             </div>
