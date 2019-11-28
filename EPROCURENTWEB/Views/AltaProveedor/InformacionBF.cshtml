@@ -170,11 +170,11 @@
                                         <div class="col25">
                                             @if (Model.CatalogoDocumentoList[idx].EsRequerido)
                                             {
-                                                <input class="text-box single-line" required type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
+                                                <input class="text-box single-line" accept="application/pdf" required type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
                                             }
                                             else
                                             {
-                                                <input class="text-box single-line" type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
+                                                <input class="text-box single-line" accept="application/pdf" type="file" name="@Html.NameFor(m => m.CatalogoDocumentoList[idx].NombreDocumento)" id="@Html.IdFor(m => m.CatalogoDocumentoList[idx].File)" />
                                             }
 
                                         </div>
