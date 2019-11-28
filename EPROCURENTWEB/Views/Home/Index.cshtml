@@ -424,7 +424,7 @@
                 <button class="btnStyle btnWhite" type="submit">Cancelar</button>
             </div>
             <div class="col-sm-3">
-                <button class="btnStyle" type="submit">Aceptar</button>
+                <button class="btnStyle" id="btnaceptar" type="submit">Aceptar</button>
             </div>
         </div>
     </div>
@@ -476,7 +476,7 @@
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <div class="row">
-                        <button type="button" class="btn btnStyle" data-dismiss="modal">Aceptar</button>
+                        <button type="button"  class="btn btnStyle" data-dismiss="modal">Aceptar</button>
 
                     </div>
 
@@ -948,15 +948,26 @@ function validarInput(input) {
   
     if (rfcCorrecto) {
     	valido = "Válido";
-      resultado.classList.add("ok");
+        resultado.classList.add("ok");
+
+        // Enable #x
+        $("#btnaceptar").prop("disabled", false);
+        //$("#btnaceptar").show();
     } else {
     	valido = "No válido"
-    	resultado.classList.remove("ok");
+        resultado.classList.remove("ok");
+
+        // Disable #x
+        $( "#btnaceptar" ).prop( "disabled", true );
+        //$("#btnaceptar").hide();
     }
         
-    resultado.innerText = "RFC: " + rfc 
-                        + "\nResultado: " + rfcCorrecto
-                        + "\nFormato: " + valido;
+    //resultado.innerText = "RFC: " + rfc 
+    //                    + "\nResultado: " + rfcCorrecto
+    //    + "\nFormato: " + valido;
+
+     //resultado.innerText = "Formato " + valido;
+        resultado.innerText = ".";
     }
 
     $('#rfc_input').on('input', function () {

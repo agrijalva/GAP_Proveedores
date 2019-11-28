@@ -270,8 +270,11 @@ body{
     background-color: red;
     color: white;
     font-weight: bold;
+    color: red;
+    font-size:8px;
 }
 
     #resultado.ok {
         background-color: green;
+        color: green;
     }
