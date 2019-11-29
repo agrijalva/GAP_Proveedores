@@ -285,4 +285,7 @@
   <data name="Mensaje_Error_StringLength" xml:space="preserve">
     <value>Solo se permiten minimo {0} y maximo {1} caracteres</value>
   </data>
+  <data name="PrincipalContacto" xml:space="preserve">
+    <value>Principal Contact</value>
+  </data>
 </root>

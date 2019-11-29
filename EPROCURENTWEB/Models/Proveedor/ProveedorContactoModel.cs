@@ -46,5 +46,10 @@ namespace EprocurementWeb.Models
         [Required(ErrorMessageResourceType = typeof(RHome), ErrorMessageResourceName = "Mensaje_Error_Required")]
         [Display(ResourceType = typeof(RHome), Name = "Language")]
         public int IdIdioma { get; set; }
+
+        public int ContactoPrincipal { get; set; }
+
+        [Display(ResourceType = typeof(RHome), Name = "PrincipalContacto")]
+        public bool EsPrincipal { get; set; }
     }
 }

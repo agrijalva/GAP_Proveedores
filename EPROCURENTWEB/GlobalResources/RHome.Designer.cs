@@ -457,6 +457,15 @@ namespace EprocurementWeb.GlobalResources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Contacto Principal.
+        /// </summary>
+        public static string PrincipalContacto {
+            get {
+                return ResourceManager.GetString("PrincipalContacto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Favor de seleccionar el (los) giro (s) específicos que su empresa esta calificada*.
         /// </summary>
         public static string ProveedorGiros {

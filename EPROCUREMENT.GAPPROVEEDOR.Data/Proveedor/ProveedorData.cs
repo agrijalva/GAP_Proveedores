@@ -560,6 +560,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                     cmdContacto.Parameters.Add(new SqlParameter("@IdZonaHoraria", contacto.IdZonaHoraria));
                     cmdContacto.Parameters.Add(new SqlParameter("@IdPais", contacto.IdPais));
                     cmdContacto.Parameters.Add(new SqlParameter("@IdIdioma", contacto.IdIdioma));
+                    cmdContacto.Parameters.Add(new SqlParameter("@ContactoPrincipal", contacto.ContactoPrincipal));
                     cmdContacto.Parameters.Add(new SqlParameter("Result", SqlDbType.Int) { Direction = ParameterDirection.ReturnValue });
                     cmdContacto.ExecuteNonQuery();
                     var resultado = Convert.ToInt32(cmdContacto.Parameters["Result"].Value);
