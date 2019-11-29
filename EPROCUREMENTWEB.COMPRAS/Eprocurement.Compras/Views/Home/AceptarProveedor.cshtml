@@ -462,7 +462,7 @@
             var idEstatus = $("#IdEstatus").val();
             estatus = 2;
             if (idEstatus == 9) {
-                estatus = 8;
+                estatus = 12;
             }
 
             var jsonData = JSON.stringify({ idProveedor: idProveedor, observaciones: obs, estatus: estatus });
@@ -476,6 +476,7 @@
                 confirmButtonText: 'Aceptar',
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
+                console.log('result', result);
                 if (result.value) {
                      $.ajax({
                             type: "POST",
@@ -511,7 +512,7 @@
             obs = "";
             estatus = 3;
             if (idEstatus == 9) {
-                estatus = 8;
+                estatus = 11;
             }
             var jsonData = JSON.stringify({ idProveedor: idProveedor, observaciones: obs, estatus: estatus });
             Swal.fire({
@@ -524,6 +525,7 @@
                 confirmButtonText: 'Aceptar',
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
+                console.log('result', result);
                 if (result.value) {
                      $.ajax({
                             type: "POST",

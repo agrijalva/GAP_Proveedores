@@ -658,6 +658,34 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             response.Success = true;
                         }
                     }
+                    else if (request.EstatusProveedor.IdEstatusProveedor == 11 || request.EstatusProveedor.IdEstatusProveedor == 12)
+                    {
+                        //var estatusOriginal = request.EstatusProveedor.IdEstatusProveedor;
+                        if (ExecuteComandEstatus(cmdEstatus, request.EstatusProveedor) < 1)
+                        {
+                            return response;
+                        }
+
+                        if (request.EstatusProveedor.IdEstatusProveedor == 11)
+                        {
+                            var cmdAprobada = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorModificacionAprobada]", conexion);
+                            if (ExecuteComandModificacionAprobadaRechazada(cmdAprobada, request.EstatusProveedor.IdProveedor) > 0)
+                            {
+                                response.Success = true;
+                                //request.EstatusProveedor.IdEstatusProveedor = 11;
+                            }
+                        }
+                        if (request.EstatusProveedor.IdEstatusProveedor == 12)
+                        {
+                            var cmdAprobada = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorModificacionRechazada]", conexion);
+                            if (ExecuteComandModificacionAprobadaRechazada(cmdAprobada, request.EstatusProveedor.IdProveedor) > 0)
+                            {
+                                response.Success = true;
+                                //request.EstatusProveedor.IdEstatusProveedor = 12;
+                            }
+                        }
+                        //request.EstatusProveedor.IdEstatusProveedor = 8;
+                    }
                     else
                     {
                         response.ErrorList = new List<ErrorDTO> { new ErrorDTO { Codigo = "", Mensaje = string.Format("Estatus No valido") } };
@@ -1036,7 +1064,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
         /// <param name="cmdContacto">Información del comand</param>
         /// <param name="contacto">Información del contacto</param>
         /// <returns>La respuesta de la inserción</returns>
-        private int ExecuteComandContacto(SqlCommand cmdContacto, ProveedorContactoDTO contacto)
+        private int ExecuteComandContacto(SqlCommand cmdContacto, ProveedorContactoDTO contacto, bool esModificacion = false)
         {
             cmdContacto.CommandType = CommandType.StoredProcedure;
             cmdContacto.Parameters.Add(new SqlParameter("@IdProveedor", contacto.IdProveedor));
@@ -1051,6 +1079,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             cmdContacto.Parameters.Add(new SqlParameter("@IdPais", contacto.IdPais));
             cmdContacto.Parameters.Add(new SqlParameter("@IdIdioma", contacto.IdIdioma));
             cmdContacto.Parameters.Add(new SqlParameter("@ContactoPrincipal", 1));
+            cmdContacto.Parameters.Add(new SqlParameter("@EsModificacion", esModificacion));
             cmdContacto.Parameters.Add(new SqlParameter("Result", SqlDbType.Int) { Direction = ParameterDirection.ReturnValue });
             cmdContacto.ExecuteNonQuery();
             var resultado = Convert.ToInt32(cmdContacto.Parameters["Result"].Value);
@@ -1063,7 +1092,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
         /// <param name="cmdDireccion">Información del comand</param>
         /// <param name="direccion">Información de la dirección</param>
         /// <returns>La respuesta de la inserción</returns>
-        private int ExecuteComandDireccion(SqlCommand cmdDireccion, ProveedorDireccionDTO direccion)
+        private int ExecuteComandDireccion(SqlCommand cmdDireccion, ProveedorDireccionDTO direccion, bool esModificacion = false)
         {
             cmdDireccion.CommandType = CommandType.StoredProcedure;
             cmdDireccion.Parameters.Add(new SqlParameter("@IdProveedor", direccion.IdProveedor));
@@ -1075,6 +1104,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             cmdDireccion.Parameters.Add(new SqlParameter("@Estado", SqlDbType.NVarChar, 150)).Value = direccion.Estado;
             cmdDireccion.Parameters.Add(new SqlParameter("@Municipio", SqlDbType.NVarChar, 250)).Value = direccion.Municipio;
             cmdDireccion.Parameters.Add(new SqlParameter("@DireccionValidada", direccion.DireccionValidada));
+            cmdDireccion.Parameters.Add(new SqlParameter("@EsModificacion", esModificacion));
             cmdDireccion.Parameters.Add(new SqlParameter("Result", SqlDbType.Int) { Direction = ParameterDirection.ReturnValue });
             cmdDireccion.ExecuteNonQuery();
             var resultado = Convert.ToInt32(cmdDireccion.Parameters["Result"].Value);
@@ -1087,11 +1117,12 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
         /// <param name="cmdEmpresa">Información del comand</param>
         /// <param name="empresa">Información de la empresa</param>
         /// <returns>La respuesta de la inserción</returns>
-        private int ExecuteComandEmpresa(SqlCommand cmdEmpresa, ProveedorEmpresaDTO empresa)
+        private int ExecuteComandEmpresa(SqlCommand cmdEmpresa, ProveedorEmpresaDTO empresa, bool esModificacion = false)
         {
             cmdEmpresa.CommandType = CommandType.StoredProcedure;
             cmdEmpresa.Parameters.Add(new SqlParameter("@IdProveedor", empresa.IdProveedor));
             cmdEmpresa.Parameters.Add(new SqlParameter("@IdCatalogoAeropuerto", SqlDbType.NVarChar, 50)).Value = empresa.IdCatalogoAeropuerto;
+            cmdEmpresa.Parameters.Add(new SqlParameter("@EsModificacion", esModificacion));
             cmdEmpresa.Parameters.Add(new SqlParameter("Result", SqlDbType.BigInt) { Direction = ParameterDirection.ReturnValue });
             cmdEmpresa.ExecuteNonQuery();
             var resultado = Convert.ToInt32(cmdEmpresa.Parameters["Result"].Value);
@@ -1105,11 +1136,12 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
         /// <param name="idAeropuerto">Identificador del aeropuerto</param>
         /// <param name="idProveedor">Identificador del proovedor</param>
         /// <returns>La respuesta de la inserción</returns>
-        private int ExecuteComandGiro(SqlCommand cmdGiro, int idGiro, int idProveedor)
+        private int ExecuteComandGiro(SqlCommand cmdGiro, int idGiro, int idProveedor, bool esModificacion = false)
         {
             cmdGiro.CommandType = CommandType.StoredProcedure;
             cmdGiro.Parameters.Add(new SqlParameter("@IdProveedor", idProveedor));
             cmdGiro.Parameters.Add(new SqlParameter("@IdCatalogoGiro", SqlDbType.NVarChar, 50)).Value = idGiro;
+            cmdGiro.Parameters.Add(new SqlParameter("@EsModificacion", esModificacion));
             cmdGiro.Parameters.Add(new SqlParameter("Result", SqlDbType.BigInt) { Direction = ParameterDirection.ReturnValue });
             cmdGiro.ExecuteNonQuery();
             var resultado = Convert.ToInt32(cmdGiro.Parameters["Result"].Value);
@@ -1139,6 +1171,15 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             cmdEstatus.Parameters.Add(new SqlParameter("@IdProveedor", estatusProveedor.IdProveedor));
             cmdEstatus.Parameters.Add(new SqlParameter("@Observaciones", SqlDbType.NVarChar, 50)).Value = estatusProveedor.Observaciones;
             cmdEstatus.Parameters.Add(new SqlParameter("@IdUsuario", estatusProveedor.IdUsuario));
+            cmdEstatus.Parameters.Add(new SqlParameter("Result", SqlDbType.Int) { Direction = ParameterDirection.ReturnValue });
+            cmdEstatus.ExecuteNonQuery();
+            var resultado = Convert.ToInt32(cmdEstatus.Parameters["Result"].Value);
+            return resultado;
+        }
+        private int ExecuteComandModificacionAprobadaRechazada(SqlCommand cmdEstatus, int idProveedor)
+        {
+            cmdEstatus.CommandType = CommandType.StoredProcedure;
+            cmdEstatus.Parameters.Add(new SqlParameter("@IdProveedor", idProveedor));
             cmdEstatus.Parameters.Add(new SqlParameter("Result", SqlDbType.Int) { Direction = ParameterDirection.ReturnValue });
             cmdEstatus.ExecuteNonQuery();
             var resultado = Convert.ToInt32(cmdEstatus.Parameters["Result"].Value);
@@ -1182,10 +1223,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
         public ProveedorResponseDTO TempProveedorInsertar(ProveedorRequesteDTO request)
         {
-            var response = new ProveedorResponseDTO()
-            {
-                ErrorList = new List<ErrorDTO>()
-            };
+            var response = new ProveedorResponseDTO { ErrorList = new List<ErrorDTO>() };
 
             try
             {
@@ -1200,31 +1238,31 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                         if (resultado > 0)
                         {
                             var idProveedor = request.Proveedor.IdProveedor;
-                            var cmdGiroDelete = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorGiro_DEL]", conexion);
-                            if (ExecuteComandDelete(cmdGiroDelete, idProveedor) < 1) { return response; }
-                            var cmdEmpresaDelete = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorEmpresa_DEL]", conexion);
-                            if (ExecuteComandDelete(cmdEmpresaDelete, idProveedor) < 1) { return response; }
+                            //var cmdGiroDelete = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorGiro_DEL]", conexion);
+                            //if (ExecuteComandDelete(cmdGiroDelete, idProveedor) < 1) { return response; }
+                            //var cmdEmpresaDelete = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorEmpresa_DEL]", conexion);
+                            //if (ExecuteComandDelete(cmdEmpresaDelete, idProveedor) < 1) { return response; }
+
+                            foreach (var proveedorGiro in request.Proveedor.ProveedorGiroList.Where(x => x.IdCatalogoGiro != 0).ToList())
+                            {
+                                var cmdGiro = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_ProveedorGiro_INS, conexion);
+                                if (ExecuteComandGiro(cmdGiro, proveedorGiro.IdCatalogoGiro, idProveedor, true) < 1) { return response; }
+                            }
 
                             foreach (var empresa in request.Proveedor.EmpresaList)
                             {
                                 var cmdEmpresa = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_ProveedorEmpresa_INS, conexion);
                                 empresa.IdProveedor = idProveedor;
-                                if (ExecuteComandEmpresa(cmdEmpresa, empresa) < 1) { return response; }
+                                if (ExecuteComandEmpresa(cmdEmpresa, empresa, true) < 1) { return response; }
                             }
 
-                            var cmdContacto = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorContacto_UPD]", conexion);
+                            var cmdContacto = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_ProveedorContacto_INS, conexion);
                             request.Proveedor.Contacto.IdProveedor = idProveedor;
-                            if (ExecuteComandContacto(cmdContacto, request.Proveedor.Contacto) < 1) { return response; }
+                            if (ExecuteComandContacto(cmdContacto, request.Proveedor.Contacto, true) < 1) { return response; }
 
-                            foreach (var proveedorGiro in request.Proveedor.ProveedorGiroList.Where(x => x.IdCatalogoGiro != 0).ToList())
-                            {
-                                var cmdGiro = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_ProveedorGiro_INS, conexion);
-                                if (ExecuteComandGiro(cmdGiro, proveedorGiro.IdCatalogoGiro, idProveedor) < 1) { return response; }
-                            }
-
-                            var cmdDireccion = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorDireccion_UPD]", conexion);
+                            var cmdDireccion = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_ProveedorDireccion_INS, conexion);
                             request.Proveedor.Direccion.IdProveedor = idProveedor;
-                            if (ExecuteComandDireccion(cmdDireccion, request.Proveedor.Direccion) < 1) { return response; }
+                            if (ExecuteComandDireccion(cmdDireccion, request.Proveedor.Direccion, true) < 1) { return response; }
 
                             var cmdEstatus = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_EstatusProveedor_INS, conexion);
                             var estatusProveedor = new HistoricoEstatusProveedorDTO
@@ -1235,6 +1273,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                                 Observaciones = null
                             };
                             if (ExecuteComandEstatus(cmdEstatus, estatusProveedor) < 1) { return response; }
+
                             transactionScope.Complete();
                             response.Success = true;
                         }
@@ -1377,6 +1416,14 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                                 }
                             }
                         }
+                        var cmdEstatus = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_EstatusProveedor_INS, conexion);
+                        var estatusProveedor = new HistoricoEstatusProveedorDTO
+                        {
+                            IdEstatusProveedor = 10,
+                            IdProveedor = request.IdProveedor,
+                            IdUsuario = null,
+                            Observaciones = null
+                        };
                         transactionScope.Complete();
                         response.Success = true;
 

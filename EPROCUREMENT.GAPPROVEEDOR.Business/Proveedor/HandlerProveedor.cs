@@ -167,6 +167,18 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Proveedor
                         case 8:
                             new EmailData().EnviarEmailAprobadoTesoreria(proveedorUsuario);
                             break;
+                        case 11:
+                            new EmailData().EnviarEmailAprobadoTesoreria(proveedorUsuario);
+                            break;
+                        case 12:
+                            new EmailData().EnviarEmailAprobadoTesoreria(proveedorUsuario);
+                            break;
+                        case 13:
+                            new EmailData().EnviarEmailAprobadoTesoreria(proveedorUsuario);
+                            break;
+                        case 14:
+                            new EmailData().EnviarEmailAprobadoTesoreria(proveedorUsuario);
+                            break;
                         default:
                             break;
                     }
