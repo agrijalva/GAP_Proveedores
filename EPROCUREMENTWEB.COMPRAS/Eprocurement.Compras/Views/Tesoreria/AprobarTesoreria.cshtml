@@ -33,10 +33,8 @@
                         @Html.DropDownList("aeropuerto", new SelectList(ViewBag.AeropuertoList, "Id", "Nombre"), "Seleccione una opción", new { @class = "form-control" })
                     </div>
                     <div class="form-group col-md-4">
-                        <label class="control-label text-right">Estatus</label>
-                        <select class="form-control">
-                            <option>...</option>
-                        </select>
+                        @Html.Label("Estatus", "Estatus", new { @class = "control-label text-right " })
+                        @Html.DropDownList("estatus", new SelectList(ViewBag.EstatusProveedorGetList, "IdEstatusProveedor", "EstatusDescripcion"), "Seleccione una opción", new { @class = "form-control" })
                     </div>
                     <div class="form-group col-md-4">
                         <button id="buscar" class="btn btn-search btn-purple float-right" onclick="fn_buscarTesoreria()">
@@ -76,8 +74,10 @@
          var idAeropuerto = $('#aeropuerto').val() == '' ? null : $('#aeropuerto').val();
          var email = $('#email').val() == '' ? null : $('#email').val();
          var nombreEmpresa = $('#proveedor').val() == '' ? null : $('#proveedor').val();
-         var rfc = $('#rfc').val() == '' ? null : $('#rfc').val();
-         var jsonData = JSON.stringify({ idTipoProveedor: tipoProveedor, idGiroProveedor: idGiroProveedor, idAeropuerto: idAeropuerto, nombreEmpresa: nombreEmpresa, rfc: rfc, email: email });
+        var rfc = $('#rfc').val() == '' ? null : $('#rfc').val();
+        var idEstatus = $('#estatus').val() == '' ? null : $('#estatus').val();
+        console.log(idEstatus);
+        var jsonData = JSON.stringify({ idTipoProveedor: tipoProveedor, idGiroProveedor: idGiroProveedor, idAeropuerto: idAeropuerto, nombreEmpresa: nombreEmpresa, rfc: rfc, email: email, idEstatus: idEstatus });
          $.ajax({
              type: "POST",
              contentType: "application/json; charset=utf-8",
@@ -149,8 +149,9 @@
          var idAeropuerto = $('#aeropuerto').val() == '' ? null : $('#aeropuerto').val();
          var email = $('#email').val() == '' ? null : $('#email').val();
          var nombreEmpresa = $('#proveedor').val() == '' ? null : $('#proveedor').val();
-         var rfc = $('#rfc').val() == '' ? null : $('#rfc').val();
-         var jsonData = JSON.stringify({ idTipoProveedor: tipoProveedor, idGiroProveedor: idGiroProveedor, idAeropuerto: idAeropuerto, nombreEmpresa: nombreEmpresa, rfc: rfc, email: email });
+        var rfc = $('#rfc').val() == '' ? null : $('#rfc').val();
+        var idEstatus = $('#estatus').val() == '' ? null : $('#estatus').val();
+        var jsonData = JSON.stringify({ idTipoProveedor: tipoProveedor, idGiroProveedor: idGiroProveedor, idAeropuerto: idAeropuerto, nombreEmpresa: nombreEmpresa, rfc: rfc, email: email, idEstatus: idEstatus });
          $.ajax({
              type: "POST",
              contentType: "application/json; charset=utf-8",
