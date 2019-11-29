@@ -147,6 +147,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
             var response = new HandlerProveedor().GetProveedorInfoFinanciera(request);
             return response;
         }
+
         [HttpPost]
         [Route("ContactoProveedorList")]
         public ContactoResponseDTO GetContactoProveedorList([FromBody]ContactoRequestDTO request)
@@ -207,7 +208,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
             
             return response;
         }
-
+        
         [HttpPost]
         [Route("Upload")]
         public HttpResponseMessage Upload()
@@ -249,6 +250,19 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Registra la información financiera
+        /// </summary>
+        /// <param name="request">Un objeto de tipo InformacionFinancieraRequestDTO</param>
+        /// <returns>Retorna la respuesta true/false y un listado de errores segun aplique</returns>
+        [HttpPost]
+        [Route("InsertarInformacionFinanciera")]
+        public InformacionFinancieraResponseDTO InsertarInformacionFinanciera([FromBody]InformacionFinancieraRequestDTO request)
+        {
+            
+            return new InformacionFinancieraResponseDTO();
         }
 
     }

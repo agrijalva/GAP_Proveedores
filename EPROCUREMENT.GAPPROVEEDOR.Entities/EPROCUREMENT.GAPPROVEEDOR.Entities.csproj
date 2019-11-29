@@ -82,6 +82,7 @@
     <Compile Include="Request\EstadoRequestDTO.cs" />
     <Compile Include="Request\EstatusProveedorRequestDTO.cs" />
     <Compile Include="Request\FormatoArchivoRequestDTO.cs" />
+    <Compile Include="Request\InformacionFinancieraRequestDTO.cs" />
     <Compile Include="Request\LoginUsuarioRequestDTO.cs" />
     <Compile Include="Request\ProveedorAprobarRequestDTO.cs" />
     <Compile Include="Request\MunicipioRequestDTO.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Response\FormatoArchivoResponseDTO.cs" />
     <Compile Include="Response\GiroResponseDTO.cs" />
     <Compile Include="Response\IdiomaResponseDTO.cs" />
+    <Compile Include="Response\InformacionFinancieraResponseDTO.cs" />
     <Compile Include="Response\LoginUsuarioResponseDTO.cs" />
     <Compile Include="Response\MunicipioResponseDTO.cs" />
     <Compile Include="Response\NacionalidadResponseDTO.cs" />
