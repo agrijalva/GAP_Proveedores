@@ -35,6 +35,7 @@
                 <a class="nav-link" href="#tbDatosFinancieros" role="tab" data-toggle="tab" id="tabDatosFinancieros">Datos Financieros</a>
             </li>
         </ul>
+        @Html.Hidden("IdProveedor", (int)ViewBag.IdProveedor)
         @Html.Hidden("accionForm", (int)ViewBag.accionForm)
         <div class="tab-content" style="background-color:white; padding: 0px;">
             <div role="tabpanel" class="tab-pane fade in active show" id="tbInfoCuenta">
@@ -45,23 +46,140 @@
 
             </div>
             <div role="tabpanel" class="tab-pane fade in active hide" id="tbDatosBancarios">
-                <div class="col100" style="font-size:14px;">
-                    Detalle de Cuenta
+                <div class="row mt-2">
+                    @Html.HiddenFor(model => model.ProveedorCuentaList[0].IdProveedor)
+                    <div class="col-sm-3">
+                        <div class="inputIF">
+                            @Html.Label("cuenta", @EprocurementWeb.GlobalResources.RHome.Account, new { @class = "labelTexto control-label" })
+                        </div>
+                        <div class="inputIF">
+                            @Html.TextBoxFor(model => model.ProveedorCuentaList[0].Cuenta, new { @class = "form-control inputIF", id = "cuenta" })
+                            @Html.Label((string)@EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Generic, new { @class = "text-danger", id = "errorCuenta", @style = "display:none;" })
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="inputIF">
+                            @Html.Label("banco", @EprocurementWeb.GlobalResources.RHome.Bank, new { @class = "labelTexto control-label" })
+                        </div>
+                        <div class="inputIF">
+                            @Html.DropDownListFor(model => model.ProveedorCuentaList[0].IdBanco, new SelectList(ViewBag.BancoList, "IdBanco", "Nombre"), "...", new { @class = "form-control inputIF", @id = "idBanco" })
+                            @Html.Label((string)@EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Generic, new { @class = "text-danger", id = "errorIdBanco", @style = "display:none;" })
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="inputIF">
+                            @Html.Label("clabe", @EprocurementWeb.GlobalResources.RHome.CLABE, new { @class = "labelTexto control-label" })
+                        </div>
+                        <div class="inputIF">
+                            @Html.TextBoxFor(model => model.ProveedorCuentaList[0].CLABE, new { @class = "form-control inputIF", id = "clave" })
+                            @Html.Label((string)@EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Generic, new { @class = "text-danger", id = "errorClave", @style = "display:none;" })
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="inputIF">
+                            @Html.Label("tipo", @EprocurementWeb.GlobalResources.RHome.Type, new { @class = "labelTexto control-label" })
+                        </div>
+                        <div class="inputIF">
+                            @Html.DropDownListFor(model => model.ProveedorCuentaList[0].IdTipoCuenta, new SelectList(ViewBag.TipoCuentaList, "IdTipoCuenta", "Tipo"), "...", new { @class = "form-control inputIF", @id = "idTipoCuenta" })
+                            @Html.Label((string)@EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Generic, new { @class = "text-danger", id = "errorIdIdTipoCuenta", @style = "display:none;" })
+                        </div>
+                    </div>
                 </div>
 
-                <table id="Table"></table>
+                <div class="col100 mt-5" style="font-size:14px;">
+                    <b>Elige el (o los) aeropuertos que tomará como referencia la cuenta bancaria proporcionada</b>
+                </div>
+                <div class="col100 mt-3" style="font-size:12px;">
+                    <div class="row">
+                        @for (int idx = 0; idx < Model.ProveedorCuentaList[0].AeropuertoList.Count; idx++)
+                        {
+                            @Html.HiddenFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Id)
+                            @Html.HiddenFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Nombre)
+                            <div class="col-sm-4 mt-2">
+                                @if (Model.ProveedorCuentaList[0].AeropuertoList[idx].Agregado)
+                                {
+                                    @Html.CheckBoxFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Checado, new { id = Model.ProveedorCuentaList[0].AeropuertoList[idx].Id, hd = Model.ProveedorCuentaList[0].AeropuertoList[idx].Nombre, @disabled = "disabled", @class = "checkAirport" })
+                                }
+                                else
+                                {
+                                    @Html.CheckBoxFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Checado, new { id = Model.ProveedorCuentaList[0].AeropuertoList[idx].Id, hd = Model.ProveedorCuentaList[0].AeropuertoList[idx].Nombre, @class = "checkAirport" })
+                                }
+                                @Html.DisplayTextFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Nombre)
+                            </div>
+                        }
+
+                    </div>
+                    @Html.Label((string)@EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Airport, new { @class = "text-danger", id = "errorAeropuerto", @style = "display:none;" })
+                    <div class="row mt-4">
+                        <div class="col-sm-9">&nbsp;</div>
+                        <div class="col-sm-3"><input type="button" id="btnAgregarCuenta" value="Agregar" class="btnStyle" /></div>
+                    </div>
+                </div>
+                <div class="col100" style="font-size:14px;">
+                    <table id="Table"></table>
+                </div>
+
             </div>
             <div role="tabpanel" class="tab-pane fade in active hide" id="tbDatosFinancieros">
                 <div class="col100" style="font-size:14px;">
-                    Información Financiera
-                </div>
+                    
 
-                <div id="PanelDocumentos" style="font-size:12px;"></div>
+                    <div id="PanelDocumentos" style="font-size:12px;">
+                        @*<div class="col100" style="font-size:12px;">
+
+                    <div id="PanelDocumentos" style="font-size:12px;"></div>
+
+                    @for (int idx = 0; idx < ViewBag.ProveedorDocumentoList.Count; idx++)
+                        {
+                        <div class="col-sm-6 mt-2" style="border:solid 1px #c6c7cb; padding:10px;">
+                            <div class="col50">
+                                <div class="inputIF" style="font-weight:600;">
+                                    @ViewBag.ProveedorDocumentoList[idx].DescripcionDocumento
+                                </div>
+                            </div>
+                            <div class="col25">
+                                <input class="text-box single-line" accept="application/pdf" type="file" name="@ViewBag.ProveedorDocumentoList[idx].DescripcionDocumento" id="@ViewBag.ProveedorDocumentoList[idx].IdProveedorDocumento" />
+                            </div>
+                            <div class="col25">
+                                <a href="@ViewBag.ProveedorDocumentoList[idx].NombreArchivo" download="archivo">
+                                    <img style="height: 60px" src="@ViewBag.ProveedorDocumentoList[idx].NombreArchivo" />
+                                </a>
+
+                            </div>
+                        </div>
+                        }
+                </div>
+            </div>*@
+                    </div>
+                </div>
+                
             </div>
         </div>
-
     </div>
 </div>
+
+<!-- Modal Aeropuertos -->
+<div class="modal fade" id="modalAeropuertos" tabindex="-1" role="dialog" aria-labelledby="aeropuertoModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-purple">
+                <h5 class="modal-title" id="aeropuertoModalCenterTitle">Aeropuertos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div id="aeropuertosContainer" class="col-sm-12">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btnStyle btn-modal-aceptar">Aceptar</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -71,47 +189,29 @@
          $.ajax({
              type: "POST",
              contentType: "application/json; charset=utf-8",
-             url: '@Url.Action("GetDocumentosList", "Home")',
+             url: '@Url.Action("GetDocumentosList", "MiCuenta")',
              data: jsonData,
              async: false,
-             success: function(data) {
-                 $("#TableDocumento").html('');
-                 $("#TableDocumento").append('<thead class="bg-light-purple"><tr>' +
-                     '<td>Nombre</td>' +
-                     '<td>Documento</td>' + '</tr></thead>'
-                 );
-                 $("#TableDocumento").DataTable().clear().draw();
-                 $("#TableDocumento").DataTable().destroy();
-
-                 $("#TableDocumento").append('<tbody>');
-                 console.log("Documentos", data);
+             success: function (data) {
+                 console.log(data);
                  for (i = 0; i < data.length; i++) {
 
-                     $("#TableDocumento").append('<tr>' +
-                         '<td style="dislay: none;"><b>' + data[i].NombreDocumento + '</b></td>' +
-                         '<td style="dislay: none;"><button class="btn-descargar">Descargar</button></tr>'
-                     );
 
                      $("#PanelDocumentos").append(
                          '<div class="col-sm-6 mt-2" style="border:solid 1px #c6c7cb; padding:10px;">'+
                             '<div class="row">'+
-                                '<div class="col-sm-10"> <label style="font-weight:600;">' + data[i].NombreDocumento + '</label> </div>'+
+                         '<div class="col-sm-10"> <label style="font-weight:600;">' + data[i].DescripcionDocumento + '</label>' +
+                         '<input class="text-box single-line" accept="application/pdf" type="file" name="documento-' + data[i].IdProveedorDocumento + '" id="documento-' + data[i].IdProveedorDocumento + '" />'
+                         + ' </div>' +
                                 '<div class="col-sm-2">'+
                                     '<a href="' + data[i].NombreArchivo + '" download="archivo">'+
-                                        '<img src="/Content/Images/descargar.png" width="30" />'+
+                                        '<img style="height: 60px" src="' + data[i].NombreArchivo + '" />'+
                                     '</a>'+
                                 '</div>'+
                             '</div>'+
                         '</div>'
                      );
                  }
-                 $("#TableDocumento").append('</tbody>');
-
-                 $('#TableDocumento').DataTable({
-                        "paging": false,
-                         "bScrollInfinite": true,
-                         "bScrollCollapse": true
-                     });
 
              },
          });
@@ -122,11 +222,12 @@
          $.ajax({
              type: "POST",
              contentType: "application/json; charset=utf-8",
-             url: '@Url.Action("GetDetalleCuentaList", "Home")',
+             url: '@Url.Action("GetDetalleCuentaList", "MiCuenta")',
              data: jsonData,
              async: false,
              success: function (data) {
                  proveedorCuentaList = data;
+                 console.log('proveedorCuentaList');
                  console.log(proveedorCuentaList);
                  $("#Table").html('');
                  $("#Table").append('<thead class="bg-light-purple"><tr>' +
@@ -135,7 +236,7 @@
                      '<td>NombreBanco</td>' +
                      '<td>CLABE</td>' +
                      '<td>TipoCuenta</td>' +
-                     '<td>Aeropuertos</td>' + '</tr></thead>'
+                     '<td>Aeropuertos</td><td>Eliminar</td>' + '</tr></thead>'
                  );
                  $("#Table").DataTable().clear().draw();
                  $("#Table").DataTable().destroy();
@@ -150,7 +251,7 @@
                          '<td>' + data[i].NombreBanco + '</td>' +
                          '<td>' + data[i].CLABE + '</td>' +
                          '<td>' + data[i].TipoCuenta + '</td>' +
-                         '<td><a class="verAeropuertos" href="#" >Ver</a></td>' + '</tr>'
+                         '<td><a class="verAeropuertos" href="#" >Ver</a></td><td><a class="eliminar" href="#" >Eliminar</a></td>' + '</tr>'
                      );
                  }
                  $("#Table").append('</tbody>');
@@ -166,9 +267,12 @@
     }
 
     $(document).ready(function () {
+
+        let proveedorCuenta = [];
+
         var url = '@Url.Action("AprobarTesoreria", "Tesoreria")';
         var idProveedor = $("#IdProveedor").val();
-
+        console.log(idProveedor);
         console.log(idProveedor);
         fn_CargarCuentas(idProveedor);
         fn_CargarDoctos(idProveedor);
@@ -193,78 +297,242 @@
             $('#modalAeropuertos').modal('show');
         });
 
-        //console.log("2", $("#accionForm").val());
-        //if ($("#accionForm").val() == 1) {
-        //$("#tabInfoCuenta").addClass('active');
-        //    $("#tbInfoCuenta").addClass('active');
-        //    $("#tbInfoCuenta").addClass('show');
-        //    $("#tabPassword").removeClass('active');
-        //    $("#tbPassword").removeClass('active');
-        //    $("#tbPassword").removeClass('show');
-        //} else if ($("#accionForm").val() == 2) {
-        //console.log("2", $("#accionForm").val());
-        //    $("#tabInfoCuenta").removeClass('active');
-        //    $("#tbInfoCuenta").removeClass('active');
-        //    $("#tbInfoCuenta").removeClass('show');
-        //    $("#tabPassword").addClass('active');
-        //    $("#tbPassword").addClass('active');
-        //    $("#tbPassword").addClass('show');
-        //}
+        $('#Table tbody').on( 'click', '.eliminar', function () {
+            var data = table.row($(this).closest('tr')).data()[0];
+            console.log(data);
+            console.log(proveedorCuentaList);
+            console.log('eliminar');
+        });
 
+        if ('@ViewBag.Respuesta' != "") {
+            Swal.fire({
+                position: 'middle',
+                icon: 'success',
+                title: 'Las cuentas han sido guardadas con éxito',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
 
-        //$("#tbInfoCuenta").click(function () {
-        //    $("#tbPassword").removeClass("active");
-        //    $("#tbPassword").removeClass("show");
-        //    $("#tbPassword").addClass("hide");
-        //    $("#tbInfoCuenta").addClass("active");
-        //    $("#tbInfoCuenta").addClass("show");
-        //});
-        //$("#tbPassword").click(function () {
-        //    $("#tbInfoCuenta").removeClass("active");
-        //    $("#tbInfoCuenta").removeClass("show");
-        //    $("#tbInfoCuenta").addClass("hide");
-        //    $("#tbPassword").removeClass("hide");
-        //    $("#tbPassword").addClass("active");
-        //    $("#tbPassword").addClass("show");
-        //});
+        $("#idBanco").val(0);
+        $("#idTipoCuenta").val(0);
+
+        //fn_buscar();
+
+        $("#cuenta").on("change paste keyup", () => {
+            $('#errorCuenta').hide();
+        });
+
+        $("#clave").on("change paste keyup", () => {
+            $('#errorClave').hide();
+        });
+
+        $("#idBanco").change(() => {
+            $('#errorIdBanco').hide();
+        });
+
+        $("#idTipoCuenta").change(() => {
+            $('#errorIdIdTipoCuenta').hide();
+        });
+
+        $('input[type="checkbox"]').click(function () {
+            $("#errorAeropuerto").hide();
+        });
+
+        @*$('input[type="file"]').on('change', () => {
+            var docs = @Html.Raw(Json.Encode(Model.CatalogoDocumentoList));
+                for (var j = 0; j < docs.length; j++) {
+                    var fileInput = document.getElementById("CatalogoDocumentoList_" + j + "__File");
+                    if (docs[j].EsRequerido && fileInput.files.length < 1) {
+                        $('#errorDocument' + docs[j].IdCatalogoDocumento).show();
+                    } else {
+                        $('#errorDocument' + docs[j].IdCatalogoDocumento).hide();
+                    }
+                }
+        });*@
+
+        function validaCampos(cuenta,idBanco,clave,idTipoCuenta) {
+            if (cuenta && cuenta.length) {
+
+            } else {
+                //$("#cuenta").addClass('is-invalid');
+                $('#errorCuenta').show();
+            }
+
+            if (idBanco && idBanco.length) {
+
+            } else {
+                $('#errorIdBanco').show();
+            }
+
+            if (clave && clave.length) {
+
+            } else {
+                $('#errorClave').show();
+            }
+
+            if (idTipoCuenta && idTipoCuenta.length) {
+
+            } else {
+                $('#errorIdIdTipoCuenta').show();
+            }
+        }
+
+        $("#btnAgregarCuenta").click(function () {
+            console.log(proveedorCuenta);
+
+            let Cuenta = $("#cuenta").val();
+            let IdBanco = $("#idBanco").val();
+            let NombreBanco = $("#idBanco option:selected").text();
+            let CLABE = $("#clave").val();
+            let IdTipoCuenta = $("#idTipoCuenta").val();
+            let TipoCuenta = $("#idTipoCuenta option:selected").text();
+            let aeropuerto = '';
+            let AeropuertoList = [];
+
+            validaCampos(Cuenta, IdBanco, CLABE, IdTipoCuenta);
+
+            if (Cuenta && Cuenta.length
+                && IdBanco && IdBanco.length
+                && CLABE && CLABE.length
+                && IdTipoCuenta && IdTipoCuenta.length) {
+
+                $(".checkAirport:checkbox:checked").each(function () {
+
+                    if (!$(this).is(':disabled')) {
+                        let c = $(this).is(":checked");
+                        if (c) {
+                            // por si quieren deschequearlos
+                            //$(this).prop("checked", false);
+
+                            $(this).attr("disabled", true);
+                            console.log('id');
+                            console.log($(this).attr('id'));
+                            console.log($(this).attr('hd'));
+
+                            let Id = $(this).attr('id');
+                            let Nombre = $(this).attr('hd');
+                            aeropuerto += Nombre + '<br />';
+                            console.log(aeropuerto);
+                            AeropuertoList.push({ Id, Nombre });
+                        }
+                    }
+                });
+
+                if (AeropuertoList && AeropuertoList.length) {
+                    proveedorCuenta.push({ Cuenta, IdBanco, NombreBanco, CLABE, IdTipoCuenta, TipoCuenta, AeropuertoList });
+
+//                    AeropuertoList: (3) [{…}, {…}, {…}]
+//CLABE: "6565566556"
+//Cuenta: "100000003"
+//IdBanco: 0
+//IdProveedor: 0
+//IdProveedorCuenta: 112
+//IdTipoCuenta: 0
+//NombreBanco: "CITIBANAMEX"
+//TipoCuenta: "Crédito"
+
+                    var table = $('#Table').DataTable();
+                    table.destroy();
+                    $('#Table').empty();
+
+                    $("#Table").append('<thead class="bg-light-purple"><tr>' +
+                     '<td style="display:none">IdProveedorCuenta</td>' +
+                     '<td>Cuenta</td>' +
+                     '<td>NombreBanco</td>' +
+                     '<td>CLABE</td>' +
+                     '<td>TipoCuenta</td>' +
+                     '<td>Aeropuertos</td><td>Eliminar</td>' + '</tr></thead>'
+                 );
+                 $("#Table").DataTable().clear().draw();
+                 $("#Table").DataTable().destroy();
+
+                 $("#Table").append('<tbody>');
+                 for (i = 0; i < proveedorCuentaList.length; i++) {
+
+                     $("#Table").append('<tr>' +
+                         //'<td style="display:none"><b>' + data[i].TipoCuenta + '</b></td>' +
+                         '<td style="display:none">' + proveedorCuentaList[i].IdProveedorCuenta + '</td>' +
+                         '<td><b>' + proveedorCuentaList[i].Cuenta + '</b></td>' +
+                         '<td>' + proveedorCuentaList[i].NombreBanco + '</td>' +
+                         '<td>' + proveedorCuentaList[i].CLABE + '</td>' +
+                         '<td>' + proveedorCuentaList[i].TipoCuenta + '</td>' +
+                         '<td><a class="verAeropuertos" href="#" >Ver</a></td><td><a class="eliminar" href="#" >Eliminar</a></td>' + '</tr>'
+                     );
+                 }
+                 $("#Table").append('</tbody>');
+
+                 $('#Table').DataTable({
+                        "paging": false,
+                         "bScrollInfinite": true,
+                         "bScrollCollapse": true
+                     });
+
+                    console.log(Cuenta);
+                    console.log(IdBanco);
+                    console.log(CLABE);
+                    console.log(IdTipoCuenta);
+                    $("#cuenta").val('');
+                    $("#idBanco").val(0);
+                    $("#clave").val('');
+                    $("#idTipoCuenta").val(0);
+                } else {
+                    $("#errorAeropuerto").show();
+                }
+            }
+        });
+
+        $('#btnCargarCuentas').click(() => {
+
+            if (proveedorCuenta && proveedorCuenta.length) {
+
+                var formData = new FormData();
+
+                var documentosInvalidos = false;
+
+                var docs = @Html.Raw(Json.Encode(Model.CatalogoDocumentoList));
+                console.log(docs.length);
+                console.log(docs);
+                for (var j = 0; j < docs.length; j++) {
+                    console.log(docs[j].IdCatalogoDocumento);
+                    var fileInput = document.getElementById("CatalogoDocumentoList_" + j + "__File");
+                    if (docs[j].EsRequerido && fileInput.files.length < 1) {
+                        documentosInvalidos = true;
+                        $('#errorDocument' + docs[j].IdCatalogoDocumento).show();
+                    }
+                    for (i = 0; i < fileInput.files.length; i++) {
+                        formData.append(docs[j].IdCatalogoDocumento, fileInput.files[i]);
+                    }
+                }
+
+                if (documentosInvalidos) {
+                    //alert('Falta cargar los documentos.');
+                } else {
+                    formData.append('cuenta', JSON.stringify({ ProveedorCuentaListRegistro: proveedorCuenta }));
+
+                    $.ajax({
+                        url: "/AltaProveedor/Upload",
+                        type: "POST",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        async: false,
+                        success: function (result) {
+                            console.log(result);
+                            window.location.href = '/AltaProveedor/InformacionBF/';
+                        },
+                    });
+                }
+            } else {
+                alert('Es necesario agregar las cuentas.')
+            }
+        });
+
+        
     });
 
 
 </script>
 
-
-
-
-
-
-
-
-
-
-@*<div class="row">
-        <div class="col-md-6 offset-3">
-            <div class="form-style">
-                <form action="@Url.Content("~/Seguridad/Recovery")" method="post">
-                    @Html.HiddenFor(d => d.Token)
-
-                    <label>Escribe tu contraeña:</label>
-                    @Html.PasswordFor(d => d.Password, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(d => d.Password, null, new { style = "color:red;" })
-
-                    <label>Nueva contraseña:</label>
-                    @Html.PasswordFor(d => d.PasswordNueva, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(d => d.PasswordNueva, null, new { style = "color:red;" })
-
-                    <label>Confirmar contraseña:</label>
-                    @Html.PasswordFor(d => d.ConfirmarPassword, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(d => d.ConfirmarPassword, null, new { style = "color:red;" })
-                    <br />
-                    <div class="text-right">
-                        <button class="btn btn-primary">Recuperar</button>
-                    </div>
-
-                </form>
-            </div>
-        </div>
-    </div>*@
 

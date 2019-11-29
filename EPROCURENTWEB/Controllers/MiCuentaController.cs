@@ -51,15 +51,54 @@ namespace EprocurementWeb.Controllers
             ViewBag.PaisList = paisList;
             ViewBag.IdiomaList = idiomaList;
             ViewBag.TipoProveedorList = tipoProveedorList;
-            ViewBag.idProveedor = 0;
+            
             ViewBag.accionForm = 1;
             ViewBag.cantidadGiro = giroList.Count;
             var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
             ViewBag.IdEstatus = usuarioInfo.IdEstatus;
+            ViewBag.IdProveedor = usuarioInfo.IdProveedor;
             try
             {
+                BusinessLogic business = new BusinessLogic();
+                ProveedorCuentaRequestDTO proveedorCuentaRequest = new ProveedorCuentaRequestDTO
+                {
+                    IdProveedor = usuarioInfo.IdProveedor
+                };
+                var proveedorCuentaResponse = business.GetProveedorCuentaList(proveedorCuentaRequest);
+                ProveedorCuentaRequestDTO proveedorCuentaAeropuertoRequest = new ProveedorCuentaRequestDTO
+                {
+                    ProveedorCuentaList = proveedorCuentaResponse.ProveedorCuentaList
+                };
+                var proveedorCuentaAeropuertoResponse = business.GetProveedorCuentaAeropuertoList(proveedorCuentaAeropuertoRequest);
+                ViewBag.ProveedorCuentaList = proveedorCuentaAeropuertoResponse.ProveedorCuentaList;
+
+                ProveedorDocumentoRequestDTO proveedorDocumentoRequest = new ProveedorDocumentoRequestDTO
+                {
+                    IdProveedor = usuarioInfo.IdProveedor
+                };
+
+                var aeropuertos = business.GetAeropuertosList();
+                ViewBag.BancoList = business.GetBancoList();
+                ViewBag.TipoCuentaList = business.GetTipoCuentaList();
+                ProveedorDetalleRequestModel request = new ProveedorDetalleRequestModel();
+                request.IdProveedor = usuarioInfo.IdProveedor;
+                var response = business.GetProveedorElemento(request).Proveedor;
+                var aeropuertosAsignados = response.EmpresaList;
+
+                var proveedorDocumentoResponse = business.GetProveedorDocumentoList(proveedorDocumentoRequest);
+                ViewBag.ProveedorDocumentoList = proveedorDocumentoResponse.ProveedorDocumentoList;
+
+                var ProveedorCuentaList = new List<ProveedorCuentaDTO> { new ProveedorCuentaDTO { Cuenta = null, IdBanco = 0, CLABE = null, IdTipoCuenta = 0, IdProveedor = usuarioInfo.IdProveedor } };
+                ProveedorCuentaList[0].AeropuertoList = (from aeropuerto in aeropuertos
+                                                                join aeropuertoA in aeropuertosAsignados on aeropuerto.Id equals aeropuertoA.IdCatalogoAeropuerto
+                                                                select new AeropuertoDTO { Id = aeropuerto.Id, Nombre = aeropuerto.Nombre, Checado = false }).ToList();
+                miCuenta.ProveedorCuentaList = ProveedorCuentaList;
+
+                var proveedorDocumento = business.GetCatalogoDocumentoList();
+                miCuenta.CatalogoDocumentoList = proveedorDocumento;
+
                 var proveedor = ObtenerProveedor();
-                ViewBag.idProveedor = proveedor.IdProveedor;
+                //ViewBag.idProveedor = proveedor.IdProveedor;
                 ViewBag.EstadoList = estadoList;
                 ViewBag.MunicipioList = municipioList;
                 ViewBag.idEstado = proveedor.Direccion.IdEstado;
