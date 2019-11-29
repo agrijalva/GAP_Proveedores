@@ -229,7 +229,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Proveedor
 
         public ContactoResponseDTO UpdateContacto(ContactoRequestDTO request)
         {
-            ContactoResponseDTO response = new ContactoResponseDTO();
+            var response = new ContactoResponseDTO();
             if (request.Contacto.IdContacto > 0)
             {
                 response = proveedorData.UpdateContacto(request);
@@ -247,7 +247,17 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Proveedor
 
         public ContactoResponseDTO DeleteContacto(ContactoRequestDTO request)
         {
-            ContactoResponseDTO response = proveedorData.DeleteContacto(request);
+            var response = proveedorData.DeleteContacto(request);
+            if (!response.Success)
+            {
+                response.ErrorList = new List<ErrorDTO> { new ErrorDTO { Codigo = "", Mensaje = string.Format("No fue posible recuperar datos disponibles o no se encontro alguna solicitud en proceso") } };
+            }
+            return response;
+        }
+
+        public InformacionFinancieraResponseDTO InsertarInformacionFinanciera(InformacionFinancieraRequestDTO request)
+        {
+            var response = proveedorData.GuardaInformacionCuenta(request);
             if (!response.Success)
             {
                 response.ErrorList = new List<ErrorDTO> { new ErrorDTO { Codigo = "", Mensaje = string.Format("No fue posible recuperar datos disponibles o no se encontro alguna solicitud en proceso") } };

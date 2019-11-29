@@ -261,8 +261,9 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
         [Route("InsertarInformacionFinanciera")]
         public InformacionFinancieraResponseDTO InsertarInformacionFinanciera([FromBody]InformacionFinancieraRequestDTO request)
         {
-            
-            return new InformacionFinancieraResponseDTO();
+            var response = new HandlerProveedor().InsertarInformacionFinanciera(request); 
+
+            return response;
         }
 
     }

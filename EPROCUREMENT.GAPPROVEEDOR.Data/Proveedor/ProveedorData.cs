@@ -25,7 +25,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
         /// <returns>Un objeto de tipo ProveedorResponseDTO</returns>
         public ProveedorResponseDTO ProveedorInsertar(ProveedorRequesteDTO request)
         {
-            ProveedorResponseDTO response = new ProveedorResponseDTO()
+            var response = new ProveedorResponseDTO()
             {
                 ErrorList = new List<ErrorDTO>()
             };
@@ -92,7 +92,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
         /// <returns>Un obejeto de tipo ProveedorCuentaResponseDTO</returns>
         public ProveedorCuentaResponseDTO GetProveedorCuentaList(ProveedorCuentaRequestDTO request)
         {
-            ProveedorCuentaResponseDTO response = new ProveedorCuentaResponseDTO()
+            var response = new ProveedorCuentaResponseDTO()
             {
                 ProveedorCuentaList = new List<ProveedorCuentaDTO>()
             };
@@ -146,7 +146,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
         /// <returns>Un obejeto de tipo ProveedorCuentaResponseDTO</returns>
         public ProveedorCuentaResponseDTO GetProveedorCuentaAeropuertoList(ProveedorCuentaRequestDTO request)
         {
-            ProveedorCuentaResponseDTO response = new ProveedorCuentaResponseDTO()
+            var response = new ProveedorCuentaResponseDTO()
             {
                 ProveedorCuentaList = new List<ProveedorCuentaDTO>()
             };
@@ -194,7 +194,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
         public ProveedorCuentaResponseDTO GuardarProveedorCuenta(ProveedorCuentaRequestDTO request)
         {
-            ProveedorCuentaResponseDTO response = new ProveedorCuentaResponseDTO()
+            var response = new ProveedorCuentaResponseDTO()
             {
                 ErrorList = new List<ErrorDTO>()
             };
@@ -258,7 +258,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
         /// <returns>Un obejeto de tipo ProveedorCuentaResponseDTO</returns>
         public ProveedorDocumentoResponseDTO GetProveedorDocumentoList(ProveedorDocumentoRequestDTO request)
         {
-            ProveedorDocumentoResponseDTO response = new ProveedorDocumentoResponseDTO()
+            var response = new ProveedorDocumentoResponseDTO()
             {
                 ProveedorDocumentoList = new List<ProveedorDocumentoDTO>()
             };
@@ -305,7 +305,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
         public ProveedorDocumentoResponseDTO GuardarProveedorDocumento(ProveedorDocumentoRequestDTO request)
         {
-            ProveedorDocumentoResponseDTO response = new ProveedorDocumentoResponseDTO()
+            var response = new ProveedorDocumentoResponseDTO()
             {
                 ErrorList = new List<ErrorDTO>()
             };
@@ -354,7 +354,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
         /// <returns>Un obejeto de tipo ProveedorEstatusResponseDTO</returns>
         public ProveedorEstatusResponseDTO GetProveedorEstatusList(ProveedorEstatusRequestDTO request)
         {
-            ProveedorEstatusResponseDTO response = new ProveedorEstatusResponseDTO()
+            var response = new ProveedorEstatusResponseDTO()
             {
                 ProveedorList = new List<ProveedorEstatusDTO>()
             };
@@ -412,7 +412,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
         /// <returns>Un obejeto de tipo ProveedorEstatusResponseDTO</returns>
         public ProveedorDetalleResponseDTO GetProveedorElemento(ProveedorDetalleRequestDTO request)
         {
-            ProveedorDetalleResponseDTO response = new ProveedorDetalleResponseDTO()
+            var response = new ProveedorDetalleResponseDTO()
             {
                 Proveedor = null
             };
@@ -450,7 +450,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
         public ContactoResponseDTO GetContactoProveedorList(ContactoRequestDTO request)
         {
-            ContactoResponseDTO response = new ContactoResponseDTO()
+            var response = new ContactoResponseDTO()
             {
                 ContactoList = new List<ProveedorContactoDTO>()
             };
@@ -499,7 +499,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
         public ContactoResponseDTO InsertContacto(ContactoRequestDTO request)
         {
-            ContactoResponseDTO response = new ContactoResponseDTO();
+            var response = new ContactoResponseDTO();
 
             try
             {
@@ -538,7 +538,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
         public ContactoResponseDTO UpdateContacto(ContactoRequestDTO request)
         {
-            ContactoResponseDTO response = new ContactoResponseDTO();
+            var response = new ContactoResponseDTO();
 
             try
             {
@@ -577,7 +577,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
         public ContactoResponseDTO DeleteContacto(ContactoRequestDTO request)
         {
-            ContactoResponseDTO response = new ContactoResponseDTO();
+            var response = new ContactoResponseDTO();
 
             try
             {
@@ -610,7 +610,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
         /// <returns>Un objeto de tipo ProveedorEstatusResponseDTO con la respuesta</returns>
         public ProveedorEstatusResponseDTO EstatusProveedorInsertar(ProveedorAprobarRequestDTO request)
         {
-            ProveedorEstatusResponseDTO response = new ProveedorEstatusResponseDTO()
+            var response = new ProveedorEstatusResponseDTO()
             {
                 ErrorList = new List<ErrorDTO>()
             };
@@ -672,7 +672,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
         public ProveedorUsuarioDTO GetProvedorUsuarioItem(int idProveedor, int idUsuario)
         {
-            ProveedorUsuarioDTO response = new ProveedorUsuarioDTO();
+            var response = new ProveedorUsuarioDTO();
 
             try
             {
@@ -708,7 +708,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
         public ProveedorUsuarioDTO GetProvedorUsuarioPorEmail(string email)
         {
-            ProveedorUsuarioDTO response = new ProveedorUsuarioDTO();
+            var response = new ProveedorUsuarioDTO();
 
             try
             {
@@ -743,7 +743,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
         public ProveedorUsuarioDTO GetProvedorUsuarioPorRFC(string rfc)
         {
-            ProveedorUsuarioDTO response = new ProveedorUsuarioDTO();
+            var response = new ProveedorUsuarioDTO();
 
             try
             {
@@ -778,7 +778,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
         public ProveedorFiltroResponseDTO GetProvedorPorFiltro(ProveedorFiltroRequestDTO request)
         {
-            ProveedorFiltroResponseDTO response = new ProveedorFiltroResponseDTO();
+            var response = new ProveedorFiltroResponseDTO();
             ProveedorUsuarioDTO proveedorUsuario = null;
 
             try
@@ -1182,7 +1182,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
         public ProveedorResponseDTO TempProveedorInsertar(ProveedorRequesteDTO request)
         {
-            ProveedorResponseDTO response = new ProveedorResponseDTO()
+            var response = new ProveedorResponseDTO()
             {
                 ErrorList = new List<ErrorDTO>()
             };
@@ -1339,6 +1339,96 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             }
 
             return catalogoDocumentoList;
+        }
+
+        public InformacionFinancieraResponseDTO GuardaInformacionCuenta(InformacionFinancieraRequestDTO request)
+        {
+            var response = new InformacionFinancieraResponseDTO()
+            {
+                ErrorList = new List<ErrorDTO>()
+            };
+
+            try
+            {
+                using (var conexion = new SqlConnection(Helper.Connection()))
+                {
+                    conexion.Open();
+
+                    using (TransactionScope transactionScope = new TransactionScope())
+                    {
+                        foreach (var proveedorDocumento in request.ProveedorDocumentoList)
+                        {
+                            var cmdDocto = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_ProveedorDocumento_INS, conexion);
+                            if (ExecuteComandDocumento(cmdDocto, proveedorDocumento) < 1) return response;
+                        }
+
+                        foreach (var proveedorCuenta in request.ProveedorCuentaList)
+                        {
+                            var cmdCuenta = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_ProveedorCuenta_INS, conexion);
+
+                            var idProveedorCuenta = ExecuteComandCuenta(cmdCuenta, proveedorCuenta);
+                            if (idProveedorCuenta < 1) { return response; }
+                            foreach (var aeropuerto in proveedorCuenta.AeropuertoList)
+                            {
+                                var cmdAeropuerto = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_CuentaEmpresa_INS, conexion);
+                                if (ExecuteComandAeropuertoCuenta(cmdAeropuerto, aeropuerto, idProveedorCuenta) < 0)
+                                {
+                                    return response;
+                                }
+                            }
+                        }
+                        transactionScope.Complete();
+                        response.Success = true;
+
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+            }
+            return response;
+        }
+
+        private int ExecuteComandDocumento(SqlCommand cmdDocto, ProveedorDocumentoDTO proveedorDocumento)
+        {
+            cmdDocto.CommandType = CommandType.StoredProcedure;
+            cmdDocto.Parameters.Add(new SqlParameter("@IdProveedor", proveedorDocumento.IdProveedor));
+            cmdDocto.Parameters.Add(new SqlParameter("@IdCatalogoDocumento", proveedorDocumento.IdCatalogoDocumento));
+            cmdDocto.Parameters.Add(new SqlParameter("@DescripcionDocumento", SqlDbType.NVarChar, 560)).Value = proveedorDocumento.DescripcionDocumento;
+            cmdDocto.Parameters.Add(new SqlParameter("@DocumentoAutorizado", proveedorDocumento.DocumentoAutorizado));
+            cmdDocto.Parameters.Add(new SqlParameter("@NombreArchivo", SqlDbType.VarChar, 200)).Value = proveedorDocumento.NombreArchivo;
+            cmdDocto.Parameters.Add(new SqlParameter("@EsModificacion", true));
+            cmdDocto.Parameters.Add(new SqlParameter("Result", SqlDbType.BigInt) { Direction = ParameterDirection.ReturnValue });
+            cmdDocto.ExecuteNonQuery();
+            var resultado = Convert.ToInt32(cmdDocto.Parameters["Result"].Value);
+            return resultado;
+        }
+
+        private int ExecuteComandCuenta(SqlCommand cmdCuenta, ProveedorCuentaDTO proveedorCuenta)
+        {
+            cmdCuenta.CommandType = CommandType.StoredProcedure;
+            cmdCuenta.Parameters.Add(new SqlParameter("@Cuenta", proveedorCuenta.Cuenta));
+            cmdCuenta.Parameters.Add(new SqlParameter("@IdBanco", proveedorCuenta.IdBanco));
+            cmdCuenta.Parameters.Add(new SqlParameter("@CLABE", proveedorCuenta.CLABE));
+            cmdCuenta.Parameters.Add(new SqlParameter("@IdTipoCuenta", proveedorCuenta.IdTipoCuenta));
+            cmdCuenta.Parameters.Add(new SqlParameter("@IdProveedor", proveedorCuenta.IdProveedor));
+            cmdCuenta.Parameters.Add(new SqlParameter("@EsModificacion", true));
+            cmdCuenta.Parameters.Add(new SqlParameter("Result", SqlDbType.BigInt) { Direction = ParameterDirection.ReturnValue });
+            cmdCuenta.ExecuteNonQuery();
+            var resultado = Convert.ToInt32(cmdCuenta.Parameters["Result"].Value);
+            return resultado;
+        }
+
+        private int ExecuteComandAeropuertoCuenta(SqlCommand cmdAeropuerto, AeropuertoDTO aeropuerto, int idProveedorCuenta)
+        {
+            cmdAeropuerto.CommandType = CommandType.StoredProcedure;
+            cmdAeropuerto.Parameters.Add(new SqlParameter("@IdProveedorCuenta", idProveedorCuenta));
+            cmdAeropuerto.Parameters.Add(new SqlParameter("@IdCatalogoAeropuerto", SqlDbType.NVarChar, 50)).Value = aeropuerto.Id;
+            cmdAeropuerto.Parameters.Add(new SqlParameter("@EsModificacion", true));            
+            cmdAeropuerto.Parameters.Add(new SqlParameter("Result", SqlDbType.BigInt) { Direction = ParameterDirection.ReturnValue });
+            cmdAeropuerto.ExecuteNonQuery();
+            var resultado = Convert.ToInt32(cmdAeropuerto.Parameters["Result"].Value);
+            return resultado;
         }
     }
 }
