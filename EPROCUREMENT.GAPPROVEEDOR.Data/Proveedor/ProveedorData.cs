@@ -660,12 +660,13 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                     }
                     else if (request.EstatusProveedor.IdEstatusProveedor == 11 || request.EstatusProveedor.IdEstatusProveedor == 12)
                     {
-                        //var estatusOriginal = request.EstatusProveedor.IdEstatusProveedor;
+                        var estatusOriginal = request.EstatusProveedor.IdEstatusProveedor;
+                        request.EstatusProveedor.IdEstatusProveedor = 8;
                         if (ExecuteComandEstatus(cmdEstatus, request.EstatusProveedor) < 1)
                         {
                             return response;
                         }
-
+                        request.EstatusProveedor.IdEstatusProveedor = estatusOriginal;
                         if (request.EstatusProveedor.IdEstatusProveedor == 11)
                         {
                             var cmdAprobada = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorModificacionAprobada]", conexion);
