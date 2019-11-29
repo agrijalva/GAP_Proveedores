@@ -62,6 +62,7 @@
     <Compile Include="Email\DireccionEmailDTO.cs" />
     <Compile Include="Email\EmailDTO.cs" />
     <Compile Include="Enum\EmailPrioridadDTO.cs" />
+    <Compile Include="Enum\TipoAccion.cs" />
     <Compile Include="Helper\ProveedorEstatusDTO.cs" />
     <Compile Include="Helper\ProveedorFiltroDTO.cs" />
     <Compile Include="Helper\ProveedorUsuarioDTO.cs" />
