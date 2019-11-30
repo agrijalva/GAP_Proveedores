@@ -385,6 +385,15 @@ namespace EprocurementWeb.GlobalResources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Debe ingresar un Email valido, ejemplo (usuario@dominio.com).
+        /// </summary>
+        public static string Message_Error_Email {
+            get {
+                return ResourceManager.GetString("Message_Error_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Debe seleccionar al menos un aeropuerto.
         /// </summary>
         public static string Message_Error_Required_Airport {

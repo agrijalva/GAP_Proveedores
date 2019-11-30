@@ -278,7 +278,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Contacto.Email, new { @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.Contacto.Email, new { placeholder = "Ej. correo@dominio.com", @class = "form-control col-md-12" })
+                                                @Html.TextBoxFor(model => model.Contacto.Email, new { id = "email_input", placeholder = "Ej. correo@dominio.com", @class = "form-control col-md-12" })
                                                 @Html.ValidationMessageFor(model => model.Contacto.Email, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
@@ -619,95 +619,10 @@
             var chall = $('#checkall').prop('checked');
             $(".check input:checkbox").prop('checked', chall);
         });
-
-        ///// Cargar Aeropuertos
-        //$.ajax({
-        //    url: "/Home/GetAeropuertosList",
-        //    type: "GET",
-        //    contentType: "application/json; charset=utf-8",
-        //    datatype: JSON,
-        //    success: function (result) {
-        //        $.each(result, function (key, value) {
-        //            var li = $('<li><input  type="checkbox" name="' + key + '" id="' + key + '"/>' +
-        //                '<label for="' + key + '"></label></li>');
-        //            li.find('label').text(value.GiroNombre);
-        //            $('#wkslist').append(li);
-        //        });
-        //    },
-        //    error: function (data) { }
-        //});
-
-        /// Cargar Giros
-        //$.ajax({
-        //    url: "/Home/GetGirosList",
-        //    type: "GET",
-        //    contentType: "application/json; charset=utf-8",
-        //    datatype: JSON,
-        //    success: function (result) {
-        //        $(result).each(function () {
-        //            $("#giro1").append($("<option></option>").val(this.IdGiro).html(this.GiroNombre));
-        //        });
-        //        $(result).each(function () {
-        //            $("#giro2").append($("<option></option>").val(this.IdGiro).html(this.GiroNombre));
-        //        });
-        //        $(result).each(function () {
-        //            $("#giro3").append($("<option></option>").val(this.IdGiro).html(this.GiroNombre));
-
-        //        });
-        //        $(result).each(function () {
-        //            $("#giro4").append($("<option></option>").val(this.IdGiro).html(this.GiroNombre));
-        //        });
-        //        $(result).each(function () {
-        //            $("#giro5").append($("<option></option>").val(this.IdGiro).html(this.GiroNombre));
-        //        });
-        //        //$(result).each(function () {u eres
-        //        //    $("#paisConctacto").append($("<option></option>").val(this.IdPais).html(this.Nombre));
-        //        //});
-        //    },
-        //    error: function (data) { }
-        //});
-        /// Cargar Giros
-        //$.ajax({
-        //    url: "/Home/GetZonaHorariaList",
-        //    type: "GET",
-        //    contentType: "application/json; charset=utf-8",
-        //    datatype: JSON,
-        //    success: function (result) {
-        //        $(result).each(function () {
-        //            $("#zonaHoraria").append($("<option></option>").val(this.IdPais).html(this.Nombre));
-        //        });
-        //        $(result).each(function () {
-        //            $("#zonaHorariaContacto").append($("<option></option>").val(this.IdPais).html(this.Nombre));
-        //        });
-
-        //    },
-        //    error: function (data) { }
-        //});
-
-        /// Cargar Nacionalidad
-        //$.ajax({
-        //    url: "/Home/GetNacionalidadList",
-        //    type: "GET",
-        //    contentType: "application/json; charset=utf-8",
-        //    datatype: JSON,
-        //    success: function (result) {
-        //        $(result).each(function () {
-        //            $("#nacionalidad").append($("<option></option>").val(this.IdPais).html(this.Nombre));
-        //        });
-
-
-        //    },
-        //    error: function (data) { }
-        //});
-
-
         if ($("#Mexicana").is(':checked')) {
             $("#ColoniaProveedor").removeClass("control-display-none");
             $("#lblColonia").removeClass("control-display-none");
-            //$("#Direccion_Colonia").addClass("control-display-none");
             $("#PaisProveedor option:disabled").removeAttr('disabled');
-
-
             $("#lblEstado").removeClass("control-display-none");
             $("#Direccion_Estado").removeClass("control-display-none");
             $("#lblMunicipio").removeClass("control-display-none");
@@ -715,28 +630,21 @@
             $("#lblTIN").addClass("control-display-none");
             $("#Direccion_TIN").addClass("control-display-none");
                 $("#PaisProveedor").val(1);
-            //$("#PaisProveedor").prop("disabled", true);
-
             $("#inpgro-tin").hide();
         }
         else {
             var value = 1;
             $('#PaisProveedor option[value="'+value+'"]').attr("disabled", true);
             $("#Extranjera").val(true);
-            //$("#Direccion_Colonia").removeClass("control-display-none");
             $("#lblColonia").addClass("control-display-none");
             $("#ColoniaProveedor").addClass("control-display-none");
-            //$("#Direccion_Colonia").addClass("control-display-none");
             $("#lblEstado").addClass("control-display-none");
             $("#Direccion_Estado").addClass("control-display-none");
             $("#lblMunicipio").addClass("control-display-none");
             $("#Direccion_Municipio").addClass("control-display-none");
-
             $("#lblTIN").removeClass("control-display-none");
             $("#Direccion_TIN").removeClass("control-display-none");
-
             $("#PaisProveedor").prop("disabled", false);
-
             $("#inpgro-tin").show();
         }
 
@@ -763,6 +671,13 @@
             }
         });
 
+        $("#email_input").on("change", function () {
+            var value = $(this).val();
+            if (value.length > 6) {
+                ValidaEmail(value);
+            }
+        });
+        
         $("#Mexicana").on("change", function () {
             if ($(this).is(':checked')) {
                 //$("#PaisProveedor").prop("disabled", true);
@@ -874,6 +789,22 @@
                         $("#ColoniaProveedor").val(data.colonias[0])
                     }
 
+                });
+        }
+
+        function ValidaEmail(email) {
+            $.getJSON("/Home/ValidaEmail", { email: email },
+                function (data) {
+                    if (data != '') {
+                        $("#email_input").val('');
+                        Swal.fire({
+                            position: 'middle',
+                            icon: 'warning',
+                            title: '¡Validación de RFC!',
+                            html: '<p class="text">' + data + '</p> ',
+                            showConfirmButton: true
+                        });
+                    }
                 });
         }
 

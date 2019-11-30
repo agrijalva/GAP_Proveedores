@@ -300,4 +300,7 @@
   <data name="PrincipalContacto" xml:space="preserve">
     <value>Contacto Principal</value>
   </data>
+  <data name="Message_Error_Email" xml:space="preserve">
+    <value>Debe ingresar un Email valido, ejemplo (usuario@dominio.com)</value>
+  </data>
 </root>

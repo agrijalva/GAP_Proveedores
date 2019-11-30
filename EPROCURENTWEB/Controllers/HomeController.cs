@@ -12,6 +12,7 @@ using EprocurementWeb.Business;
 using System.Threading.Tasks;
 using EPROCUREMENT.GAPPROVEEDOR.Entities;
 using EprocurementWeb.Models;
+using System.Net;
 
 namespace EprocurementWeb.Controllers
 {
@@ -230,13 +231,30 @@ namespace EprocurementWeb.Controllers
         {
             var resultado = string.Empty;
             BusinessLogic businessLogic = new BusinessLogic();
-            ProveedorFiltroRequestModel request = new ProveedorFiltroRequestModel { Filtro = rfc };
+            ProveedorFiltroRequestModel request = new ProveedorFiltroRequestModel { Filtro = rfc, TipoFiltro = Models.TipoFiltro.RFC };
             var response = businessLogic.ObtenerProveedorFiltro(request);
             if(response.Success)
             {
                 if(response.Proveedor != null)
                 {
                     resultado = "El RFC: " + rfc + " ya se encuentra registrado.";
+                }
+            }
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult ValidaEmail(string email)
+        {
+            var resultado = string.Empty;
+            BusinessLogic businessLogic = new BusinessLogic();
+            ProveedorFiltroRequestModel request = new ProveedorFiltroRequestModel { Filtro = email, TipoFiltro = Models.TipoFiltro.Email };
+            var response = businessLogic.ObtenerProveedorFiltro(request);
+            if (response.Success)
+            {
+                if (response.Proveedor != null)
+                {
+                    resultado = "El Email: " + email + " ya se encuentra registrado.";
                 }
             }
             return Json(resultado, JsonRequestBehavior.AllowGet);

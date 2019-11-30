@@ -33,6 +33,8 @@ namespace EprocurementWeb.Models
         public string Fax { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(RHome), ErrorMessageResourceName = "Mensaje_Error_Required")]
+        [DataType(DataType.EmailAddress, ErrorMessageResourceType = typeof(RHome), ErrorMessageResourceName = "Message_Error_Email")]
+        [EmailAddress]
         [Display(ResourceType = typeof(RHome), Name = "Email")]
         public string Email { get; set; }
 

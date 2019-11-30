@@ -170,6 +170,7 @@
     <Compile Include="Models\ActualizaPasswordModel.cs" />
     <Compile Include="Models\CodigoPostalModel.cs" />
     <Compile Include="Models\Comun\ErrorModel.cs" />
+    <Compile Include="Models\Comun\TipoFiltro.cs" />
     <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\MiCuentaModel.cs" />
     <Compile Include="Models\PaisModel.cs" />

@@ -816,11 +816,23 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                 using (var conexion = new SqlConnection(Helper.Connection()))
                 {
                     conexion.Open();
-                    var cmdReset = new SqlCommand("[dbo].[usp_EPROCUREMENT_Proveedor_GETIByRFC]", conexion)
+                    var storeProcedure = string.Empty;
+                    var parametro = string.Empty;
+                    if(request.TipoFiltro == TipoFiltro.RFC)
+                    {
+                        storeProcedure = "[dbo].[usp_EPROCUREMENT_Proveedor_GETIByRFC]";
+                        parametro = "@RFC";
+                    }
+                    else if (request.TipoFiltro == TipoFiltro.Email)
+                    {
+                        storeProcedure = "[dbo].[usp_EPROCUREMENT_ProveedorUsuario_GETIByEmail]";
+                        parametro = "@Email";
+                    }
+                    var cmdReset = new SqlCommand(storeProcedure, conexion)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
-                    cmdReset.Parameters.Add(new SqlParameter("@RFC", SqlDbType.NVarChar, 100)).Value = request.Filtro;
+                    cmdReset.Parameters.Add(new SqlParameter(parametro, SqlDbType.NVarChar, 100)).Value = request.Filtro;
                     using (SqlDataReader reader = cmdReset.ExecuteReader())
                     {
                         if (reader.Read())
@@ -830,8 +842,9 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             proveedorUsuario.NombreEmpresa = reader["NombreEmpresa"].ToString();
                             proveedorUsuario.RazonSocial = reader["RazonSocial"].ToString();
                             response.Proveedor = proveedorUsuario;
-                            response.Success = true;
                         }
+
+                        response.Success = true;
                     }
                 }
             }

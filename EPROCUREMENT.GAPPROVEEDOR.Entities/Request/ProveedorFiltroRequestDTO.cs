@@ -9,5 +9,6 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Entities
     public class ProveedorFiltroRequestDTO: RequestBaseDTO
     {
         public string Filtro { get; set; }
+        public TipoFiltro TipoFiltro { get; set; }
     }
 }
