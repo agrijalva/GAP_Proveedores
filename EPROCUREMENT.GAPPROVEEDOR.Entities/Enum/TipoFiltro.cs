@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace EPROCUREMENT.GAPPROVEEDOR.Entities
 {
-    public class RequestBaseDTO
+    public enum TipoFiltro
     {
-        /// <summary>
-        /// Id del usuario en sesion
-        /// </summary>
-        public ulong IdUsuario { get; set; }
+        RFC = 1,
+        Email = 2
     }
 }

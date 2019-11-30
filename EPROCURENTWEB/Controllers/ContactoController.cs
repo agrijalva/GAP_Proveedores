@@ -89,7 +89,8 @@ namespace EprocurementWeb.Controllers
                         IdZonaHoraria = contactoItem.IdZonaHoraria,
                         NombreContacto = contactoItem.NombreContacto,
                         TelefonoDirecto = contactoItem.TelefonoDirecto,
-                        TelefonoMovil = contactoItem.TelefonoMovil
+                        TelefonoMovil = contactoItem.TelefonoMovil,
+                        EsPrincipal = contactoItem.ContactoPrincipal > 0
                     };
                 }
             }
@@ -119,7 +120,8 @@ namespace EprocurementWeb.Controllers
                         IdZonaHoraria = contactoItem.IdZonaHoraria,
                         NombreContacto = contactoItem.NombreContacto,
                         TelefonoDirecto = contactoItem.TelefonoDirecto,
-                        TelefonoMovil = contactoItem.TelefonoMovil
+                        TelefonoMovil = contactoItem.TelefonoMovil,
+                        ContactoPrincipal = contactoItem.EsPrincipal ? 1 : 0
                     };
                     var response = businessLogic.UpdateContacto(request);
                     if (response.Success)
@@ -166,7 +168,7 @@ namespace EprocurementWeb.Controllers
                         NombreContacto = contactoItem.NombreContacto,
                         TelefonoDirecto = contactoItem.TelefonoDirecto,
                         TelefonoMovil = contactoItem.TelefonoMovil,
-                        ContactoPrincipal = 0
+                        ContactoPrincipal = contactoItem.EsPrincipal ? 1 : 0
                     };
                     var response = businessLogic.UpdateContacto(request);
                     if (response.Success)

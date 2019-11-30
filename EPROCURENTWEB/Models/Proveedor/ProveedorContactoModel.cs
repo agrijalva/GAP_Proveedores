@@ -33,6 +33,8 @@ namespace EprocurementWeb.Models
         public string Fax { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(RHome), ErrorMessageResourceName = "Mensaje_Error_Required")]
+        [DataType(DataType.EmailAddress, ErrorMessageResourceType = typeof(RHome), ErrorMessageResourceName = "Message_Error_Email")]
+        [EmailAddress]
         [Display(ResourceType = typeof(RHome), Name = "Email")]
         public string Email { get; set; }
 
@@ -46,5 +48,10 @@ namespace EprocurementWeb.Models
         [Required(ErrorMessageResourceType = typeof(RHome), ErrorMessageResourceName = "Mensaje_Error_Required")]
         [Display(ResourceType = typeof(RHome), Name = "Language")]
         public int IdIdioma { get; set; }
+
+        public int ContactoPrincipal { get; set; }
+
+        [Display(ResourceType = typeof(RHome), Name = "PrincipalContacto")]
+        public bool EsPrincipal { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Eprocurement.Compras.Business;
+using Eprocurement.Compras.Filters;
 using Eprocurement.Compras.Models;
 using Eprocurement.Compras.Service;
 using EPROCUREMENT.GAPPROVEEDOR.Entities;
@@ -16,6 +17,7 @@ namespace Eprocurement.Compras.Controllers
         public ActionResult Index()
         {
             UsuarioModel usuario = new UsuarioModel();
+            Session["User"] = null;
             ViewBag.Error = "";
             return View(usuario);
         }
@@ -63,6 +65,12 @@ namespace Eprocurement.Compras.Controllers
             }
         }
 
-
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult GetInoformacionUsuario()
+        {
+            UsuarioDTO usuario = null;
+            usuario = new ValidaSession().ObtenerUsuarioSession();
+            return Json(usuario, JsonRequestBehavior.AllowGet);
+        }
     }
 }

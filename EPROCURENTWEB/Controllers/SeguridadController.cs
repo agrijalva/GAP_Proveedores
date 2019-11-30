@@ -16,6 +16,7 @@ namespace EprocurementWeb.Controllers
         public ActionResult Index()
         {
             UsuarioModel usuario = new UsuarioModel();
+            Session["User"] = null;
             ViewBag.Error = "";
             return View(usuario);
         }

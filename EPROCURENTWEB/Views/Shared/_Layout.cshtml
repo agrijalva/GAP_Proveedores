@@ -33,12 +33,6 @@
             <div class="" style="flex: 0 0 33.333333%; max-width: 33.333333%;">
                 <table width="100%" class="panel-user-control">
                     <tr>
-                        @*<td style="border:none" valign="middle">
-                            <div class="g-user" id="userInfo">Usuario</div>
-                        </td>
-                        <td width="32px" style="border:none">
-                            <img class="padding-user" src="~/Content/Images/user-photo.png" width="25" />
-                        </td>*@
                         <td>
                             <div class="menu-user">
                                 <span style="font-weight:600; font-size:12px;" id="userInfo"></span> <img class="padding-user" src="~/Content/Images/user-photo.png" width="25" />
@@ -86,72 +80,12 @@
                         <li class="nav-item">
                             @*<a class="nav-link" href="OrdenCompra">Órden de compra<span class="sr-only"></span></a>*@
                             <a class="nav-link" href="@Url.Action("OrdenCompra", "Gestion")">Órden de compra</a>
-                        </li>
-                        @*<li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="Gestion/SolicitudFacturacion" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Solicitud de facturación
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="Gestion/SolicitudCotizacion" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Solicitud de cotización
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="Gestion/OrdenCompra" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Órden de compra
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </li>*@
-                        @*<li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Usuario Gestor
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </li>*@
+                        </li>                       
                     </ul>
                 </div>
             </nav>
         </div>
     </div>
-
-    @*<div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("Nombre de la aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
-                    </ul>
-                </div>
-            </div>
-        </div>*@
 
     <div class="col-sm-12">
         <div class="container">
