@@ -464,7 +464,7 @@ namespace EprocurementWeb.Controllers
                     bool respuestaDoc = business.GuardarDocumentos(cuenta.RFC, cuenta.CatalogoDocumentoList);
                     if (respuestaDoc)
                     {
-                        ProveedorAprobarRequestDTO requestAprobador = new ProveedorAprobarRequestDTO { EstatusProveedor = new HistoricoEstatusProveedorDTO { IdEstatusProveedor = 5, IdProveedor = idProveedor, IdUsuario = usuarioInfo.IdUsuario } };
+                        ProveedorAprobarRequestDTO requestAprobador = new ProveedorAprobarRequestDTO { EstatusProveedor = new HistoricoEstatusProveedorDTO { IdEstatusProveedor = 10, IdProveedor = idProveedor, IdUsuario = usuarioInfo.IdUsuario } };
                         var responseAprobar = business.SetProveedorEstatus(requestAprobador);
                         if (responseAprobar.Success)
                         {
