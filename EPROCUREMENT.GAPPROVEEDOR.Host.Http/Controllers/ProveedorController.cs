@@ -45,13 +45,13 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
             return proveedorCuenta;
         }
 
-        [HttpPost]
-        [Route("ProveedorCuentaAeropuertoList")]
-        public ProveedorCuentaResponseDTO GetProveedorCuentaAeropuertoList([FromBody]ProveedorCuentaRequestDTO request)
-        {
-            var proveedorCuentaAeropuerto = new HandlerProveedor().GetProveedorCuentaAeropuertoList(request);
-            return proveedorCuentaAeropuerto;
-        }
+        //[HttpPost]
+        //[Route("ProveedorCuentaAeropuertoList")]
+        //public ProveedorCuentaResponseDTO GetProveedorCuentaAeropuertoList([FromBody]ProveedorCuentaRequestDTO request)
+        //{
+        //    var proveedorCuentaAeropuerto = new HandlerProveedor().GetProveedorCuentaAeropuertoList(request);
+        //    return proveedorCuentaAeropuerto;
+        //}
 
         [HttpPost]
         [Route("GetProveedorDocumentoList")]

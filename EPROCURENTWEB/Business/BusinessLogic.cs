@@ -353,27 +353,27 @@ namespace EprocurementWeb.Business
             return response;
         }
 
-        public ProveedorCuentaResponseDTO GetProveedorCuentaAeropuertoList(ProveedorCuentaRequestDTO request)
-        {
-            ProveedorCuentaResponseDTO response = new ProveedorCuentaResponseDTO();
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
-                var json = JsonConvert.SerializeObject(request);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var responseTask = client.PostAsync("ProveedorCuentaAeropuertoList", content);
-                responseTask.Wait();
+        //public ProveedorCuentaResponseDTO GetProveedorCuentaAeropuertoList(ProveedorCuentaRequestDTO request)
+        //{
+        //    ProveedorCuentaResponseDTO response = new ProveedorCuentaResponseDTO();
+        //    using (var client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+        //        var json = JsonConvert.SerializeObject(request);
+        //        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        //        var responseTask = client.PostAsync("ProveedorCuentaAeropuertoList", content);
+        //        responseTask.Wait();
 
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsStringAsync();
-                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
-                    response = JSSerializer.Deserialize<ProveedorCuentaResponseDTO>(readTask.Result);
-                }
-            }
-            return response;
-        }
+        //        var result = responseTask.Result;
+        //        if (result.IsSuccessStatusCode)
+        //        {
+        //            var readTask = result.Content.ReadAsStringAsync();
+        //            JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+        //            response = JSSerializer.Deserialize<ProveedorCuentaResponseDTO>(readTask.Result);
+        //        }
+        //    }
+        //    return response;
+        //}
 
         //public ProveedorDocumentoResponseDTO GetProveedorDocumentoList(ProveedorDocumentoRequestDTO request)
         //{
@@ -594,6 +594,28 @@ namespace EprocurementWeb.Business
                     var readTask = result.Content.ReadAsStringAsync();
                     JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
                     response = JSSerializer.Deserialize<ProveedorDocumentoResponseDTO>(readTask.Result);
+                }
+            }
+            return response;
+        }
+
+        public InformacionFinancieraResponseDTO InsertarInformacionFinanciera(InformacionFinancieraRequestDTO informacionFinanciera)
+        {
+            InformacionFinancieraResponseDTO response = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+                var json = JsonConvert.SerializeObject(informacionFinanciera);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var responseTask = client.PostAsync("InsertarInformacionFinanciera", content);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+                    response = JSSerializer.Deserialize<InformacionFinancieraResponseDTO>(readTask.Result);
                 }
             }
             return response;

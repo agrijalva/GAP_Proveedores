@@ -28,3 +28,4 @@ C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPRO
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.csprojAssemblyReference.cache
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.dll
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.pdb
+C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.csprojAssemblyReference.cache
