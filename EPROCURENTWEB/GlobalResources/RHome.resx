@@ -229,7 +229,7 @@
     <value>Código Postal*</value>
   </data>
   <data name="DefaultSelect" xml:space="preserve">
-    <value>Seleccione una opción</value>
+    <value>Seleccionar</value>
   </data>
   <data name="City" xml:space="preserve">
     <value>Municipio</value>

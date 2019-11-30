@@ -64,16 +64,9 @@ namespace EprocurementWeb.Controllers
                 proveedor.IdTipoProveedor = 1;
                 proveedor.IdNacionalidad = 1;
                 proveedor.Direccion.DireccionValidada = true;
-                //proveedor.Direccion.IdPais = proveedor.i
                 CargarCatalogos();
-                ViewBag.GiroList = giroList; if (giroList != null)
-                {
-                    ViewBag.cantidadGiro = giroList.Count;
-                }
-                else
-                {
-                    ViewBag.cantidadGiro = 0;
-                }
+                ViewBag.GiroList = giroList;
+                ViewBag.cantidadGiro = giroList != null ? giroList.Count : 0;
                 ViewBag.ZonaHorariaList = zonaHorariaList;
                 ViewBag.NacionalidadList = nacionalidadList;
                 ViewBag.PaisList = paisList;
@@ -107,11 +100,22 @@ namespace EprocurementWeb.Controllers
                 if (ModelState.IsValid)
                 {
                     BusinessLogic businessLogic = new BusinessLogic();
+                    var validacionRFC = ValidacionCampos(new ProveedorFiltroRequestModel { Filtro = proveedor.RFC, TipoFiltro = Models.TipoFiltro.RFC });
+                    if (!validacionRFC)
+                    {
+                        ModelState.AddModelError("RFC", "Este RFC ya se encuentra registrado");
+                    }
+                    var validacionEmail = ValidacionCampos(new ProveedorFiltroRequestModel { Filtro = proveedor.Contacto.Email, TipoFiltro = Models.TipoFiltro.Email });
+                    if (!validacionEmail)
+                    {
+                        ModelState.AddModelError("Contacto.Email", "Este Email ya se encuentra registrado");
+                    }
+                    if (!validacionRFC || !validacionEmail) { return View(proveedor); }
+
                     ProveedorResponseModel response = businessLogic.PostProveedor(proveedor);
                     if (response.Success)
                     {
                         return Redirect("/Home/Index#success");
-                        //return RedirectToAction("Contact");
                     }
                     else
                     {
@@ -258,6 +262,20 @@ namespace EprocurementWeb.Controllers
                 }
             }
             return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+
+        public bool ValidacionCampos(ProveedorFiltroRequestModel request)
+        {
+            BusinessLogic businessLogic = new BusinessLogic();
+            var response = businessLogic.ObtenerProveedorFiltro(request);
+            if (response.Success)
+            {
+                if (response.Proveedor != null)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
