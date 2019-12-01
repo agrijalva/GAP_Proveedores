@@ -81,5 +81,23 @@
     color: #FF0000;
 }
 
+.micuenta .card-header1 {
+    background-color: white !important;
+    color: #6f5c99;
+    padding: 15px 0px 10px 20px;
 
+}
 
+.micuenta .card-border {
+    border-radius: 0px !important;
+}
+
+.micuenta .card-border,
+.micuenta .card-header1,
+.micuenta .card-body {
+    border: none !important;
+}
+
+.text-danger{
+    font-size:12px;
+}

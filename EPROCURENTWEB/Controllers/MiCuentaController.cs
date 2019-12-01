@@ -377,7 +377,6 @@ namespace EprocurementWeb.Controllers
             // Logica anterior
             BusinessLogic business = new BusinessLogic();
             int idProveedor = usuarioInfo.IdProveedor;
-            //int idProveedor = new ValidaSession().RecuperaIdProveedorSession();
             var aeropuertos = business.GetAeropuertosList();
             ViewBag.BancoList = business.GetBancoList();
             ViewBag.TipoCuentaList = business.GetTipoCuentaList();
@@ -396,7 +395,6 @@ namespace EprocurementWeb.Controllers
                 };
 
                 bool extensionesValidas = true;
-
                 for (int j = 0; j < cuenta.ProveedorDocumentoList.Count; j++)
                 {
                     var division = cuenta.ProveedorDocumentoList[j].NombreArchivo.Split('.');
@@ -461,13 +459,9 @@ namespace EprocurementWeb.Controllers
                     ProveedorDetalleRequestModel request = new ProveedorDetalleRequestModel();
                     var response = business.GetProveedorElemento(request).Proveedor;
                     cuenta.RFC = response.RFC;
-
-                    //ProveedorDocumentoRequestDTO requestPC = new ProveedorDocumentoRequestDTO { IdUsuario = Convert.ToUInt64(usuarioInfo.IdUsuario), ProveedorDocumentoList = provDoctos };
-                    //var responsePC = business.GuardarProveedorCuenta(requestPC);
-
                     informacionfinanciera.ProveedorDocumentoList = cuenta.ProveedorDocumentoList;
                     var responseInfo = business.InsertarInformacionFinanciera(informacionfinanciera);
-
+                
                     if (responseInfo.Success)
                     {
                         bool respuestaDoc = business.GuardarDocumentos(cuenta.RFC, cuenta.CatalogoDocumentoList);

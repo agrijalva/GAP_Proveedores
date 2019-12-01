@@ -36,5 +36,6 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Entities
         public bool Mexicana { get; set; }
         public bool Extranjera { get; set; }
         public int IdEstatus { get; set; }
+        public string TIN { get; set; }
     }
 }

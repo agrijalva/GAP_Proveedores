@@ -44,7 +44,8 @@
             </div>
         </div>
         <div class="row mt-5">
-            @if ((int)ViewBag.IdEstatus == 5)
+            @Html.Hidden("IdEstatus", (int)ViewBag.IdEstatus)
+            @if ((int)ViewBag.IdEstatus == 5 || (int)ViewBag.IdEstatus == 10)
             {
                 <div class="col-md-3">
                     @*<a href="@Url.Action("AprobarTesoreria", "Tesoreria")" class="btnStyle btnWhite">
@@ -62,13 +63,13 @@
                 </a>
 
             </div>
-            @if ((int)ViewBag.IdEstatus == 5)
+            @if ((int)ViewBag.IdEstatus == 5 || (int)ViewBag.IdEstatus == 10)
             {
                 <div class="col-md-3">
                     <input id="btnAprobar" class="btnStyle" type="button" value="Aceptar" />
                 </div>
             }
-            </div>
+        </div>
     </div>
 
 </div>
@@ -280,8 +281,12 @@
         });
 
         $("#btnAprobar").click(function () {
+            var idEstatus = $("#IdEstatus").val();
             obs = "";
             estatus = 8;
+            if (idEstatus == 10) {
+                estatus = 13;
+            }
 
             var jsonData = JSON.stringify({ idProveedor: idProveedor, observaciones: obs, estatus: estatus });
             Swal.fire({
@@ -322,8 +327,12 @@
         });
 
         $("#btnRechazar").click(function () {
+            var idEstatus = $("#IdEstatus").val();
              obs = $("#observaciones").val();
             estatus = 6;
+            if (idEstatus == 10) {
+                estatus = 14;
+            }
 
             var jsonData = JSON.stringify({ idProveedor: idProveedor, observaciones: obs, estatus: estatus });
             Swal.fire({

@@ -118,8 +118,8 @@
 
                                         <div class="col-md-3" id="inpgro-tin">
                                             <div class="form-group">
-                                                @Html.LabelFor(model => model.Direccion.TIN, new { id = "lblTIN", @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.Direccion.TIN, new { @class = "form-control col-md-12" })
+                                                @Html.LabelFor(model => model.TIN, new { id = "lblTIN", @class = "label-formulario" })
+                                                @Html.TextBoxFor(model => model.TIN, new { @class = "form-control col-md-12" })
                                             </div>
                                         </div>
 
@@ -396,7 +396,7 @@
 
         </div>
 
-        <div class="row">
+        <div class="row mt-5">
             <div class="col-sm-6">&nbsp;</div>
             <div class="col-sm-3">
                 <button class="btnStyle btnWhite" type="submit">Cancelar</button>
@@ -415,13 +415,13 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header bg-purple">
-                    <h4 class="modal-title">Términos y condiciones</h4>
+                    <h5 class="modal-title">Términos y condiciones</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
                 <!-- Modal body -->
-                <div class="modal-body">
-                    <embed src="~/Content/PDF/PruebaTerminos.pdf" frameborder="0" width="100%" height="400px">
+                <div class="modal-body1">
+                    <embed src="~/Content/PDF/DocTerminos.pdf" frameborder="0" width="100%" height="400px">
                 </div>
 
                 <!-- Modal footer -->
@@ -442,13 +442,13 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header bg-purple">
-                    <h4 class="modal-title">Aviso de privacidad</h4>
+                    <h5 class="modal-title">Aviso de privacidad</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
                 <!-- Modal body -->
-                <div class="modal-body">
-                    <embed src="~/Content/PDF/PruebaAvisos.pdf" frameborder="0" width="100%" height="400px">
+                <div class="modal-body1">
+                    <embed src="~/Content/PDF/DocAviso.pdf" frameborder="0" width="100%" height="400px">
                 </div>
 
                 <!-- Modal footer -->
@@ -538,56 +538,7 @@
                 showConfirmButton: true,
                 timer: 3000
             })
-
-            //setTimeout(function(){  window.location.href = url; }, 1500);
-
-
-            //location.hash = '#';
         }
-
-        //$("#PaisProveedor").change(function () {
-        //    var dID = $('#PaisProveedor option:selected').val();
-        //    $.getJSON("/Home/GetEstados", { idPais: dID },
-        //        function (data) {
-        //            var select = $("#EstadoProveedor");
-        //            var selectMunicipio = $("#MunicipioProveedor");
-        //            select.empty();
-        //            selectMunicipio.empty();
-        //            select.append($('<option/>', {
-        //                value: 0,
-        //                text: "..."
-        //            }));
-        //            selectMunicipio.append($('<option/>', {
-        //                value: 0,
-        //                text: "..."
-        //            }));
-        //            $.each(data, function (index, itemData) {
-        //                select.append($('<option/>', {
-        //                    value: itemData.IdEstado,
-        //                    text: itemData.Nombre
-        //                }));
-        //            });
-        //        });
-        //});
-
-        //$("#EstadoProveedor").change(function () {
-        //    var dID = $('#EstadoProveedor option:selected').val();
-        //    $.getJSON("/Home/GetMunicipios", { idEstado: dID },
-        //        function (data) {
-        //            var select = $("#MunicipioProveedor");
-        //            select.empty();
-        //            select.append($('<option/>', {
-        //                value: 0,
-        //                text: "..."
-        //            }));
-        //            $.each(data, function (index, itemData) {
-        //                select.append($('<option/>', {
-        //                    value: itemData.IdMunicipio,
-        //                    text: itemData.Nombre
-        //                }));
-        //            });
-        //        });
-        //});
 
         $("#checkall").change(function () {
             var chall = $('#checkall').prop('checked');
@@ -622,13 +573,6 @@
             $("#inpgro-tin").show();
         }
 
-        @*var idPais = $('#PaisProveedor option:selected').val();
-        if (idPais == 1) {
-            var idEstado = $('#EstadoProveedor option:selected').val();
-            if (idEstado > 0) {
-                obtenerMunicipio(idEstado, '@ViewBag.idMunicipio');
-            }
-        }*@
 
         $("#Direccion_CodigoPostal").on("change", function () {
             var codigoPostal = this.value;
@@ -800,9 +744,6 @@
 
     });
 
-
-
-
     //Función para validar un RFC
 // Devuelve el RFC sin espacios ni guiones si es correcto
 // Devuelve false si es inválido
@@ -882,4 +823,8 @@ function validarInput(input) {
     $('#rfc_input').on('input', function () {
         validarInput(this);
     });
+
+     var verifyCallback = function(response) {
+        alert(response);
+      };
 </script>

@@ -88,15 +88,18 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            @if (Model.EsPrincipal)
-                                            {
-                                                @Html.CheckBoxFor(model => model.EsPrincipal, new { @class = "form-control col-md-12", @disabled = "disabled" })
-                                            }
-                                            else
-                                            {
-                                                @Html.CheckBoxFor(model => model.EsPrincipal, new { @class = "form-control col-md-12" })
-                                            }
-                                            @Html.LabelFor(model => model.ContactoPrincipal, new { @class = "label-formulario" })
+                                            <table>
+                                                <tr>
+                                                    <td><br /></td>
+                                                </tr>
+                                                <tr>
+                                                    
+                                                    <td>
+                                                        @Html.CheckBoxFor(model => model.EsPrincipal, new { @class = "form-control col-md-12" })
+                                                    </td>
+                                                    <td>@Html.LabelFor(model => model.ContactoPrincipal, new { @class = "label-formulario" })</td>
+                                                </tr>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
