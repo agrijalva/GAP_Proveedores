@@ -171,74 +171,108 @@ namespace EprocurementWeb.Controllers
             {
                 var cuenta = (ProveedorInformacionFinanciera)JsonConvert.DeserializeObject(cuentaJson, typeof(ProveedorInformacionFinanciera));
 
-                if (cuenta.ProveedorCuentaListRegistro.Count > 0)
+                for(int i = 0; i < cuenta.ProveedorCuentaListRegistro.Count; i++)
                 {
-                    foreach (var registro in cuenta.ProveedorCuentaListRegistro)
-                    {
-                        registro.IdProveedor = idProveedor;
-                        cuenta.ProveedorCuentaList = new List<ProveedorCuentaDTO>();
-                        cuenta.ProveedorCuentaList.Add(registro);
-                        ProveedorCuentaRequestDTO requestg = new ProveedorCuentaRequestDTO { IdUsuario = Convert.ToUInt64(usuarioInfo.IdUsuario), ProveedorCuentaList = cuenta.ProveedorCuentaList };
-                        var responseg = business.GuardarProveedorCuenta(requestg);
-                    }
+                    cuenta.ProveedorCuentaListRegistro[i].IdProveedor = idProveedor;
                 }
 
                 int contador = Request.Files.Count;
-
-                for (int j = 0; j < cuenta.ProveedorDocumentoList.Count; j++)
-                {
-                    var division = cuenta.ProveedorDocumentoList[j].NombreArchivo.Split('.');
-                    var extension = division.Last();
-                    string nombreArchivo = idProveedor + "-" + cuenta.ProveedorDocumentoList[j].IdCatalogoDocumento + '.' + extension;
-
-                    cuenta.ProveedorDocumentoList[j] = new ProveedorDocumentoDTO
-                    {
-                        IdCatalogoDocumento = cuenta.ProveedorDocumentoList[j].IdCatalogoDocumento,
-                        IdProveedor = idProveedor,
-                        DescripcionDocumento = "NA",
-                        DocumentoAutorizado = false,
-                        NombreArchivo = nombreArchivo
-                    };
-                }
-
                 cuenta.CatalogoDocumentoList = new List<CatalogoDocumentoDTO>();
 
-                for (int i = 0; i < Request.Files.Count; i++)
+                if (cuenta.ProveedorDocumentoList != null)
                 {
-                    HttpPostedFileBase file = Request.Files[i];
-                    string idCatalogoDocumento = Request.Files.GetKey(i);
-                    var division = file.FileName.Split('.');
-                    var extension = division.Last();
-                    string nombreArchivo = idProveedor + "-" + idCatalogoDocumento + '.' + extension;
-
                     for (int j = 0; j < cuenta.ProveedorDocumentoList.Count; j++)
                     {
-                        if (cuenta.ProveedorDocumentoList[j].IdCatalogoDocumento == Convert.ToInt32(idCatalogoDocumento))
+                        var division = cuenta.ProveedorDocumentoList[j].NombreArchivo.Split('.');
+                        var extension = division.Last();
+                        string nombreArchivo = idProveedor + "-" + cuenta.ProveedorDocumentoList[j].IdCatalogoDocumento + '.' + extension;
+
+                        cuenta.ProveedorDocumentoList[j] = new ProveedorDocumentoDTO
                         {
-                            cuenta.ProveedorDocumentoList[j] = new ProveedorDocumentoDTO
-                            {
-                                IdCatalogoDocumento = Convert.ToInt32(idCatalogoDocumento),
-                                IdProveedor = idProveedor,
-                                DescripcionDocumento = "NA",
-                                DocumentoAutorizado = false,
-                                NombreArchivo = nombreArchivo
-                            };
-                        }
+                            IdCatalogoDocumento = cuenta.ProveedorDocumentoList[j].IdCatalogoDocumento,
+                            IdProveedor = idProveedor,
+                            DescripcionDocumento = "NA",
+                            DocumentoAutorizado = false,
+                            NombreArchivo = nombreArchivo
+                        };
                     }
 
-                    cuenta.CatalogoDocumentoList.Add(new CatalogoDocumentoDTO
+                    for (int i = 0; i < Request.Files.Count; i++)
                     {
-                        IdCatalogoDocumento = Convert.ToInt32(idCatalogoDocumento),
-                        NombreDocumento = nombreArchivo,
-                        File = file
-                    });
+                        HttpPostedFileBase file = Request.Files[i];
+                        string idCatalogoDocumento = Request.Files.GetKey(i);
+                        var division = file.FileName.Split('.');
+                        var extension = division.Last();
+                        string nombreArchivo = idProveedor + "-" + idCatalogoDocumento + '.' + extension;
+
+
+                        for (int j = 0; j < cuenta.ProveedorDocumentoList.Count; j++)
+                        {
+                            if (cuenta.ProveedorDocumentoList[j].IdCatalogoDocumento == Convert.ToInt32(idCatalogoDocumento))
+                            {
+                                cuenta.ProveedorDocumentoList[j] = new ProveedorDocumentoDTO
+                                {
+                                    IdCatalogoDocumento = Convert.ToInt32(idCatalogoDocumento),
+                                    IdProveedor = idProveedor,
+                                    DescripcionDocumento = "NA",
+                                    DocumentoAutorizado = false,
+                                    NombreArchivo = nombreArchivo
+                                };
+                            }
+                        }
+
+                        cuenta.CatalogoDocumentoList.Add(new CatalogoDocumentoDTO
+                        {
+                            IdCatalogoDocumento = Convert.ToInt32(idCatalogoDocumento),
+                            NombreDocumento = nombreArchivo,
+                            File = file
+                        });
+                    }
+                }
+                else
+                {
+                    cuenta.ProveedorDocumentoList = new List<ProveedorDocumentoDTO>();
+                    for (int i = 0; i < Request.Files.Count; i++)
+                    {
+                        HttpPostedFileBase file = Request.Files[i];
+                        string idCatalogoDocumento = Request.Files.GetKey(i);
+                        var division = file.FileName.Split('.');
+                        var extension = division.Last();
+                        string nombreArchivo = idProveedor + "-" + idCatalogoDocumento + '.' + extension;
+
+                        cuenta.ProveedorDocumentoList.Add(new ProveedorDocumentoDTO
+                        {
+                            IdCatalogoDocumento = Convert.ToInt32(idCatalogoDocumento),
+                            IdProveedor = idProveedor,
+                            DescripcionDocumento = "NA",
+                            DocumentoAutorizado = false,
+                            NombreArchivo = nombreArchivo
+                        });
+
+                        cuenta.CatalogoDocumentoList.Add(new CatalogoDocumentoDTO
+                        {
+                            IdCatalogoDocumento = Convert.ToInt32(idCatalogoDocumento),
+                            NombreDocumento = nombreArchivo,
+                            File = file
+                        });
+                    }
                 }
 
                 ProveedorDetalleRequestModel request = new ProveedorDetalleRequestModel();
                 var response = business.GetProveedorElemento(request).Proveedor;
                 cuenta.RFC = response.RFC;
 
-                ProveedorDocumentoRequestDTO requestPC = new ProveedorDocumentoRequestDTO { IdUsuario = Convert.ToUInt64(usuarioInfo.IdUsuario), ProveedorDocumentoList = cuenta.ProveedorDocumentoList };
+                ProveedorCuentaRequestDTO requestg = new ProveedorCuentaRequestDTO {
+                    IdUsuario = Convert.ToUInt64(usuarioInfo.IdUsuario),
+                    ProveedorCuentaList = cuenta.ProveedorCuentaListRegistro
+                };
+                var responseg = business.GuardarProveedorCuenta(requestg);
+
+                ProveedorDocumentoRequestDTO requestPC = new ProveedorDocumentoRequestDTO {
+                    IdUsuario = Convert.ToUInt64(usuarioInfo.IdUsuario),
+                    ProveedorDocumentoList = cuenta.ProveedorDocumentoList
+                };
+
                 var responsePC = business.GuardarProveedorCuenta(requestPC);
                 if (responsePC.Success)
                 {
