@@ -948,6 +948,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                     proveedor.Mexicana = Convert.ToInt32(reader["TipoEmpresa"]) == 1;
                     proveedor.Extranjera = Convert.ToInt32(reader["TipoEmpresa"]) != 1;
                     proveedor.IdEstatus = Convert.ToInt32(reader["IdEstatus"]);
+                    proveedor.TIN = reader["TIN"].ToString();
                 }
             }
             return proveedor;
@@ -1094,7 +1095,8 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             cmdProveedor.Parameters.Add(new SqlParameter("@AXFechaRegistro", proveedor.AXFechaRegistro));
             cmdProveedor.Parameters.Add(new SqlParameter("@IdNacionalidad", proveedor.IdNacionalidad));
             cmdProveedor.Parameters.Add(new SqlParameter("@TipoEmpresa", proveedor.Mexicana ? 1 : 2 ));
-            
+            cmdProveedor.Parameters.Add(new SqlParameter("@TIN", SqlDbType.NVarChar, 30)).Value = proveedor.TIN;
+
             cmdProveedor.Parameters.Add(new SqlParameter("Result", SqlDbType.Int) { Direction = ParameterDirection.ReturnValue });
             cmdProveedor.ExecuteNonQuery();
             var idProveedor = Convert.ToInt32(cmdProveedor.Parameters["Result"].Value);

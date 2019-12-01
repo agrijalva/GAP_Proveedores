@@ -66,5 +66,7 @@ namespace EprocurementWeb.Models
         [Display(ResourceType = typeof(RHome), Name = "CompanyTypeInternational")]
         public bool Extranjera { get; set; }
         public int IdEstatus { get; set; }
+        [Display(ResourceType = typeof(RHome), Name = "TIN")]
+        public string TIN { get; set; }
     }
 }

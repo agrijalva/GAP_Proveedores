@@ -377,7 +377,6 @@ namespace EprocurementWeb.Controllers
             // Logica anterior
             BusinessLogic business = new BusinessLogic();
             int idProveedor = usuarioInfo.IdProveedor;
-            //int idProveedor = new ValidaSession().RecuperaIdProveedorSession();
             var aeropuertos = business.GetAeropuertosList();
             ViewBag.BancoList = business.GetBancoList();
             ViewBag.TipoCuentaList = business.GetTipoCuentaList();
@@ -394,18 +393,6 @@ namespace EprocurementWeb.Controllers
                     ProveedorCuentaList = cuenta.ProveedorCuentaListRegistro,
                     ProveedorDocumentoList = new List<ProveedorDocumentoDTO>()
                 };
-
-                //if (cuenta.ProveedorCuentaListRegistro.Count > 0)
-                //{
-                //    foreach (var registro in cuenta.ProveedorCuentaListRegistro)
-                //    {
-                //        registro.IdProveedor = idProveedor;
-                //        cuenta.ProveedorCuentaList = new List<ProveedorCuentaDTO>();
-                //        cuenta.ProveedorCuentaList.Add(registro);
-                //        ProveedorCuentaRequestDTO requestg = new ProveedorCuentaRequestDTO { IdUsuario = Convert.ToUInt64(usuarioInfo.IdUsuario), ProveedorCuentaList = cuenta.ProveedorCuentaList };
-                //        var responseg = business.GuardarProveedorCuenta(requestg);
-                //    }
-                //}
 
                 for (int j = 0; j < cuenta.ProveedorDocumentoList.Count; j++)
                 {
@@ -450,15 +437,6 @@ namespace EprocurementWeb.Controllers
                         }
                     }
 
-                    //provDoctos.Add(new ProveedorDocumentoDTO
-                    //{
-                    //    IdCatalogoDocumento = Convert.ToInt32(idCatalogoDocumento),
-                    //    IdProveedor = idProveedor,
-                    //    DescripcionDocumento = "NA",
-                    //    DocumentoAutorizado = false,
-                    //    NombreArchivo = nombreArchivo
-                    //});
-
                     cuenta.CatalogoDocumentoList.Add(new CatalogoDocumentoDTO
                     {
                         IdCatalogoDocumento = Convert.ToInt32(idCatalogoDocumento),
@@ -470,10 +448,6 @@ namespace EprocurementWeb.Controllers
                 ProveedorDetalleRequestModel request = new ProveedorDetalleRequestModel();
                 var response = business.GetProveedorElemento(request).Proveedor;
                 cuenta.RFC = response.RFC;
-
-                //ProveedorDocumentoRequestDTO requestPC = new ProveedorDocumentoRequestDTO { IdUsuario = Convert.ToUInt64(usuarioInfo.IdUsuario), ProveedorDocumentoList = provDoctos };
-                //var responsePC = business.GuardarProveedorCuenta(requestPC);
-
                 informacionfinanciera.ProveedorDocumentoList = cuenta.ProveedorDocumentoList;
                 var responseInfo = business.InsertarInformacionFinanciera(informacionfinanciera);
                 
