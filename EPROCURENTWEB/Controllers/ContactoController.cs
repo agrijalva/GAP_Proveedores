@@ -34,8 +34,11 @@ namespace EprocurementWeb.Controllers
                 {
                     foreach(var contacto in response.ContactoList)
                     {
+                        contacto.EsPrincipal = contacto.ContactoPrincipal == 1;
                         contacto.Tipo = contacto.ContactoPrincipal == 1 ? "Principal" : "Opcional";
                     }
+                    var totalPrincipal = response.ContactoList.Count(x => x.EsPrincipal);
+                    ViewBag.totalPrincipal = totalPrincipal;
                     contactoList = response.ContactoList;
                 }
 
@@ -220,6 +223,36 @@ namespace EprocurementWeb.Controllers
                 return null;
             }
             return Json(false, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult ActualizaPrincipal(int idContacto, bool principal)
+        {
+            var respuesta = false;
+            try
+            {
+
+                var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
+                BusinessLogic businessLogic = new BusinessLogic();
+                ContactoRequestDTO request = new ContactoRequestDTO();
+                request.IdProveedor = usuarioInfo.IdProveedor;
+
+                var response = businessLogic.GetContactoProveedorList(request);
+                if (response.Success)
+                {
+                    var contacto = response.ContactoList.First(x => x.IdContacto == idContacto);
+                    contacto.EsPrincipal = principal;
+                    contacto.ContactoPrincipal = principal ? 1 : 0;
+                    request.Contacto = contacto;
+                    var responseUpdate = businessLogic.UpdateContacto(request);
+                    respuesta = response.Success;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+            return Json(respuesta, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -22,7 +22,8 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Entities
         public int IdIdioma { get; set; }
         public string Tipo { get; set; }
         public int ContactoPrincipal { get; set; }
+        public bool EsPrincipal { get; set; }
 
-        
+
     }
 }
