@@ -328,10 +328,10 @@ namespace Eprocurement.Compras.Controllers
                 ProveedorInformacionFinanciera informacionFinanciera = new ProveedorInformacionFinanciera();
                 informacionFinanciera = new BusinessLogic().GetProveedorInfoFinanciera(idProveedor);
 
-                ProveedorCuentaResponseDTO proveedorCuentaResponse = new BusinessLogic().GetProveedorCuentaAeropuertoList(new ProveedorCuentaRequestDTO
-                {
-                    ProveedorCuentaList = informacionFinanciera.ProveedorCuentaList
-                });
+                //ProveedorCuentaResponseDTO proveedorCuentaResponse = new BusinessLogic().GetProveedorCuentaAeropuertoList(new ProveedorCuentaRequestDTO
+                //{
+                //    ProveedorCuentaList = informacionFinanciera.ProveedorCuentaList
+                //});
 
                 //informacionFinanciera.ProveedorCuentaListRegistro = new List<ProveedorCuentaDTO>();
                 //informacionFinanciera.ProveedorCuentaListRegistro.Add(new ProveedorCuentaDTO {
@@ -341,7 +341,7 @@ namespace Eprocurement.Compras.Controllers
                 //    TipoCuenta = "Débito"
                 //});
 
-                return Json(proveedorCuentaResponse.ProveedorCuentaList, JsonRequestBehavior.AllowGet);
+                return Json(informacionFinanciera, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
