@@ -65,5 +65,6 @@ namespace EprocurementWeb.Models
         public bool Mexicana { get; set; }
         [Display(ResourceType = typeof(RHome), Name = "CompanyTypeInternational")]
         public bool Extranjera { get; set; }
+        public int IdEstatus { get; set; }
     }
 }

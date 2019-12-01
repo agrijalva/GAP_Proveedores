@@ -673,7 +673,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             response.Success = true;
                         }
                     }
-                    else if (request.EstatusProveedor.IdEstatusProveedor == 11 || request.EstatusProveedor.IdEstatusProveedor == 12)
+                    else if (request.EstatusProveedor.IdEstatusProveedor == 11 || request.EstatusProveedor.IdEstatusProveedor == 12 || request.EstatusProveedor.IdEstatusProveedor == 13 || request.EstatusProveedor.IdEstatusProveedor == 14)
                     {
                         var estatusOriginal = request.EstatusProveedor.IdEstatusProveedor;
                         request.EstatusProveedor.IdEstatusProveedor = 8;
@@ -688,7 +688,6 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             if (ExecuteComandModificacionAprobadaRechazada(cmdAprobada, request.EstatusProveedor.IdProveedor) > 0)
                             {
                                 response.Success = true;
-                                //request.EstatusProveedor.IdEstatusProveedor = 11;
                             }
                         }
                         if (request.EstatusProveedor.IdEstatusProveedor == 12)
@@ -697,7 +696,22 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             if (ExecuteComandModificacionAprobadaRechazada(cmdAprobada, request.EstatusProveedor.IdProveedor) > 0)
                             {
                                 response.Success = true;
-                                //request.EstatusProveedor.IdEstatusProveedor = 12;
+                            }
+                        }
+                        if (request.EstatusProveedor.IdEstatusProveedor == 13)
+                        {
+                            var cmdAprobada = new SqlCommand("[dbo].[usp_EPROCUREMENT_InfoFinancieraModificacionAprobada]", conexion);
+                            if (ExecuteComandModificacionAprobadaRechazada(cmdAprobada, request.EstatusProveedor.IdProveedor) > 0)
+                            {
+                                response.Success = true;
+                            }
+                        }
+                        if (request.EstatusProveedor.IdEstatusProveedor == 14)
+                        {
+                            var cmdAprobada = new SqlCommand("[dbo].[usp_EPROCUREMENT_InfoFinancieraModificacionRechazada]", conexion);
+                            if (ExecuteComandModificacionAprobadaRechazada(cmdAprobada, request.EstatusProveedor.IdProveedor) > 0)
+                            {
+                                response.Success = true;
                             }
                         }
                         //request.EstatusProveedor.IdEstatusProveedor = 8;

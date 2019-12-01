@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -560,6 +561,14 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             {
                 mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["EmailOrigen"], titulo);
                 mailMessage.Subject = entidad.Subject;
+
+                string imagen = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, App_GlobalResources.ResourceConstants.EmailLayout, "logo-gap-color.png");
+                AlternateView htmlView = AlternateView.CreateAlternateViewFromString(entidad.Message, null, MediaTypeNames.Text.Html);
+                LinkedResource imageResource = new LinkedResource(imagen, "image/png");
+                imageResource.ContentId = "logo";
+                htmlView.LinkedResources.Add(imageResource);
+                mailMessage.AlternateViews.Add(htmlView);
+
                 mailMessage.Body = entidad.Message;
                 mailMessage.IsBodyHtml = entidad.Html;
 

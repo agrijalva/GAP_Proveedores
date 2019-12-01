@@ -66,11 +66,6 @@ namespace EprocurementWeb.Controllers
                     IdProveedor = usuarioInfo.IdProveedor
                 };
                 var proveedorCuentaResponse = business.GetProveedorCuentaList(proveedorCuentaRequest);
-                //ProveedorCuentaRequestDTO proveedorCuentaAeropuertoRequest = new ProveedorCuentaRequestDTO
-                //{
-                //    ProveedorCuentaList = proveedorCuentaResponse.ProveedorCuentaList
-                //};
-                //var proveedorCuentaAeropuertoResponse = business.GetProveedorCuentaAeropuertoList(proveedorCuentaAeropuertoRequest);
                 ViewBag.ProveedorCuentaList = proveedorCuentaResponse.ProveedorCuentaList;
 
                 ProveedorDocumentoRequestDTO proveedorDocumentoRequest = new ProveedorDocumentoRequestDTO
@@ -99,7 +94,7 @@ namespace EprocurementWeb.Controllers
                 miCuenta.CatalogoDocumentoList = proveedorDocumento;
 
                 var proveedor = ObtenerProveedor();
-                //ViewBag.idProveedor = proveedor.IdProveedor;
+                ViewBag.IdEstatus = proveedor.IdEstatus;
                 ViewBag.EstadoList = estadoList;
                 ViewBag.MunicipioList = municipioList;
                 ViewBag.idEstado = proveedor.Direccion.IdEstado;
@@ -328,7 +323,8 @@ namespace EprocurementWeb.Controllers
                     RazonSocial = response.RazonSocial,
                     RFC = response.RFC,
                     Mexicana = response.Mexicana,
-                    Extranjera = response.Extranjera
+                    Extranjera = response.Extranjera,
+                    IdEstatus = response.IdEstatus
                 };
             } 
             else
