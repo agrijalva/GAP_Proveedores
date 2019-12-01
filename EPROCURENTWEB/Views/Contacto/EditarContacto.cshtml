@@ -93,6 +93,7 @@
                                                     <td><br /></td>
                                                 </tr>
                                                 <tr>
+                                                    @Html.HiddenFor(model => model.EsPrincipal)
                                                     <td>@Html.CheckBoxFor(model => model.EsPrincipal, new { @class = "form-control col-md-12", @disabled = "disabled" })</td>
                                                     <td>@Html.LabelFor(model => model.ContactoPrincipal, new { @class = "label-formulario" })</td>
                                                 </tr>
