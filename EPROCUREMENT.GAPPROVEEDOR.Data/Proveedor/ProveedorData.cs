@@ -207,6 +207,13 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
                     using (TransactionScope transactionScope = new TransactionScope())
                     {
+                        var cmdDeleteCuenta = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorCuenta_DelByIdProveedor]", conexion);
+                        cmdDeleteCuenta.CommandType = CommandType.StoredProcedure;
+                        cmdDeleteCuenta.Parameters.Add(new SqlParameter("@IdProveedor", request.IdProveedor));
+                        cmdDeleteCuenta.Parameters.Add(new SqlParameter("Result", SqlDbType.BigInt) { Direction = ParameterDirection.ReturnValue });
+                        cmdDeleteCuenta.ExecuteNonQuery();
+                        var resultDelete = Convert.ToInt32(cmdDeleteCuenta.Parameters["Result"].Value);
+
                         foreach (var proveedorCuenta in request.ProveedorCuentaList)
                         {
                             var cmdCuenta = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_ProveedorCuenta_INS, conexion);
