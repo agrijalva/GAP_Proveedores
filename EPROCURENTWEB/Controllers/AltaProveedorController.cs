@@ -34,7 +34,7 @@ namespace EprocurementWeb.Controllers
             Session["IdProveedor"] = idProveedor;
             BusinessLogic business = new BusinessLogic();
 
-            if (usuarioInfo.IdEstatus == 5)
+            if (usuarioInfo.IdEstatus == 5 || usuarioInfo.IdEstatus == 7)
             {
                 ProveedorCuentaRequestDTO proveedorCuentaRequest = new ProveedorCuentaRequestDTO
                 {
@@ -392,6 +392,71 @@ namespace EprocurementWeb.Controllers
             string fileName = nombre;
 
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
+        public JsonResult GetDocumentosList(int idProveedor)
+        {
+            try
+            {
+                ProveedorInformacionFinanciera informacionFinanciera = new ProveedorInformacionFinanciera();
+                informacionFinanciera = new BusinessLogic().GetProveedorInfoFinanciera(idProveedor);
+                //informacionFinanciera.CatalogoDocumentoList = new List<CatalogoDocumentoDTO>();
+                //informacionFinanciera.CatalogoDocumentoList.Add(new CatalogoDocumentoDTO
+                //{
+                //    NombreDocumento = "PDF",
+                //    RutaDocumento = "localhost"
+                //});
+
+                ProveedorDocumentoRequestDTO proveedorDocumentoRequest = new ProveedorDocumentoRequestDTO
+                {
+                    IdProveedor = idProveedor
+                };
+
+                var proveedorDocumentoResponse = new BusinessLogic().GetProveedorDocumentoList(proveedorDocumentoRequest);
+
+                return Json(proveedorDocumentoResponse.ProveedorDocumentoList, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+        }
+
+        public JsonResult GetDetalleCuentaList(int idProveedor)
+        {
+            try
+            {
+                ProveedorCuentaRequestDTO proveedorCuentaRequest = new ProveedorCuentaRequestDTO
+                {
+                    IdProveedor = idProveedor
+                };
+                var proveedorCuentaResponse = new BusinessLogic().GetProveedorCuentaList(proveedorCuentaRequest);
+                ViewBag.ProveedorCuentaList = proveedorCuentaResponse.ProveedorCuentaList;
+
+                //ProveedorInformacionFinanciera informacionFinanciera = new ProveedorInformacionFinanciera();
+                //informacionFinanciera = new BusinessLogic().GetProveedorInfoFinanciera(idProveedor);
+
+                //ProveedorCuentaResponseDTO proveedorCuentaResponse = new BusinessLogic().GetProveedorCuentaAeropuertoList(new ProveedorCuentaRequestDTO
+                //{
+                //    ProveedorCuentaList = informacionFinanciera.ProveedorCuentaList
+                //});
+
+                //informacionFinanciera.ProveedorCuentaListRegistro = new List<ProveedorCuentaDTO>();
+                //informacionFinanciera.ProveedorCuentaListRegistro.Add(new ProveedorCuentaDTO {
+                //    CLABE = "123456789012345678",
+                //    Cuenta = "1234567890",
+                //    NombreBanco = "BBVA",
+                //    TipoCuenta = "Débito"
+                //});
+
+                return Json(proveedorCuentaResponse.ProveedorCuentaList, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
         }
 
     }
