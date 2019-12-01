@@ -185,6 +185,22 @@ namespace EprocurementWeb.Controllers
 
                 int contador = Request.Files.Count;
 
+                for (int j = 0; j < cuenta.ProveedorDocumentoList.Count; j++)
+                {
+                    var division = cuenta.ProveedorDocumentoList[j].NombreArchivo.Split('.');
+                    var extension = division.Last();
+                    string nombreArchivo = idProveedor + "-" + cuenta.ProveedorDocumentoList[j].IdCatalogoDocumento + '.' + extension;
+
+                    cuenta.ProveedorDocumentoList[j] = new ProveedorDocumentoDTO
+                    {
+                        IdCatalogoDocumento = cuenta.ProveedorDocumentoList[j].IdCatalogoDocumento,
+                        IdProveedor = idProveedor,
+                        DescripcionDocumento = "NA",
+                        DocumentoAutorizado = false,
+                        NombreArchivo = nombreArchivo
+                    };
+                }
+
                 cuenta.CatalogoDocumentoList = new List<CatalogoDocumentoDTO>();
 
                 for (int i = 0; i < Request.Files.Count; i++)
