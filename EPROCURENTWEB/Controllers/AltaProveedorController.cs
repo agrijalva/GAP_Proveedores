@@ -195,14 +195,20 @@ namespace EprocurementWeb.Controllers
                     var extension = division.Last();
                     string nombreArchivo = idProveedor + "-" + idCatalogoDocumento + '.' + extension;
 
-                    provDoctos.Add(new ProveedorDocumentoDTO
+                    for (int j = 0; j < cuenta.ProveedorDocumentoList.Count; j++)
                     {
-                        IdCatalogoDocumento = Convert.ToInt32(idCatalogoDocumento),
-                        IdProveedor = idProveedor,
-                        DescripcionDocumento = "NA",
-                        DocumentoAutorizado = false,
-                        NombreArchivo = nombreArchivo
-                    });
+                        if (cuenta.ProveedorDocumentoList[j].IdCatalogoDocumento == Convert.ToInt32(idCatalogoDocumento))
+                        {
+                            cuenta.ProveedorDocumentoList[j] = new ProveedorDocumentoDTO
+                            {
+                                IdCatalogoDocumento = Convert.ToInt32(idCatalogoDocumento),
+                                IdProveedor = idProveedor,
+                                DescripcionDocumento = "NA",
+                                DocumentoAutorizado = false,
+                                NombreArchivo = nombreArchivo
+                            };
+                        }
+                    }
 
                     cuenta.CatalogoDocumentoList.Add(new CatalogoDocumentoDTO
                     {
@@ -216,7 +222,7 @@ namespace EprocurementWeb.Controllers
                 var response = business.GetProveedorElemento(request).Proveedor;
                 cuenta.RFC = response.RFC;
 
-                ProveedorDocumentoRequestDTO requestPC = new ProveedorDocumentoRequestDTO { IdUsuario = Convert.ToUInt64(usuarioInfo.IdUsuario), ProveedorDocumentoList = provDoctos };
+                ProveedorDocumentoRequestDTO requestPC = new ProveedorDocumentoRequestDTO { IdUsuario = Convert.ToUInt64(usuarioInfo.IdUsuario), ProveedorDocumentoList = cuenta.ProveedorDocumentoList };
                 var responsePC = business.GuardarProveedorCuenta(requestPC);
                 if (responsePC.Success)
                 {

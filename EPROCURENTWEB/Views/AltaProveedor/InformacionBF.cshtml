@@ -391,7 +391,8 @@
 
     <script type="text/javascript">
         var contador = 0;
-    var proveedorCuentaList = [];
+        var proveedorCuentaList = [];
+        var proveedorDocumentoList = [];
     var fn_CargarDoctos = function (idProveedor) {
         var jsonData = JSON.stringify({ idProveedor: idProveedor });
          $.ajax({
@@ -403,6 +404,7 @@
              success: function (data) {
                  console.log('actualizado');
                  console.log(data);
+                 proveedorDocumentoList = data;
                  for (i = 0; i < data.length; i++) {
 
 
@@ -803,7 +805,7 @@
                     }
                 }
 
-                formData.append('cuenta', JSON.stringify({ ProveedorCuentaListRegistro: proveedorCuentaList }));
+                    formData.append('cuenta', JSON.stringify({ ProveedorCuentaListRegistro: proveedorCuentaList, ProveedorDocumentoList: proveedorDocumentoList }));
 
                 $.ajax({
                     url: "/AltaProveedor/Upload",
