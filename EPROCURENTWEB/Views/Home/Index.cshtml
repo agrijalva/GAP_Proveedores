@@ -156,7 +156,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Direccion.IdPais, new { @class = "label-formulario" })
-                                                @Html.DropDownListFor(model => model.Direccion.IdPais, new SelectList(ViewBag.PaisList, "IdPais", "Nombre"), "Seleccione", new { @class = "form-control col-md-12", @id = "PaisProveedor" })
+                                                @Html.DropDownListFor(model => model.Direccion.IdPais, new SelectList(ViewBag.PaisList, "IdPais", "Nombre"), "Seleccionar", new { @class = "form-control col-md-12", @id = "PaisProveedor" })
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -171,7 +171,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.IdZonaHoraria, new { @class = "label-formulario" })
-                                                @Html.DropDownListFor(model => model.IdZonaHoraria, new SelectList(ViewBag.ZonaHorariaList, "IdZonaHoraria", "Nombre"), "Seleccione", new { @class = "form-control col-md-12" })
+                                                @Html.DropDownListFor(model => model.IdZonaHoraria, new SelectList(ViewBag.ZonaHorariaList, "IdZonaHoraria", "Nombre"), "Seleccionar", new { @class = "form-control col-md-12" })
                                                 @Html.ValidationMessageFor(model => model.IdZonaHoraria, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
@@ -193,25 +193,6 @@
                                                 @Html.TextBoxFor(model => model.PaginaWeb, new { placeholder = "Ej. www.mipaginaweb.com", @class = "form-control col-md-12" })
                                             </div>
                                         </div>
-                                        @*<div class="col-md-6">
-                                                <div class="form-group">
-                                                    @Html.Label("tipoProveedor", @RHome.ProvType, new { @class = "label-formulario" })
-                                                    @Html.DropDownListFor(model => model.IdTipoProveedor, new SelectList(ViewBag.TipoProveedorList, "IdTipoProveedor", "Tipo"), "...", new { @class = "form-control col-md-12" })
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    @Html.Label("axNumeroProveedor", @RHome.AXProviderNum, new { @class = "label-formulario" })
-                                                    @Html.TextBoxFor(model => model.AXNumeroProveedor, new { @class = "form-control col-md-12" })
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    @Html.Label("nacionalidad", @RHome.Nacionality, new { @class = "label-formulario" })
-                                                    @Html.DropDownListFor(model => model.IdNacionalidad, new SelectList(ViewBag.NacionalidadList, "IdNacionalidad", "Nombre"), "...", new { @class = "form-control col-md-12" })
-                                                </div>
-                                            </div>*@
-
                                     </div>
                                 </div>
                             </div>
@@ -253,7 +234,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Contacto.IdNacionalidad, new { @class = "label-formulario" })
-                                                @Html.DropDownListFor(model => model.Contacto.IdNacionalidad, new SelectList(ViewBag.NacionalidadList, "IdNacionalidad", "Nombre"), "...", new { @class = "form-control col-md-12" })
+                                                @Html.DropDownListFor(model => model.Contacto.IdNacionalidad, new SelectList(ViewBag.NacionalidadList, "IdNacionalidad", "Nombre"), "Seleccionar", new { @class = "form-control col-md-12" })
                                                 @Html.ValidationMessageFor(model => model.Contacto.IdNacionalidad, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
@@ -285,23 +266,16 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Contacto.IdPais, new { @class = "label-formulario" })
-                                                @Html.DropDownListFor(model => model.Contacto.IdPais, new SelectList(ViewBag.PaisList, "IdPais", "Nombre"), "...", new { @class = "form-control col-md-12" })
+                                                @Html.DropDownListFor(model => model.Contacto.IdPais, new SelectList(ViewBag.PaisList, "IdPais", "Nombre"), "Seleccionar", new { @class = "form-control col-md-12" })
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Contacto.IdZonaHoraria, new { @class = "label-formulario" })
-                                                @Html.DropDownListFor(model => model.Contacto.IdZonaHoraria, new SelectList(ViewBag.ZonaHorariaList, "IdZonaHoraria", "Nombre"), "...", new { @class = "form-control col-md-12" })
+                                                @Html.DropDownListFor(model => model.Contacto.IdZonaHoraria, new SelectList(ViewBag.ZonaHorariaList, "IdZonaHoraria", "Nombre"), "Seleccionar", new { @class = "form-control col-md-12" })
                                                 @Html.ValidationMessageFor(model => model.Contacto.IdZonaHoraria, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
-                                        @*<div class="col-md-3">
-                                                <div class="form-group">
-                                                    @Html.LabelFor(model => model.Contacto.IdIdioma, new { @class = "label-formulario" })
-                                                    @Html.DropDownListFor(model => model.Contacto.IdIdioma, new SelectList(ViewBag.IdiomaList, "IdIdioma", "NombreIdioma"), "...", new { @class = "form-control col-md-12" })
-                                                    @Html.ValidationMessageFor(model => model.Contacto.IdIdioma, "", new { @class = "label-formulario field-validation-error" })
-                                                </div>
-                                            </div>*@
                                     </div>
                                 </div>
                             </div>
@@ -571,49 +545,49 @@
             //location.hash = '#';
         }
 
-        $("#PaisProveedor").change(function () {
-            var dID = $('#PaisProveedor option:selected').val();
-            $.getJSON("/Home/GetEstados", { idPais: dID },
-                function (data) {
-                    var select = $("#EstadoProveedor");
-                    var selectMunicipio = $("#MunicipioProveedor");
-                    select.empty();
-                    selectMunicipio.empty();
-                    select.append($('<option/>', {
-                        value: 0,
-                        text: "..."
-                    }));
-                    selectMunicipio.append($('<option/>', {
-                        value: 0,
-                        text: "..."
-                    }));
-                    $.each(data, function (index, itemData) {
-                        select.append($('<option/>', {
-                            value: itemData.IdEstado,
-                            text: itemData.Nombre
-                        }));
-                    });
-                });
-        });
+        //$("#PaisProveedor").change(function () {
+        //    var dID = $('#PaisProveedor option:selected').val();
+        //    $.getJSON("/Home/GetEstados", { idPais: dID },
+        //        function (data) {
+        //            var select = $("#EstadoProveedor");
+        //            var selectMunicipio = $("#MunicipioProveedor");
+        //            select.empty();
+        //            selectMunicipio.empty();
+        //            select.append($('<option/>', {
+        //                value: 0,
+        //                text: "..."
+        //            }));
+        //            selectMunicipio.append($('<option/>', {
+        //                value: 0,
+        //                text: "..."
+        //            }));
+        //            $.each(data, function (index, itemData) {
+        //                select.append($('<option/>', {
+        //                    value: itemData.IdEstado,
+        //                    text: itemData.Nombre
+        //                }));
+        //            });
+        //        });
+        //});
 
-        $("#EstadoProveedor").change(function () {
-            var dID = $('#EstadoProveedor option:selected').val();
-            $.getJSON("/Home/GetMunicipios", { idEstado: dID },
-                function (data) {
-                    var select = $("#MunicipioProveedor");
-                    select.empty();
-                    select.append($('<option/>', {
-                        value: 0,
-                        text: "..."
-                    }));
-                    $.each(data, function (index, itemData) {
-                        select.append($('<option/>', {
-                            value: itemData.IdMunicipio,
-                            text: itemData.Nombre
-                        }));
-                    });
-                });
-        });
+        //$("#EstadoProveedor").change(function () {
+        //    var dID = $('#EstadoProveedor option:selected').val();
+        //    $.getJSON("/Home/GetMunicipios", { idEstado: dID },
+        //        function (data) {
+        //            var select = $("#MunicipioProveedor");
+        //            select.empty();
+        //            select.append($('<option/>', {
+        //                value: 0,
+        //                text: "..."
+        //            }));
+        //            $.each(data, function (index, itemData) {
+        //                select.append($('<option/>', {
+        //                    value: itemData.IdMunicipio,
+        //                    text: itemData.Nombre
+        //                }));
+        //            });
+        //        });
+        //});
 
         $("#checkall").change(function () {
             var chall = $('#checkall').prop('checked');
@@ -648,13 +622,13 @@
             $("#inpgro-tin").show();
         }
 
-        var idPais = $('#PaisProveedor option:selected').val();
+        @*var idPais = $('#PaisProveedor option:selected').val();
         if (idPais == 1) {
             var idEstado = $('#EstadoProveedor option:selected').val();
             if (idEstado > 0) {
                 obtenerMunicipio(idEstado, '@ViewBag.idMunicipio');
             }
-        }
+        }*@
 
         $("#Direccion_CodigoPostal").on("change", function () {
             var codigoPostal = this.value;
@@ -664,19 +638,19 @@
             }
         });
 
-        $("#RFC").on("change", function () {
-            var value = $(this).val();
-            if (value.length == 12 || value.length == 13) {
-                ValidaRFC(value);
-            }
-        });
+        //$("#RFC").on("change", function () {
+        //    var value = $(this).val();
+        //    if (value.length == 12 || value.length == 13) {
+        //        ValidaRFC(value);
+        //    }
+        //});
 
-        $("#email_input").on("change", function () {
-            var value = $(this).val();
-            if (value.length > 6) {
-                ValidaEmail(value);
-            }
-        });
+        //$("#email_input").on("change", function () {
+        //    var value = $(this).val();
+        //    if (value.length > 6) {
+        //        ValidaEmail(value);
+        //    }
+        //});
         
         $("#Mexicana").on("change", function () {
             if ($(this).is(':checked')) {
@@ -774,7 +748,7 @@
                     selectColonia.empty();
                     selectColonia.append($('<option/>', {
                         value: 0,
-                        text: "..."
+                        text: "Seleccionar"
                     }));
                         $("#ColoniaProveedor").removeClass("control-display-none");
                         $.each(data.colonias, function (index, itemData) {

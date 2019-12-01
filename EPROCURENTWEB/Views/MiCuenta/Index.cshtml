@@ -117,12 +117,18 @@
                 </div>
                 <div class="col100" style="font-size:14px;">
                     <table id="Table"></table>
+
+                    <div class="row mt-4">
+                        <div class="col-sm-6">&nbsp;</div>
+                        <div class="col-sm-3">&nbsp;</div>
+                        <div class="col-sm-3"><input type="button" class="btnStyle btnCargarCuentas" value="Enviar" /></div>
+                    </div>
                 </div>
 
             </div>
             <div role="tabpanel" class="tab-pane fade in active hide" id="tbDatosFinancieros">
                 <div class="col100" style="font-size:14px;">
-                    
+
 
                     <div id="PanelDocumentos" style="font-size:12px;">
                         @*<div class="col100" style="font-size:12px;">
@@ -150,6 +156,11 @@
                         }
                 </div>
             </div>*@
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-sm-6">&nbsp;</div>
+                        <div class="col-sm-3">&nbsp;</div>
+                        <div class="col-sm-3"><input type="button" class="btnStyle btnCargarCuentas" value="Enviar" /></div>
                     </div>
                 </div>
                 
@@ -183,6 +194,7 @@
 </div>
 
 <script type="text/javascript">
+    var contador = 0;
     var proveedorCuentaList = [];
     var fn_CargarDoctos = function (idProveedor) {
         var jsonData = JSON.stringify({ idProveedor: idProveedor });
@@ -201,7 +213,7 @@
                          '<div class="col-sm-6 mt-2" style="border:solid 1px #c6c7cb; padding:10px;">'+
                             '<div class="row">'+
                          '<div class="col-sm-10"> <label style="font-weight:600;">' + data[i].DescripcionDocumento + '</label>' +
-                         '<input class="text-box single-line" accept="application/pdf" type="file" name="documento-' + data[i].IdProveedorDocumento + '" id="documento-' + data[i].IdProveedorDocumento + '" />'
+                         '<input class="text-box single-line" accept="application/pdf" type="file" name="documento-' + data[i].IdProveedorDocumento + '" id="documento-' + data[i].IdCatalogoDocumento + '" />'
                          + ' </div>' +
                                 '<div class="col-sm-2">'+
                                     '<a href="' + data[i].NombreArchivo + '" download="archivo">'+
@@ -242,15 +254,16 @@
                  $("#Table").DataTable().destroy();
 
                  $("#Table").append('<tbody>');
-                 for (i = 0; i < data.length; i++) {
-
+                 contador = proveedorCuentaList.length;
+                 for (i = 0; i < proveedorCuentaList.length; i++) {
+                     proveedorCuentaList[i].Id = i;
                      $("#Table").append('<tr>' +
                          //'<td style="display:none"><b>' + data[i].TipoCuenta + '</b></td>' +
-                         '<td style="display:none">' + data[i].IdProveedorCuenta + '</td>' +
-                         '<td><b>' + data[i].Cuenta + '</b></td>' +
-                         '<td>' + data[i].NombreBanco + '</td>' +
-                         '<td>' + data[i].CLABE + '</td>' +
-                         '<td>' + data[i].TipoCuenta + '</td>' +
+                         '<td style="display:none">' + proveedorCuentaList[i].Id + '</td>' +
+                         '<td><b>' + proveedorCuentaList[i].Cuenta + '</b></td>' +
+                         '<td>' + proveedorCuentaList[i].NombreBanco + '</td>' +
+                         '<td>' + proveedorCuentaList[i].CLABE + '</td>' +
+                         '<td>' + proveedorCuentaList[i].TipoCuenta + '</td>' +
                          '<td><a class="verAeropuertos" href="#" >Ver</a></td><td><a class="eliminar" href="#" >Eliminar</a></td>' + '</tr>'
                      );
                  }
@@ -268,8 +281,6 @@
 
     $(document).ready(function () {
 
-        let proveedorCuenta = [];
-
         var url = '@Url.Action("AprobarTesoreria", "Tesoreria")';
         var idProveedor = $("#IdProveedor").val();
         console.log(idProveedor);
@@ -279,11 +290,15 @@
 
         var table = $('#Table').DataTable();
 
-        $('#Table tbody').on( 'click', '.verAeropuertos', function () {
+        $('#Table tbody').on('click', '.verAeropuertos', function () {
             var data = table.row($(this).closest('tr')).data()[0];
             console.log(data);
             console.log(proveedorCuentaList);
-            let seleccionado = proveedorCuentaList.filter(cuenta => cuenta.IdProveedorCuenta == data);
+            console.log(proveedorCuentaList[0].Id);
+            if (data == proveedorCuentaList[0].Id) {
+                console.log('son iguales');
+            }
+            let seleccionado = proveedorCuentaList.filter(cuenta => cuenta.Id == data);
             console.log('elemento seleccionado');
             console.log(seleccionado);
             console.log(seleccionado[0].AeropuertoList);
@@ -299,10 +314,21 @@
 
         $('#Table tbody').on( 'click', '.eliminar', function () {
             var data = table.row($(this).closest('tr')).data()[0];
+
+            table.row($(this).closest('tr')).remove().draw();
+
             console.log(data);
+            proveedorCuentaList = $.grep(proveedorCuentaList, function (e) {
+                return e.Id != data;
+            });
             console.log(proveedorCuentaList);
+            validaCheckbox();
             console.log('eliminar');
         });
+
+        console.log('proveedorCuentaList.length');
+        console.log(proveedorCuentaList.length)
+        validaCheckbox();
 
         if ('@ViewBag.Respuesta' != "") {
             Swal.fire({
@@ -379,7 +405,6 @@
         }
 
         $("#btnAgregarCuenta").click(function () {
-            console.log(proveedorCuenta);
 
             let Cuenta = $("#cuenta").val();
             let IdBanco = $("#idBanco").val();
@@ -420,17 +445,10 @@
                 });
 
                 if (AeropuertoList && AeropuertoList.length) {
-                    proveedorCuenta.push({ Cuenta, IdBanco, NombreBanco, CLABE, IdTipoCuenta, TipoCuenta, AeropuertoList });
 
-//                    AeropuertoList: (3) [{…}, {…}, {…}]
-//CLABE: "6565566556"
-//Cuenta: "100000003"
-//IdBanco: 0
-//IdProveedor: 0
-//IdProveedorCuenta: 112
-//IdTipoCuenta: 0
-//NombreBanco: "CITIBANAMEX"
-//TipoCuenta: "Crédito"
+                    proveedorCuentaList.push({ Id: ++contador, Cuenta, IdBanco, NombreBanco, CLABE, IdTipoCuenta, TipoCuenta, AeropuertoList });
+
+                    console.log(proveedorCuentaList);
 
                     var table = $('#Table').DataTable();
                     table.destroy();
@@ -449,10 +467,9 @@
 
                  $("#Table").append('<tbody>');
                  for (i = 0; i < proveedorCuentaList.length; i++) {
-
                      $("#Table").append('<tr>' +
                          //'<td style="display:none"><b>' + data[i].TipoCuenta + '</b></td>' +
-                         '<td style="display:none">' + proveedorCuentaList[i].IdProveedorCuenta + '</td>' +
+                         '<td style="display:none">' + proveedorCuentaList[i].Id + '</td>' +
                          '<td><b>' + proveedorCuentaList[i].Cuenta + '</b></td>' +
                          '<td>' + proveedorCuentaList[i].NombreBanco + '</td>' +
                          '<td>' + proveedorCuentaList[i].CLABE + '</td>' +
@@ -466,7 +483,48 @@
                         "paging": false,
                          "bScrollInfinite": true,
                          "bScrollCollapse": true
-                     });
+                    });
+
+                    table = $('#Table').DataTable();
+
+                    $('#Table tbody').on('click', '.verAeropuertos', function () {
+                        console.log('entra en el click');
+                        var data = table.row($(this).closest('tr')).data()[0];
+                        console.log(data);
+                        console.log(proveedorCuentaList);
+                        console.log(proveedorCuentaList[0].Id);
+                        if (data == proveedorCuentaList[0].Id) {
+                            console.log('son iguales');
+                        }
+                        let seleccionado = proveedorCuentaList.filter(cuenta => cuenta.Id == data);
+                        console.log('elemento seleccionado');
+                        console.log(seleccionado);
+                        console.log(seleccionado[0].AeropuertoList);
+
+                        let aeropuertos = '';
+                        for (let i = 0; i < seleccionado[0].AeropuertoList.length; i++) {
+                            aeropuertos += (i + 1) + ' ' + seleccionado[0].AeropuertoList[i].Nombre + '<br />';
+                        }
+                        $('#aeropuertosContainer').html(aeropuertos);
+
+                        $('#modalAeropuertos').modal('show');
+                    });
+
+                    $('#Table tbody').on('click', '.eliminar', function () {
+                        var data = table.row($(this).closest('tr')).data()[0];
+
+                        table.row($(this).closest('tr')).remove().draw();
+
+                        console.log(data);
+                        proveedorCuentaList = $.grep(proveedorCuentaList, function (e) {
+                            return e.Id != data;
+                        });
+                        console.log(proveedorCuentaList);
+                        validaCheckbox();
+                        console.log('eliminar');
+                    });
+
+                    validaCheckbox();
 
                     console.log(Cuenta);
                     console.log(IdBanco);
@@ -482,54 +540,74 @@
             }
         });
 
-        $('#btnCargarCuentas').click(() => {
+        function validaCheckbox() {
+            if (proveedorCuentaList.length > 0) {
+                $(".checkAirport:checkbox").each(function () {
+                    let id = $(this).attr('id');
+                    let existe = false;
+                    for (let i = 0; i < proveedorCuentaList.length; i++) {
+                        if (proveedorCuentaList[i].AeropuertoList && proveedorCuentaList[i].AeropuertoList.findIndex(x => x.Id == id) > -1) {
+                            existe = true;
+                        }
+                    }
+                    if (existe) {
+                        $(this).prop("checked", true);
+                        $(this).attr("disabled", true);
+                    } else {
+                        $(this).prop("checked", false);
+                        $(this).attr("disabled", false);
+                    }
+                });
+            } else {
+                $(".checkAirport:checkbox").each(function () {
+                    $(this).prop("checked", false);
+                    $(this).attr("disabled", false);
+                });
+            }
+        }
 
-            if (proveedorCuenta && proveedorCuenta.length) {
+        $('.btnCargarCuentas').click(() => {
+
+            if (proveedorCuentaList && proveedorCuentaList.length) {
 
                 var formData = new FormData();
-
-                var documentosInvalidos = false;
 
                 var docs = @Html.Raw(Json.Encode(Model.CatalogoDocumentoList));
                 console.log(docs.length);
                 console.log(docs);
                 for (var j = 0; j < docs.length; j++) {
                     console.log(docs[j].IdCatalogoDocumento);
-                    var fileInput = document.getElementById("CatalogoDocumentoList_" + j + "__File");
-                    if (docs[j].EsRequerido && fileInput.files.length < 1) {
-                        documentosInvalidos = true;
-                        $('#errorDocument' + docs[j].IdCatalogoDocumento).show();
-                    }
-                    for (i = 0; i < fileInput.files.length; i++) {
-                        formData.append(docs[j].IdCatalogoDocumento, fileInput.files[i]);
+                    console.log("documento-" + docs[j].IdCatalogoDocumento);
+                    var fileInput = document.getElementById("documento-" + docs[j].IdCatalogoDocumento);
+                    if (fileInput) {
+                        console.log('documento existente')
+                        for (i = 0; i < fileInput.files.length; i++) {
+                            console.log('dentro del for');
+                            formData.append(docs[j].IdCatalogoDocumento, fileInput.files[i]);
+                        }
                     }
                 }
 
-                if (documentosInvalidos) {
-                    //alert('Falta cargar los documentos.');
-                } else {
-                    formData.append('cuenta', JSON.stringify({ ProveedorCuentaListRegistro: proveedorCuenta }));
+                formData.append('cuenta', JSON.stringify({ ProveedorCuentaListRegistro: proveedorCuentaList }));
 
-                    $.ajax({
-                        url: "/AltaProveedor/Upload",
-                        type: "POST",
-                        data: formData,
-                        contentType: false,
-                        processData: false,
-                        cache: false,
-                        async: false,
-                        success: function (result) {
-                            console.log(result);
-                            window.location.href = '/AltaProveedor/InformacionBF/';
-                        },
-                    });
-                }
+                $.ajax({
+                    url: "/MiCuenta/Upload",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    async: false,
+                    success: function (result) {
+                        console.log(result);
+                        //window.location.href = '/AltaProveedor/InformacionBF/';
+                    },
+                });
+                
             } else {
                 alert('Es necesario agregar las cuentas.')
             }
         });
-
-        
     });
 
 

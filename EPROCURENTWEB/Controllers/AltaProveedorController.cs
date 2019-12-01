@@ -41,12 +41,12 @@ namespace EprocurementWeb.Controllers
                     IdProveedor = idProveedor
                 };
                 var proveedorCuentaResponse = business.GetProveedorCuentaList(proveedorCuentaRequest);
-                ProveedorCuentaRequestDTO proveedorCuentaAeropuertoRequest = new ProveedorCuentaRequestDTO
-                {
-                    ProveedorCuentaList = proveedorCuentaResponse.ProveedorCuentaList
-                };
-                var proveedorCuentaAeropuertoResponse = business.GetProveedorCuentaAeropuertoList(proveedorCuentaAeropuertoRequest);
-                ViewBag.ProveedorCuentaList = proveedorCuentaAeropuertoResponse.ProveedorCuentaList;
+                //ProveedorCuentaRequestDTO proveedorCuentaAeropuertoRequest = new ProveedorCuentaRequestDTO
+                //{
+                //    ProveedorCuentaList = proveedorCuentaResponse.ProveedorCuentaList
+                //};
+                //var proveedorCuentaAeropuertoResponse = business.GetProveedorCuentaAeropuertoList(proveedorCuentaAeropuertoRequest);
+                ViewBag.ProveedorCuentaList = proveedorCuentaResponse.ProveedorCuentaList;
 
                 ProveedorDocumentoRequestDTO proveedorDocumentoRequest = new ProveedorDocumentoRequestDTO
                 {
