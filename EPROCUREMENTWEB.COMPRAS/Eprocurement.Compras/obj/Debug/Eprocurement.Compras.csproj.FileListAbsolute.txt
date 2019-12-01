@@ -537,6 +537,17 @@ C:\Users\Usuario\Documents\GitHub\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocu
 C:\Users\Usuario\Documents\GitHub\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\obj\Debug\Eprocurement.Compras.csproj.CopyComplete
 C:\Users\Usuario\Documents\GitHub\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\obj\Debug\Eprocurement.Compras.dll
 C:\Users\Usuario\Documents\GitHub\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\obj\Debug\Eprocurement.Compras.pdb
+C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.dll
+C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Security.dll
+C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Owin.dll
+C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.xml
+C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Security.xml
+C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\obj\Debug\Eprocurement.Compras.csprojAssemblyReference.cache
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Eprocurement.Compras.dll.config
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Eprocurement.Compras.dll
@@ -632,14 +643,3 @@ C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENTWEB.COM
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\obj\Debug\Eprocurement.Compras.csproj.CopyComplete
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\obj\Debug\Eprocurement.Compras.dll
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\obj\Debug\Eprocurement.Compras.pdb
-C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.dll
-C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Host.SystemWeb.dll
-C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Security.Cookies.dll
-C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Security.dll
-C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Security.OAuth.dll
-C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Owin.dll
-C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.xml
-C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Host.SystemWeb.xml
-C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Security.xml
-C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Security.Cookies.xml
-C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENTWEB.COMPRAS\Eprocurement.Compras\bin\Microsoft.Owin.Security.OAuth.xml

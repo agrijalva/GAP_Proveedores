@@ -28,7 +28,7 @@ namespace Eprocurement.Compras.Service
         {
             string val = "";
 
-            using (PrincipalContext principalContext = new PrincipalContext(ContextType.Domain, GapActiveDirectory))
+            using ( PrincipalContext principalContext = new PrincipalContext(ContextType.Domain, GapActiveDirectory))
             {
                 //bool isValid = principalContext.ValidateCredentials(username, password);
                 bool isValid = true;
