@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="row mt-5">
-            @if ((int)ViewBag.IdEstatus == 5)
+            @if ((int)ViewBag.IdEstatus == 5 || (int)ViewBag.IdEstatus == 10)
             {
                 <div class="col-md-3">
                     @*<a href="@Url.Action("AprobarTesoreria", "Tesoreria")" class="btnStyle btnWhite">
@@ -62,7 +62,7 @@
                 </a>
 
             </div>
-            @if ((int)ViewBag.IdEstatus == 5)
+            @if ((int)ViewBag.IdEstatus == 5 || (int)ViewBag.IdEstatus == 10)
             {
                 <div class="col-md-3">
                     <input id="btnAprobar" class="btnStyle" type="button" value="Aceptar" />

@@ -59,7 +59,7 @@ namespace Eprocurement.Compras.Controllers
                 {
                     if ((idEstatus == null || idEstatus == 0))
                     {
-                        string[] estatus = { "5", "6", "7", "8" };
+                        string[] estatus = { "5", "6", "7", "8", "10" };
                         var response = businessLogic.GetProveedorEstatusList(request);
                         var proveedorEstatus = (from t in response.ProveedorList
                                                 where estatus.Contains(t.IdEstatus.ToString())
@@ -78,7 +78,7 @@ namespace Eprocurement.Compras.Controllers
                 }
                 else
                 {
-                    string[] estatus = { "1", "2", "3", "4", "5", "6", "7", "8" };
+                    string[] estatus = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
                     var response = businessLogic.GetProveedorEstatusList(request);
                     var proveedorEstatus = (from t in response.ProveedorList
                                             where estatus.Contains(t.IdEstatus.ToString())
