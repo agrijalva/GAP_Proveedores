@@ -190,7 +190,7 @@
                          '<div class="col-sm-6 mt-2" style="border:solid 1px #c6c7cb; padding:10px;">'+
                             '<div class="row">'+
                          '<div class="col-sm-10"> <label style="font-weight:600;">' + data[i].DescripcionDocumento + '</label>' +
-                         '<input class="text-box single-line" accept="application/pdf" type="file" name="documento-' + data[i].IdProveedorDocumento + '" id="documento-' + data[i].IdCatalogoDocumento + '" />'
+                         '<input class="text-box single-line" accept="' + data[i].TiposAceptados + '" type="file" name="documento-' + data[i].IdProveedorDocumento + '" id="documento-' + data[i].IdCatalogoDocumento + '" />'
                          + ' </div>' +
                                 '<div class="col-sm-2">'+
                                     '<a href="' + data[i].NombreArchivo + '" download="archivo">'+
@@ -586,9 +586,16 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             })
+                        } else {
+                            Swal.fire({
+                                position: 'middle',
+                                icon: 'error',
+                                title: 'Información invalida, por favor vuelva a intentarlo.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
                         }
-
-                        //window.location.href = '/AltaProveedor/InformacionBF/';
+                        
                     },
                 });
                 

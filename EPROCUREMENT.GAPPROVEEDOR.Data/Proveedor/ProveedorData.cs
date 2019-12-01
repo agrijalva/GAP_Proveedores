@@ -295,6 +295,8 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             proveedorDocumento.DescripcionDocumento = reader["NombreDocumento"].ToString();
                             proveedorDocumento.NombreArchivo = reader["NombreArchivo"].ToString();
                             proveedorDocumento.TipoArchivo = proveedorDocumento.NombreArchivo.Split('.').Last();
+                            proveedorDocumento.TiposAceptados = reader["FormatoNombre"].ToString();
+                            proveedorDocumento.Extensiones = reader["FormatoDescripcion"].ToString();
                             response.ProveedorDocumentoList.Add(proveedorDocumento);
                         }
                     }

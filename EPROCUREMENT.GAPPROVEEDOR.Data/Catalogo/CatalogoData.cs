@@ -560,6 +560,8 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             catalogoDocumento.IdFormatoArchivo = Convert.ToInt32(reader["IdFormatoArchivo"]);
                             catalogoDocumento.EsRequerido = Convert.ToBoolean(reader["EsRequerido"]);
                             catalogoDocumento.IdFormulario = Convert.ToInt32(reader["IdFormulario"]);
+                            catalogoDocumento.TiposAceptados = reader["FormatoNombre"].ToString();
+                            catalogoDocumento.Extensiones = reader["FormatoDescripcion"].ToString();
                             response.CatalogoDocumentoList.Add(catalogoDocumento);
                         }
                     }
