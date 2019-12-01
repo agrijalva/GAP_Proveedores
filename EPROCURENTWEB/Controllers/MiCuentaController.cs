@@ -411,6 +411,22 @@ namespace EprocurementWeb.Controllers
                 //    }
                 //}
 
+                for (int j = 0; j < cuenta.ProveedorDocumentoList.Count; j++)
+                {
+                    var division = cuenta.ProveedorDocumentoList[j].NombreArchivo.Split('.');
+                    var extension = division.Last();
+                    string nombreArchivo = idProveedor + "-" + cuenta.ProveedorDocumentoList[j].IdCatalogoDocumento + '.' + extension;
+
+                    cuenta.ProveedorDocumentoList[j] = new ProveedorDocumentoDTO
+                    {
+                        IdCatalogoDocumento = Convert.ToInt32(cuenta.ProveedorDocumentoList[j].IdCatalogoDocumento),
+                        IdProveedor = idProveedor,
+                        DescripcionDocumento = "NA",
+                        DocumentoAutorizado = false,
+                        NombreArchivo = nombreArchivo
+                    };
+                }
+
                 int contador = Request.Files.Count;
 
                 cuenta.CatalogoDocumentoList = new List<CatalogoDocumentoDTO>();
