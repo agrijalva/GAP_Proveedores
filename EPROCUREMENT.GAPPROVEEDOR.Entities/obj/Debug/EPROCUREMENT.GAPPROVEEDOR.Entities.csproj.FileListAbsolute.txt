@@ -23,9 +23,8 @@ C:\Users\Usuario\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Enti
 C:\Users\Usuario\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.csprojAssemblyReference.cache
 C:\Users\Usuario\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.dll
 C:\Users\Usuario\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.pdb
+C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.csprojAssemblyReference.cache
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.dll
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.pdb
-C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.csprojAssemblyReference.cache
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.dll
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.pdb
-C:\Users\Angel\Documents\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Entities\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.csprojAssemblyReference.cache
