@@ -172,16 +172,16 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Proveedor
                             new EmailData().EnviarEmailAprobadoTesoreria(proveedorUsuario);
                             break;
                         case 11:
-                            new EmailData().EnviarEmailAprobadoTesoreria(proveedorUsuario);
+                            new EmailData().EnviarEmailModificacionAprobadaCompras(proveedorUsuario);
                             break;
                         case 12:
-                            new EmailData().EnviarEmailAprobadoTesoreria(proveedorUsuario);
+                            new EmailData().EnviarEmailModificacionRechazadaCompras(proveedorUsuario);
                             break;
                         case 13:
-                            new EmailData().EnviarEmailAprobadoTesoreria(proveedorUsuario);
+                            new EmailData().EnviarEmailModificacionAprobadaTesoreria(proveedorUsuario);
                             break;
                         case 14:
-                            new EmailData().EnviarEmailAprobadoTesoreria(proveedorUsuario);
+                            new EmailData().EnviarEmailModificacionRechazadaTesoreria(proveedorUsuario);
                             break;
                         default:
                             break;
@@ -280,6 +280,15 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Proveedor
             if (!response.Success)
             {
                 response.ErrorList = new List<ErrorDTO> { new ErrorDTO { Codigo = "", Mensaje = string.Format("No fue posible recuperar datos disponibles o no se encontro alguna solicitud en proceso") } };
+            }
+            else
+            {
+                var proveedorUsuario = proveedorData.GetProvedorDetallePorId(request.IdProveedor);
+                if (proveedorUsuario != null)
+                {
+                    var emailData = new EmailData();
+                    new EmailData().EnviarEmailProveedorModificacion(proveedorUsuario);
+                }
             }
             return response;
         }

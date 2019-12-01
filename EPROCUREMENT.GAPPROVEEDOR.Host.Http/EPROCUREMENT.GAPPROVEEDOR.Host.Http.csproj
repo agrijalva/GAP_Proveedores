@@ -80,6 +80,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="EmailLayout\logo-gap-color.png" />
     <Content Include="EmailLayout\ModificacionProveedor.htm" />
     <Content Include="EmailLayout\ModificacionAceptada.htm" />
     <Content Include="EmailLayout\NuevoProveedorCompras.htm" />

@@ -207,6 +207,13 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
                     using (TransactionScope transactionScope = new TransactionScope())
                     {
+                        var cmdDeleteCuenta = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorCuenta_DelByIdProveedor]", conexion);
+                        cmdDeleteCuenta.CommandType = CommandType.StoredProcedure;
+                        cmdDeleteCuenta.Parameters.Add(new SqlParameter("@IdProveedor", request.ProveedorCuentaList.First().IdProveedor));
+                        cmdDeleteCuenta.Parameters.Add(new SqlParameter("Result", SqlDbType.BigInt) { Direction = ParameterDirection.ReturnValue });
+                        cmdDeleteCuenta.ExecuteNonQuery();
+                        var resultDelete = Convert.ToInt32(cmdDeleteCuenta.Parameters["Result"].Value);
+
                         foreach (var proveedorCuenta in request.ProveedorCuentaList)
                         {
                             var cmdCuenta = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_ProveedorCuenta_INS, conexion);
@@ -318,6 +325,13 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
                     using (TransactionScope transactionScope = new TransactionScope())
                     {
+                        var cmdDeleteDocto = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorDocumento_DELByIdProveedor]", conexion);
+                        cmdDeleteDocto.CommandType = CommandType.StoredProcedure;
+                        cmdDeleteDocto.Parameters.Add(new SqlParameter("@IdProveedor", request.ProveedorDocumentoList.First().IdProveedor));
+                        cmdDeleteDocto.Parameters.Add(new SqlParameter("Result", SqlDbType.BigInt) { Direction = ParameterDirection.ReturnValue });
+                        cmdDeleteDocto.ExecuteNonQuery();
+                        var resultDelete = Convert.ToInt32(cmdDeleteDocto.Parameters["Result"].Value);
+
                         foreach (var proveedorDocumento in request.ProveedorDocumentoList)
                         {
                             var cmdDocto = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_ProveedorDocumento_INS, conexion);
@@ -659,7 +673,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             response.Success = true;
                         }
                     }
-                    else if (request.EstatusProveedor.IdEstatusProveedor == 11 || request.EstatusProveedor.IdEstatusProveedor == 12)
+                    else if (request.EstatusProveedor.IdEstatusProveedor == 11 || request.EstatusProveedor.IdEstatusProveedor == 12 || request.EstatusProveedor.IdEstatusProveedor == 13 || request.EstatusProveedor.IdEstatusProveedor == 14)
                     {
                         var estatusOriginal = request.EstatusProveedor.IdEstatusProveedor;
                         request.EstatusProveedor.IdEstatusProveedor = 8;
@@ -674,7 +688,6 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             if (ExecuteComandModificacionAprobadaRechazada(cmdAprobada, request.EstatusProveedor.IdProveedor) > 0)
                             {
                                 response.Success = true;
-                                //request.EstatusProveedor.IdEstatusProveedor = 11;
                             }
                         }
                         if (request.EstatusProveedor.IdEstatusProveedor == 12)
@@ -683,7 +696,22 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             if (ExecuteComandModificacionAprobadaRechazada(cmdAprobada, request.EstatusProveedor.IdProveedor) > 0)
                             {
                                 response.Success = true;
-                                //request.EstatusProveedor.IdEstatusProveedor = 12;
+                            }
+                        }
+                        if (request.EstatusProveedor.IdEstatusProveedor == 13)
+                        {
+                            var cmdAprobada = new SqlCommand("[dbo].[usp_EPROCUREMENT_InfoFinancieraModificacionAprobada]", conexion);
+                            if (ExecuteComandModificacionAprobadaRechazada(cmdAprobada, request.EstatusProveedor.IdProveedor) > 0)
+                            {
+                                response.Success = true;
+                            }
+                        }
+                        if (request.EstatusProveedor.IdEstatusProveedor == 14)
+                        {
+                            var cmdAprobada = new SqlCommand("[dbo].[usp_EPROCUREMENT_InfoFinancieraModificacionRechazada]", conexion);
+                            if (ExecuteComandModificacionAprobadaRechazada(cmdAprobada, request.EstatusProveedor.IdProveedor) > 0)
+                            {
+                                response.Success = true;
                             }
                         }
                         //request.EstatusProveedor.IdEstatusProveedor = 8;
@@ -1439,6 +1467,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             IdUsuario = null,
                             Observaciones = null
                         };
+                        if (ExecuteComandEstatus(cmdEstatus, estatusProveedor) < 0) { return response; }
                         transactionScope.Complete();
                         response.Success = true;
 

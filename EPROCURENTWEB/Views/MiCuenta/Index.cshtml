@@ -131,31 +131,6 @@
 
 
                     <div id="PanelDocumentos" style="font-size:12px;">
-                        @*<div class="col100" style="font-size:12px;">
-
-                    <div id="PanelDocumentos" style="font-size:12px;"></div>
-
-                    @for (int idx = 0; idx < ViewBag.ProveedorDocumentoList.Count; idx++)
-                        {
-                        <div class="col-sm-6 mt-2" style="border:solid 1px #c6c7cb; padding:10px;">
-                            <div class="col50">
-                                <div class="inputIF" style="font-weight:600;">
-                                    @ViewBag.ProveedorDocumentoList[idx].DescripcionDocumento
-                                </div>
-                            </div>
-                            <div class="col25">
-                                <input class="text-box single-line" accept="application/pdf" type="file" name="@ViewBag.ProveedorDocumentoList[idx].DescripcionDocumento" id="@ViewBag.ProveedorDocumentoList[idx].IdProveedorDocumento" />
-                            </div>
-                            <div class="col25">
-                                <a href="@ViewBag.ProveedorDocumentoList[idx].NombreArchivo" download="archivo">
-                                    <img style="height: 60px" src="@ViewBag.ProveedorDocumentoList[idx].NombreArchivo" />
-                                </a>
-
-                            </div>
-                        </div>
-                        }
-                </div>
-            </div>*@
                     </div>
                     <div class="row mt-4">
                         <div class="col-sm-6">&nbsp;</div>
@@ -196,6 +171,7 @@
 <script type="text/javascript">
     var contador = 0;
     var proveedorCuentaList = [];
+    var proveedorDocumentoList = [];
     var fn_CargarDoctos = function (idProveedor) {
         var jsonData = JSON.stringify({ idProveedor: idProveedor });
          $.ajax({
@@ -206,6 +182,7 @@
              async: false,
              success: function (data) {
                  console.log(data);
+                 proveedorDocumentoList = data;
                  for (i = 0; i < data.length; i++) {
 
 
@@ -588,7 +565,7 @@
                     }
                 }
 
-                formData.append('cuenta', JSON.stringify({ ProveedorCuentaListRegistro: proveedorCuentaList }));
+                formData.append('cuenta', JSON.stringify({ ProveedorCuentaListRegistro: proveedorCuentaList, ProveedorDocumentoList: proveedorDocumentoList  }));
 
                 $.ajax({
                     url: "/MiCuenta/Upload",
@@ -600,6 +577,17 @@
                     async: false,
                     success: function (result) {
                         console.log(result);
+
+                        if (result.success) {
+                            Swal.fire({
+                                position: 'middle',
+                                icon: 'success',
+                                title: 'El genero la actualización con éxito',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }
+
                         //window.location.href = '/AltaProveedor/InformacionBF/';
                     },
                 });
