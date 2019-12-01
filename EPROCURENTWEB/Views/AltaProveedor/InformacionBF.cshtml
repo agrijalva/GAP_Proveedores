@@ -860,6 +860,17 @@
                         cache: false,
                         async: false,
                         success: function (result) {
+
+                            if (result.success) {
+                                Swal.fire({
+                                    position: 'middle',
+                                    icon: 'success',
+                                    title: 'El genero la actualización con éxito',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+
                             console.log(result);
 
                             window.location.href = '/AltaProveedor/InformacionBF/';
