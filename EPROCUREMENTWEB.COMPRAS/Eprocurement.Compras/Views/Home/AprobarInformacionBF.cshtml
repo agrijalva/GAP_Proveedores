@@ -136,7 +136,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div id="aeropuertosContainer" class="col-sm-12">
+                    <div id="aeropuertosContainer" class="col-sm-12 mt-4">
                         
                     </div>
                 </div>
@@ -272,7 +272,7 @@
             
             let aeropuertos = '';
             for (let i = 0; i < seleccionado[0].AeropuertoList.length; i++) {
-                aeropuertos += (i + 1) + ' ' + seleccionado[0].AeropuertoList[i].Nombre + '<br />';
+                aeropuertos += '<p class="list-aero">' + seleccionado[0].AeropuertoList[i].Nombre + '</p>';
             }
             $('#aeropuertosContainer').html(aeropuertos);
 

@@ -112,7 +112,7 @@
         $.getJSON("/Seguridad/GetInoformacionUsuario",
             function (data) {
                 if (data != null && data.NombreUsuario != null)
-                    $("#userInfo").html(data.NombreCompania);
+                    $("#userInfo").html(data.NombreUsuario);
             });
     });
 </script>
