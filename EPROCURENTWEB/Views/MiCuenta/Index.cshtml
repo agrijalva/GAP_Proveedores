@@ -46,76 +46,88 @@
 
             </div>
             <div role="tabpanel" class="tab-pane fade in active hide" id="tbDatosBancarios">
-                <div class="row mt-2">
-                    @Html.HiddenFor(model => model.ProveedorCuentaList[0].IdProveedor)
-                    <div class="col-sm-3">
-                        <div class="inputIF">
-                            @Html.Label("cuenta", @EprocurementWeb.GlobalResources.RHome.Account, new { @class = "labelTexto control-label" })
+                <div class="col-sm-12 mt-2 micuenta">
+                    <div class="card card-border">
+                        <div class="card-header1">
+                            <span class="card-titulo"></span>
                         </div>
-                        <div class="inputIF">
-                            @Html.TextBoxFor(model => model.ProveedorCuentaList[0].Cuenta, new { @class = "form-control inputIF", id = "cuenta" })
-                            @Html.Label((string)@EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Generic, new { @class = "text-danger", id = "errorCuenta", @style = "display:none;" })
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="inputIF">
-                            @Html.Label("banco", @EprocurementWeb.GlobalResources.RHome.Bank, new { @class = "labelTexto control-label" })
-                        </div>
-                        <div class="inputIF">
-                            @Html.DropDownListFor(model => model.ProveedorCuentaList[0].IdBanco, new SelectList(ViewBag.BancoList, "IdBanco", "Nombre"), "...", new { @class = "form-control inputIF", @id = "idBanco" })
-                            @Html.Label((string)@EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Generic, new { @class = "text-danger", id = "errorIdBanco", @style = "display:none;" })
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="inputIF">
-                            @Html.Label("clabe", @EprocurementWeb.GlobalResources.RHome.CLABE, new { @class = "labelTexto control-label" })
-                        </div>
-                        <div class="inputIF">
-                            @Html.TextBoxFor(model => model.ProveedorCuentaList[0].CLABE, new { @class = "form-control inputIF", id = "clave" })
-                            @Html.Label((string)@EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Generic, new { @class = "text-danger", id = "errorClave", @style = "display:none;" })
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="inputIF">
-                            @Html.Label("tipo", @EprocurementWeb.GlobalResources.RHome.Type, new { @class = "labelTexto control-label" })
-                        </div>
-                        <div class="inputIF">
-                            @Html.DropDownListFor(model => model.ProveedorCuentaList[0].IdTipoCuenta, new SelectList(ViewBag.TipoCuentaList, "IdTipoCuenta", "Tipo"), "...", new { @class = "form-control inputIF", @id = "idTipoCuenta" })
-                            @Html.Label((string)@EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Generic, new { @class = "text-danger", id = "errorIdIdTipoCuenta", @style = "display:none;" })
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col100 mt-5" style="font-size:14px;">
-                    <b>Elige el (o los) aeropuertos que tomará como referencia la cuenta bancaria proporcionada</b>
-                </div>
-                <div class="col100 mt-3" style="font-size:12px;">
-                    <div class="row">
-                        @for (int idx = 0; idx < Model.ProveedorCuentaList[0].AeropuertoList.Count; idx++)
-                        {
-                            @Html.HiddenFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Id)
-                            @Html.HiddenFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Nombre)
-                            <div class="col-sm-4 mt-2">
-                                @if (Model.ProveedorCuentaList[0].AeropuertoList[idx].Agregado)
-                                {
-                                    @Html.CheckBoxFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Checado, new { id = Model.ProveedorCuentaList[0].AeropuertoList[idx].Id, hd = Model.ProveedorCuentaList[0].AeropuertoList[idx].Nombre, @disabled = "disabled", @class = "checkAirport" })
-                                }
-                                else
-                                {
-                                    @Html.CheckBoxFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Checado, new { id = Model.ProveedorCuentaList[0].AeropuertoList[idx].Id, hd = Model.ProveedorCuentaList[0].AeropuertoList[idx].Nombre, @class = "checkAirport" })
-                                }
-                                @Html.DisplayTextFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Nombre)
+                        <div class="card-body">
+                            @Html.HiddenFor(model => model.ProveedorCuentaList[0].IdProveedor)
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="inputIF">
+                                        @Html.Label("cuenta", @EprocurementWeb.GlobalResources.RHome.Account, new { @class = "labelTexto control-label" })
+                                    </div>
+                                    <div class="inputIF">
+                                        @Html.TextBoxFor(model => model.ProveedorCuentaList[0].Cuenta, new { @class = "form-control inputIF", id = "cuenta" })
+                                        @Html.Label((string)@EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Generic, new { @class = "text-danger", id = "errorCuenta", @style = "display:none;" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="inputIF">
+                                        @Html.Label("banco", @EprocurementWeb.GlobalResources.RHome.Bank, new { @class = "labelTexto control-label" })
+                                    </div>
+                                    <div class="inputIF">
+                                        @Html.DropDownListFor(model => model.ProveedorCuentaList[0].IdBanco, new SelectList(ViewBag.BancoList, "IdBanco", "Nombre"), "...", new { @class = "form-control inputIF", @id = "idBanco" })
+                                        @Html.Label((string)@EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Generic, new { @class = "text-danger", id = "errorIdBanco", @style = "display:none;" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="inputIF">
+                                        @Html.Label("clabe", @EprocurementWeb.GlobalResources.RHome.CLABE, new { @class = "labelTexto control-label" })
+                                    </div>
+                                    <div class="inputIF">
+                                        @Html.TextBoxFor(model => model.ProveedorCuentaList[0].CLABE, new { @class = "form-control inputIF", id = "clave" })
+                                        @Html.Label((string)@EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Generic, new { @class = "text-danger", id = "errorClave", @style = "display:none;" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="inputIF">
+                                        @Html.Label("tipo", @EprocurementWeb.GlobalResources.RHome.Type, new { @class = "labelTexto control-label" })
+                                    </div>
+                                    <div class="inputIF">
+                                        @Html.DropDownListFor(model => model.ProveedorCuentaList[0].IdTipoCuenta, new SelectList(ViewBag.TipoCuentaList, "IdTipoCuenta", "Tipo"), "...", new { @class = "form-control inputIF", @id = "idTipoCuenta" })
+                                        @Html.Label((string)@EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Generic, new { @class = "text-danger", id = "errorIdIdTipoCuenta", @style = "display:none;" })
+                                    </div>
+                                </div>
                             </div>
-                        }
+                            
 
-                    </div>
-                    @Html.Label((string)@EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Airport, new { @class = "text-danger", id = "errorAeropuerto", @style = "display:none;" })
-                    <div class="row mt-4">
-                        <div class="col-sm-9">&nbsp;</div>
-                        <div class="col-sm-3"><input type="button" id="btnAgregarCuenta" value="Agregar" class="btnStyle" /></div>
+                            <div class="col100 mt-5" style="font-size:14px;">
+                                <b>Elige el (o los) aeropuertos que tomará como referencia la cuenta bancaria proporcionada</b>
+                            </div>
+                            <div class="col100 mt-3" style="font-size:12px;">
+                                <div class="row">
+                                    @for (int idx = 0; idx < Model.ProveedorCuentaList[0].AeropuertoList.Count; idx++)
+                                    {
+                                        @Html.HiddenFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Id)
+                                        @Html.HiddenFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Nombre)
+                                        <div class="col-sm-4 mt-2">
+                                            @if (Model.ProveedorCuentaList[0].AeropuertoList[idx].Agregado)
+                                            {
+                                                @Html.CheckBoxFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Checado, new { id = Model.ProveedorCuentaList[0].AeropuertoList[idx].Id, hd = Model.ProveedorCuentaList[0].AeropuertoList[idx].Nombre, @disabled = "disabled", @class = "checkAirport" })
+                                            }
+                                            else
+                                            {
+                                                @Html.CheckBoxFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Checado, new { id = Model.ProveedorCuentaList[0].AeropuertoList[idx].Id, hd = Model.ProveedorCuentaList[0].AeropuertoList[idx].Nombre, @class = "checkAirport" })
+                                            }
+                                            @Html.DisplayTextFor(model => model.ProveedorCuentaList[0].AeropuertoList[idx].Nombre)
+                                        </div>
+                                    }
+
+                                </div>
+                                @Html.Label((string)@EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Airport, new { @class = "text-danger", id = "errorAeropuerto", @style = "display:none;" })
+                                <div class="row mt-4">
+                                    <div class="col-sm-9">&nbsp;</div>
+                                    <div class="col-sm-3"><input type="button" id="btnAgregarCuenta" value="Agregar" class="btnStyle" /></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col100" style="font-size:14px;">
+
+                
+                <div class="col100 mt-4" style="font-size:14px;">
                     <table id="Table"></table>
 
                     <div class="row mt-4">
@@ -128,10 +140,7 @@
             </div>
             <div role="tabpanel" class="tab-pane fade in active hide" id="tbDatosFinancieros">
                 <div class="col100" style="font-size:14px;">
-
-
-                    <div id="PanelDocumentos" style="font-size:12px;">
-                    </div>
+                    <div class="ml-2 mt-3" id="PanelDocumentos" style="font-size:12px; overflow:hidden"></div>
                     <div class="row mt-4">
                         <div class="col-sm-6">&nbsp;</div>
                         <div class="col-sm-3">&nbsp;</div>
@@ -157,7 +166,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div id="aeropuertosContainer" class="col-sm-12">
-
+                        @*<img src="~/Content/Images/descargar.png" />*@
                     </div>
                 </div>
             </div>
@@ -187,18 +196,19 @@
 
 
                      $("#PanelDocumentos").append(
-                         '<div class="col-sm-6 mt-2" style="border:solid 1px #c6c7cb; padding:10px;">'+
+                         '<div class="col-sm-8 mt-2" style="border:solid 1px #c6c7cb; padding:10px;">'+
                             '<div class="row">'+
-                         '<div class="col-sm-10"> <label style="font-weight:600;">' + data[i].DescripcionDocumento + '</label>' +
-                         '<input class="text-box single-line" accept="application/pdf" type="file" name="documento-' + data[i].IdProveedorDocumento + '" id="documento-' + data[i].IdCatalogoDocumento + '" />'
-                         + ' </div>' +
-                                '<div class="col-sm-2">'+
-                                    '<a href="' + data[i].NombreArchivo + '" download="archivo">'+
-                                        '<img style="height: 60px" src="' + data[i].NombreArchivo + '" />'+
-                                    '</a>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>'
+                         '<div class="col-sm-5"> <label style="font-weight:600;">' + data[i].DescripcionDocumento + '</label>' +
+                         '</div><div class="col-sm-5">'+
+                                 '<input class="text-box single-line" accept="application/pdf" type="file" name="documento-' + data[i].IdProveedorDocumento + '" id="documento-' + data[i].IdCatalogoDocumento + '" />'
+                              + ' </div>' +
+                                        '<div class="col-sm-2">'+
+                                            '<a href="' + data[i].NombreArchivo + '" download="archivo">'+
+                                                '<img style="width: 32px" src="Content/Images/descargar.png" />'+
+                                            '</a>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'
                      );
                  }
 
