@@ -1447,7 +1447,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                         foreach (var proveedorCuenta in request.ProveedorCuentaList)
                         {
                             var cmdCuenta = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_ProveedorCuenta_INS, conexion);
-
+                            proveedorCuenta.IdProveedor = request.IdProveedor;
                             var idProveedorCuenta = ExecuteComandCuenta(cmdCuenta, proveedorCuenta);
                             if (idProveedorCuenta < 1) { return response; }
                             foreach (var aeropuerto in proveedorCuenta.AeropuertoList)
