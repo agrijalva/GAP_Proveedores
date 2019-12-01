@@ -281,7 +281,10 @@
 
         $("#btnAprobar").click(function () {
             obs = "";
-            estatus = 13;
+            estatus = 8;
+            if (idEstatus == 10) {
+                estatus = 13;
+            }
 
             var jsonData = JSON.stringify({ idProveedor: idProveedor, observaciones: obs, estatus: estatus });
             Swal.fire({
@@ -323,7 +326,10 @@
 
         $("#btnRechazar").click(function () {
              obs = $("#observaciones").val();
-            estatus = 14;
+            estatus = 6;
+            if (idEstatus == 10) {
+                estatus = 14;
+            }
 
             var jsonData = JSON.stringify({ idProveedor: idProveedor, observaciones: obs, estatus: estatus });
             Swal.fire({
