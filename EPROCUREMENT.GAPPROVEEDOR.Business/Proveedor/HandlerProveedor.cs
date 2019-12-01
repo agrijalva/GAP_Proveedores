@@ -59,7 +59,6 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Proveedor
         public ProveedorCuentaResponseDTO GetProveedorCuentaList(ProveedorCuentaRequestDTO request)
         {
             var response = proveedorData.GetProveedorCuentaList(request);
-            request.ProveedorCuentaList = response.ProveedorCuentaList;
             response = proveedorData.GetProveedorCuentaAeropuertoList(request);
             if (!response.Success)
             {
@@ -218,6 +217,9 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Proveedor
         {
             var response = new ProveedorInformacionFinanciera();
             response.ProveedorCuentaList = proveedorData.GetProveedorCuentaList(request.IdProveedor);
+
+            var response2 = proveedorData.GetProveedorCuentaAeropuertoList(new ProveedorCuentaRequestDTO { ProveedorCuentaList = response.ProveedorCuentaList });
+            response.ProveedorCuentaList = response2.ProveedorCuentaList;
             response.CatalogoDocumentoList = proveedorData.GetProveedorDocumentoList(request.IdProveedor);
 
             return response;

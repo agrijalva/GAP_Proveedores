@@ -328,20 +328,7 @@ namespace Eprocurement.Compras.Controllers
                 ProveedorInformacionFinanciera informacionFinanciera = new ProveedorInformacionFinanciera();
                 informacionFinanciera = new BusinessLogic().GetProveedorInfoFinanciera(idProveedor);
 
-                //ProveedorCuentaResponseDTO proveedorCuentaResponse = new BusinessLogic().GetProveedorCuentaAeropuertoList(new ProveedorCuentaRequestDTO
-                //{
-                //    ProveedorCuentaList = informacionFinanciera.ProveedorCuentaList
-                //});
-
-                //informacionFinanciera.ProveedorCuentaListRegistro = new List<ProveedorCuentaDTO>();
-                //informacionFinanciera.ProveedorCuentaListRegistro.Add(new ProveedorCuentaDTO {
-                //    CLABE = "123456789012345678",
-                //    Cuenta = "1234567890",
-                //    NombreBanco = "BBVA",
-                //    TipoCuenta = "Débito"
-                //});
-
-                return Json(informacionFinanciera, JsonRequestBehavior.AllowGet);
+                return Json(informacionFinanciera.ProveedorCuentaList, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -356,12 +343,6 @@ namespace Eprocurement.Compras.Controllers
             {
                 ProveedorInformacionFinanciera informacionFinanciera = new ProveedorInformacionFinanciera();
                 informacionFinanciera = new BusinessLogic().GetProveedorInfoFinanciera(idProveedor);
-                //informacionFinanciera.CatalogoDocumentoList = new List<CatalogoDocumentoDTO>();
-                //informacionFinanciera.CatalogoDocumentoList.Add(new CatalogoDocumentoDTO
-                //{
-                //    NombreDocumento = "PDF",
-                //    RutaDocumento = "localhost"
-                //});
 
                 ProveedorDocumentoRequestDTO proveedorDocumentoRequest = new ProveedorDocumentoRequestDTO
                 {
