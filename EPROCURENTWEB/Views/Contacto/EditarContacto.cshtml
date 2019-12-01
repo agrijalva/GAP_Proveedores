@@ -88,13 +88,30 @@
                                     <div class="form-group">
                                         @if (Model.EsPrincipal)
                                         {
-                                            @Html.CheckBoxFor(model => model.EsPrincipal, new { @class = "form-control col-md-12", @disabled = "disabled" })
+                                            <table>
+                                                <tr>
+                                                    <td><br /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>@Html.CheckBoxFor(model => model.EsPrincipal, new { @class = "form-control col-md-12", @disabled = "disabled" })</td>
+                                                    <td>@Html.LabelFor(model => model.ContactoPrincipal, new { @class = "label-formulario" })</td>
+                                                </tr>
+                                            </table>
                                         }
                                         else
                                         {
-                                            @Html.CheckBoxFor(model => model.EsPrincipal, new { @class = "form-control col-md-12" })
+                                            <table>
+                                                <tr>
+                                                    <td><br /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>@Html.CheckBoxFor(model => model.EsPrincipal, new { @class = "form-control col-md-12" })</td>
+                                                    <td>@Html.LabelFor(model => model.ContactoPrincipal, new { @class = "label-formulario" })</td>
+                                                </tr>
+                                            </table>
+                                            
+                                            
                                         }
-                                        @Html.LabelFor(model => model.ContactoPrincipal, new { @class = "label-formulario" })
                                     </div>
                                 </div>
                             </div>
