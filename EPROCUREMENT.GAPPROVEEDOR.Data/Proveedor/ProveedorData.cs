@@ -318,6 +318,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
                     using (TransactionScope transactionScope = new TransactionScope())
                     {
+
                         foreach (var proveedorDocumento in request.ProveedorDocumentoList)
                         {
                             var cmdDocto = new SqlCommand(App_GlobalResources.StoredProcedures.usp_EPROCUREMENT_ProveedorDocumento_INS, conexion);
@@ -1439,6 +1440,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             IdUsuario = null,
                             Observaciones = null
                         };
+                        if (ExecuteComandEstatus(cmdEstatus, estatusProveedor) < 0) { return response; }
                         transactionScope.Complete();
                         response.Success = true;
 

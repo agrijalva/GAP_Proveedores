@@ -281,6 +281,15 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Proveedor
             {
                 response.ErrorList = new List<ErrorDTO> { new ErrorDTO { Codigo = "", Mensaje = string.Format("No fue posible recuperar datos disponibles o no se encontro alguna solicitud en proceso") } };
             }
+            else
+            {
+                var proveedorUsuario = proveedorData.GetProvedorDetallePorId(request.IdProveedor);
+                if (proveedorUsuario != null)
+                {
+                    var emailData = new EmailData();
+                    new EmailData().EnviarEmailProveedorModificacion(proveedorUsuario);
+                }
+            }
             return response;
         }
     }
