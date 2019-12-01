@@ -10,5 +10,6 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Entities.Proveedor
         public List<ProveedorCuentaDTO> ProveedorCuentaListRegistro { get; set; }
         public List<CatalogoDocumentoDTO> CatalogoDocumentoList { get; set; }
         public bool Respuesta { get; set; }
+        public List<ProveedorDocumentoDTO> ProveedorDocumentoList { get; set; }
     }
 }

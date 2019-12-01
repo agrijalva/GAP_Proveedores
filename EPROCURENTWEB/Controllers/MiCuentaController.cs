@@ -423,14 +423,20 @@ namespace EprocurementWeb.Controllers
                     var extension = division.Last();
                     string nombreArchivo = idProveedor + "-" + idCatalogoDocumento + '.' + extension;
 
-                    informacionfinanciera.ProveedorDocumentoList.Add(new ProveedorDocumentoDTO
+                    for(int j=0;j<cuenta.ProveedorDocumentoList.Count; j++)
                     {
-                        IdCatalogoDocumento = Convert.ToInt32(idCatalogoDocumento),
-                        IdProveedor = idProveedor,
-                        DescripcionDocumento = "NA",
-                        DocumentoAutorizado = false,
-                        NombreArchivo = nombreArchivo
-                    });
+                        if(cuenta.ProveedorDocumentoList[j].IdCatalogoDocumento == Convert.ToInt32(idCatalogoDocumento))
+                        {
+                            cuenta.ProveedorDocumentoList[j] = new ProveedorDocumentoDTO
+                            {
+                                IdCatalogoDocumento = Convert.ToInt32(idCatalogoDocumento),
+                                IdProveedor = idProveedor,
+                                DescripcionDocumento = "NA",
+                                DocumentoAutorizado = false,
+                                NombreArchivo = nombreArchivo
+                            };
+                        }
+                    }
 
                     //provDoctos.Add(new ProveedorDocumentoDTO
                     //{
@@ -456,7 +462,7 @@ namespace EprocurementWeb.Controllers
                 //ProveedorDocumentoRequestDTO requestPC = new ProveedorDocumentoRequestDTO { IdUsuario = Convert.ToUInt64(usuarioInfo.IdUsuario), ProveedorDocumentoList = provDoctos };
                 //var responsePC = business.GuardarProveedorCuenta(requestPC);
 
-                
+                informacionfinanciera.ProveedorDocumentoList = cuenta.ProveedorDocumentoList;
                 var responseInfo = business.InsertarInformacionFinanciera(informacionfinanciera);
                 
                 if (responseInfo.Success)
