@@ -209,7 +209,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                     {
                         var cmdDeleteCuenta = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorCuenta_DelByIdProveedor]", conexion);
                         cmdDeleteCuenta.CommandType = CommandType.StoredProcedure;
-                        cmdDeleteCuenta.Parameters.Add(new SqlParameter("@IdProveedor", request.IdProveedor));
+                        cmdDeleteCuenta.Parameters.Add(new SqlParameter("@IdProveedor", request.ProveedorCuentaList.First().IdProveedor));
                         cmdDeleteCuenta.Parameters.Add(new SqlParameter("Result", SqlDbType.BigInt) { Direction = ParameterDirection.ReturnValue });
                         cmdDeleteCuenta.ExecuteNonQuery();
                         var resultDelete = Convert.ToInt32(cmdDeleteCuenta.Parameters["Result"].Value);
@@ -325,6 +325,12 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
                     using (TransactionScope transactionScope = new TransactionScope())
                     {
+                        var cmdDeleteDocto = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorDocumento_DELByIdProveedor]", conexion);
+                        cmdDeleteDocto.CommandType = CommandType.StoredProcedure;
+                        cmdDeleteDocto.Parameters.Add(new SqlParameter("@IdProveedor", request.ProveedorDocumentoList.First().IdProveedor));
+                        cmdDeleteDocto.Parameters.Add(new SqlParameter("Result", SqlDbType.BigInt) { Direction = ParameterDirection.ReturnValue });
+                        cmdDeleteDocto.ExecuteNonQuery();
+                        var resultDelete = Convert.ToInt32(cmdDeleteDocto.Parameters["Result"].Value);
 
                         foreach (var proveedorDocumento in request.ProveedorDocumentoList)
                         {
