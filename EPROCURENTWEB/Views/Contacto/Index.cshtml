@@ -59,51 +59,51 @@
 
     });
 
-    var fn_checkbox = function (idContacto, valorChk) {
-        valorChk = !valorChk;
-        var jsonData = JSON.stringify({ idContacto: idContacto, principal: valorChk });
-        Swal.fire({
-            title: '¿Esta seguro de actualizar el contacto?',
+    //var fn_checkbox = function (idContacto, valorChk) {
+    //    valorChk = !valorChk;
+    //    var jsonData = JSON.stringify({ idContacto: idContacto, principal: valorChk });
+    //    Swal.fire({
+    //        title: '¿Esta seguro de actualizar el contacto?',
 
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#432979',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Aceptar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    url: "/Contacto/ActualizaPrincipal",
-                    data: jsonData,
-                    async: false,
-                    success: function (data) {
-                        if (data) {
-                            Swal.fire({
-                                position: 'middle',
-                                icon: 'success',
-                                title: 'El contacto ha sido actualizado con éxito',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                            setTimeout(function () { fn_consulta();; }, 1500);
-                        } else {
-                            Swal.fire({
-                                position: 'middle',
-                                icon: 'error',
-                                title: 'Ocurrio un error al procesar la solicitud',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                        }
+    //        icon: 'warning',
+    //        showCancelButton: true,
+    //        confirmButtonColor: '#432979',
+    //        cancelButtonColor: '#d33',
+    //        confirmButtonText: 'Aceptar',
+    //        cancelButtonText: 'Cancelar'
+    //    }).then((result) => {
+    //        if (result.value) {
+    //            $.ajax({
+    //                type: "POST",
+    //                contentType: "application/json; charset=utf-8",
+    //                url: "/Contacto/ActualizaPrincipal",
+    //                data: jsonData,
+    //                async: false,
+    //                success: function (data) {
+    //                    if (data) {
+    //                        Swal.fire({
+    //                            position: 'middle',
+    //                            icon: 'success',
+    //                            title: 'El contacto ha sido actualizado con éxito',
+    //                            showConfirmButton: false,
+    //                            timer: 1500
+    //                        })
+    //                        setTimeout(function () { fn_consulta();; }, 1500);
+    //                    } else {
+    //                        Swal.fire({
+    //                            position: 'middle',
+    //                            icon: 'error',
+    //                            title: 'Ocurrio un error al procesar la solicitud',
+    //                            showConfirmButton: false,
+    //                            timer: 1500
+    //                        })
+    //                    }
 
-                    },
-                });
-            }
-        })
-    }
+    //                },
+    //            });
+    //        }
+    //    })
+    //}
 
     var fn_eliminar = function (idContacto) {
         console.log(idContacto);
@@ -173,27 +173,27 @@
                  $("#Table").DataTable().destroy();
 
                  $("#Table").append('<tbody>');
-                 let seleccionados = data.filter(contacto => contacto.EsPrincipal);
+                 //let seleccionados = data.filter(contacto => contacto.EsPrincipal);
                  for (i = 0; i < data.length; i++) {
 
                      var linkEdit = '@Html.ActionLink(" ", "EditarContacto", "Contacto", new { idContacto = "_idContacto_" }, new { @class = "fas fa-edit icon-color" })';
                      var btnEliminar = '<input type="button" value="x" class="BTN-DELETE-CONTACTO icon-color" onclick="fn_eliminar(_idContacto_)" />';
-                     console.log('console.log(data[i].EsPrincipal)', data[i].EsPrincipal)
-                     var chkPrincipal = '<input type="checkbox" value="_value_" onclick="fn_checkbox(_idContacto_, _EsPrincipal_)" checked/>';
+                     //console.log('console.log(data[i].EsPrincipal)', data[i].EsPrincipal)
+                     //var chkPrincipal = '<input type="checkbox" value="_value_" onclick="fn_checkbox(_idContacto_, _EsPrincipal_)" checked/>';
                      linkEdit = linkEdit.replace('_idContacto_', data[i].IdContacto);
                      btnEliminar = btnEliminar.replace('_idContacto_', data[i].IdContacto)
-                     if (data[i].EsPrincipal) {
-                         var chkPrincipal = '<input type="checkbox" value="_value_" onclick="fn_checkbox(_idContacto_, _EsPrincipal_)" checked/>';
-                     }
-                     else {
-                         if (seleccionados.length != 2) {
-                             var chkPrincipal = '<input type="checkbox" value="_value_" onclick="fn_checkbox(_idContacto_, _EsPrincipal_)" />';
-                         } else {
-                             var chkPrincipal = '';
-                         }
-                     }                     
-                     chkPrincipal = chkPrincipal.replace('_idContacto_', data[i].IdContacto);
-                     chkPrincipal = chkPrincipal.replace('_EsPrincipal_', data[i].EsPrincipal);
+                     //if (data[i].EsPrincipal) {
+                     //    var chkPrincipal = '<input type="checkbox" value="_value_" onclick="fn_checkbox(_idContacto_, _EsPrincipal_)" checked/>';
+                     //}
+                     //else {
+                     //    if (seleccionados.length != 2) {
+                     //        var chkPrincipal = '<input type="checkbox" value="_value_" onclick="fn_checkbox(_idContacto_, _EsPrincipal_)" />';
+                     //    } else {
+                     //        var chkPrincipal = '';
+                     //    }
+                     //}                     
+                     //chkPrincipal = chkPrincipal.replace('_idContacto_', data[i].IdContacto);
+                     //chkPrincipal = chkPrincipal.replace('_EsPrincipal_', data[i].EsPrincipal);
 
                      if (data[i].ContactoPrincipal == 0) {
                          $("#Table").append('<tr>' +
@@ -201,8 +201,7 @@
                              '<td style="dislay: none;">' + data[i].Email + '</td>' +
                              '<td style="dislay: none;">' + data[i].Tipo + '</td>' +
                              '<td style="dislay: none;"><div class="btn-circle">' + linkEdit + '</div></td>' +
-                             '<td style="dislay: none;"><div class="btn-circle">' + btnEliminar + '</div></td>' +
-                             '<td style="dislay: none;"><div >' + chkPrincipal + '</div></td>' + '</tr>'
+                             '<td style="dislay: none;"><div >' + btnEliminar + '</div></td>' + '</tr>'
                          );
                      }
                      else {
@@ -211,8 +210,7 @@
                              '<td style="dislay: none;">' + data[i].Email + '</td>' +
                              '<td style="dislay: none;">' + data[i].Tipo + '</td>' +
                              '<td style="dislay: none;"><div class="btn-circle">' + linkEdit + '</div></td>' +
-                             '<td style="dislay: none;"><div class="btn-circle">' + btnEliminar + '</div></td>' +
-                             '<td style="dislay: none;"><div >' + chkPrincipal + '</div></td>' + '</tr>'
+                             '<td style="dislay: none;"><div ></div></td>' + '</tr>'
                          );
                      }
                  }

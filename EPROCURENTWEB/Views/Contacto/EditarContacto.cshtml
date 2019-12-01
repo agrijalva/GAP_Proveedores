@@ -42,7 +42,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.IdNacionalidad, new { @class = "label-formulario" })
-                                        @Html.DropDownListFor(model => model.IdNacionalidad, new SelectList(ViewBag.NacionalidadList, "IdNacionalidad", "Nombre"), "...", new { @class = "form-control col-md-12" })
+                                        @Html.DropDownListFor(model => model.IdNacionalidad, new SelectList(ViewBag.NacionalidadList, "IdNacionalidad", "Nombre"), "Selecciona", new { @class = "form-control col-md-12" })
                                         @Html.ValidationMessageFor(model => model.IdNacionalidad, "", new { @class = "label-formulario field-validation-error" })
                                     </div>
                                 </div>
@@ -71,32 +71,30 @@
                                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "label-formulario field-validation-error" })
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.IdPais, new { @class = "label-formulario" })
-                                        @Html.DropDownListFor(model => model.IdPais, new SelectList(ViewBag.PaisList, "IdPais", "Nombre"), "...", new { @class = "form-control col-md-10" })
+                                        @Html.DropDownListFor(model => model.IdPais, new SelectList(ViewBag.PaisList, "IdPais", "Nombre"), "Selecciona", new { @class = "form-control col-md-10" })
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.IdZonaHoraria, new { @class = "label-formulario" })
-                                        @Html.DropDownListFor(model => model.IdZonaHoraria, new SelectList(ViewBag.ZonaHorariaList, "IdZonaHoraria", "Nombre"), "...", new { @class = "form-control col-md-12" })
+                                        @Html.DropDownListFor(model => model.IdZonaHoraria, new SelectList(ViewBag.ZonaHorariaList, "IdZonaHoraria", "Nombre"), "Selecciona", new { @class = "form-control col-md-12" })
                                         @Html.ValidationMessageFor(model => model.IdZonaHoraria, "", new { @class = "label-formulario field-validation-error" })
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        @Html.HiddenFor(model => model.ContactoPrincipal)
-                                        @Html.HiddenFor(model => model.EsPrincipal)
-                                        @*@if (Model.EsPrincipal)
-        {
-            @Html.CheckBoxFor(model => model.EsPrincipal, new { @class = "form-control col-md-12", @disabled = "disabled" })
-        }
-        else
-        {
-            @Html.CheckBoxFor(model => model.EsPrincipal, new { @class = "form-control col-md-12" })
-        }
-        @Html.LabelFor(model => model.ContactoPrincipal, new { @class = "label-formulario" })*@
+                                        @if (Model.EsPrincipal)
+                                        {
+                                            @Html.CheckBoxFor(model => model.EsPrincipal, new { @class = "form-control col-md-12", @disabled = "disabled" })
+                                        }
+                                        else
+                                        {
+                                            @Html.CheckBoxFor(model => model.EsPrincipal, new { @class = "form-control col-md-12" })
+                                        }
+                                        @Html.LabelFor(model => model.ContactoPrincipal, new { @class = "label-formulario" })
                                     </div>
                                 </div>
                             </div>
