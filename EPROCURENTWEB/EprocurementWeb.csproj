@@ -263,6 +263,10 @@
     <Content Include="Content\Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Content\Scripts\bootstrap.js.map" />
     <Content Include="Content\Scripts\bootstrap.min.js.map" />
+    <Content Include="Content\PDF\PruebaAvisos.pdf" />
+    <Content Include="Content\PDF\PruebaTerminos.pdf" />
+    <Content Include="Content\PDF\DocAviso.pdf" />
+    <Content Include="Content\PDF\DocTerminos.pdf" />
     <None Include="Content\Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Content\Scripts\jquery-1.10.2.js" />
     <Content Include="Content\Scripts\jquery-1.10.2.min.js" />
@@ -459,7 +463,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\PDF\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
