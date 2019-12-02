@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using EprocurementWeb.Properties;
 using System.IO;
 using EPROCUREMENT.GAPPROVEEDOR.Entities.Proveedor;
+using System.Net;
+using EprocurementWeb.Models.Response;
 
 namespace EprocurementWeb.Business
 {
@@ -933,6 +935,14 @@ namespace EprocurementWeb.Business
                 }
             }
             return proveedor;
+        }
+
+        public static CaptchaResponse ValidateCaptcha(string response)
+        {
+            string secret = System.Web.Configuration.WebConfigurationManager.AppSettings["recaptchaPrivatekey"];
+            var client = new WebClient();
+            var jsonResult = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secret, response));
+            return JsonConvert.DeserializeObject<CaptchaResponse>(jsonResult.ToString());
         }
     }
 }
