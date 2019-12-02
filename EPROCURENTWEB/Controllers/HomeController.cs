@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using EPROCUREMENT.GAPPROVEEDOR.Entities;
 using EprocurementWeb.Models;
 using System.Net;
+using EprocurementWeb.Models.Response;
 
 namespace EprocurementWeb.Controllers
 {
@@ -52,6 +53,7 @@ namespace EprocurementWeb.Controllers
             proveedor.Mexicana = true;
             ViewBag.colonias = new List<string>();
             ViewBag.errorResultado = 0;
+            ViewBag.recaptchaPublickey = System.Web.Configuration.WebConfigurationManager.AppSettings["recaptchaPublickey"];
             return View(proveedor);
         }
 
@@ -59,73 +61,83 @@ namespace EprocurementWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult GuardarProveedor(ProveedorModel proveedor)
         {
-            try
+            proveedor.IdTipoProveedor = 1;
+            proveedor.IdNacionalidad = 1;
+            proveedor.Direccion.DireccionValidada = true;
+            CargarCatalogos();
+            ViewBag.GiroList = giroList;
+            ViewBag.cantidadGiro = giroList != null ? giroList.Count : 0;
+            ViewBag.ZonaHorariaList = zonaHorariaList;
+            ViewBag.NacionalidadList = nacionalidadList;
+            ViewBag.PaisList = paisList;
+            ViewBag.IdiomaList = idiomaList;
+            ViewBag.EstadoList = estadoList;
+            ViewBag.MunicipioList = municipioList;
+            ViewBag.TipoProveedorList = tipoProveedorList;
+            ViewBag.errorResultado = 0;
+            proveedor.EmpresaList = proveedor.AeropuertoList.Where(a => a.Checado).Select(a => new ProveedorEmpresaModel { IdCatalogoAeropuerto = a.Id }).ToList();
+            ViewBag.colonias = new List<string>();
+
+            CaptchaResponse captchaResponse = BusinessLogic.ValidateCaptcha(Request["g-recaptcha-response"]);
+            if (captchaResponse.Success)
             {
-                proveedor.IdTipoProveedor = 1;
-                proveedor.IdNacionalidad = 1;
-                proveedor.Direccion.DireccionValidada = true;
-                CargarCatalogos();
-                ViewBag.GiroList = giroList;
-                ViewBag.cantidadGiro = giroList != null ? giroList.Count : 0;
-                ViewBag.ZonaHorariaList = zonaHorariaList;
-                ViewBag.NacionalidadList = nacionalidadList;
-                ViewBag.PaisList = paisList;
-                ViewBag.IdiomaList = idiomaList;
-                ViewBag.EstadoList = estadoList;
-                ViewBag.MunicipioList = municipioList;
-                ViewBag.TipoProveedorList = tipoProveedorList;
-                ViewBag.errorResultado = 0;
-                proveedor.EmpresaList = proveedor.AeropuertoList.Where(a => a.Checado).Select(a => new ProveedorEmpresaModel { IdCatalogoAeropuerto = a.Id }).ToList();
-                ViewBag.colonias = new List<string>();
-                if (proveedor.ProveedorGiroList == null || !proveedor.ProveedorGiroList.Exists(x => x.IdCatalogoGiro > 0))
-                {
-                    ModelState.AddModelError("ErrorEmpresa", "Debe agregar al menos una empresa");
-                }
-                if (proveedor.AeropuertoList == null || !proveedor.AeropuertoList.Exists(x => x.Checado))
-                {
-                    ModelState.AddModelError("ErrorAeropuerto", "Debe seleccionar al menos un aeropuerto");
-                }
-                if (!proveedor.Mexicana && !proveedor.Extranjera)
-                {
-                    ModelState.AddModelError("ErrorTipoEmpresa", "Debe seleccionar una opción");
-                }
+                try
+                {        
+                    if (proveedor.ProveedorGiroList == null || !proveedor.ProveedorGiroList.Exists(x => x.IdCatalogoGiro > 0))
+                    {
+                        ModelState.AddModelError("ErrorEmpresa", "Debe agregar al menos una empresa");
+                    }
+                    if (proveedor.AeropuertoList == null || !proveedor.AeropuertoList.Exists(x => x.Checado))
+                    {
+                        ModelState.AddModelError("ErrorAeropuerto", "Debe seleccionar al menos un aeropuerto");
+                    }
+                    if (!proveedor.Mexicana && !proveedor.Extranjera)
+                    {
+                        ModelState.AddModelError("ErrorTipoEmpresa", "Debe seleccionar una opción");
+                    }
 
-                for (var pos = 0; pos < proveedor.ProveedorGiroList.Count; pos++)
-                {
-                    if (ModelState["ProveedorGiroList[" + pos + "].IdCatalogoGiro"] != null)
+                    for (var pos = 0; pos < proveedor.ProveedorGiroList.Count; pos++)
                     {
-                        ModelState["ProveedorGiroList[" + pos + "].IdCatalogoGiro"].Errors.Clear();
+                        if (ModelState["ProveedorGiroList[" + pos + "].IdCatalogoGiro"] != null)
+                        {
+                            ModelState["ProveedorGiroList[" + pos + "].IdCatalogoGiro"].Errors.Clear();
+                        }
                     }
-                }
-                if (ModelState.IsValid)
-                {
-                    BusinessLogic businessLogic = new BusinessLogic();
-                    var validacionRFC = ValidacionCampos(new ProveedorFiltroRequestModel { Filtro = proveedor.RFC, TipoFiltro = Models.TipoFiltro.RFC });
-                    if (!validacionRFC)
+                    if (ModelState.IsValid)
                     {
-                        ModelState.AddModelError("RFC", "Este RFC ya se encuentra registrado");
-                    }
-                    var validacionEmail = ValidacionCampos(new ProveedorFiltroRequestModel { Filtro = proveedor.Contacto.Email, TipoFiltro = Models.TipoFiltro.Email });
-                    if (!validacionEmail)
-                    {
-                        ModelState.AddModelError("Contacto.Email", "Este Email ya se encuentra registrado");
-                    }
-                    if (!validacionRFC || !validacionEmail) { return View(proveedor); }
+                        BusinessLogic businessLogic = new BusinessLogic();
+                        var validacionRFC = ValidacionCampos(new ProveedorFiltroRequestModel { Filtro = proveedor.RFC, TipoFiltro = Models.TipoFiltro.RFC });
+                        if (!validacionRFC)
+                        {
+                            ModelState.AddModelError("RFC", "Este RFC ya se encuentra registrado");
+                        }
+                        var validacionEmail = ValidacionCampos(new ProveedorFiltroRequestModel { Filtro = proveedor.Contacto.Email, TipoFiltro = Models.TipoFiltro.Email });
+                        if (!validacionEmail)
+                        {
+                            ModelState.AddModelError("Contacto.Email", "Este Email ya se encuentra registrado");
+                        }
+                        if (!validacionRFC || !validacionEmail) { return View(proveedor); }
 
-                    ProveedorResponseModel response = businessLogic.PostProveedor(proveedor);
-                    if (response.Success)
-                    {
-                        return Redirect("/Home/Index#success");
-                    }
-                    else
-                    {
-                        ViewBag.errorResultado = 1;
+                        ProveedorResponseModel response = businessLogic.PostProveedor(proveedor);
+                        if (response.Success)
+                        {
+                            return Redirect("/Home/Index#success");
+                        }
+                        else
+                        {
+                            ViewBag.errorResultado = 1;
+                        }
                     }
                 }
+                catch
+                {
+
+                }
+                
             }
-            catch
+            else
             {
-
+                ViewBag.errorResultado = 1;
             }
             return View(proveedor);
         }
