@@ -133,7 +133,13 @@
                     <div class="row mt-4">
                         <div class="col-sm-6">&nbsp;</div>
                         <div class="col-sm-3">&nbsp;</div>
-                        <div class="col-sm-3"><input type="button" class="btnStyle btnCargarCuentas" value="Enviar" /></div>
+                        <div class="col-sm-3">
+                            @if ((int)ViewBag.IdEstatus == 8)
+                            { 
+                            <input type="button" class="btnStyle btnCargarCuentas" value="Enviar" />
+                            }
+                            
+                        </div>
                     </div>
                 </div>
 
@@ -144,7 +150,13 @@
                     <div class="row mt-4">
                         <div class="col-sm-6">&nbsp;</div>
                         <div class="col-sm-3">&nbsp;</div>
-                        <div class="col-sm-3"><input type="button" class="btnStyle btnCargarCuentas" value="Enviar" /></div>
+                        <div class="col-sm-3">
+                            @if ((int)ViewBag.IdEstatus == 8)
+                            {
+                            <input type="button" class="btnStyle btnCargarCuentas" value="Enviar" />
+                            }
+                            @*<input type="button" class="btnStyle btnCargarCuentas" value="Enviar" />*@
+                        </div>
                     </div>
                 </div>
                 
