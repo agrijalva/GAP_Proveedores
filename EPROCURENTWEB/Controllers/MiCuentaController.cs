@@ -429,10 +429,6 @@ namespace EprocurementWeb.Controllers
 
                     for(int j=0;j<cuenta.ProveedorDocumentoList.Count; j++)
                     {
-                        if (!cuenta.ProveedorDocumentoList[j].Extensiones.Contains(extension))
-                        {
-                            extensionesValidas = false;
-                        }
                         if (cuenta.ProveedorDocumentoList[j].IdCatalogoDocumento == Convert.ToInt32(idCatalogoDocumento))
                         {
                             cuenta.ProveedorDocumentoList[j] = new ProveedorDocumentoDTO
