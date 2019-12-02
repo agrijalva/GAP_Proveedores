@@ -324,7 +324,8 @@ namespace EprocurementWeb.Controllers
                     RFC = response.RFC,
                     Mexicana = response.Mexicana,
                     Extranjera = response.Extranjera,
-                    IdEstatus = response.IdEstatus
+                    IdEstatus = response.IdEstatus,
+                    TIN = response.TIN
                 };
             } 
             else
