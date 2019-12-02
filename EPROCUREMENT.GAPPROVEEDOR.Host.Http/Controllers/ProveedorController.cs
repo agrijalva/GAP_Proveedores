@@ -199,6 +199,13 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
             {
                 response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
                 response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
+            } else if(division.Last() == "xls" || division.Last() == "xlsx")
+            {
+                response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+                response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = image
+                };
             }
             else
             {
