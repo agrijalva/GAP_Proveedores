@@ -199,7 +199,8 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
             {
                 response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
                 response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
-            } else if(division.Last() == "xls" || division.Last() == "xlsx")
+            }
+            else if(division.Last() == "xls" || division.Last() == "xlsx" || division.Last() == "doc" || division.Last() == "docx")
             {
                 response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
                 response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment")
@@ -207,12 +208,22 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
                     FileName = image
                 };
             }
+            else if(division.Last() == "jpg")
+            {
+                response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpg");
+                response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
+            }
+            else if (division.Last() == "jpeg")
+            {
+                response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
+                response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
+            }
             else
             {
                 response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
                 response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
             }
-            
+
             return response;
         }
         
