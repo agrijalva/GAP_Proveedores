@@ -14,5 +14,6 @@
         /// Representa el nombre del Giro
         /// </summary>
         public string GiroNombre { get; set; }
+        public bool Registrado { get; set; }
     }
 }

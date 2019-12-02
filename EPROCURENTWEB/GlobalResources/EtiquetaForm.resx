@@ -124,7 +124,7 @@
     <value>Contraseña anterior</value>
   </data>
   <data name="ActualizaPassword_NuevaContrasena" xml:space="preserve">
-    <value>Nueva contraseña:</value>
+    <value>Nueva contraseña</value>
   </data>
   <data name="Mensaje_Error_ComparePassword" xml:space="preserve">
     <value>La costraseñas deben ser iguales</value>
@@ -133,7 +133,7 @@
     <value>Se genero un error al procesar la solicitud</value>
   </data>
   <data name="Mensaje_Error_Required" xml:space="preserve">
-    <value>La {0} es obligatoria</value>
+    <value>El campo {0} es obligatorio</value>
   </data>
   <data name="Mensaje_Error_StringLength" xml:space="preserve">
     <value>La {0} debe contener entre 6 y 15 caracteres</value>

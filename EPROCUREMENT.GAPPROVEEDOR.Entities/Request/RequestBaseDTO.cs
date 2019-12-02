@@ -12,6 +12,5 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Entities
         /// Id del usuario en sesion
         /// </summary>
         public ulong IdUsuario { get; set; }
-
     }
 }

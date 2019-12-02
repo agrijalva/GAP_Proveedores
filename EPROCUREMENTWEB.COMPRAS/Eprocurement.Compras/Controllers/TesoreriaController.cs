@@ -20,6 +20,7 @@ namespace Eprocurement.Compras.Controllers
         public List<EstadoDTO> estadoList;
         public List<MunicipioDTO> municipioList;
         public List<TipoProveedorDTO> tipoProveedorList;
+        public List<EstatusProveedorDTO> estatusProveedorGetList;
         // GET: Tesoreria
         private void CargarCatalogos()
         {
@@ -27,21 +28,24 @@ namespace Eprocurement.Compras.Controllers
             aeropuertoList = businessLogic.GetAeropuertosList();
             giroList = businessLogic.GetGirosList();
             tipoProveedorList = businessLogic.GetTipoProveedorList();
+            estatusProveedorGetList = businessLogic.GetEstatusProveedorList();
         }
 
         public ActionResult AprobarTesoreria()
         {
             CargarCatalogos();
-
+            string[] estatus = { "5", "6", "7", "8", "10" };
             ViewBag.AeropuertoList = aeropuertoList;
             ViewBag.GiroList = giroList;
             ViewBag.TipoProveedorList = tipoProveedorList;
             var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
             ViewBag.IdUsuarioRol = usuarioInfo.IdUsuarioRol;
+            var estatusList = (from t in estatusProveedorGetList where estatus.Contains(t.IdEstatusProveedor.ToString()) select t).ToList();
+            ViewBag.EstatusProveedorGetList = estatusList;
             return View();
         }
 
-        public JsonResult GetProveedorEstatusList(int? idTipoProveedor, int? idGiroProveedor, string idAeropuerto, string nombreEmpresa, string rfc, string email)
+        public JsonResult GetProveedorEstatusList(int? idTipoProveedor, int? idGiroProveedor, string idAeropuerto, string nombreEmpresa, string rfc, string email, int? idEstatus)
         {
             try
             {
@@ -53,16 +57,28 @@ namespace Eprocurement.Compras.Controllers
                 //var response = businessLogic.GetProveedorEstatusList(request);
                 if (usuarioInfo.IdUsuarioRol == 3)
                 {
-                    string[] estatus = { "5", "6", "7", "8" };
-                    var response = businessLogic.GetProveedorEstatusList(request);
-                    var proveedorEstatus = (from t in response.ProveedorList
-                                            where estatus.Contains(t.IdEstatus.ToString())
-                                            select t).ToList();
-                    return Json(proveedorEstatus, JsonRequestBehavior.AllowGet);
+                    if ((idEstatus == null || idEstatus == 0))
+                    {
+                        string[] estatus = { "5", "6", "7", "8", "10" };
+                        var response = businessLogic.GetProveedorEstatusList(request);
+                        var proveedorEstatus = (from t in response.ProveedorList
+                                                where estatus.Contains(t.IdEstatus.ToString())
+                                                select t).ToList();
+                        return Json(proveedorEstatus, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        string[] estatus = { idEstatus.ToString() };
+                        var response = businessLogic.GetProveedorEstatusList(request);
+                        var proveedorEstatus = (from t in response.ProveedorList
+                                                where estatus.Contains(t.IdEstatus.ToString())
+                                                select t).ToList();
+                        return Json(proveedorEstatus, JsonRequestBehavior.AllowGet);
+                    }
                 }
                 else
                 {
-                    string[] estatus = { "1", "2", "3", "4", "5", "6", "7", "8" };
+                    string[] estatus = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
                     var response = businessLogic.GetProveedorEstatusList(request);
                     var proveedorEstatus = (from t in response.ProveedorList
                                             where estatus.Contains(t.IdEstatus.ToString())

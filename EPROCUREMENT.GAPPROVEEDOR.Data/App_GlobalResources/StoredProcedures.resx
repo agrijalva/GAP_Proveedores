@@ -120,6 +120,9 @@
   <data name="usp_EPROCUREMENT_Aeropuerto_GETL" xml:space="preserve">
     <value>[dbo].[usp_EPROCUREMENT_Aeropuerto_GETL]</value>
   </data>
+  <data name="usp_EPROCUREMENT_Aeropuerto_GETLByIdProveedorCuenta" xml:space="preserve">
+    <value>[dbo].[usp_EPROCUREMENT_Aeropuerto_GETLByIdProveedorCuenta]</value>
+  </data>
   <data name="usp_EPROCUREMENT_Banco_GETL" xml:space="preserve">
     <value>[dbo].[usp_EPROCUREMENT_Banco_GETL]</value>
   </data>
@@ -159,6 +162,9 @@
   <data name="usp_EPROCUREMENT_ProveedorContacto_INS" xml:space="preserve">
     <value>[dbo].[usp_EPROCUREMENT_ProveedorContacto_INS]</value>
   </data>
+  <data name="usp_EPROCUREMENT_ProveedorCuenta_GETLByIdProveedor" xml:space="preserve">
+    <value>[dbo].[usp_EPROCUREMENT_ProveedorCuenta_GETLByIdProveedor]</value>
+  </data>
   <data name="usp_EPROCUREMENT_ProveedorCuenta_INS" xml:space="preserve">
     <value>[dbo].[usp_EPROCUREMENT_ProveedorCuenta_INS]</value>
   </data>
@@ -167,6 +173,9 @@
   </data>
   <data name="usp_EPROCUREMENT_ProveedorDireccion_INS" xml:space="preserve">
     <value>[dbo].[usp_EPROCUREMENT_ProveedorDireccion_INS]</value>
+  </data>
+  <data name="usp_EPROCUREMENT_ProveedorDocumento_GETLByIdProveedor" xml:space="preserve">
+    <value>[dbo].[usp_EPROCUREMENT_ProveedorDocumento_GETLByIdProveedor]</value>
   </data>
   <data name="usp_EPROCUREMENT_ProveedorDocumento_INS" xml:space="preserve">
     <value>[dbo].[usp_EPROCUREMENT_ProveedorDocumento_INS]</value>

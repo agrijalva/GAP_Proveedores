@@ -26,6 +26,10 @@
     width: 100%;
 }
 
+.inputError{
+    border-color: red;
+}
+
 .labelTexto {
     max-width: 100%;
     flex: auto;

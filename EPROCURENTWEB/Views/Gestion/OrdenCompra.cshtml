@@ -1,0 +1,203 @@
+﻿
+@{
+    ViewBag.Title = "Orden de Compras";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mt-3">
+            <div class="card-body">
+                <div class="row" style="">
+                    <div class="col-md-12 h-filtro">Filtrar por</div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label text-right">Aeropuerto</label>
+                        <select class="form-control">
+                            <option>Selecione</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label text-right">Orden de compra</label>
+                        <input type="text" class="form-control" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label text-right">Folio</label>
+                        <input type="text" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <div class="row">
+                            <div class="col-sm-12"><label class="control-label text-right">Fecha propuesta de pago</label></div>
+                            <div class="col-sm-2"> <label class="control-label text-right" style="color:#68686a !important">Inicio</label> </div>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" />
+                            </div>
+                            <div class="col-sm-2"> <label class="control-label text-right" style="color:#68686a !important">Fin</label> </div>
+                            <div class="col-sm-4"><input type="text" class="form-control" /></div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class="row">
+                            <div class="col-sm-12"><label class="control-label text-right">Fecha propuesta de pago</label></div>
+                            <div class="col-sm-2"> <label class="control-label text-right" style="color:#68686a !important">Inicio</label> </div>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" />
+                            </div>
+                            <div class="col-sm-2"> <label class="control-label text-right" style="color:#68686a !important">Fin</label> </div>
+                            <div class="col-sm-4"><input type="text" class="form-control" /></div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <button id="buscar" class="btn btn-search btn-purple float-right">
+                            <i class="fas fa-search"></i> Buscar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row mt-3">
+    <div class="col-sm-12">
+        <table id="Table" class="dataTable dataTables_wrapper ">
+            <thead class="bg-light-purple">
+                <tr>
+                    <td>Aeropuerto</td>
+                    <td>Numero de Orden de Compra</td>
+                    <td>Folio</td>
+                    <td>Monto</td>
+                    <td>Fecha de factura</td>
+                    <td>Estatus</td>
+                    <td>Fecha propuesta de pago</td>
+                    <td>Ver</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>GDL</b></td>
+                    <td>GDL-OC-0003235</td>
+                    <td>1234567890</td>
+                    <td>$ 354,456.00</td>
+                    <td>09/Diciembre/2019</td>
+                    <td><span class="text-warning"><b>Pendiente</b></span></td>
+                    <td>09/Diciembre/2019</td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+                <tr>
+                    <td><b>GDL</b></td>
+                    <td>GDL-OC-0003235</td>
+                    <td>1234567890</td>
+                    <td>$ 354,456.00</td>
+                    <td>09/Diciembre/2019</td>
+                    <td><span class="text-warning"><b>Pendiente</b></span></td>
+                    <td>09/Diciembre/2019</td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+                <tr>
+                    <td><b>GDL</b></td>
+                    <td>GDL-OC-0003235</td>
+                    <td>1234567890</td>
+                    <td>$ 354,456.00</td>
+                    <td>09/Diciembre/2019</td>
+                    <td><span class="text-warning"><b>Pendiente</b></span></td>
+                    <td>09/Diciembre/2019</td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+                <tr>
+                    <td><b>GDL</b></td>
+                    <td>GDL-OC-0003235</td>
+                    <td>1234567890</td>
+                    <td>$ 354,456.00</td>
+                    <td>09/Diciembre/2019</td>
+                    <td><span class="text-warning"><b>Pendiente</b></span></td>
+                    <td>09/Diciembre/2019</td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+                <tr>
+                    <td><b>GDL</b></td>
+                    <td>GDL-OC-0003235</td>
+                    <td>1234567890</td>
+                    <td>$ 354,456.00</td>
+                    <td>09/Diciembre/2019</td>
+                    <td><span class="text-warning"><b>Pendiente</b></span></td>
+                    <td>09/Diciembre/2019</td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+                <tr>
+                    <td><b>GDL</b></td>
+                    <td>GDL-OC-0003235</td>
+                    <td>1234567890</td>
+                    <td>$ 354,456.00</td>
+                    <td>09/Diciembre/2019</td>
+                    <td><span class="text-warning"><b>Pendiente</b></span></td>
+                    <td>09/Diciembre/2019</td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+                <tr>
+                    <td><b>GDL</b></td>
+                    <td>GDL-OC-0003235</td>
+                    <td>1234567890</td>
+                    <td>$ 354,456.00</td>
+                    <td>09/Diciembre/2019</td>
+                    <td><span class="text-warning"><b>Pendiente</b></span></td>
+                    <td>09/Diciembre/2019</td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+                <tr>
+                    <td><b>GDL</b></td>
+                    <td>GDL-OC-0003235</td>
+                    <td>1234567890</td>
+                    <td>$ 354,456.00</td>
+                    <td>09/Diciembre/2019</td>
+                    <td><span class="text-warning"><b>Pendiente</b></span></td>
+                    <td>09/Diciembre/2019</td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+                <tr>
+                    <td><b>GDL</b></td>
+                    <td>GDL-OC-0003235</td>
+                    <td>1234567890</td>
+                    <td>$ 354,456.00</td>
+                    <td>09/Diciembre/2019</td>
+                    <td><span class="text-warning"><b>Pendiente</b></span></td>
+                    <td>09/Diciembre/2019</td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+                <tr>
+                    <td><b>GDL</b></td>
+                    <td>GDL-OC-0003235</td>
+                    <td>1234567890</td>
+                    <td>$ 354,456.00</td>
+                    <td>09/Diciembre/2019</td>
+                    <td><span class="text-warning"><b>Pendiente</b></span></td>
+                    <td>09/Diciembre/2019</td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+                <tr>
+                    <td><b>GDL</b></td>
+                    <td>GDL-OC-0003235</td>
+                    <td>1234567890</td>
+                    <td>$ 354,456.00</td>
+                    <td>09/Diciembre/2019</td>
+                    <td><span class="text-warning"><b>Pendiente</b></span></td>
+                    <td>09/Diciembre/2019</td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+                <tr>
+                    <td><b>GDL</b></td>
+                    <td>GDL-OC-0003235</td>
+                    <td>1234567890</td>
+                    <td>$ 354,456.00</td>
+                    <td>09/Diciembre/2019</td>
+                    <td><span class="text-warning"><b>Pendiente</b></span></td>
+                    <td>09/Diciembre/2019</td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

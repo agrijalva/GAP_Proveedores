@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Eprocurement.Compras.Models;
 using EPROCUREMENT.GAPPROVEEDOR.Entities.Proveedor;
+using Eprocurement.Compras.Filters;
 
 namespace Eprocurement.Compras.Controllers
 {
@@ -22,6 +23,7 @@ namespace Eprocurement.Compras.Controllers
         public List<EstadoDTO> estadoList;
         public List<MunicipioDTO> municipioList;
         public List<TipoProveedorDTO> tipoProveedorList;
+        public List<EstatusProveedorDTO> estatusProveedorGetList;
 
         private void CargarCatalogos()
         {
@@ -29,6 +31,7 @@ namespace Eprocurement.Compras.Controllers
             aeropuertoList = businessLogic.GetAeropuertosList();
             giroList = businessLogic.GetGirosList();
             tipoProveedorList = businessLogic.GetTipoProveedorList();
+            estatusProveedorGetList = businessLogic.GetEstatusProveedorList();
         }
 
         private void CargarCatalogosAceptar()
@@ -41,15 +44,19 @@ namespace Eprocurement.Compras.Controllers
             paisList = businessLogic.GetPaisesList();
             idiomaList = businessLogic.GetIdiomaList();
             tipoProveedorList = businessLogic.GetTipoProveedorList();
+            estatusProveedorGetList = businessLogic.GetEstatusProveedorList();
         }
 
         public ActionResult Index()
         {
             CargarCatalogos();
 
+            var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
+            ViewBag.IdUsuarioRol = usuarioInfo.IdUsuarioRol;
             ViewBag.AeropuertoList = aeropuertoList;
             ViewBag.GiroList = giroList;
             ViewBag.TipoProveedorList = tipoProveedorList;
+            ViewBag.EstatusProveedorGetList = estatusProveedorGetList;
             return View();
         }
 
@@ -67,6 +74,7 @@ namespace Eprocurement.Compras.Controllers
             ViewBag.MunicipioList = municipioList;
             ViewBag.TipoProveedorList = tipoProveedorList;
             ViewBag.idProveedor = idProvider;
+            ViewBag.EstatusProveedorGetList = estatusProveedorGetList;
             try
             {
                 BusinessLogic businessLogic = new BusinessLogic();
@@ -96,7 +104,8 @@ namespace Eprocurement.Compras.Controllers
                     RazonSocial = response.RazonSocial,
                     RFC = response.RFC     ,
                     Mexicana = response.Mexicana,
-                    Extranjera = response.Extranjera
+                    Extranjera = response.Extranjera,
+                    IdEstatus = response.IdEstatus
                 };
                 proveedor.AeropuertoList = proveedor.AeropuertoList.Where(x => x.Checado).ToList();
                 ViewBag.EstadoList = estadoList;
@@ -120,19 +129,45 @@ namespace Eprocurement.Compras.Controllers
             }
             return View(proveedor);
         }
-        public JsonResult GetProveedorEstatusList(int? idTipoProveedor, int? idGiroProveedor, string idAeropuerto, string nombreEmpresa, string rfc, string email)
+
+        public JsonResult GetProveedorEstatusList(int? idTipoProveedor, int? idGiroProveedor, string idAeropuerto, string nombreEmpresa, string rfc, string email, int? idEstatus)
         {
             try
             {
+                var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
+                var proveedorEstatus = new List<ProveedorEstatusDTO>();
                 BusinessLogic businessLogic = new BusinessLogic();
                 ProveedorEstatusRequestDTO request = new ProveedorEstatusRequestDTO();
-                request.ProveedorFiltro = new ProveedorFiltroDTO { IdTipoProveedor = idTipoProveedor, IdGiroProveedor = idGiroProveedor, IdAeropuerto = idAeropuerto, NombreEmpresa = nombreEmpresa, RFC = rfc, Email = email };
-                string[] estatus = { "1", "2", "3", "4" }; 
-
-                var response = businessLogic.GetProveedorEstatusList(request);
-                var proveedorEstatus = (from t in response.ProveedorList
-                                        where estatus.Contains(t.IdEstatus.ToString())
-                                        select t).ToList();
+                request.ProveedorFiltro = new ProveedorFiltroDTO { IdTipoProveedor = idTipoProveedor, IdGiroProveedor = idGiroProveedor, IdAeropuerto = idAeropuerto, NombreEmpresa = nombreEmpresa, RFC = rfc, Email = email, IdEstatus = idEstatus };
+                //string[] estatus = { "1", "2", "3", "4" };
+                if (usuarioInfo.IdUsuarioRol == 3)
+                {
+                    string[] estatus = { "5", "6", "7", "8" };
+                    var response = businessLogic.GetProveedorEstatusList(request);
+                    proveedorEstatus = (from t in response.ProveedorList
+                                            where estatus.Contains(t.IdEstatus.ToString())
+                                            select t).ToList();
+                } else
+                {
+                    var response = businessLogic.GetProveedorEstatusList(request);
+                    if (idEstatus == null)
+                    {
+                        string[] estatus = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
+                        proveedorEstatus = (from t in response.ProveedorList
+                                            where estatus.Contains(t.IdEstatus.ToString())
+                                            select t).ToList();
+                    }
+                    else
+                    {
+                        string[] estatus = { idEstatus.ToString() };
+                        proveedorEstatus = (from t in response.ProveedorList
+                                            where estatus.Contains(t.IdEstatus.ToString())
+                                            select t).ToList();
+                    }
+                    
+                    
+                }
+                   
 
 
                 //from person in people
@@ -161,9 +196,11 @@ namespace Eprocurement.Compras.Controllers
         {
             try
             {
+
+                var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
                 BusinessLogic businessLogic = new BusinessLogic();
                 ProveedorAprobarRequestDTO request = new ProveedorAprobarRequestDTO();
-                request.EstatusProveedor = new HistoricoEstatusProveedorDTO { IdProveedor = idProveedor, IdEstatusProveedor = estatus, IdUsuario = 3, Observaciones = observaciones };
+                request.EstatusProveedor = new HistoricoEstatusProveedorDTO { IdProveedor = idProveedor, IdEstatusProveedor = estatus, IdUsuario = usuarioInfo.IdUsuario, Observaciones = observaciones };
 
                 var response = businessLogic.SetProveedorEstatus(request);
                 return Json(response.Success, JsonRequestBehavior.AllowGet);
@@ -189,6 +226,60 @@ namespace Eprocurement.Compras.Controllers
             BusinessLogic businessLogic = new BusinessLogic();
             municipioList = businessLogic.GetMunicipioList(idEstado);
             return Json(municipioList, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetAeropuertos(int idProvider)
+        {
+            ProveedorRegistro proveedor;
+            try
+            {
+                BusinessLogic businessLogic = new BusinessLogic();
+                ProveedorDetalleRequestDTO request = new ProveedorDetalleRequestDTO();
+                request.IdProveedor = idProvider;
+
+                var response = businessLogic.GetProveedorElemento(request).Proveedor;
+                var empresaList = response.EmpresaList;
+                aeropuertoList = businessLogic.GetAeropuertosList();
+                proveedor = new ProveedorRegistro
+                {
+                    AeropuertoList = aeropuertoList.Select(a => new AeropuertoDTO { Id = a.Id, Nombre = a.Nombre, Checado = empresaList.Where(el => el.IdCatalogoAeropuerto == a.Id).Count() > 0 ? true : false }).ToList(),
+                };
+                proveedor.AeropuertoList = proveedor.AeropuertoList.Where(x => x.Checado).ToList();
+    
+            }
+            catch (Exception ex)
+            {
+                return Json(new List<AeropuertoDTO>(), JsonRequestBehavior.AllowGet);
+            }
+            return Json(proveedor.AeropuertoList, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetGiros(int idProvider)
+        {
+            var girosProveedor = new List<GiroDTO>();
+            try
+            {
+                BusinessLogic businessLogic = new BusinessLogic();
+                ProveedorDetalleRequestDTO request = new ProveedorDetalleRequestDTO();
+                request.IdProveedor = idProvider;
+                var giroList = businessLogic.GetGirosList();
+                if (giroList != null && giroList.Count > 0)
+                {
+                    var response = businessLogic.GetProveedorElemento(request).Proveedor;
+                    if (response != null && response.ProveedorGiroList != null && response.ProveedorGiroList.Count > 0)
+                    {
+                        girosProveedor = (from a in giroList
+                                         join b in response.ProveedorGiroList on a.IdGiro equals b.IdCatalogoGiro
+                                         select  a).ToList();
+                    }                    
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new List<GiroDTO>(), JsonRequestBehavior.AllowGet);
+            }
+            return Json(girosProveedor, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult About(int idProvider)
@@ -222,10 +313,11 @@ namespace Eprocurement.Compras.Controllers
             return View();
         }
 
-        public ActionResult AprobarInformacionBF(int idProveedor)
+        public ActionResult AprobarInformacionBF(int idProveedor, int idEstatus)
         {
             ProveedorInformacionFinanciera informacionFinanciera = new ProveedorInformacionFinanciera();
             ViewBag.IdProveedor = idProveedor;
+            ViewBag.IdEstatus = idEstatus;
             return View(informacionFinanciera);
         }
 
@@ -235,13 +327,6 @@ namespace Eprocurement.Compras.Controllers
             {
                 ProveedorInformacionFinanciera informacionFinanciera = new ProveedorInformacionFinanciera();
                 informacionFinanciera = new BusinessLogic().GetProveedorInfoFinanciera(idProveedor);
-                //informacionFinanciera.ProveedorCuentaListRegistro = new List<ProveedorCuentaDTO>();
-                //informacionFinanciera.ProveedorCuentaListRegistro.Add(new ProveedorCuentaDTO {
-                //    CLABE = "123456789012345678",
-                //    Cuenta = "1234567890",
-                //    NombreBanco = "BBVA",
-                //    TipoCuenta = "Débito"
-                //});
 
                 return Json(informacionFinanciera.ProveedorCuentaList, JsonRequestBehavior.AllowGet);
             }
@@ -258,14 +343,15 @@ namespace Eprocurement.Compras.Controllers
             {
                 ProveedorInformacionFinanciera informacionFinanciera = new ProveedorInformacionFinanciera();
                 informacionFinanciera = new BusinessLogic().GetProveedorInfoFinanciera(idProveedor);
-                //informacionFinanciera.CatalogoDocumentoList = new List<CatalogoDocumentoDTO>();
-                //informacionFinanciera.CatalogoDocumentoList.Add(new CatalogoDocumentoDTO
-                //{
-                //    NombreDocumento = "PDF",
-                //    RutaDocumento = "localhost"
-                //});
 
-                return Json(informacionFinanciera.CatalogoDocumentoList, JsonRequestBehavior.AllowGet);
+                ProveedorDocumentoRequestDTO proveedorDocumentoRequest = new ProveedorDocumentoRequestDTO
+                {
+                    IdProveedor = idProveedor
+                };
+
+                var proveedorDocumentoResponse = new BusinessLogic().GetProveedorDocumentoList(proveedorDocumentoRequest);
+
+                return Json(proveedorDocumentoResponse.ProveedorDocumentoList, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

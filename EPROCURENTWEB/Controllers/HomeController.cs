@@ -12,12 +12,14 @@ using EprocurementWeb.Business;
 using System.Threading.Tasks;
 using EPROCUREMENT.GAPPROVEEDOR.Entities;
 using EprocurementWeb.Models;
+using System.Net;
+using EprocurementWeb.Models.Response;
 
 namespace EprocurementWeb.Controllers
 {
     public class HomeController : BaseController
     {
-        public List<AeropuertoDTO> aeropuertoList;
+        public List<AeropuertoModel> aeropuertoList;
         public List<ZonaHorariaDTO> zonaHorariaList;
         public List<NacionalidadDTO> nacionalidadList;
         public List<GiroDTO> giroList;
@@ -30,9 +32,17 @@ namespace EprocurementWeb.Controllers
         public ActionResult Index()
         {
             CargarCatalogos();
-            ProveedorRegistro proveedor = new ProveedorRegistro { Contacto = null, Direccion = null };
+            ProveedorModel proveedor = new ProveedorModel { Contacto = null, Direccion = null };
             proveedor.AeropuertoList = aeropuertoList;
             ViewBag.GiroList = giroList;
+            if (giroList != null)
+            {
+                ViewBag.cantidadGiro = giroList.Count;
+            }
+            else
+            {
+                ViewBag.cantidadGiro = 0;
+            }
             ViewBag.ZonaHorariaList = zonaHorariaList;
             ViewBag.NacionalidadList = nacionalidadList;
             ViewBag.PaisList = paisList;
@@ -42,19 +52,21 @@ namespace EprocurementWeb.Controllers
             ViewBag.TipoProveedorList = tipoProveedorList;
             proveedor.Mexicana = true;
             ViewBag.colonias = new List<string>();
+            ViewBag.errorResultado = 0;
+            ViewBag.recaptchaPublickey = System.Web.Configuration.WebConfigurationManager.AppSettings["recaptchaPublickey"];
             return View(proveedor);
         }
 
         [HttpPost, ActionName("Index")]
         [ValidateAntiForgeryToken]
-        public ActionResult GuardarProveedor(ProveedorRegistro proveedor)
+        public ActionResult GuardarProveedor(ProveedorModel proveedor)
         {
             proveedor.IdTipoProveedor = 1;
             proveedor.IdNacionalidad = 1;
             proveedor.Direccion.DireccionValidada = true;
-            //proveedor.Direccion.IdPais = proveedor.i
             CargarCatalogos();
             ViewBag.GiroList = giroList;
+            ViewBag.cantidadGiro = giroList != null ? giroList.Count : 0;
             ViewBag.ZonaHorariaList = zonaHorariaList;
             ViewBag.NacionalidadList = nacionalidadList;
             ViewBag.PaisList = paisList;
@@ -62,14 +74,71 @@ namespace EprocurementWeb.Controllers
             ViewBag.EstadoList = estadoList;
             ViewBag.MunicipioList = municipioList;
             ViewBag.TipoProveedorList = tipoProveedorList;
-            proveedor.EmpresaList = proveedor.AeropuertoList.Where(a => a.Checado).Select(a => new ProveedorEmpresaDTO { IdCatalogoAeropuerto = a.Id }).ToList();
+            ViewBag.errorResultado = 0;
+            ViewBag.recaptchaPublickey = System.Web.Configuration.WebConfigurationManager.AppSettings["recaptchaPublickey"];
+            proveedor.EmpresaList = proveedor.AeropuertoList.Where(a => a.Checado).Select(a => new ProveedorEmpresaModel { IdCatalogoAeropuerto = a.Id }).ToList();
             ViewBag.colonias = new List<string>();
-            BusinessLogic businessLogic = new BusinessLogic();
-            ProveedorResponseDTO response = businessLogic.PostProveedor(proveedor);
-            if (response.Success)
+
+            CaptchaResponse captchaResponse = BusinessLogic.ValidateCaptcha(Request["g-recaptcha-response"]);
+            if (captchaResponse.Success)
             {
-                return Redirect("/Home/Index#success");
-                //return RedirectToAction("Contact");
+                try
+                {        
+                    if (proveedor.ProveedorGiroList == null || !proveedor.ProveedorGiroList.Exists(x => x.IdCatalogoGiro > 0))
+                    {
+                        ModelState.AddModelError("ErrorEmpresa", "Debe agregar al menos una empresa");
+                    }
+                    if (proveedor.AeropuertoList == null || !proveedor.AeropuertoList.Exists(x => x.Checado))
+                    {
+                        ModelState.AddModelError("ErrorAeropuerto", "Debe seleccionar al menos un aeropuerto");
+                    }
+                    if (!proveedor.Mexicana && !proveedor.Extranjera)
+                    {
+                        ModelState.AddModelError("ErrorTipoEmpresa", "Debe seleccionar una opción");
+                    }
+
+                    for (var pos = 0; pos < proveedor.ProveedorGiroList.Count; pos++)
+                    {
+                        if (ModelState["ProveedorGiroList[" + pos + "].IdCatalogoGiro"] != null)
+                        {
+                            ModelState["ProveedorGiroList[" + pos + "].IdCatalogoGiro"].Errors.Clear();
+                        }
+                    }
+                    if (ModelState.IsValid)
+                    {
+                        BusinessLogic businessLogic = new BusinessLogic();
+                        var validacionRFC = ValidacionCampos(new ProveedorFiltroRequestModel { Filtro = proveedor.RFC, TipoFiltro = Models.TipoFiltro.RFC });
+                        if (!validacionRFC)
+                        {
+                            ModelState.AddModelError("RFC", "Este RFC ya se encuentra registrado");
+                        }
+                        var validacionEmail = ValidacionCampos(new ProveedorFiltroRequestModel { Filtro = proveedor.Contacto.Email, TipoFiltro = Models.TipoFiltro.Email });
+                        if (!validacionEmail)
+                        {
+                            ModelState.AddModelError("Contacto.Email", "Este Email ya se encuentra registrado");
+                        }
+                        if (!validacionRFC || !validacionEmail) { return View(proveedor); }
+
+                        ProveedorResponseModel response = businessLogic.PostProveedor(proveedor);
+                        if (response.Success)
+                        {
+                            return Redirect("/Home/Index#success");
+                        }
+                        else
+                        {
+                            ViewBag.errorResultado = 1;
+                        }
+                    }
+                }
+                catch
+                {
+
+                }
+                
+            }
+            else
+            {
+                ViewBag.errorResultado = 1;
             }
             return View(proveedor);
         }
@@ -141,8 +210,8 @@ namespace EprocurementWeb.Controllers
             //}
 
 
-            ViewBag.Title = RHome.About;
-            ViewBag.Message = RHome.AboutMessage;
+            ViewBag.Title = EprocurementWeb.GlobalResources.RHome.About;
+            ViewBag.Message = @EprocurementWeb.GlobalResources.RHome.AboutMessage;
 
             return View();
         }
@@ -150,8 +219,8 @@ namespace EprocurementWeb.Controllers
         [HttpGet]
         public ActionResult Contact()
         {
-            ViewBag.Title = RHome.Contact;
-            ViewBag.Message = RHome.ContactMessage;
+            ViewBag.Title = @EprocurementWeb.GlobalResources.RHome.Contact;
+            ViewBag.Message = @EprocurementWeb.GlobalResources.RHome.ContactMessage;
             ViewBag.ContactResult = TempData["ContactResult"];
             ViewBag.ContactResultMessage = TempData["ContactResultMessage"] ?? "";
             return View();
@@ -160,18 +229,66 @@ namespace EprocurementWeb.Controllers
         [HttpPost]
         public ActionResult Contact(ContactModel model)
         {
-            ViewBag.Title = RHome.Contact;
-            ViewBag.Message = RHome.ContactMessage;
+            ViewBag.Title = @EprocurementWeb.GlobalResources.RHome.Contact;
+            ViewBag.Message = @EprocurementWeb.GlobalResources.RHome.ContactMessage;
             if (ModelState.IsValid)
             {
                 /* Do something with this information */
                 TempData["ContactResult"] = true;
-                TempData["ContactResultMessage"] = RHome.ContactMessageSendOk;
+                TempData["ContactResultMessage"] = @EprocurementWeb.GlobalResources.RHome.ContactMessageSendOk;
                 return RedirectToAction("Contact"); /* Post-Redirect-Get Pattern */
             }
             ViewBag.ContactResult = false;
-            ViewBag.ContactResultMessage = RHome.ContactMessageSendNok;
+            ViewBag.ContactResultMessage = @EprocurementWeb.GlobalResources.RHome.ContactMessageSendNok;
             return View(model);
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult ValidaRFC(string rfc)
+        {
+            var resultado = string.Empty;
+            BusinessLogic businessLogic = new BusinessLogic();
+            ProveedorFiltroRequestModel request = new ProveedorFiltroRequestModel { Filtro = rfc, TipoFiltro = Models.TipoFiltro.RFC };
+            var response = businessLogic.ObtenerProveedorFiltro(request);
+            if(response.Success)
+            {
+                if(response.Proveedor != null)
+                {
+                    resultado = "El RFC: " + rfc + " ya se encuentra registrado.";
+                }
+            }
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult ValidaEmail(string email)
+        {
+            var resultado = string.Empty;
+            BusinessLogic businessLogic = new BusinessLogic();
+            ProveedorFiltroRequestModel request = new ProveedorFiltroRequestModel { Filtro = email, TipoFiltro = Models.TipoFiltro.Email };
+            var response = businessLogic.ObtenerProveedorFiltro(request);
+            if (response.Success)
+            {
+                if (response.Proveedor != null)
+                {
+                    resultado = "El Email: " + email + " ya se encuentra registrado.";
+                }
+            }
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+
+        public bool ValidacionCampos(ProveedorFiltroRequestModel request)
+        {
+            BusinessLogic businessLogic = new BusinessLogic();
+            var response = businessLogic.ObtenerProveedorFiltro(request);
+            if (response.Success)
+            {
+                if (response.Proveedor != null)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

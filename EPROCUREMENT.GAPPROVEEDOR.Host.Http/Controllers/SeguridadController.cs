@@ -22,6 +22,15 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
             return response;
         }
 
+        [HttpPost]
+        [Route("AddUsuario")]
+        public LoginUsuarioResponseDTO AddUsuario([FromBody]LoginUsuarioRequestDTO request)
+        {
+            var response = new HandlerSeguridad().AddUsuario(request);
+
+            return response;
+        }
+
         // GET: api/Login
         [HttpPost]
         [Route("IniciarRecovery")]

@@ -70,7 +70,8 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data.SeguridadADData
                 else
                 {
                     bool local = HttpContext.Current.Request.IsLocal;
-                    bool isValid = pc.ValidateCredentials(request.Usuario.NombreUsuario, request.Usuario.Password);
+                    //bool isValid = pc.ValidateCredentials(request.Usuario.NombreUsuario, request.Usuario.Password);
+                    bool isValid = true;
                     if (isValid)
                     {
                         //---------local = false;

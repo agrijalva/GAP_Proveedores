@@ -12,6 +12,9 @@ using System.Text;
 using System.Threading.Tasks;
 using EprocurementWeb.Properties;
 using System.IO;
+using EPROCUREMENT.GAPPROVEEDOR.Entities.Proveedor;
+using System.Net;
+using EprocurementWeb.Models.Response;
 
 namespace EprocurementWeb.Business
 {
@@ -42,9 +45,9 @@ namespace EprocurementWeb.Business
             return response;
         }
 
-        public ProveedorDetalleResponseDTO GetProveedorElemento(ProveedorDetalleRequestDTO request)
+        public ProveedorDetalleResponseModel GetProveedorElemento(ProveedorDetalleRequestModel request)
         {
-            ProveedorDetalleResponseDTO response = new ProveedorDetalleResponseDTO();
+            ProveedorDetalleResponseModel response = new ProveedorDetalleResponseModel();
 
 
             using (var client = new HttpClient())
@@ -60,8 +63,7 @@ namespace EprocurementWeb.Business
                 {
                     var readTask = result.Content.ReadAsStringAsync();
                     JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
-                    response = JSSerializer.Deserialize<ProveedorDetalleResponseDTO>(readTask.Result);
-
+                    response = JSSerializer.Deserialize<ProveedorDetalleResponseModel>(readTask.Result);
                 }
             }
             return response;
@@ -87,9 +89,9 @@ namespace EprocurementWeb.Business
             }
             return lstPaises;
         }
-        public List<AeropuertoDTO> GetAeropuertosList()
+        public List<AeropuertoModel> GetAeropuertosList()
         {
-            var lstAeropuertos = new List<AeropuertoDTO>();
+            var lstAeropuertos = new List<AeropuertoModel>();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(urlApi + "api/Catalogo/");
@@ -101,7 +103,7 @@ namespace EprocurementWeb.Business
                     var readTask = result.Content.ReadAsStringAsync();
                     JavaScriptSerializer JSserializer = new JavaScriptSerializer();
 
-                    var response = JSserializer.Deserialize<AeropuertoResponseDTO>(readTask.Result);
+                    var response = JSserializer.Deserialize<AeropuertoResponseModel>(readTask.Result);
                     lstAeropuertos = response.AeropuertoList;
                 }
             }
@@ -263,10 +265,10 @@ namespace EprocurementWeb.Business
             return lstTipoProveedor;
         }
 
-        public ProveedorResponseDTO PostProveedor(ProveedorRegistro proveedor)
+        public ProveedorResponseModel PostProveedor(ProveedorModel proveedor)
         {
-            ProveedorResponseDTO response = null;
-            ProveedorRequesteDTO proveedorRequest = new ProveedorRequesteDTO { IdUsuario = 0, Proveedor = proveedor };
+            ProveedorResponseModel response = null;
+            ProveedorRequestModel proveedorRequest = new ProveedorRequestModel { IdUsuario = 0, Proveedor = proveedor };
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
@@ -280,13 +282,124 @@ namespace EprocurementWeb.Business
                 {
                     var readTask = result.Content.ReadAsStringAsync();
                     JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
-                    response = JSSerializer.Deserialize<ProveedorResponseDTO>(readTask.Result);
+                    response = JSSerializer.Deserialize<ProveedorResponseModel>(readTask.Result);
                 }
             }
             return response;
         }
 
         public bool GuardarDocumentos(string rfc, List<CatalogoDocumentoDTO> files)
+        {
+            bool respuesta = false;
+
+            foreach (var file in files)
+            {
+                if (file != null)
+                {
+
+                    //var InputFileName = Path.GetFileName(file.File.FileName);
+                    //InputFileName = file.IdCatalogoDocumento + "_" + InputFileName;
+                    //var ServerSavePath = Path.Combine(rutaP + "\\" + file.NombreDocumento);
+                    //file.File.SaveAs(ServerSavePath);
+
+                    using (var client = new HttpClient())
+                    {
+                        client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+                        using (var content = new MultipartFormDataContent())
+                        {
+                            byte[] Bytes = new byte[file.File.InputStream.Length + 1];
+                            file.File.InputStream.Read(Bytes, 0, Bytes.Length);
+                            var fileContent = new ByteArrayContent(Bytes);
+                            fileContent.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment") { FileName = file.NombreDocumento };
+                            content.Add(fileContent);
+                            //var requestUri = urlApi + "api/Proveedor/Upload/";
+                            var result = client.PostAsync("Upload", content).Result;
+
+                            if (result.StatusCode == System.Net.HttpStatusCode.Created)
+                            {
+                                respuesta = true;
+
+                            }
+                            else
+                            {
+                                respuesta = false;
+                            }
+                        }
+                    }
+                }
+            }
+            respuesta = true;
+
+            return respuesta;
+        }
+
+        public ProveedorCuentaResponseDTO GetProveedorCuentaList(ProveedorCuentaRequestDTO request)
+        {
+            ProveedorCuentaResponseDTO response = new ProveedorCuentaResponseDTO();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+                var json = JsonConvert.SerializeObject(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var responseTask = client.PostAsync("ProveedorCuentaList", content);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+                    response = JSSerializer.Deserialize<ProveedorCuentaResponseDTO>(readTask.Result);
+                }
+            }
+            return response;
+        }
+
+        //public ProveedorCuentaResponseDTO GetProveedorCuentaAeropuertoList(ProveedorCuentaRequestDTO request)
+        //{
+        //    ProveedorCuentaResponseDTO response = new ProveedorCuentaResponseDTO();
+        //    using (var client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+        //        var json = JsonConvert.SerializeObject(request);
+        //        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        //        var responseTask = client.PostAsync("ProveedorCuentaAeropuertoList", content);
+        //        responseTask.Wait();
+
+        //        var result = responseTask.Result;
+        //        if (result.IsSuccessStatusCode)
+        //        {
+        //            var readTask = result.Content.ReadAsStringAsync();
+        //            JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+        //            response = JSSerializer.Deserialize<ProveedorCuentaResponseDTO>(readTask.Result);
+        //        }
+        //    }
+        //    return response;
+        //}
+
+        //public ProveedorDocumentoResponseDTO GetProveedorDocumentoList(ProveedorDocumentoRequestDTO request)
+        //{
+        //    ProveedorDocumentoResponseDTO response = new ProveedorDocumentoResponseDTO();
+        //    using (var client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+        //        var json = JsonConvert.SerializeObject(request);
+        //        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        //        var responseTask = client.PostAsync("GetProveedorDocumentoList", content);
+        //        responseTask.Wait();
+
+        //        var result = responseTask.Result;
+        //        if (result.IsSuccessStatusCode)
+        //        {
+        //            var readTask = result.Content.ReadAsStringAsync();
+        //            JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+        //            response = JSSerializer.Deserialize<ProveedorDocumentoResponseDTO>(readTask.Result);
+        //        }
+        //    }
+        //    return response;
+        //}
+
+        public bool GuardarDocumentosBack(string rfc, List<CatalogoDocumentoDTO> files)
         {
             string ruta = Settings.Default["RutaDocumentos"].ToString();
             string rutaF = HttpContext.Current.Server.MapPath(ruta);
@@ -311,7 +424,7 @@ namespace EprocurementWeb.Business
                         //var extension = Path.GetExtension(file.File.FileName);
                         var InputFileName = Path.GetFileName(file.File.FileName);
                         InputFileName = file.IdCatalogoDocumento + "_" + InputFileName;
-                        var ServerSavePath = Path.Combine(rutaP + "\\" + InputFileName);
+                        var ServerSavePath = Path.Combine(rutaP + "\\" + file.NombreDocumento);
                         file.File.SaveAs(ServerSavePath);
                     }
                 }
@@ -337,7 +450,7 @@ namespace EprocurementWeb.Business
                     string fn = Path.GetFileName(file);
                     string[] idDoc = fn.Split('_');
                     int id = idDoc.Length > 0 ? Convert.ToInt32(idDoc[0]) : 0;
-                    foreach(var doc in files)
+                    foreach (var doc in files)
                     {
                         if (doc.IdCatalogoDocumento == id)
                         {
@@ -488,6 +601,28 @@ namespace EprocurementWeb.Business
             return response;
         }
 
+        public InformacionFinancieraResponseDTO InsertarInformacionFinanciera(InformacionFinancieraRequestDTO informacionFinanciera)
+        {
+            InformacionFinancieraResponseDTO response = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+                var json = JsonConvert.SerializeObject(informacionFinanciera);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var responseTask = client.PostAsync("InsertarInformacionFinanciera", content);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+                    response = JSSerializer.Deserialize<InformacionFinancieraResponseDTO>(readTask.Result);
+                }
+            }
+            return response;
+        }
+
         public ProveedorEstatusResponseDTO SetProveedorEstatus(ProveedorAprobarRequestDTO request)
         {
             ProveedorEstatusResponseDTO response = new ProveedorEstatusResponseDTO();
@@ -544,11 +679,11 @@ namespace EprocurementWeb.Business
             return usuarioDTO;
         }
 
-        public string RecuperarPasswordUsuario(string email, bool esSolicitud)
+        public string RecuperarPasswordUsuario(string nombreUsuario, bool esSolicitud)
         {
             UsuarioDTO usuarioDTO = new UsuarioDTO
             {
-                Email = email
+                NombreUsuario = nombreUsuario
             };
             ResetPasswordRequestDTO loginUsuario = new ResetPasswordRequestDTO { Usuario = usuarioDTO, EsSolicitud = esSolicitud };
             string token = null;
@@ -636,10 +771,10 @@ namespace EprocurementWeb.Business
             return codigoPostalItem;
         }
 
-        public bool PostTempProveedor(ProveedorRegistro proveedor)
+        public bool PostTempProveedor(ProveedorModel proveedor)
         {
-            ProveedorResponseDTO response = null;
-            ProveedorRequesteDTO proveedorRequest = new ProveedorRequesteDTO { IdUsuario = 0, Proveedor = proveedor };
+            ProveedorResponseModel response = null;
+            ProveedorRequestModel proveedorRequest = new ProveedorRequestModel { IdUsuario = 0, Proveedor = proveedor };
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
@@ -653,10 +788,161 @@ namespace EprocurementWeb.Business
                 {
                     var readTask = result.Content.ReadAsStringAsync();
                     JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
-                    response = JSSerializer.Deserialize<ProveedorResponseDTO>(readTask.Result);
+                    response = JSSerializer.Deserialize<ProveedorResponseModel>(readTask.Result);
                 }
             }
             return response.Success;
+        }
+
+        public ProveedorFiltroResponseModel ObtenerProveedorFiltro(ProveedorFiltroRequestModel request)
+        {
+            var responseFilter = new ProveedorFiltroResponseModel();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+                var json = JsonConvert.SerializeObject(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var responseTask = client.PostAsync("ProveedorFiltro", content);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+                    responseFilter = JSSerializer.Deserialize<ProveedorFiltroResponseModel>(readTask.Result);
+                    
+                }
+            }
+            return responseFilter;
+        }
+
+        public ContactoResponseDTO GetContactoProveedorList(ContactoRequestDTO request)
+        {
+            ContactoResponseDTO response = new ContactoResponseDTO();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+                var json = JsonConvert.SerializeObject(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var responseTask = client.PostAsync("ContactoProveedorList", content);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+                    response = JSSerializer.Deserialize<ContactoResponseDTO>(readTask.Result);
+                }
+            }
+            return response;
+        }
+
+        public ContactoResponseDTO UpdateContacto(ContactoRequestDTO request)
+        {
+            ContactoResponseDTO response = new ContactoResponseDTO();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+                var json = JsonConvert.SerializeObject(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var responseTask = client.PostAsync("UpdateContacto", content);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+                    response = JSSerializer.Deserialize<ContactoResponseDTO>(readTask.Result);
+                }
+            }
+            return response;
+        }
+
+        public ContactoResponseDTO DeleteContacto(ContactoRequestDTO request)
+        {
+            ContactoResponseDTO response = new ContactoResponseDTO();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+                var json = JsonConvert.SerializeObject(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var responseTask = client.PostAsync("DeleteContacto", content);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+                    response = JSSerializer.Deserialize<ContactoResponseDTO>(readTask.Result);
+                }
+            }
+            return response;
+        }
+
+        public ProveedorDocumentoResponseDTO GetProveedorDocumentoList(ProveedorDocumentoRequestDTO request)
+        {
+            ProveedorDocumentoResponseDTO response = new ProveedorDocumentoResponseDTO();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+                var json = JsonConvert.SerializeObject(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var responseTask = client.PostAsync("GetProveedorDocumentoList", content);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+                    response = JSSerializer.Deserialize<ProveedorDocumentoResponseDTO>(readTask.Result);
+                    foreach(var documento in response.ProveedorDocumentoList)
+                    {
+                        documento.NombreArchivo = ConfigurationManager.AppSettings["urlApi"] + "api/Proveedor/Documento?image=" + documento.NombreArchivo;
+                    }
+                }
+            }
+            return response;
+        }
+
+        public ProveedorInformacionFinanciera GetProveedorInfoFinanciera(int idProveedor)
+        {
+            List<EstadoDTO> lstEstado = new List<EstadoDTO>();
+            ProveedorInformacionFinancieraRequestDTO estado = new ProveedorInformacionFinancieraRequestDTO { IdProveedor = idProveedor };
+            ProveedorInformacionFinanciera proveedor = new ProveedorInformacionFinanciera();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/Proveedor/");
+                var json = JsonConvert.SerializeObject(estado);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var responseTask = client.PostAsync("ProveedorInfoFinanciera", content);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+                    var response = JSSerializer.Deserialize<ProveedorInformacionFinanciera>(readTask.Result);
+                    proveedor = response;
+                }
+            }
+            return proveedor;
+        }
+
+        public static CaptchaResponse ValidateCaptcha(string response)
+        {
+            string secret = System.Web.Configuration.WebConfigurationManager.AppSettings["recaptchaPrivatekey"];
+            var client = new WebClient();
+            var jsonResult = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secret, response));
+            return JsonConvert.DeserializeObject<CaptchaResponse>(jsonResult.ToString());
         }
     }
 }

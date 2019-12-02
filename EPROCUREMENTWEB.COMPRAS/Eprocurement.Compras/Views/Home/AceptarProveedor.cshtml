@@ -33,9 +33,9 @@
                                 <div class="row">
                                     <div class="col-sm-12" style="font-size:12px;">
                                         <label class="label-formulario">Tipo de Empresa</label><br />
-                                        @Html.CheckBoxFor(m => m.Mexicana, new { @class = "" })
+                                        @Html.CheckBoxFor(m => m.Mexicana, new { @class = "", @disabled = "disabled" })
                                         @Html.Label("Mexicana", new { @class = "" })&nbsp;&nbsp;&nbsp;&nbsp;
-                                        @Html.CheckBoxFor(m => m.Extranjera, new { @class = "" })
+                                        @Html.CheckBoxFor(m => m.Extranjera, new { @class = "", @disabled = "disabled" })
                                         @Html.Label("Extranjera", new { @class = "" })
                                     </div>
                                 </div>
@@ -67,7 +67,7 @@
                                     <div class="col-md-3" id="inpgro-tin">
                                         <div class="form-group">
                                             @Html.Label("TIN", "TIN", new { id = "lblTIN", @class = "label-formulario" })
-                                            @Html.TextBoxFor(model => model.Direccion.TIN, new { @class = "form-control col-md-12" })
+                                            @Html.TextBoxFor(model => model.TIN, new { @class = "form-control col-md-12" })
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -229,7 +229,7 @@
                                             @Html.DropDownListFor(model => model.Contacto.IdZonaHoraria, new SelectList(ViewBag.ZonaHorariaList, "IdZonaHoraria", "Nombre"), "...", new { @class = "form-control col-md-12 disabled" })
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-3" style="display:none">
                                         <div class="form-group">
                                             @Html.Label("idioma", "Idioma", new { @class = "label-formulario" })
                                             @Html.DropDownListFor(model => model.Contacto.IdIdioma, new SelectList(ViewBag.IdiomaList, "IdIdioma", "NombreIdioma"), "...", new { @class = "form-control col-md-12 disabled" })
@@ -269,7 +269,7 @@
                                                 @Html.HiddenFor(model => aeropuerto.Id)
                                                 @Html.HiddenFor(model => aeropuerto.Nombre)
                                                 <div class="col-sm-4 mt-2" style="font-size:12px;">
-                                                    @Html.CheckBoxFor(model => aeropuerto.Checado, new { @value = aeropuerto.Checado })
+                                                    @Html.CheckBoxFor(model => aeropuerto.Checado, new { @value = aeropuerto.Checado, @disabled = "disabled"  })
                                                     @Html.DisplayTextFor(model => aeropuerto.Nombre)
                                                 </div>
                                             }
@@ -281,7 +281,7 @@
                                             @Html.HiddenFor(model => giro.IdProveedorGiro)
                                             <div class="form-group col-md-12 mt-2">
                                                 <div class="col-md-10">
-                                                    @Html.DropDownListFor(x => giro.IdCatalogoGiro, new SelectList(ViewBag.GiroList, "IdGiro", "GiroNombre", giro.IdCatalogoGiro), "...", new { @class = "form-control col-md-12" })
+                                                    @Html.DropDownListFor(x => giro.IdCatalogoGiro, new SelectList(ViewBag.GiroList, "IdGiro", "GiroNombre", giro.IdCatalogoGiro), "...", new { @class = "form-control col-md-12", @disabled = "disabled" })
                                                 </div>
                                             </div>
                                          }
@@ -296,18 +296,30 @@
     </div>
     
     <div class="row mt-5">
+        @Html.Hidden("IdEstatus", Model.IdEstatus)
+        
+        @if (Model.IdEstatus == 1 || Model.IdEstatus == 9)
+        {
+            <div class="col-sm-3">
+                <input id="btnDocumentacion" class="btnStyle btnWhite" type="button" value="Documentacion pendiente " />
+            </div>
+            <div class="col-sm-3">
+                <input type="button" class="btnStyle btnWhite" data-toggle="modal" data-target="#modalRechazar" value="Rechazar" />
+            </div>
+        }
         <div class="col-sm-3">
-            <input id="btnDocumentacion" class="btnStyle btnWhite" type="button" value="Documentacion pendiente " />
+            @*<input id="btnCancelar" class="btnStyle btnWhite" type="button" value="Cancelar" />*@
+            <a href="@Url.Action("Index", "Home")">
+                <input id="btnCancelar" class="btnStyle btnWhite" type="button" value="Cancelar" />
+            </a>
         </div>
-        <div class="col-sm-3">
-            <input type="button" class="btnStyle btnWhite" data-toggle="modal" data-target="#modalRechazar" value="Rechazar" />
-        </div>
-        <div class="col-sm-3">
-            <input id="btnCancelar" class="btnStyle btnWhite" type="button" value="Cancelar" />
-        </div>
-        <div class="col-sm-3">
-            <input id="btnAprobar" class="btnStyle" type="button" value="Guardar" />
-        </div>
+        @* Se puso = 0 para seguir con las pruebas *@
+        @if (Model.IdEstatus == 1 || Model.IdEstatus == 9)
+        {
+            <div class="col-sm-3">
+                <input id="btnAprobar" class="btnStyle" type="button" value="Guardar" />
+            </div>
+        }
     </div>
 
     <!-- Modal -->
@@ -323,14 +335,14 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-12">
-                            <label for="observaciones" class="col-form-label">Ingresa un comentario para el proveedor</label>
-                            <textarea class="form-control" id="observaciones"></textarea>
+                            <label for="observaciones" class="col-form-label label-b">Ingresa un comentario para el proveedor</label><br />
+                            <textarea class="form-control" id="observaciones" placeholder="Motivo de rechazo"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btnStyle btnWhite" data-dismiss="modal">Cancelar</button>
-                    <button type="button" id="btnRechazar" class="btnStyle"><i class='fas fa-paper-plane'></i> Enviar</button>
+                    <button type="button" class="btnStyle btnWhite btn-modal-cancelar" data-dismiss="modal">Cancelar</button>
+                    <button type="button" id="btnRechazar" class="btnStyle btn-modal-aceptar"><i class='fas fa-paper-plane'></i> Enviar</button>
                 </div>
             </div>
         </div>
@@ -446,8 +458,12 @@
 
 
         $("#btnRechazar").click(function () {
-             obs = $("#observaciones").val();
+            obs = $("#observaciones").val();
+            var idEstatus = $("#IdEstatus").val();
             estatus = 2;
+            if (idEstatus == 9) {
+                estatus = 12;
+            }
 
             var jsonData = JSON.stringify({ idProveedor: idProveedor, observaciones: obs, estatus: estatus });
             Swal.fire({
@@ -460,6 +476,7 @@
                 confirmButtonText: 'Aceptar',
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
+                console.log('result', result);
                 if (result.value) {
                      $.ajax({
                             type: "POST",
@@ -490,9 +507,13 @@
 
         $("#btnAprobar").click(function () {
 
+            var idEstatus = $("#IdEstatus").val();
+            console.log($("#IdEstatus").val());
             obs = "";
-            estatus = 4;
-
+            estatus = 3;
+            if (idEstatus == 9) {
+                estatus = 11;
+            }
             var jsonData = JSON.stringify({ idProveedor: idProveedor, observaciones: obs, estatus: estatus });
             Swal.fire({
                 title: '¿Esta seguro de aprobar el proveedor?',
@@ -504,6 +525,7 @@
                 confirmButtonText: 'Aceptar',
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
+                console.log('result', result);
                 if (result.value) {
                      $.ajax({
                             type: "POST",

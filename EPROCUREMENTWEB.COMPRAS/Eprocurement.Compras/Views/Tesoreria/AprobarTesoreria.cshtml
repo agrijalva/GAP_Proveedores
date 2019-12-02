@@ -10,7 +10,9 @@
             <div class="card-body">
                 <div class="row">
                     @Html.Hidden("IdUsuarioRol", (int)ViewBag.IdUsuarioRol)
-                    <div class="col-md-12 h-filtro">Filtrar por</div>
+                    <div class="col-md-12 h-filtro">
+                        Filtrar por
+                    </div> 
                     <div class="form-group col-md-4">
                         @Html.Label("rfc", "RFC", new { @class = "control-label text-right " })
                         @Html.TextBox("rfc", "", new { @class = "form-control" })
@@ -31,13 +33,11 @@
                         @Html.DropDownList("aeropuerto", new SelectList(ViewBag.AeropuertoList, "Id", "Nombre"), "Seleccione una opción", new { @class = "form-control" })
                     </div>
                     <div class="form-group col-md-4">
-                        <label class="control-label text-right">Estatus</label>
-                        <select class="form-control">
-                            <option>...</option>
-                        </select>
+                        @Html.Label("Estatus", "Estatus", new { @class = "control-label text-right " })
+                        @Html.DropDownList("estatus", new SelectList(ViewBag.EstatusProveedorGetList, "IdEstatusProveedor", "EstatusDescripcion"), "Seleccione una opción", new { @class = "form-control" })
                     </div>
                     <div class="form-group col-md-4">
-                        <button id="buscar" class="btn btn-search btn-purple float-right">
+                        <button id="buscar" class="btn btn-search btn-purple float-right" onclick="fn_buscarTesoreria()">
                             <i class="fas fa-search"></i> Buscar
                         </button>
                     </div>
@@ -74,8 +74,10 @@
          var idAeropuerto = $('#aeropuerto').val() == '' ? null : $('#aeropuerto').val();
          var email = $('#email').val() == '' ? null : $('#email').val();
          var nombreEmpresa = $('#proveedor').val() == '' ? null : $('#proveedor').val();
-         var rfc = $('#rfc').val() == '' ? null : $('#rfc').val();
-         var jsonData = JSON.stringify({ idTipoProveedor: tipoProveedor, idGiroProveedor: idGiroProveedor, idAeropuerto: idAeropuerto, nombreEmpresa: nombreEmpresa, rfc: rfc, email: email });
+        var rfc = $('#rfc').val() == '' ? null : $('#rfc').val();
+        var idEstatus = $('#estatus').val() == '' ? null : $('#estatus').val();
+        console.log(idEstatus);
+        var jsonData = JSON.stringify({ idTipoProveedor: tipoProveedor, idGiroProveedor: idGiroProveedor, idAeropuerto: idAeropuerto, nombreEmpresa: nombreEmpresa, rfc: rfc, email: email, idEstatus: idEstatus });
          $.ajax({
              type: "POST",
              contentType: "application/json; charset=utf-8",
@@ -103,10 +105,10 @@
 
                      @*var link = '@Html.ActionLink(" ", "About", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
                      link = link.replace('_idProv_', data[i].IdProveedor);*@
-
+                     
                      var link = '@Html.ActionLink(" ", "AceptarProveedor", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
                      link = link.replace('_idProv_', data[i].IdProveedor);
-                     console.log("link", link);
+                     //console.log("link", link);
 
                      var color = ''
                      switch (data[i].IdEstatus) {
@@ -147,8 +149,9 @@
          var idAeropuerto = $('#aeropuerto').val() == '' ? null : $('#aeropuerto').val();
          var email = $('#email').val() == '' ? null : $('#email').val();
          var nombreEmpresa = $('#proveedor').val() == '' ? null : $('#proveedor').val();
-         var rfc = $('#rfc').val() == '' ? null : $('#rfc').val();
-         var jsonData = JSON.stringify({ idTipoProveedor: tipoProveedor, idGiroProveedor: idGiroProveedor, idAeropuerto: idAeropuerto, nombreEmpresa: nombreEmpresa, rfc: rfc, email: email });
+        var rfc = $('#rfc').val() == '' ? null : $('#rfc').val();
+        var idEstatus = $('#estatus').val() == '' ? null : $('#estatus').val();
+        var jsonData = JSON.stringify({ idTipoProveedor: tipoProveedor, idGiroProveedor: idGiroProveedor, idAeropuerto: idAeropuerto, nombreEmpresa: nombreEmpresa, rfc: rfc, email: email, idEstatus: idEstatus });
          $.ajax({
              type: "POST",
              contentType: "application/json; charset=utf-8",
@@ -156,7 +159,7 @@
              data: jsonData,
              async: false,
              success: function(data) {
-                 console.log("Traigo Datos", data)
+                 //console.log("Traigo Datos", data)
                  $("#Table").html('');
                  $("#Table").append('<thead class="bg-light-purple"><tr>' +
                      //'<td>IdProveedor</td>'+
@@ -164,7 +167,7 @@
                      '<td>Proveedor</td>' +
                      '<td>Email</td>' +
                      '<td>Estatus</td>' +
-                     '<td  align="right">Estatus AX</td>' +
+                     '<td  align="center">Estatus AX</td>' +
                      '<td>Ver</td></tr></thead>'
                  );
                   //("#Table").DataTable().destroy();
@@ -172,22 +175,41 @@
                  $("#Table").DataTable().destroy();
 
                  $("#Table").append('<tbody>');
+                 console.log( "Data", data );
                  for (i = 0; i < data.length; i++) {
 
                      @*var link = '@Html.ActionLink(" ", "About", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
                      link = link.replace('_idProv_', data[i].IdProveedor);*@
 
-                     var link = '@Html.ActionLink(" ", "AprobarInformacionBF", "Home", new { idProveedor ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
+                     var link = '@Html.ActionLink(" ", "AprobarInformacionBF", "Home", new { idProveedor ="_idProv_", idEstatus = "_idEst_" }, new { @class = "fas fa-eye icon-color" })';
                      link = link.replace('_idProv_', data[i].IdProveedor);
-                     console.log("link", link);
+                     link = link.replace('_idEst_', data[i].IdEstatus);
+                     //console.log("link", link);
 
+
+                     var color = ''
+                     switch (data[i].IdEstatus) {
+                         case 5: color = '#43ac3e';
+                             break;
+                         case 6: color = '#de343c';
+                             break;
+                         case 7: color = '#f9a32f';
+                             break;
+                         case 8: color = '#43ac3e';
+                             break;
+                         case 9: color = '#488dff';
+                             break;
+                         case 10: color = '#488dff';
+                             break;
+                     }
                      $("#Table").append('<tr>' +
                          //'<td align="center" style="dislay: none;">' + data[i].IdProveedor + '</td>' +
                          '<td style="dislay: none;"><b>' + data[i].RFC + '</b></td>' +
                          '<td style="dislay: none;">' + data[i].NombreEmpresa + '</td>' +
                          '<td style="dislay: none;">' + data[i].Email + '</td>' +
-                         '<td style="dislay: none;">' + data[i].Estatus + '</td>' +
-                         '<td align="right" style="dislay: none;"><div class="btn-circle"><a href="#" class="fas fa-refresh icon-color"></a></div></td>' +
+                         '<td style="dislay: none; color:'+ color +';" width="180"><b>' + data[i].Estatus + '</b></td>' +
+                         //'<td style="dislay: none;">' + data[i].Estatus + '</td>' +
+                         '<td align="center" style="dislay: none;"><img src="/Content/Images/component.png" width="30" /></td>' +
                          //'<td style="dislay: none;">' + data[i].AXNumeroProveedor + '</td>' +
                          '<td style="dislay: none;"><div class="btn-circle">' + link + '</div></td>' + '</tr>'
                      );
@@ -198,7 +220,9 @@
                         "paging": false,
                          "bScrollInfinite": true,
                          "bScrollCollapse": true
-                     });
+                 });
+
+                 $("#Table").css("width","100%");
 
              },
          });

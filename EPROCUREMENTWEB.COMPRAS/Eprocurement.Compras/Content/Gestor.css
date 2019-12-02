@@ -2,6 +2,10 @@
     background-color: #f6f6f8;
 }
 
+*:focus {
+    outline: none !important;
+}
+
 .panel-header {
     background-color: white;
     height: 55px;
@@ -24,8 +28,12 @@
     font-weight:bold;
     float:right;
     font-size:12px;
-    padding-top:15px;
-    text-transform:uppercase;
+    padding-top:5px;
+}
+
+.padding-user {
+    margin-right: 8px;
+    margin-left: 8px;
 }
 
 .row-nav {
@@ -187,4 +195,48 @@ table.dataTable tbody tr {
 
 .form-group {
     margin-bottom: 0px !important;
+}
+
+.cursor{
+    cursor:pointer;
+}
+
+.panel-user-control {
+    height: 40px;
+}
+
+a:hover {
+    text-decoration: none !important;
+}
+
+.nav-tabs .nav-item .active {
+    background-color: rgba(67,41,121,1);
+    color: white;
+    border-bottom: solid 2px white;
+}
+
+.nav-tabs .nav-item {
+    background-color: white;
+    color: #212121;
+    border-bottom: solid 2px #edeef2;
+}
+
+.btn-ver {
+    border: none;
+    background-color: transparent;
+    color: #8e7eae;
+    padding-top:5px;
+}
+
+.btn-ver:hover {
+    font-weight:600;
+}
+
+.label-modal{
+    font-size:12px;
+
+}
+
+.list-aero{
+    font-size:12px;
 }

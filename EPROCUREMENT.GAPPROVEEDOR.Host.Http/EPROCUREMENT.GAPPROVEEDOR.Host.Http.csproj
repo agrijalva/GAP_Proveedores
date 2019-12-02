@@ -80,9 +80,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="EmailLayout\logo-gap-color.png" />
+    <Content Include="EmailLayout\ModificacionProveedor.htm" />
+    <Content Include="EmailLayout\ModificacionAceptada.htm" />
+    <Content Include="EmailLayout\NuevoProveedorCompras.htm" />
+    <Content Include="EmailLayout\NuevoProveedorUsuario.htm" />
+    <Content Include="EmailLayout\AprobadoCompras.htm" />
+    <Content Include="EmailLayout\ProveedorInfoBancaria.htm" />
+    <Content Include="EmailLayout\ModificacionRechazada.htm" />
+    <Content Include="EmailLayout\DocumentacionPendiente.htm" />
+    <Content Include="EmailLayout\ProveedorRechazado.htm" />
     <Content Include="EmailLayout\RecuperarPassword.htm" />
     <Content Include="EmailLayout\UsuarioRechazado.htm" />
-    <Content Include="EmailLayout\UssuarioAprobado.htm" />
+    <Content Include="EmailLayout\AprobadoTesoreria.htm" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -99,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

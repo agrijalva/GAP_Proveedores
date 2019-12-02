@@ -16,6 +16,7 @@ namespace EprocurementWeb.Controllers
         public ActionResult Index()
         {
             UsuarioModel usuario = new UsuarioModel();
+            Session["User"] = null;
             ViewBag.Error = "";
             return View(usuario);
         }
@@ -31,14 +32,29 @@ namespace EprocurementWeb.Controllers
                     ViewBag.Error = "Usuario o contraseña invalida";
                     return View("Index");
                 }
+                if (usuarioDTO.IdEstatus == 3 ||  usuarioDTO.IdEstatus == 4 || usuarioDTO.IdEstatus == 5 || usuarioDTO.IdEstatus == 7)
+                {
+                    Session["User"] = usuarioDTO;
+                    return RedirectToAction("InformacionBF", "AltaProveedor");
+                }
+                if (usuarioDTO.IdEstatus == 8 || usuarioDTO.IdEstatus == 9 || usuarioDTO.IdEstatus == 10)
+                {
+                    Session["User"] = usuarioDTO;
+                    return RedirectToAction("Index", "Gestion");
+                }
 
-                Session["User"] = usuarioDTO;
+                else if (usuarioDTO.IdEstatus == 1 || usuarioDTO.IdEstatus == 2 || usuarioDTO.IdEstatus == 3 || usuarioDTO.IdEstatus == 6)
+                {
+                    ViewBag.Error = "El usuario no está activo o fue rechazado";
+                    return View("Index");
+                }
 
-                return RedirectToAction("InformacionBF", "AltaProveedor", new { idProveedor = usuarioDTO.IdProveedor });
+                ViewBag.Error = "Usuario o contraseña invalida";
+                return View("Index");
             }
             catch (Exception ex)
             {
-                ViewBag.Error = ex.Message;
+                ViewBag.Error = "Se generó un problema al procesar el acceso";
                 return View();
             }
 
@@ -48,37 +64,28 @@ namespace EprocurementWeb.Controllers
         public ActionResult IniciarRecuperacion()
         {
             UsuarioModel usuario = new UsuarioModel();
-            //if (string.IsNullOrWhiteSpace(usuario.NombreUsuario))
-            //{
-            //    ViewBag.Error = "Debe ingresar el nombre de usuario.";
-            //    return View("Index");
-            //}
-            //string token = new BusinessLogic().RecuperarPasswordUsuario(usuario.NombreUsuario, true);
-            //if (string.IsNullOrEmpty(token))
-            //{
-            //    ViewBag.Error = "Ocurrió un error al intentar iniciar el proceso";
-            //}
-            //ViewBag.Error = "Se ha enviado un email a su correo para iniciar la recuperación.";
-            //return View("Index");
+            
             return View(usuario);
         }
 
         [HttpPost]
         public ActionResult IniciarRecuperacion(UsuarioModel usuario)
         {
-            if (string.IsNullOrWhiteSpace(usuario.Email))
+            if (string.IsNullOrWhiteSpace(usuario.NombreUsuario))
             {
-                ViewBag.Error = "Debe ingresar el nombre de usuario.";
+                ViewBag.Error = "Debe ingresar el RFC.";
                 return View("Index");
             }
-            string token = new BusinessLogic().RecuperarPasswordUsuario(usuario.Email, true);
+            string token = new BusinessLogic().RecuperarPasswordUsuario(usuario.NombreUsuario, true);
             if (!string.IsNullOrEmpty(token))
             {
-                ViewBag.Error = "Hemos enviado un email a su correo para continuar con el proceso.";
+                return Redirect("/Seguridad/IniciarRecuperacion#success");
+                //ViewBag.Error = "Hemos enviado un email a su correo para continuar con el proceso.";
             }
             else
             {
-                ViewBag.Error = "Ocurrió un error al intentar iniciar el proceso";
+                return Redirect("/Seguridad/IniciarRecuperacion#errorSuccess");
+                //ViewBag.Error = "Ocurrió un error al intentar iniciar el proceso";
             }
             return View();
         }
@@ -124,9 +131,11 @@ namespace EprocurementWeb.Controllers
                 //usuarioInfo.Token = usuario.Token;
                 if (!new BusinessLogic().RecuperarPasswordUsuario(usuario, false))
                 {
+                    return Redirect("/Seguridad/Recovery#errorSuccess");
                     ViewBag.Error = "Error al generar la solicitud";
                 } else
                 {
+                    return Redirect("/Seguridad/Recovery#success");
                     ViewBag.Error = "Sin error";
                 }
                 //}
@@ -136,6 +145,14 @@ namespace EprocurementWeb.Controllers
             }
 
             return View();
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult GetInoformacionUsuario()
+        {
+            UsuarioDTO usuario = null;
+            usuario = new ValidaSession().ObtenerUsuarioSession();
+            return Json(usuario, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -15,6 +15,8 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Entities
         public int IdFormatoArchivo { get; set; }
         public bool EsRequerido { get; set; }
         public int IdFormulario { get; set; }
+        public string TiposAceptados { get; set; }
+        public string Extensiones { get; set; }
         public HttpPostedFileBase File { get; set; }
     }
 }

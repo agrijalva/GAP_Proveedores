@@ -8,6 +8,9 @@ using EPROCUREMENT.GAPPROVEEDOR.Entities;
 using EPROCUREMENT.GAPPROVEEDOR.Entities.Proveedor;
 using System.IO;
 using EprocurementWeb.Filters;
+using Newtonsoft.Json;
+using System.Web.Script.Serialization;
+using EprocurementWeb.Models;
 
 namespace EprocurementWeb.Controllers
 {
@@ -15,21 +18,50 @@ namespace EprocurementWeb.Controllers
     {
         public ProveedorInformacionFinanciera cuenta = null;
         public List<ProveedorCuentaDTO>  ProveedorCuentaListRegistro = new List<ProveedorCuentaDTO>();
-        public ActionResult InformacionBF(int idProveedor)
+        public ActionResult InformacionBF()
         {
             ViewBag.Respuesta = "";
+            ViewBag.MenssageError = EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Generic;
+            ViewBag.MenssageErrorAirPort = EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Airport;
+            ViewBag.MenssageErrorDocument = EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Document;
             var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
+            ViewBag.UsuarioInfo = usuarioInfo;
+            var idProveedor = 0;
             if (usuarioInfo != null)
             {
                 idProveedor = usuarioInfo.IdProveedor;
             }
             Session["IdProveedor"] = idProveedor;
             BusinessLogic business = new BusinessLogic();
+
+            if (usuarioInfo.IdEstatus == 5 || usuarioInfo.IdEstatus == 7)
+            {
+                ProveedorCuentaRequestDTO proveedorCuentaRequest = new ProveedorCuentaRequestDTO
+                {
+                    IdProveedor = idProveedor
+                };
+                var proveedorCuentaResponse = business.GetProveedorCuentaList(proveedorCuentaRequest);
+                //ProveedorCuentaRequestDTO proveedorCuentaAeropuertoRequest = new ProveedorCuentaRequestDTO
+                //{
+                //    ProveedorCuentaList = proveedorCuentaResponse.ProveedorCuentaList
+                //};
+                //var proveedorCuentaAeropuertoResponse = business.GetProveedorCuentaAeropuertoList(proveedorCuentaAeropuertoRequest);
+                ViewBag.ProveedorCuentaList = proveedorCuentaResponse.ProveedorCuentaList;
+
+                ProveedorDocumentoRequestDTO proveedorDocumentoRequest = new ProveedorDocumentoRequestDTO
+                {
+                    IdProveedor = idProveedor
+                };
+
+                var proveedorDocumentoResponse = business.GetProveedorDocumentoList(proveedorDocumentoRequest);
+                ViewBag.ProveedorDocumentoList = proveedorDocumentoResponse.ProveedorDocumentoList;
+            }
+
             Session["ProveedorCuentaListRegistro"] = new List<ProveedorCuentaDTO>();
             var aeropuertos = business.GetAeropuertosList();
             ViewBag.BancoList = business.GetBancoList();
             ViewBag.TipoCuentaList = business.GetTipoCuentaList();
-            ProveedorDetalleRequestDTO request = new ProveedorDetalleRequestDTO();
+            ProveedorDetalleRequestModel request = new ProveedorDetalleRequestModel();
             request.IdProveedor = idProveedor;
             var response = business.GetProveedorElemento(request).Proveedor;
             var aeropuertosAsignados = response.EmpresaList;
@@ -48,6 +80,7 @@ namespace EprocurementWeb.Controllers
             cuenta.ProveedorCuentaListRegistro = new List<ProveedorCuentaDTO>();
             cuenta.CuentaBancaria = new ProveedorCuentaDTO();
             cuenta.CuentaBancaria.AeropuertoList = cuenta.ProveedorCuentaList[0].AeropuertoList;
+            
             Session["ProveedorCuentaListRegistro"] = new List<ProveedorCuentaDTO>();
             return View(cuenta);
         }
@@ -82,7 +115,7 @@ namespace EprocurementWeb.Controllers
             var aeropuertos = business.GetAeropuertosList();
             ViewBag.BancoList = bancoList;
             ViewBag.TipoCuentaList = tipoCuentaList;
-            ProveedorDetalleRequestDTO request = new ProveedorDetalleRequestDTO();
+            ProveedorDetalleRequestModel request = new ProveedorDetalleRequestModel();
             if (cuenta.ProveedorCuentaList != null)
             {
                 request.IdProveedor = cuenta.ProveedorCuentaList.First().IdProveedor;
@@ -122,6 +155,192 @@ namespace EprocurementWeb.Controllers
         }
 
         [HttpPost]
+        public ActionResult Upload()
+        {
+            var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
+            // Logica anterior
+            BusinessLogic business = new BusinessLogic();
+            var proveedorDocumento = business.GetCatalogoDocumentoList();
+            int idProveedor = new ValidaSession().RecuperaIdProveedorSession();
+            var aeropuertos = business.GetAeropuertosList();
+            ViewBag.BancoList = business.GetBancoList();
+            ViewBag.TipoCuentaList = business.GetTipoCuentaList();
+            List<ProveedorDocumentoDTO> provDoctos = new List<ProveedorDocumentoDTO>();
+
+            string cuentaJson = Request["cuenta"];
+            if(cuentaJson.Length > 0)
+            {
+                var cuenta = (ProveedorInformacionFinanciera)JsonConvert.DeserializeObject(cuentaJson, typeof(ProveedorInformacionFinanciera));
+
+                for(int i = 0; i < cuenta.ProveedorCuentaListRegistro.Count; i++)
+                {
+                    cuenta.ProveedorCuentaListRegistro[i].IdProveedor = idProveedor;
+                }
+
+                int contador = Request.Files.Count;
+                cuenta.CatalogoDocumentoList = new List<CatalogoDocumentoDTO>();
+                bool extensionesValidas = true;
+
+                if (cuenta.ProveedorDocumentoList != null)
+                {
+                    for (int j = 0; j < cuenta.ProveedorDocumentoList.Count; j++)
+                    {
+                        var division = cuenta.ProveedorDocumentoList[j].NombreArchivo.Split('.');
+                        var extension = division.Last();
+                        if (!cuenta.ProveedorDocumentoList[j].Extensiones.Contains(extension))
+                        {
+                            extensionesValidas = false;
+                        }
+                        string nombreArchivo = idProveedor + "-" + cuenta.ProveedorDocumentoList[j].IdCatalogoDocumento + '.' + extension;
+
+                        cuenta.ProveedorDocumentoList[j] = new ProveedorDocumentoDTO
+                        {
+                            IdCatalogoDocumento = cuenta.ProveedorDocumentoList[j].IdCatalogoDocumento,
+                            IdProveedor = idProveedor,
+                            DescripcionDocumento = "NA",
+                            DocumentoAutorizado = false,
+                            NombreArchivo = nombreArchivo
+                        };
+                    }
+
+                    for (int i = 0; i < Request.Files.Count; i++)
+                    {
+                        HttpPostedFileBase file = Request.Files[i];
+                        string idCatalogoDocumento = Request.Files.GetKey(i);
+                        var division = file.FileName.Split('.');
+                        var extension = division.Last();
+                        string nombreArchivo = idProveedor + "-" + idCatalogoDocumento + '.' + extension;
+
+
+                        for (int j = 0; j < cuenta.ProveedorDocumentoList.Count; j++)
+                        {
+                            if (cuenta.ProveedorDocumentoList[j].IdCatalogoDocumento == Convert.ToInt32(idCatalogoDocumento))
+                            {
+                                cuenta.ProveedorDocumentoList[j] = new ProveedorDocumentoDTO
+                                {
+                                    IdCatalogoDocumento = Convert.ToInt32(idCatalogoDocumento),
+                                    IdProveedor = idProveedor,
+                                    DescripcionDocumento = "NA",
+                                    DocumentoAutorizado = false,
+                                    NombreArchivo = nombreArchivo
+                                };
+                            }
+                        }
+
+                        cuenta.CatalogoDocumentoList.Add(new CatalogoDocumentoDTO
+                        {
+                            IdCatalogoDocumento = Convert.ToInt32(idCatalogoDocumento),
+                            NombreDocumento = nombreArchivo,
+                            File = file
+                        });
+                    }
+                }
+                else
+                {
+                    cuenta.ProveedorDocumentoList = new List<ProveedorDocumentoDTO>();
+                    for (int i = 0; i < Request.Files.Count; i++)
+                    {
+                        HttpPostedFileBase file = Request.Files[i];
+                        string idCatalogoDocumento = Request.Files.GetKey(i);
+                        var division = file.FileName.Split('.');
+                        var extension = division.Last();
+
+                        foreach(var doc in proveedorDocumento)
+                        {
+                            if(doc.IdCatalogoDocumento == Convert.ToInt32(idCatalogoDocumento))
+                            {
+                                if (!doc.Extensiones.Contains(extension))
+                                {
+                                    extensionesValidas = false;
+                                }
+                            }
+                        }
+
+                        string nombreArchivo = idProveedor + "-" + idCatalogoDocumento + '.' + extension;
+
+                        cuenta.ProveedorDocumentoList.Add(new ProveedorDocumentoDTO
+                        {
+                            IdCatalogoDocumento = Convert.ToInt32(idCatalogoDocumento),
+                            IdProveedor = idProveedor,
+                            DescripcionDocumento = "NA",
+                            DocumentoAutorizado = false,
+                            NombreArchivo = nombreArchivo
+                        });
+
+                        cuenta.CatalogoDocumentoList.Add(new CatalogoDocumentoDTO
+                        {
+                            IdCatalogoDocumento = Convert.ToInt32(idCatalogoDocumento),
+                            NombreDocumento = nombreArchivo,
+                            File = file
+                        });
+                    }
+                }
+
+                if (extensionesValidas)
+                {
+                    ProveedorDetalleRequestModel request = new ProveedorDetalleRequestModel();
+                    var response = business.GetProveedorElemento(request).Proveedor;
+                    cuenta.RFC = response.RFC;
+
+                    ProveedorCuentaRequestDTO requestg = new ProveedorCuentaRequestDTO
+                    {
+                        IdUsuario = Convert.ToUInt64(usuarioInfo.IdUsuario),
+                        ProveedorCuentaList = cuenta.ProveedorCuentaListRegistro
+                    };
+                    var responseg = business.GuardarProveedorCuenta(requestg);
+
+                    ProveedorDocumentoRequestDTO requestPC = new ProveedorDocumentoRequestDTO
+                    {
+                        IdUsuario = Convert.ToUInt64(usuarioInfo.IdUsuario),
+                        ProveedorDocumentoList = cuenta.ProveedorDocumentoList
+                    };
+
+                    var responsePC = business.GuardarProveedorCuenta(requestPC);
+                    if (responsePC.Success)
+                    {
+                        bool respuestaDoc = business.GuardarDocumentos(cuenta.RFC, cuenta.CatalogoDocumentoList);
+                        if (respuestaDoc)
+                        {
+                            ProveedorAprobarRequestDTO requestAprobador = new ProveedorAprobarRequestDTO { EstatusProveedor = new HistoricoEstatusProveedorDTO { IdEstatusProveedor = 5, IdProveedor = idProveedor, IdUsuario = usuarioInfo.IdUsuario } };
+                            var responseAprobar = business.SetProveedorEstatus(requestAprobador);
+                            if (responseAprobar.Success)
+                            {
+                                usuarioInfo.IdEstatus = 5;
+                                Session["User"] = usuarioInfo;
+                            }
+                        }
+                    }
+
+                    request.IdProveedor = idProveedor;
+                    var aeropuertosAsignados = response.EmpresaList;
+                    var formatoDocumento = business.GetFormatoArchivoList();
+                    if (cuenta == null)
+                    {
+                        cuenta = new ProveedorInformacionFinanciera();
+                        cuenta.ProveedorCuentaList = new List<ProveedorCuentaDTO> { new ProveedorCuentaDTO { Cuenta = null, IdBanco = 0, CLABE = null, IdTipoCuenta = 0, IdProveedor = idProveedor } };
+                    }
+
+                    cuenta.RFC = response.RFC;
+                    cuenta.CatalogoDocumentoList = proveedorDocumento;
+
+                    cuenta.ProveedorCuentaList = new List<ProveedorCuentaDTO> { new ProveedorCuentaDTO { Cuenta = null, IdBanco = 0, CLABE = null, IdTipoCuenta = 0, IdProveedor = idProveedor } };
+
+                    cuenta.ProveedorCuentaListRegistro = new List<ProveedorCuentaDTO>();
+
+                    return Json(new { success = true, responseText = "ok" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { success = false, responseText = "error en extensiones" }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                return Json(new { success = false, responseText = "Sin Cuenta" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
         public ActionResult CargarCuentas(ProveedorInformacionFinanciera proveedor)
         {
             BusinessLogic business = new BusinessLogic();
@@ -156,7 +375,7 @@ namespace EprocurementWeb.Controllers
             //        }
             // }
             //}
-            ProveedorDetalleRequestDTO request = new ProveedorDetalleRequestDTO();
+            ProveedorDetalleRequestModel request = new ProveedorDetalleRequestModel();
             request.IdProveedor = idProveedor;
             var response = business.GetProveedorElemento(request).Proveedor;
             var aeropuertosAsignados = response.EmpresaList;
@@ -216,7 +435,7 @@ namespace EprocurementWeb.Controllers
                     //}
                 }
             }
-            ProveedorDetalleRequestDTO request = new ProveedorDetalleRequestDTO();
+            ProveedorDetalleRequestModel request = new ProveedorDetalleRequestModel();
             request.IdProveedor = idProveedor;
             var response = business.GetProveedorElemento(request).Proveedor;
             var aeropuertosAsignados = response.EmpresaList;
@@ -244,7 +463,7 @@ namespace EprocurementWeb.Controllers
         {
             BusinessLogic business = new BusinessLogic();
             var proveedorDocumento = business.GetCatalogoDocumentoList();
-            ProveedorDetalleRequestDTO request = new ProveedorDetalleRequestDTO();
+            ProveedorDetalleRequestModel request = new ProveedorDetalleRequestModel();
             request.IdProveedor = idProveedor;
             var response = business.GetProveedorElemento(request).Proveedor;
             ProveedorInformacionFinanciera cuenta = new ProveedorInformacionFinanciera();
@@ -259,6 +478,71 @@ namespace EprocurementWeb.Controllers
             string fileName = nombre;
 
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
+        public JsonResult GetDocumentosList(int idProveedor)
+        {
+            try
+            {
+                ProveedorInformacionFinanciera informacionFinanciera = new ProveedorInformacionFinanciera();
+                informacionFinanciera = new BusinessLogic().GetProveedorInfoFinanciera(idProveedor);
+                //informacionFinanciera.CatalogoDocumentoList = new List<CatalogoDocumentoDTO>();
+                //informacionFinanciera.CatalogoDocumentoList.Add(new CatalogoDocumentoDTO
+                //{
+                //    NombreDocumento = "PDF",
+                //    RutaDocumento = "localhost"
+                //});
+
+                ProveedorDocumentoRequestDTO proveedorDocumentoRequest = new ProveedorDocumentoRequestDTO
+                {
+                    IdProveedor = idProveedor
+                };
+
+                var proveedorDocumentoResponse = new BusinessLogic().GetProveedorDocumentoList(proveedorDocumentoRequest);
+
+                return Json(proveedorDocumentoResponse.ProveedorDocumentoList, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+        }
+
+        public JsonResult GetDetalleCuentaList(int idProveedor)
+        {
+            try
+            {
+                ProveedorCuentaRequestDTO proveedorCuentaRequest = new ProveedorCuentaRequestDTO
+                {
+                    IdProveedor = idProveedor
+                };
+                var proveedorCuentaResponse = new BusinessLogic().GetProveedorCuentaList(proveedorCuentaRequest);
+                ViewBag.ProveedorCuentaList = proveedorCuentaResponse.ProveedorCuentaList;
+
+                //ProveedorInformacionFinanciera informacionFinanciera = new ProveedorInformacionFinanciera();
+                //informacionFinanciera = new BusinessLogic().GetProveedorInfoFinanciera(idProveedor);
+
+                //ProveedorCuentaResponseDTO proveedorCuentaResponse = new BusinessLogic().GetProveedorCuentaAeropuertoList(new ProveedorCuentaRequestDTO
+                //{
+                //    ProveedorCuentaList = informacionFinanciera.ProveedorCuentaList
+                //});
+
+                //informacionFinanciera.ProveedorCuentaListRegistro = new List<ProveedorCuentaDTO>();
+                //informacionFinanciera.ProveedorCuentaListRegistro.Add(new ProveedorCuentaDTO {
+                //    CLABE = "123456789012345678",
+                //    Cuenta = "1234567890",
+                //    NombreBanco = "BBVA",
+                //    TipoCuenta = "Débito"
+                //});
+
+                return Json(proveedorCuentaResponse.ProveedorCuentaList, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
         }
 
     }

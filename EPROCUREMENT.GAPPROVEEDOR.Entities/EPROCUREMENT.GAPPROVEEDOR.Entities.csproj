@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EPROCUREMENT.GAPPROVEEDOR.Entities</RootNamespace>
     <AssemblyName>EPROCUREMENT.GAPPROVEEDOR.Entities</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,6 +48,7 @@
     <Compile Include="Catalogo\BancoDTO.cs" />
     <Compile Include="Catalogo\CatalogoDocumentoDTO.cs" />
     <Compile Include="Catalogo\EstadoDTO.cs" />
+    <Compile Include="Catalogo\EstatusProveedorDTO.cs" />
     <Compile Include="Catalogo\FormatoArchivoDTO.cs" />
     <Compile Include="Catalogo\GiroDTO.cs" />
     <Compile Include="Catalogo\IdiomaDTO.cs" />
@@ -60,6 +62,8 @@
     <Compile Include="Email\DireccionEmailDTO.cs" />
     <Compile Include="Email\EmailDTO.cs" />
     <Compile Include="Enum\EmailPrioridadDTO.cs" />
+    <Compile Include="Enum\TipoAccion.cs" />
+    <Compile Include="Enum\TipoFiltro.cs" />
     <Compile Include="Helper\ProveedorEstatusDTO.cs" />
     <Compile Include="Helper\ProveedorFiltroDTO.cs" />
     <Compile Include="Helper\ProveedorUsuarioDTO.cs" />
@@ -75,8 +79,11 @@
     <Compile Include="Proveedor\ProveedorInformacionFinanciera.cs" />
     <Compile Include="Proveedor\TmpProveedoDTO.cs" />
     <Compile Include="Request\ActualizaPasswordRequestDTO.cs" />
+    <Compile Include="Request\ContactoRequestDTO.cs" />
     <Compile Include="Request\EstadoRequestDTO.cs" />
+    <Compile Include="Request\EstatusProveedorRequestDTO.cs" />
     <Compile Include="Request\FormatoArchivoRequestDTO.cs" />
+    <Compile Include="Request\InformacionFinancieraRequestDTO.cs" />
     <Compile Include="Request\LoginUsuarioRequestDTO.cs" />
     <Compile Include="Request\ProveedorAprobarRequestDTO.cs" />
     <Compile Include="Request\MunicipioRequestDTO.cs" />
@@ -84,6 +91,7 @@
     <Compile Include="Request\ProveedorDetalleRequestDTO.cs" />
     <Compile Include="Request\ProveedorDocumentoRequestDTO.cs" />
     <Compile Include="Request\ProveedorEstatusRequestDTO.cs" />
+    <Compile Include="Request\ProveedorFiltroRequestDTO.cs" />
     <Compile Include="Request\ProveedorInformacionFinancieraRequestDTO.cs" />
     <Compile Include="Request\ProveedorRequestDTO.cs" />
     <Compile Include="Request\RequestBaseDTO.cs" />
@@ -93,11 +101,13 @@
     <Compile Include="Response\AeropuertoResponseDTO.cs" />
     <Compile Include="Response\BancoResponseDTO.cs" />
     <Compile Include="Response\CatalogoDocumentoResponseDTO.cs" />
+    <Compile Include="Response\ContactoResponseDTO.cs" />
     <Compile Include="Response\EstadoResponseDTO.cs" />
     <Compile Include="Response\EstatusProveedorResponseDTO.cs" />
     <Compile Include="Response\FormatoArchivoResponseDTO.cs" />
     <Compile Include="Response\GiroResponseDTO.cs" />
     <Compile Include="Response\IdiomaResponseDTO.cs" />
+    <Compile Include="Response\InformacionFinancieraResponseDTO.cs" />
     <Compile Include="Response\LoginUsuarioResponseDTO.cs" />
     <Compile Include="Response\MunicipioResponseDTO.cs" />
     <Compile Include="Response\NacionalidadResponseDTO.cs" />
@@ -106,6 +116,7 @@
     <Compile Include="Response\ProveedorDetalleResponseDTO.cs" />
     <Compile Include="Response\ProveedorDocumentoResponseDTO.cs" />
     <Compile Include="Response\ProveedorEstatusResponseDTO.cs" />
+    <Compile Include="Response\ProveedorFiltroResponseDTO.cs" />
     <Compile Include="Response\ProveedorResponseDTO.cs" />
     <Compile Include="Response\ResetPasswordResponseDTO.cs" />
     <Compile Include="Response\ResponseBaseDTO.cs" />
@@ -113,6 +124,7 @@
     <Compile Include="Response\TipoProveedorResponseDTO.cs" />
     <Compile Include="Response\TmpProveedoResponseDTO.cs.cs" />
     <Compile Include="Response\ZonaHorariaResponseDTO.cs" />
+    <Compile Include="Seguridad\AuthenticationResult.cs" />
     <Compile Include="Seguridad\UsuarioDTO.cs" />
   </ItemGroup>
   <ItemGroup />

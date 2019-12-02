@@ -19,13 +19,13 @@ namespace EprocurementWeb.Filters
                 usuarioInfo = (UsuarioDTO)HttpContext.Current.Session["User"];
                 if (usuarioInfo == null)
                 {
-
-                    if (filterContext.Controller is SeguridadController == false && filterContext.Controller is HomeController == false && filterContext.Controller is AltaProveedorController == false)
+                    if (filterContext.Controller is SeguridadController == false && filterContext.Controller is HomeController == false)
                     {
                         //filterContext.HttpContext.Response.Redirect("~/Seguridad/Index");
                         filterContext.Result = new RedirectResult("~/Seguridad/Index");
                     }
                 }
+                
             }
             catch (Exception)
             {

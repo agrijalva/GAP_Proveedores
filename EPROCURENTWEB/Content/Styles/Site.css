@@ -57,7 +57,7 @@ textarea {
 }
 
 .row {
-    padding-bottom: 25px;
+    /*padding-bottom: 25px;*/
 }
 
 .t-a-c {
@@ -265,3 +265,16 @@ body{
 .form-control{
     font-size:14px;
 }
+
+#resultado {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    color: red;
+    font-size:8px;
+}
+
+    #resultado.ok {
+        background-color: green;
+        color: green;
+    }

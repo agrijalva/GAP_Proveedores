@@ -1,0 +1,129 @@
+﻿@model EprocurementWeb.Models.ProveedorContactoModel
+
+@{
+    ViewBag.Title = "Nuevo Contacto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/validacionProveedor.css" rel="stylesheet" />
+<link href="~/Content/Gestor.css" rel="stylesheet" />
+@using (Html.BeginForm("NuevoContacto", "Contacto", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="accordion" id="accordionExample">
+                <div class="card card-border">
+                    <div class="card-header" id="headingOne">
+                        <span class="card-titulo">
+                            Detalles del contacto
+                            <button class="btn btn-link collapsed float-right" type="button" data-toggle="collapse" data-target="#detallecontacto" aria-expanded="false" aria-controls="collapseThree">
+                                <i class="fas fa-chevron-up collapse-color"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div id="detallecontacto" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div>
+                            <div class="card-body">
+                                <div class="row">
+
+                                    @Html.ValidationMessage("ErrorGeneral", new { @class = "label-formulario field-validation-error" })
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.HiddenFor(model => model.IdProveedor)
+                                            @Html.LabelFor(model => model.NombreContacto, new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.NombreContacto, new { @class = "form-control col-md-12" })
+                                            @Html.ValidationMessageFor(model => model.NombreContacto, "", new { @class = "label-formulario field-validation-error" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Cargo, new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.Cargo, new { @class = "form-control col-md-12" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.IdNacionalidad, new { @class = "label-formulario" })
+                                            @Html.DropDownListFor(model => model.IdNacionalidad, new SelectList(ViewBag.NacionalidadList, "IdNacionalidad", "Nombre"), "...", new { @class = "form-control col-md-12" })
+                                            @Html.ValidationMessageFor(model => model.IdNacionalidad, "", new { @class = "label-formulario field-validation-error" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.TelefonoDirecto, new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.TelefonoDirecto, new { placeholder = "Ej. 55 1234 5678", @class = "form-control col-md-12" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.TelefonoMovil, new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.TelefonoMovil, new { placeholder = "Ej. 55 1234 5678", @class = "form-control col-md-12" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Fax, new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.Fax, new { @class = "form-control col-md-12" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Email, new { @class = "label-formulario" })
+                                            @Html.TextBoxFor(model => model.Email, new { placeholder = "Ej. correo@dominio.com", @class = "form-control col-md-12" })
+                                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "label-formulario field-validation-error" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.IdPais, new { @class = "label-formulario" })
+                                            @Html.DropDownListFor(model => model.IdPais, new SelectList(ViewBag.PaisList, "IdPais", "Nombre"), "...", new { @class = "form-control col-md-10" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.IdZonaHoraria, new { @class = "label-formulario" })
+                                            @Html.DropDownListFor(model => model.IdZonaHoraria, new SelectList(ViewBag.ZonaHorariaList, "IdZonaHoraria", "Nombre"), "...", new { @class = "form-control col-md-12" })
+                                            @Html.ValidationMessageFor(model => model.IdZonaHoraria, "", new { @class = "label-formulario field-validation-error" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <table>
+                                                <tr>
+                                                    <td><br /></td>
+                                                </tr>
+                                                <tr>
+                                                    
+                                                    <td>
+                                                        @Html.CheckBoxFor(model => model.EsPrincipal, new { @class = "form-control col-md-12" })
+                                                    </td>
+                                                    <td>@Html.LabelFor(model => model.ContactoPrincipal, new { @class = "label-formulario" })</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 mt-3"></div>
+        <div class="col-sm-6">&nbsp;</div>
+        <div class="col-sm-3">
+            <a href="@Url.Action("Index", "Contacto")">
+                <button class="btnStyle btnWhite" type="button">Cancelar</button>
+            </a>
+            @*<button class="btnStyle btnWhite" type="submit">Cancelar</button>*@
+        </div>
+        <div class="col-sm-3">
+            <button class="btnStyle" type="submit"><i class="fa fa-plus"></i>  Agregar</button>
+        </div>
+    </div>
+}
+
+
+

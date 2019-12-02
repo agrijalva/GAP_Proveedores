@@ -1,18 +1,30 @@
-﻿@model EprocurementWeb.Models.ProveedorRegistro
+﻿@model EprocurementWeb.Models.ProveedorModel
 
 @{
-    ViewBag.Title = @RHome.Title;
+    ViewBag.Title = @EprocurementWeb.GlobalResources.RHome.Title;
+    Layout = null;
 }
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/modernizr")
+@Scripts.Render("~/bundles/shared")
+@Scripts.Render("~/bundles/bootstrap")
 
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script type="text/javascript">
-        var onloadCallback = function () {
-            //alert("grecaptcha is ready!");
-        };
-    </script>
+<link href="~/Content/Styles/Site.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
 <link href="~/Content/Css/infoCuenta.css" rel="stylesheet" />
 <link href="~/Content/validacionProveedor.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+@*@RenderSection("scripts", required: false)*@
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script type="text/javascript">
+    var onloadCallback = function () {
+        //alert("grecaptcha is ready!");
+    };
+</script>
 <form action="/Home/Index" method="post" class="registro-form form-horizontal" id="form_fact" name="form_fact">
     @Html.AntiForgeryToken()
     <div class="row panel-header">
@@ -22,7 +34,7 @@
 
         <div class="col-sm-4 t-a-c ">
             <h1 class="h-title">
-                @RHome.ProvP
+                @EprocurementWeb.GlobalResources.RHome.ProvP
             </h1>
         </div>
 
@@ -36,13 +48,14 @@
                 </li>
             </ul>
         </div>
+
     </div>
 
     <div class="container">
         <div class="row pb-0">
             <div class="col-sm-12">
                 <h3 class="subtitle">
-                    @RHome.TitlePP
+                    @EprocurementWeb.GlobalResources.RHome.TitlePP
                 </h3>
             </div>
         </div>
@@ -64,55 +77,62 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-sm-12" style="font-size:12px;">
-                                            <label class="label-formulario">Tipo de Empresa</label><br />
+                                            <label class="label-formulario">@EprocurementWeb.GlobalResources.RHome.CompanyTypeTitle</label><br />
+                                            @Html.ValidationMessage("ErrorTipoEmpresa", "", new { @class = "field-validation-error" })
                                             @Html.CheckBoxFor(m => m.Mexicana, new { @class = "" })
-                                            @Html.Label("Mexicana", new { @class = "" })&nbsp;&nbsp;&nbsp;&nbsp;
+                                            @Html.LabelFor(m => m.Mexicana, new { @class = "" })&nbsp;&nbsp;&nbsp;&nbsp;
                                             @Html.CheckBoxFor(m => m.Extranjera, new { @class = "" })
-                                            @Html.Label("Extranjera", new { @class = "" })
+                                            @Html.LabelFor(m => m.Extranjera, new { @class = "" })
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                @Html.Label("empresa", @RHome.NameOfCompany, new { @class = "label-formulario" })
+                                                @Html.LabelFor(model => model.NombreEmpresa, new { @class = "label-formulario" })
                                                 @Html.TextBoxFor(model => model.NombreEmpresa, new { placeholder = "Ej. Grupo Aeroportuario del Pacífico", @class = "form-control col-md-12" })
+                                                @Html.ValidationMessageFor(model => model.NombreEmpresa, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                @Html.Label("razonSocial", @RHome.BName, new { @class = "label-formulario" })
+                                                @Html.LabelFor(model => model.RazonSocial, new { @class = "label-formulario" })
                                                 @Html.TextBoxFor(model => model.RazonSocial, new { placeholder = "Ej. Grupo Aeroportuario del Pacífico", @class = "form-control col-md-12" })
+                                                @Html.ValidationMessageFor(model => model.RazonSocial, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                @Html.Label("rfc", @RHome.RFC, new { @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.RFC, new { placeholder = "13 caracteres", @class = "form-control col-md-12" })
+                                                @Html.LabelFor(model => model.RFC, new { @class = "label-formulario" })
+                                                @Html.TextBoxFor(model => model.RFC, new { id = "rfc_input", placeholder = "13 caracteres", @class = "form-control col-md-12" })
+                                                @Html.ValidationMessageFor(model => model.RFC, "", new { @class = "label-formulario field-validation-error" })
+
+                                                <pre id="resultado"></pre>
                                             </div>
                                         </div>
                                         <div class="col-md-6" id="inpgro-nif">
                                             <div class="form-group">
-                                                @Html.Label("nif", @RHome.NIF, new { @class = "label-formulario" })
+                                                @Html.LabelFor(model => model.NIF, new { @class = "label-formulario" })
                                                 @Html.TextBoxFor(model => model.NIF, new { @class = "form-control col-md-12" })
                                             </div>
                                         </div>
 
                                         <div class="col-md-3" id="inpgro-tin">
-                                            <div class="form-group">                                               
-                                                @Html.Label("TIN", "TIN", new { id = "lblTIN", @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.Direccion.TIN, new { @class = "form-control col-md-12" })
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.TIN, new { id = "lblTIN", @class = "label-formulario" })
+                                                @Html.TextBoxFor(model => model.TIN, new { @class = "form-control col-md-12" })
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                @Html.Label("codigo", @RHome.ZipCode, new { @class = "label-formulario" })
+                                                @Html.LabelFor(model => model.Direccion.CodigoPostal, new { @class = "label-formulario" })
                                                 @Html.TextBoxFor(model => model.Direccion.CodigoPostal, new { placeholder = "5 caracteres", @class = "form-control col-md-12" })
+                                                @Html.ValidationMessageFor(model => model.Direccion.CodigoPostal, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
                                         <div class="col-md-3" id="inpgro-Colonia">
                                             <div class="form-group">
-                                                @Html.Label("colonia intgru-esta", @RHome.Suburb, new { id = "lblColonia", @class = "label-formulario" })
+                                                @Html.LabelFor(model => model.Direccion.Colonia, new { id = "lblColonia", @class = "label-formulario" })
                                                 @Html.DropDownListFor(model => model.Direccion.Colonia, new SelectList(ViewBag.colonias), "...", new { @class = "form-control col-md-12 ", @id = "ColoniaProveedor" })
                                                 @*@Html.TextBoxFor(model => model.Direccion.Colonia, new { @class = "form-control col-md-12" })*@
                                             </div>
@@ -120,7 +140,7 @@
 
                                         <div class="col-md-3" id="inpgro-Municipio">
                                             <div class="form-group">
-                                                @Html.Label("municipio", @RHome.City, new { id = "lblMunicipio", @class = "label-formulario" })
+                                                @Html.LabelFor(model => model.Direccion.Municipio, new { id = "lblMunicipio", @class = "label-formulario" })
                                                 @Html.TextBoxFor(model => model.Direccion.Municipio, new { @class = "form-control col-md-12" })
                                             </div>
                                         </div>
@@ -135,61 +155,44 @@
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                @Html.Label("pais", @RHome.Country, new { @class = "label-formulario" })
-                                                @Html.DropDownListFor(model => model.Direccion.IdPais, new SelectList(ViewBag.PaisList, "IdPais", "Nombre"), "Seleccione", new { @class = "form-control col-md-12", @id = "PaisProveedor" })
+                                                @Html.LabelFor(model => model.Direccion.IdPais, new { @class = "label-formulario" })
+                                                @Html.DropDownListFor(model => model.Direccion.IdPais, new SelectList(ViewBag.PaisList, "IdPais", "Nombre"), "Seleccionar", new { @class = "form-control col-md-12", @id = "PaisProveedor" })
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                @Html.Label("direccion", @RHome.Address, new { @class = "label-formulario" })
+                                                @Html.LabelFor(model => model.Direccion.Calle, new { @class = "label-formulario" })
                                                 @Html.TextBoxFor(model => model.Direccion.Calle, new { @class = "form-control col-md-12" })
+                                                @Html.ValidationMessageFor(model => model.Direccion.Calle, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
 
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                @Html.Label("zonaHoraria", @RHome.TZone, new { @class = "label-formulario" })
-                                                @Html.DropDownListFor(model => model.IdZonaHoraria, new SelectList(ViewBag.ZonaHorariaList, "IdZonaHoraria", "Nombre"), "Seleccione", new { @class = "form-control col-md-12" })
+                                                @Html.LabelFor(model => model.IdZonaHoraria, new { @class = "label-formulario" })
+                                                @Html.DropDownListFor(model => model.IdZonaHoraria, new SelectList(ViewBag.ZonaHorariaList, "IdZonaHoraria", "Nombre"), "Seleccionar", new { @class = "form-control col-md-12" })
+                                                @Html.ValidationMessageFor(model => model.IdZonaHoraria, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                @Html.Label("telefono", @RHome.Phone, new { @class = "label-formulario" })
+                                                @Html.LabelFor(model => model.ProvTelefono, new { @class = "label-formulario" })
                                                 @Html.TextBoxFor(model => model.ProvTelefono, new { placeholder = "55 1234 5678", @class = "form-control col-md-12" })
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                @Html.Label("fax", @RHome.Fax, new { @class = "label-formulario" })
+                                                @Html.LabelFor(model => model.ProvFax, new { @class = "label-formulario" })
                                                 @Html.TextBoxFor(model => model.ProvFax, new { @class = "form-control col-md-12" })
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                @Html.Label("paginaWeb", @RHome.WPage, new { @class = "label-formulario" })
+                                                @Html.LabelFor(model => model.PaginaWeb, new { @class = "label-formulario" })
                                                 @Html.TextBoxFor(model => model.PaginaWeb, new { placeholder = "Ej. www.mipaginaweb.com", @class = "form-control col-md-12" })
                                             </div>
                                         </div>
-                                        @*<div class="col-md-6">
-                                            <div class="form-group">
-                                                @Html.Label("tipoProveedor", @RHome.ProvType, new { @class = "label-formulario" })
-                                                @Html.DropDownListFor(model => model.IdTipoProveedor, new SelectList(ViewBag.TipoProveedorList, "IdTipoProveedor", "Tipo"), "...", new { @class = "form-control col-md-12" })
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                @Html.Label("axNumeroProveedor", @RHome.AXProviderNum, new { @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.AXNumeroProveedor, new { @class = "form-control col-md-12" })
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                @Html.Label("nacionalidad", @RHome.Nacionality, new { @class = "label-formulario" })
-                                                @Html.DropDownListFor(model => model.IdNacionalidad, new SelectList(ViewBag.NacionalidadList, "IdNacionalidad", "Nombre"), "...", new { @class = "form-control col-md-12" })
-                                            </div>
-                                        </div>*@
-
                                     </div>
                                 </div>
                             </div>
@@ -217,62 +220,60 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                @Html.Label("contacto", RHome.CName, new { @class = "label-formulario" })
+                                                @Html.LabelFor(model => model.Contacto.NombreContacto, new { @class = "label-formulario" })
                                                 @Html.TextBoxFor(model => model.Contacto.NombreContacto, new { @class = "form-control col-md-12" })
+                                                @Html.ValidationMessageFor(model => model.Contacto.NombreContacto, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                @Html.Label("cargo", RHome.Position, new { @class = "label-formulario" })
+                                                @Html.LabelFor(model => model.Contacto.Cargo, new { @class = "label-formulario" })
                                                 @Html.TextBoxFor(model => model.Contacto.Cargo, new { @class = "form-control col-md-12" })
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                @Html.Label("nacionalidad", RHome.Nacionality, new { @class = "label-formulario" })
-                                                @Html.DropDownListFor(model => model.Contacto.IdNacionalidad, new SelectList(ViewBag.NacionalidadList, "IdNacionalidad", "Nombre"), "...", new { @class = "form-control col-md-12" })
+                                                @Html.LabelFor(model => model.Contacto.IdNacionalidad, new { @class = "label-formulario" })
+                                                @Html.DropDownListFor(model => model.Contacto.IdNacionalidad, new SelectList(ViewBag.NacionalidadList, "IdNacionalidad", "Nombre"), "Seleccionar", new { @class = "form-control col-md-12" })
+                                                @Html.ValidationMessageFor(model => model.Contacto.IdNacionalidad, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                @Html.Label("teledonoDirecto", RHome.CPhone, new { @class = "label-formulario" })
+                                                @Html.LabelFor(model => model.Contacto.TelefonoDirecto, new { @class = "label-formulario" })
                                                 @Html.TextBoxFor(model => model.Contacto.TelefonoDirecto, new { placeholder = "Ej. 55 1234 5678", @class = "form-control col-md-12" })
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                @Html.Label("movil", RHome.CellPhone, new { @class = "label-formulario" })
+                                                @Html.LabelFor(model => model.Contacto.TelefonoMovil, new { @class = "label-formulario" })
                                                 @Html.TextBoxFor(model => model.Contacto.TelefonoMovil, new { placeholder = "Ej. 55 1234 5678", @class = "form-control col-md-12" })
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                @Html.Label("fax", RHome.Fax, new { @class = "label-formulario" })
+                                                @Html.LabelFor(model => model.Contacto.Fax, new { @class = "label-formulario" })
                                                 @Html.TextBoxFor(model => model.Contacto.Fax, new { @class = "form-control col-md-12" })
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                @Html.Label("emailContacto", RHome.Email, new { @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.Contacto.Email, new { placeholder = "Ej. correo@dominio.com", @class = "form-control col-md-12" })
+                                                @Html.LabelFor(model => model.Contacto.Email, new { @class = "label-formulario" })
+                                                @Html.TextBoxFor(model => model.Contacto.Email, new { id = "email_input", placeholder = "Ej. correo@dominio.com", @class = "form-control col-md-12" })
+                                                @Html.ValidationMessageFor(model => model.Contacto.Email, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                @Html.Label("paisContacto", RHome.Country, new { @class = "label-formulario" })
-                                                @Html.DropDownListFor(model => model.Contacto.IdPais, new SelectList(ViewBag.PaisList, "IdPais", "Nombre"), "...", new { @class = "form-control col-md-12" })
+                                                @Html.LabelFor(model => model.Contacto.IdPais, new { @class = "label-formulario" })
+                                                @Html.DropDownListFor(model => model.Contacto.IdPais, new SelectList(ViewBag.PaisList, "IdPais", "Nombre"), "Seleccionar", new { @class = "form-control col-md-12" })
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                @Html.Label("zonaHorariaConctacto", RHome.TZone, new { @class = "label-formulario" })
-                                                @Html.DropDownListFor(model => model.Contacto.IdZonaHoraria, new SelectList(ViewBag.ZonaHorariaList, "IdZonaHoraria", "Nombre"), "...", new { @class = "form-control col-md-12" })
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                @Html.Label("idioma", RHome.Language, new { @class = "label-formulario" })
-                                                @Html.DropDownListFor(model => model.Contacto.IdIdioma, new SelectList(ViewBag.IdiomaList, "IdIdioma", "NombreIdioma"), "...", new { @class = "form-control col-md-12" })
+                                                @Html.LabelFor(model => model.Contacto.IdZonaHoraria, new { @class = "label-formulario" })
+                                                @Html.DropDownListFor(model => model.Contacto.IdZonaHoraria, new SelectList(ViewBag.ZonaHorariaList, "IdZonaHoraria", "Nombre"), "Seleccionar", new { @class = "form-control col-md-12" })
+                                                @Html.ValidationMessageFor(model => model.Contacto.IdZonaHoraria, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
                                     </div>
@@ -300,7 +301,8 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            @Html.Label("", "Marque los Aeropuertos que puede atender*", new { @class = "label-formulario" })
+                                            @Html.Label("", @EprocurementWeb.GlobalResources.RHome.AeropuertosAtender, new { @class = "label-formulario" }) &nbsp;&nbsp;
+                                            @Html.ValidationMessage("ErrorAeropuerto", new { @class = "label-formulario field-validation-error" })
                                         </div>
                                         <div class="col-md-12">
                                             <div class="row">
@@ -320,31 +322,41 @@
 
                                             <hr />
                                             <span style="font-size:14px; font-weight:bold;">
-                                                @Html.Label("", "Favor de seleccionar el (los) giro (s) específicos que su empresa esta calificada*", new { @class = "control-label m-b-1" })
-                                            </span>
+                                                @Html.Label("", @EprocurementWeb.GlobalResources.RHome.ProveedorGiros, new { @class = "control-label m-b-1" })
+                                            </span>&nbsp;&nbsp;
+                                            @Html.ValidationMessage("ErrorEmpresa", new { @class = "label-formulario field-validation-error" })
+                                            @Html.Hidden("errorResultado", (int)ViewBag.errorResultado)
+                                            @Html.Hidden("cantidadGiro", (int)ViewBag.cantidadGiro)
 
-                                            @for (int idx = 0; idx < 5; idx++)
+
+                                            @for (int idx = 0; idx < ViewBag.GiroList.Count; idx++)
                                             {
-                                                @Html.HiddenFor(model => model.ProveedorGiroList[idx].IdProveedorGiro)
                                                 <div class="form-group col-md-6 ">
                                                     <div class="col-md-12">
-                                                        @Html.DropDownListFor(x => x.ProveedorGiroList[idx].IdCatalogoGiro, new SelectList(ViewBag.GiroList, "IdGiro", "GiroNombre"), RHome.DefaultSelect, new { @class = "form-control" })
+                                                        @if (idx == 0)
+                                                        {
+                                                            @Html.DropDownListFor(x => x.ProveedorGiroList[idx].IdCatalogoGiro, new SelectList(ViewBag.GiroList, "IdGiro", "GiroNombre"), @EprocurementWeb.GlobalResources.RHome.DefaultSelect, new { @class = "form-control" })
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.DropDownListFor(x => x.ProveedorGiroList[idx].IdCatalogoGiro, new SelectList(ViewBag.GiroList, "IdGiro", "GiroNombre"), @EprocurementWeb.GlobalResources.RHome.DefaultSelect, new { @class = "form-control control-display-none" })
+                                                        }
                                                     </div>
                                                 </div>
                                             }
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btnStyleGray col-md-3">Agregar</button>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="btnGiro" class="btnStyleGray col-md-3">Agregar</button>
+                                                </div>
                                             </div>
-                                        </div>
-                                            
+
 
                                             <hr />
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <ul id="condiciones" class="chkCondiciones">
                                                         <li class="mb-2">
-                                                            <input type="checkbox" data-val="true" data-val-required="Es necesario aceptar los términos y condiciones." id="termino" name="termino" value="true" required>
+                                                            <input type="checkbox" data-val="true" data-val-required=@EprocurementWeb.GlobalResources.RHome.TituloTerminos id="termino" name="termino" value="true" required>
                                                             He leído y acepto los
                                                             <a href="#" data-toggle="modal" data-target="#modalTerminos" class="a-c">
                                                                 Términos y condiciones
@@ -352,7 +364,7 @@
 
                                                         </li>
                                                         <li>
-                                                            <input type="checkbox" data-val="true" data-val-required="Es necesario aceptar el aviso de privacidad" id="avisos" name="avisos" value="true" required>
+                                                            <input type="checkbox" data-val="true" data-val-required=@EprocurementWeb.GlobalResources.RHome.AvisoPrivacidadAceptar id="avisos" name="avisos" value="true" required>
                                                             He leído y acepto el
                                                             <a href="#" data-toggle="modal" data-target="#modalAviso" class="a-c">
                                                                 Aviso de privacidad
@@ -365,10 +377,10 @@
                                                     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
                                                             async defer>
                                                     </script>
-                                                    <div class="g-recaptcha" data-sitekey="6LdH08MUAAAAACNZbhvqmIvsC3WMofzii0OmyUbH"></div>
+                                                    <div class="g-recaptcha" data-sitekey="@ViewBag.recaptchaPublickey"></div>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
 
 
@@ -384,13 +396,13 @@
 
         </div>
 
-        <div class="row">
+        <div class="row mt-5">
             <div class="col-sm-6">&nbsp;</div>
             <div class="col-sm-3">
                 <button class="btnStyle btnWhite" type="submit">Cancelar</button>
             </div>
             <div class="col-sm-3">
-                <button class="btnStyle" type="submit">Aceptar</button>
+                <button class="btnStyle" id="btnaceptar" type="submit">Aceptar</button>
             </div>
         </div>
     </div>
@@ -403,13 +415,13 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header bg-purple">
-                    <h4 class="modal-title">Términos y condiciones</h4>
+                    <h5 class="modal-title">Términos y condiciones</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
                 <!-- Modal body -->
-                <div class="modal-body">
-                    <embed src="~/Content/PDF/PruebaTerminos.pdf" frameborder="0" width="100%" height="400px">
+                <div class="modal-body1">
+                    <embed src="~/Content/PDF/DocTerminos.pdf" frameborder="0" width="100%" height="400px">
                 </div>
 
                 <!-- Modal footer -->
@@ -430,13 +442,13 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header bg-purple">
-                    <h4 class="modal-title">Aviso de privacidad</h4>
+                    <h5 class="modal-title">Aviso de privacidad</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
                 <!-- Modal body -->
-                <div class="modal-body">
-                    <embed src="~/Content/PDF/PruebaAvisos.pdf" frameborder="0" width="100%" height="400px">
+                <div class="modal-body1">
+                    <embed src="~/Content/PDF/DocAviso.pdf" frameborder="0" width="100%" height="400px">
                 </div>
 
                 <!-- Modal footer -->
@@ -467,8 +479,51 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+        if ($("#errorResultado").val() == 1) {
+            Swal.fire({
+                position: 'middle',
+                icon: 'error',
+                title: '¡Registro de proveedor!',
+                html: '<p class="text">Se genero un error al procesar la informacion..</p> ' +
+                    '</br> <p class="text">Favor de intentarlo mas tarde.',
+                showConfirmButton: true,
+                timer: 3000
+            })
+        }
          var url = '@Url.Action("Contact", "Home")';
-        if (window.location.hash == "#success" ){
+
+        $("#btnGiro").click(function () {
+            for (var p = 0; p < $("#cantidadGiro").val(); p++) {
+                var nombre = "#ProveedorGiroList_" + p + "__IdCatalogoGiro";
+                if ($(nombre).hasClass("control-display-none")) {
+                    bloquearOpciones(p);
+                    $(nombre).removeClass("control-display-none");
+                    break;
+                } else if ($(nombre + ' option:selected').val() < 1) {
+                    Swal.fire({
+                        position: 'middle',
+                        icon: 'warning',
+                        title: '¡Seleccion de Giro!',
+                        html: '<p class="text">Aun tiene opciones disponibles.</p> ',
+                        showConfirmButton: true,
+                        timer: 3000
+                    })
+                    break;
+                }
+                //$('#PaisProveedor option[value="'+value+'"]').attr("disabled", true);
+            }
+        });
+
+        function bloquearOpciones(posicion) {
+            var nombre = "#ProveedorGiroList_" + posicion + "__IdCatalogoGiro";
+            for (p = 0; p < posicion; p++) {
+                var nombreValor = "#ProveedorGiroList_" + p + "__IdCatalogoGiro";
+                $(nombre + ' option[value="' + $(nombreValor + ' option:selected').val() + '"]').attr("disabled", true);
+            }
+        }
+
+
+        if (window.location.hash == "#success") {
             Swal.fire({
                 position: 'middle',
                 icon: 'success',
@@ -483,171 +538,16 @@
                 showConfirmButton: true,
                 timer: 3000
             })
-
-            //setTimeout(function(){  window.location.href = url; }, 1500);
-
-
-            //location.hash = '#';
         }
-
-
-
-
-
-        $("#PaisProveedor").change(function () {
-            var dID = $('#PaisProveedor option:selected').val();
-            $.getJSON("/Home/GetEstados", { idPais: dID },
-                function (data) {
-                    var select = $("#EstadoProveedor");
-                    var selectMunicipio = $("#MunicipioProveedor");
-                    select.empty();
-                    selectMunicipio.empty();
-                    select.append($('<option/>', {
-                        value: 0,
-                        text: "..."
-                    }));
-                    selectMunicipio.append($('<option/>', {
-                        value: 0,
-                        text: "..."
-                    }));
-                    $.each(data, function (index, itemData) {
-                        select.append($('<option/>', {
-                            value: itemData.IdEstado,
-                            text: itemData.Nombre
-                        }));
-                    });
-                });
-        });
-
-        $("#EstadoProveedor").change(function () {
-            var dID = $('#EstadoProveedor option:selected').val();
-            $.getJSON("/Home/GetMunicipios", { idEstado: dID },
-                function (data) {
-                    var select = $("#MunicipioProveedor");
-                    select.empty();
-                    select.append($('<option/>', {
-                        value: 0,
-                        text: "..."
-                    }));
-                    $.each(data, function (index, itemData) {
-                        select.append($('<option/>', {
-                            value: itemData.IdMunicipio,
-                            text: itemData.Nombre
-                        }));
-                    });
-                });
-        });
 
         $("#checkall").change(function () {
             var chall = $('#checkall').prop('checked');
             $(".check input:checkbox").prop('checked', chall);
         });
-
-        /// Cargar Paises
-        //$.ajax({
-        //    url: "/Home/GetPaisesList",
-        //    type: "GET",
-        //    contentType: "application/json; charset=utf-8",
-        //    datatype: JSON,
-        //    success: function (result) {
-        //        $(result).each(function () {
-        //            $("#pais").append($("<option></option>").val(this.IdPais).html(this.Nombre));
-        //        });
-        //        $(result).each(function () {
-        //            $("#paisConctacto").append($("<option></option>").val(this.IdPais).html(this.Nombre));
-        //        });
-        //    },
-        //    error: function (data) { }
-        //});
-
-        ///// Cargar Aeropuertos
-        //$.ajax({
-        //    url: "/Home/GetAeropuertosList",
-        //    type: "GET",
-        //    contentType: "application/json; charset=utf-8",
-        //    datatype: JSON,
-        //    success: function (result) {
-        //        $.each(result, function (key, value) {
-        //            var li = $('<li><input  type="checkbox" name="' + key + '" id="' + key + '"/>' +
-        //                '<label for="' + key + '"></label></li>');
-        //            li.find('label').text(value.GiroNombre);
-        //            $('#wkslist').append(li);
-        //        });
-        //    },
-        //    error: function (data) { }
-        //});
-
-        /// Cargar Giros
-        //$.ajax({
-        //    url: "/Home/GetGirosList",
-        //    type: "GET",
-        //    contentType: "application/json; charset=utf-8",
-        //    datatype: JSON,
-        //    success: function (result) {
-        //        $(result).each(function () {
-        //            $("#giro1").append($("<option></option>").val(this.IdGiro).html(this.GiroNombre));
-        //        });
-        //        $(result).each(function () {
-        //            $("#giro2").append($("<option></option>").val(this.IdGiro).html(this.GiroNombre));
-        //        });
-        //        $(result).each(function () {
-        //            $("#giro3").append($("<option></option>").val(this.IdGiro).html(this.GiroNombre));
-
-        //        });
-        //        $(result).each(function () {
-        //            $("#giro4").append($("<option></option>").val(this.IdGiro).html(this.GiroNombre));
-        //        });
-        //        $(result).each(function () {
-        //            $("#giro5").append($("<option></option>").val(this.IdGiro).html(this.GiroNombre));
-        //        });
-        //        //$(result).each(function () {u eres
-        //        //    $("#paisConctacto").append($("<option></option>").val(this.IdPais).html(this.Nombre));
-        //        //});
-        //    },
-        //    error: function (data) { }
-        //});
-        /// Cargar Giros
-        //$.ajax({
-        //    url: "/Home/GetZonaHorariaList",
-        //    type: "GET",
-        //    contentType: "application/json; charset=utf-8",
-        //    datatype: JSON,
-        //    success: function (result) {
-        //        $(result).each(function () {
-        //            $("#zonaHoraria").append($("<option></option>").val(this.IdPais).html(this.Nombre));
-        //        });
-        //        $(result).each(function () {
-        //            $("#zonaHorariaContacto").append($("<option></option>").val(this.IdPais).html(this.Nombre));
-        //        });
-
-        //    },
-        //    error: function (data) { }
-        //});
-
-        /// Cargar Nacionalidad
-        //$.ajax({
-        //    url: "/Home/GetNacionalidadList",
-        //    type: "GET",
-        //    contentType: "application/json; charset=utf-8",
-        //    datatype: JSON,
-        //    success: function (result) {
-        //        $(result).each(function () {
-        //            $("#nacionalidad").append($("<option></option>").val(this.IdPais).html(this.Nombre));
-        //        });
-
-
-        //    },
-        //    error: function (data) { }
-        //});
-
-
         if ($("#Mexicana").is(':checked')) {
             $("#ColoniaProveedor").removeClass("control-display-none");
             $("#lblColonia").removeClass("control-display-none");
-            //$("#Direccion_Colonia").addClass("control-display-none");
             $("#PaisProveedor option:disabled").removeAttr('disabled');
-
-
             $("#lblEstado").removeClass("control-display-none");
             $("#Direccion_Estado").removeClass("control-display-none");
             $("#lblMunicipio").removeClass("control-display-none");
@@ -655,37 +555,24 @@
             $("#lblTIN").addClass("control-display-none");
             $("#Direccion_TIN").addClass("control-display-none");
                 $("#PaisProveedor").val(1);
-            //$("#PaisProveedor").prop("disabled", true);
-
             $("#inpgro-tin").hide();
-        } else {
+        }
+        else {
             var value = 1;
             $('#PaisProveedor option[value="'+value+'"]').attr("disabled", true);
             $("#Extranjera").val(true);
-            //$("#Direccion_Colonia").removeClass("control-display-none");
             $("#lblColonia").addClass("control-display-none");
             $("#ColoniaProveedor").addClass("control-display-none");
-            //$("#Direccion_Colonia").addClass("control-display-none");
             $("#lblEstado").addClass("control-display-none");
             $("#Direccion_Estado").addClass("control-display-none");
             $("#lblMunicipio").addClass("control-display-none");
             $("#Direccion_Municipio").addClass("control-display-none");
-
             $("#lblTIN").removeClass("control-display-none");
             $("#Direccion_TIN").removeClass("control-display-none");
-
             $("#PaisProveedor").prop("disabled", false);
-
             $("#inpgro-tin").show();
         }
 
-        var idPais = $('#PaisProveedor option:selected').val();
-        if (idPais == 1) {
-            var idEstado = $('#EstadoProveedor option:selected').val();
-            if (idEstado > 0) {
-                obtenerMunicipio(idEstado, '@ViewBag.idMunicipio');
-            }
-        }
 
         $("#Direccion_CodigoPostal").on("change", function () {
             var codigoPostal = this.value;
@@ -695,9 +582,22 @@
             }
         });
 
+        //$("#RFC").on("change", function () {
+        //    var value = $(this).val();
+        //    if (value.length == 12 || value.length == 13) {
+        //        ValidaRFC(value);
+        //    }
+        //});
+
+        //$("#email_input").on("change", function () {
+        //    var value = $(this).val();
+        //    if (value.length > 6) {
+        //        ValidaEmail(value);
+        //    }
+        //});
+        
         $("#Mexicana").on("change", function () {
             if ($(this).is(':checked')) {
-                console.log(1)
                 //$("#PaisProveedor").prop("disabled", true);
                 $("#PaisProveedor").val(1);
                 $("#Extranjera").prop("checked", false);
@@ -717,11 +617,9 @@
                 $("#inpgro-Municipio").show();
                 $("#inpgro-Estado").show();
                 $("#inpgro-Colonia").show();
-                
+
 
             } else {
-                console.log(2)
-                var value = 1;
                 $("#lblMunicipio").addClass("control-display-none");
                 $("#Direccion_Municipio").addClass("control-display-none");
                 $('#PaisProveedor option[value="' + value + '"]').attr("disabled", true);
@@ -733,7 +631,7 @@
                 $("#Direccion_Estado").addClass("control-display-none");
                 $("#inpgro-nif").removeClass('col-md-6');
                 $("#inpgro-nif").addClass('col-md-3');
-                $("#inpgro-tin").show();           
+                $("#inpgro-tin").show();
                 $("#inpgro-Municipio").hide();
                 $("#inpgro-Estado").hide();
                 $("#inpgro-Colonia").hide();
@@ -743,7 +641,6 @@
         });
         $("#Extranjera").on("change", function () {
             if ($(this).is(':checked')) {
-            console.log(3)
                 var value = 1;
                 $('#PaisProveedor option[value="' + value + '"]').attr("disabled", true);
                 $("#PaisProveedor").val(0);
@@ -764,7 +661,6 @@
             $("#lblTIN").removeClass("control-display-none");
             $("#Direccion_TIN").removeClass("control-display-none");
             } else {
-                console.log(4)
                 $("#ColoniaProveedor").removeClass("control-display-none");
                 $("#PaisProveedor option:disabled").removeAttr('disabled');
                 $("#PaisProveedor").val(1);
@@ -790,14 +686,13 @@
         function obtenerCodigoInfo(codigoPostal) {
             $.getJSON("/Home/GetCodigoPostalInfo", { codigoPostal: codigoPostal },
                 function (data) {
-                    console.log();
                     $("#Direccion_Estado").val(data.estado);
                     $("#Direccion_Municipio").val(data.municipio);
                     var selectColonia = $("#ColoniaProveedor");
                     selectColonia.empty();
                     selectColonia.append($('<option/>', {
                         value: 0,
-                        text: "..."
+                        text: "Seleccionar"
                     }));
                         $("#ColoniaProveedor").removeClass("control-display-none");
                         $.each(data.colonias, function (index, itemData) {
@@ -806,14 +701,130 @@
                                 text: itemData
                             }));
                         });
-                    
+
                     if (data.colonias.length == 1) {
-                        
+
                         $("#ColoniaProveedor").val(data.colonias[0])
                     }
 
                 });
         }
 
+        function ValidaEmail(email) {
+            $.getJSON("/Home/ValidaEmail", { email: email },
+                function (data) {
+                    if (data != '') {
+                        $("#email_input").val('');
+                        Swal.fire({
+                            position: 'middle',
+                            icon: 'warning',
+                            title: '¡Validación de RFC!',
+                            html: '<p class="text">' + data + '</p> ',
+                            showConfirmButton: true
+                        });
+                    }
+                });
+        }
+
+        function ValidaRFC(rfc) {
+            $.getJSON("/Home/ValidaRFC", { rfc: rfc },
+                function (data) {
+                    if (data != '') {
+                        $("#RFC").val('');
+                        Swal.fire({
+                            position: 'middle',
+                            icon: 'warning',
+                            title: '¡Validación de RFC!',
+                            html: '<p class="text">' + data + '</p> ',
+                            showConfirmButton: true
+                        });
+                    }
+                });
+        }
+
     });
+
+    //Función para validar un RFC
+// Devuelve el RFC sin espacios ni guiones si es correcto
+// Devuelve false si es inválido
+// (debe estar en mayúsculas, guiones y espacios intermedios opcionales)
+function rfcValido(rfc, aceptarGenerico = true) {
+    const re       = /^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/;
+    var   validado = rfc.match(re);
+
+    if (!validado)  //Coincide con el formato general del regex?
+        return false;
+
+    //Separar el dígito verificador del resto del RFC
+    const digitoVerificador = validado.pop(),
+          rfcSinDigito      = validado.slice(1).join(''),
+          len               = rfcSinDigito.length,
+
+    //Obtener el digito esperado
+          diccionario       = "0123456789ABCDEFGHIJKLMN&OPQRSTUVWXYZ Ñ",
+          indice            = len + 1;
+    var   suma,
+          digitoEsperado;
+
+    if (len == 12) suma = 0
+    else suma = 481; //Ajuste para persona moral
+
+    for(var i=0; i<len; i++)
+        suma += diccionario.indexOf(rfcSinDigito.charAt(i)) * (indice - i);
+    digitoEsperado = 11 - suma % 11;
+    if (digitoEsperado == 11) digitoEsperado = 0;
+    else if (digitoEsperado == 10) digitoEsperado = "A";
+
+    //El dígito verificador coincide con el esperado?
+    // o es un RFC Genérico (ventas a público general)?
+    if ((digitoVerificador != digitoEsperado)
+     && (!aceptarGenerico || rfcSinDigito + digitoVerificador != "XAXX010101000"))
+        return false;
+    else if (!aceptarGenerico && rfcSinDigito + digitoVerificador == "XEXX010101000")
+        return false;
+    return rfcSinDigito + digitoVerificador;
+}
+
+
+//Handler para el evento cuando cambia el input
+// -Lleva la RFC a mayúsculas para validarlo
+// -Elimina los espacios que pueda tener antes o después
+function validarInput(input) {
+    var rfc         = input.value.trim().toUpperCase(),
+        resultado   = document.getElementById("resultado"),
+        valido;
+
+    var rfcCorrecto = rfcValido(rfc);   // ⬅️ Acá se comprueba
+
+    if (rfcCorrecto) {
+    	valido = "Válido";
+        resultado.classList.add("ok");
+
+        // Enable #x
+        $("#btnaceptar").prop("disabled", false);
+        //$("#btnaceptar").show();
+    } else {
+    	valido = "No válido"
+        resultado.classList.remove("ok");
+
+        // Disable #x
+        $( "#btnaceptar" ).prop( "disabled", true );
+        //$("#btnaceptar").hide();
+    }
+
+    //resultado.innerText = "RFC: " + rfc
+    //                    + "\nResultado: " + rfcCorrecto
+    //    + "\nFormato: " + valido;
+
+     //resultado.innerText = "Formato " + valido;
+        resultado.innerText = ".";
+    }
+
+    $('#rfc_input').on('input', function () {
+        validarInput(this);
+    });
+
+     var verifyCallback = function(response) {
+        alert(response);
+      };
 </script>
