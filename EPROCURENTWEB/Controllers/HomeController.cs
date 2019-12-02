@@ -75,6 +75,7 @@ namespace EprocurementWeb.Controllers
             ViewBag.MunicipioList = municipioList;
             ViewBag.TipoProveedorList = tipoProveedorList;
             ViewBag.errorResultado = 0;
+            ViewBag.recaptchaPublickey = System.Web.Configuration.WebConfigurationManager.AppSettings["recaptchaPublickey"];
             proveedor.EmpresaList = proveedor.AeropuertoList.Where(a => a.Checado).Select(a => new ProveedorEmpresaModel { IdCatalogoAeropuerto = a.Id }).ToList();
             ViewBag.colonias = new List<string>();
 
