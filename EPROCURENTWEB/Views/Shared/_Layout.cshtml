@@ -64,23 +64,24 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav">
-                        <li class="nav-item active">
+                        <li id="nav-1" class="nav-item active">
                             @*@Html.ActionLink("Facturas", "InformacionBF", "AltaProveedor", new { @class = "nav-link" })*@
                             @*<a class="nav-link" href="Index">Facturas <span class="sr-only"></span></a>*@
                             <a class="nav-link" href="@Url.Action("Index", "Gestion")">Facturas</a>
                         </li>
-                        <li class="nav-item">
+                        @*@if (ViewBag.view == 2) { active }*@
+                        <li id="nav-2" class="nav-item">
                             @*<a class="nav-link" href="SolicitudFacturacion">Solicitud de facturación <span class="sr-only"></span></a>*@
                             <a class="nav-link" href="@Url.Action("SolicitudFacturacion", "Gestion")">Solicitud de facturación</a>
                         </li>
-                        <li class="nav-item">
+                        <li id="nav-3" class="nav-item">
                             @*<a class="nav-link" href="SolicitudCotizacion">Solicitud de cotización <span class="sr-only"></span></a>*@
                             <a class="nav-link" href="@Url.Action("SolicitudCotizacion", "Gestion")">Solicitud de cotización</a>
                         </li>
-                        <li class="nav-item">
+                        <li id="nav-4" class="nav-item">
                             @*<a class="nav-link" href="OrdenCompra">Órden de compra<span class="sr-only"></span></a>*@
                             <a class="nav-link" href="@Url.Action("OrdenCompra", "Gestion")">Órden de compra</a>
-                        </li>                       
+                        </li>
                     </ul>
                 </div>
             </nav>

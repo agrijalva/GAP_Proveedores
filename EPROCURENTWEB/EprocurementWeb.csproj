@@ -221,6 +221,10 @@
     <Content Include="Content\Images\fr-fr\eiffel.jpg" />
     <Content Include="Content\Images\fr-fr\welcome.jpg" />
     <Content Include="Content\Images\France.png" />
+    <Content Include="Content\Images\icon\pdf.png" />
+    <Content Include="Content\Images\icon\upload.png" />
+    <Content Include="Content\Images\icon\view.png" />
+    <Content Include="Content\Images\icon\xml.png" />
     <Content Include="Content\Images\logo-gap-color%402x.png" />
     <Content Include="Content\Images\logo-gap-color%403x.png" />
     <Content Include="Content\Images\logo-gap-color.png" />

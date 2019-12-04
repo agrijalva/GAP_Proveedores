@@ -318,3 +318,13 @@ a:hover {
 .table-detalle tbody tr td{
     font-size: 13px;
 }
+
+
+a.btn-ver {
+    background: url(/Content/Images/icon/view.png) no-repeat top left;
+    display: block;
+    width: 35px;
+    height: 35px;
+    background-size: 35px 35px;
+    text-indent: -9999px; /* hides the link text */
+}

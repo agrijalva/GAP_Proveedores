@@ -11,6 +11,10 @@ namespace EprocurementWeb.Controllers
 {
     public class GestionController : Controller
     {
+        public string nav_factura;
+        public string nav_sFactura;
+        public string nav_sCotizacion;
+        public string nav_sOC;
         // GET: Gestion
         public ActionResult Index()
         {

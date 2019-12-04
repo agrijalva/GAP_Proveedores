@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Solicitud de Facturación";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.view = 2;
 }
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
@@ -84,10 +85,10 @@
                      '<td>Número de<br> solicitud</td>'+
                      '<td>Número de recepción</td>' +
                      '<td>Fecha de solicitud</td>' +
-                     '<td>Importe</td>' +
-                     '<td>PDF</td>' +
-                     '<td>XML</td>' +
-                     '<td>Estatus</td>' +
+                     '<td align="right">Importe</td>' +
+                     '<td align="center">PDF</td>' +
+                     '<td align="center">XML</td>' +
+                     '<td align="center">Estatus</td>' +
                      '<td>Ver</td></tr></thead>'
                  );
                  $("#Table").DataTable().clear().draw();
@@ -100,20 +101,20 @@
                      link = link.replace('_idProv_', data[i].IdProveedor);*@
                      @*var link = '@Html.ActionLink(" ", "AceptarProveedor", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
                      link = link.replace('_idProv_', data[i].IdProveedor);*@
-                     var link = '@Html.ActionLink("Ver", "SolicitudDetalle", "Gestion", new { idSolicitud ="_idSoliocitud_" }, new { @class = "" })';
+                     var link = '@Html.ActionLink(" ", "SolicitudDetalle", "Gestion", new { idSolicitud ="_idSoliocitud_" }, new { @class = "btn-ver" })';
                      link = link.replace('_idSoliocitud_', data[i].IdSolicitudFactura);
 
                      var color = ''
                      switch (data[i].UltimoEstatus) {
-                         case 1: color = '#43ac3e';
+                         case 1: color = '#f9a32f'; // Pendiente
                              break;
-                         case 2: color = '#de343c';
+                         case 2: color = '#448aff'; // En Proceso
                              break;
-                         case 3: color = '#f9a32f';
+                         case 3: color = '#43ac3e'; // Aceptada
+                             break; 
+                         case 4: color = '#de343c'; // Rechazada
                              break;
-                         case 4: color = '#f9a32f';
-                             break;
-                         case 5: color = '#f9a32f';
+                         case 5: color = '#43ac3e'; // Aceptada
                              break;
                      }
 
@@ -124,8 +125,8 @@
                          '<td style="dislay: none;" align="right">$ ' + addCommas(data[i].Monto) + '</td>' +
                          //'<td style="dislay: none;">' + data[i].RutaPDF + '</td>' +
                          //'<td style="dislay: none;">' + data[i].RutaXML + '</td>' +
-                         '<td style="dislay: none;" align="center"><img src="/Content/Images/descargar.png" width="32" /></td>' +
-                         '<td style="dislay: none;" align="center"><img src="/Content/Images/descargar.png" width="32" /></td>' +
+                         '<td style="dislay: none;" align="center"><img src="/Content/Images/icon/upload.png" width="32" /></td>' +
+                         '<td style="dislay: none;" align="center"><img src="/Content/Images/icon/upload.png" width="32" /></td>' +
 
                          //'<td style="dislay: none;">' + data[i].UltimoEstatus + '</td>' +
                          '<td style="dislay: none; color:'+ color +'"><b>' + data[i].UltimoStatusLabel + '</b></td>' +
@@ -160,8 +161,9 @@
 
 
     $(document).ready(function () {
-        console.log('Aqui');
         fn_buscar();
+        $(".navbar-nav .nav-item").removeClass("active");
+        $("#nav-2").addClass("active");
     });
 
 </script>
