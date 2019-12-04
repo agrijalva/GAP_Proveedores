@@ -47,6 +47,7 @@
     <Compile Include="Proveedor\HandlerProveedor.cs" />
     <Compile Include="SeguridadAD\HandlerSeguridadAD.cs" />
     <Compile Include="Seguridad\HandlerSeguridad.cs" />
+    <Compile Include="SolicitudFactura\HandlerSolicitudFactura.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPROCUREMENT.GAPPROVEEDOR.Data\EPROCUREMENT.GAPPROVEEDOR.Data.csproj">

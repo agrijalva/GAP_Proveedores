@@ -78,6 +78,7 @@
     <Compile Include="Proveedor\ProveedorData.cs" />
     <Compile Include="SeguridadADData\SeguridadADData.cs" />
     <Compile Include="Seguridad\SeguridadData.cs" />
+    <Compile Include="SolicitudFactura\SolicitudFacturaData.cs" />
     <Compile Include="TryCatchExecutor.cs" />
   </ItemGroup>
   <ItemGroup>
