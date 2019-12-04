@@ -52,7 +52,6 @@ C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_P
 C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.pdb
 C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\Microsoft.Owin.xml
 C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.csprojAssemblyReference.cache
-C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.csproj.CoreCompileInputs.cache
 C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.csproj.CopyComplete
 C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.dll
 C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.pdb
