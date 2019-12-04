@@ -116,6 +116,7 @@
     <Compile Include="Controllers\ProveedorController.cs" />
     <Compile Include="Controllers\SeguridadADController.cs" />
     <Compile Include="Controllers\SeguridadController.cs" />
+    <Compile Include="Controllers\SolicitudFacturaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
