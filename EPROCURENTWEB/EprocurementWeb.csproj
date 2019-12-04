@@ -169,6 +169,7 @@
     </Compile>
     <Compile Include="Helpers\GlobalHelper.cs" />
     <Compile Include="Models\ActualizaPasswordModel.cs" />
+    <Compile Include="Models\Catalogo\EstatusSolicitudModel.cs" />
     <Compile Include="Models\CodigoPostalModel.cs" />
     <Compile Include="Models\Comun\ErrorModel.cs" />
     <Compile Include="Models\Comun\TipoFiltro.cs" />

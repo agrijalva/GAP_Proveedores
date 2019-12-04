@@ -20,6 +20,22 @@ namespace EprocurementWeb.Controllers
         // GET: SolicitudFacturacion
         public ActionResult SolicitudFacturacion()
         {
+            List<EstatusSolicitudModel> estatusList = new List<EstatusSolicitudModel>();
+            estatusList.Add(new EstatusSolicitudModel { IdEstatus = 1, Descripcion = "Pendiente" });
+            estatusList.Add(new EstatusSolicitudModel { IdEstatus = 2, Descripcion = "En Proceso" });
+            estatusList.Add(new EstatusSolicitudModel { IdEstatus = 3, Descripcion = "Aceptada" });
+            estatusList.Add(new EstatusSolicitudModel { IdEstatus = 4, Descripcion = "Cancelada por AX" });
+            estatusList.Add(new EstatusSolicitudModel { IdEstatus = 5, Descripcion = "Pagada" });
+            ViewBag.EstatusSolicitudList = estatusList;
+
+            List<SolicitudFactura> numeroSolicitudList = new List<SolicitudFactura>();
+            numeroSolicitudList.Add(new SolicitudFactura { IdSolicitudFactura = 4 });
+            numeroSolicitudList.Add(new SolicitudFactura { IdSolicitudFactura = 5 });
+            numeroSolicitudList.Add(new SolicitudFactura { IdSolicitudFactura = 6 });
+            numeroSolicitudList.Add(new SolicitudFactura { IdSolicitudFactura = 7 });
+            ViewBag.NumeroSolicitudList = numeroSolicitudList;
+
+
             return View();
         }
 
@@ -29,7 +45,6 @@ namespace EprocurementWeb.Controllers
             return View();
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult GetSolicitudFacturaList(int? idSolicitudFactura, int? idEstatus, DateTime? fechaInicio, DateTime? fechaFin)
         {
             var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
