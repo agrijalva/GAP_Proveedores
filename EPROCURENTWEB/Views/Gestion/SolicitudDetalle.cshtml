@@ -24,27 +24,32 @@
                 <div class="row">
                     <div class="col-sm-3 cabecero-detalle">
                         <label>Descripción</label>
-                        @Html.Label("lblDescripcion", "lblDescripcion", new { id = "lblDescripcion", @class = "control-label text-right " })
+                        <p class="control-label">
+                            @Html.Label("lblDescripcion", "lblDescripcion", new { id = "lblDescripcion" })
+                        </p>
+                        
                     </div>
 
                     <div class="col-sm-2 cabecero-detalle">
                         <label>Importe contratado sin I.V.A.</label>
-                        @Html.Label("lblImporteContratado", "lblImporteContratado", new { id = "lblImporteContratado", @class = "control-label text-right " })
+                        <p class="control-label">
+                            @Html.Label("lblImporteContratado", "lblImporteContratado", new { id = "lblImporteContratado", @class = "" })
+                        </p>
                     </div>
 
                     <div class="col-sm-2 cabecero-detalle">
                         <label>Importe facturado sin I.V.A.</label>
-                        @Html.Label("lblImporteFacturado", "lblImporteFacturado", new { id = "lblImporteFacturado", @class = "control-label text-right " })
+                        <p class="control-label">@Html.Label("lblImporteFacturado", "lblImporteFacturado", new { id = "lblImporteFacturado" })</p>
                     </div>
 
                     <div class="col-sm-3 cabecero-detalle">
                         <label>Importe pendiente de facturar sin I.V.A.</label>
-                        @Html.Label("lblImportePendiente", "lblImportePendiente", new { id = "lblImportePendiente", @class = "control-label text-right " })
+                        <p class="control-label">@Html.Label("lblImportePendiente", "lblImportePendiente", new { id = "lblImportePendiente" })</p>
                     </div>
 
                     <div class="col-sm-2 cabecero-detalle">
                         <label>Importe pagado sin I.V.A.</label>
-                        @Html.Label("lblImporteFacturar", "lblImporteFacturar", new { id = "lblImporteFacturar", @class = "control-label text-right " })
+                        <p class="control-label">@Html.Label("lblImporteFacturar", "lblImporteFacturar", new { id = "lblImporteFacturar" })</p>
                     </div>
 
                 </div>
@@ -112,6 +117,7 @@
                         $("#Table").DataTable().clear().draw();
                         $("#Table").DataTable().destroy();
                         $("#Table").append('<tbody>');
+                        console.log( "SolicitudFacturaDetalleList", data.SolicitudFacturaDetalleList );
                         for (i = 0; i < data.SolicitudFacturaDetalleList.length; i++) {                           
                             $("#Table").append('<tr>' +
                                 '<td style="dislay: none;"><b>' + data.SolicitudFacturaDetalleList[i].Linea + '</b></td>' +
@@ -139,6 +145,8 @@
 
         $(document).ready(function () {
             fn_buscar();
+            $(".navbar-nav .nav-item").removeClass("active");
+            $("#nav-2").addClass("active");
         });
 
     </script>

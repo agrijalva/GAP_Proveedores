@@ -101,6 +101,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             solicitudFacturaDetalle.Linea = Convert.ToInt32(reader["Linea"]);
                             solicitudFacturaDetalle.Descripcion = reader["Descripcion"].ToString();
                             solicitudFacturaDetalle.CantidadAdquirida = Convert.ToDecimal(reader["CantidadAdquirida"]);
+                            solicitudFacturaDetalle.PrecioUnitario = Convert.ToDecimal(reader["PrecioUnitario"]);
                             solicitudFacturaDetalle.ImporteAdquirido = Convert.ToDecimal(reader["ImporteAdquirido"].ToString());
                             solicitudFacturaDetalle.CantidadFacturada = Convert.ToDecimal(reader["CantidadFacturada"]);
                             solicitudFacturaDetalle.CantidadFacturar = Convert.ToDecimal(reader["CantidadFacturar"]);
