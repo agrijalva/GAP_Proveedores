@@ -96,6 +96,7 @@
     <Compile Include="Request\ProveedorRequestDTO.cs" />
     <Compile Include="Request\RequestBaseDTO.cs" />
     <Compile Include="Request\ResetPasswordRequestDTO.cs" />
+    <Compile Include="Request\SolicitudFacturaDetalleRequestDTO.cs" />
     <Compile Include="Request\SolicitudFacturaRequestDTO.cs" />
     <Compile Include="Request\TmpProveedoRequestDTO.cs" />
     <Compile Include="Response\ActualizaPasswordResponseDTO.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="Response\ProveedorResponseDTO.cs" />
     <Compile Include="Response\ResetPasswordResponseDTO.cs" />
     <Compile Include="Response\ResponseBaseDTO.cs" />
+    <Compile Include="Response\SolicitudFacturaDetalleResponseDTO.cs" />
     <Compile Include="Response\SolicitudFacturaResponseDTO.cs" />
     <Compile Include="Response\TipoCuentaResponseDTO.cs" />
     <Compile Include="Response\TipoProveedorResponseDTO.cs" />
@@ -128,6 +130,8 @@
     <Compile Include="Response\ZonaHorariaResponseDTO.cs" />
     <Compile Include="Seguridad\AuthenticationResult.cs" />
     <Compile Include="Seguridad\UsuarioDTO.cs" />
+    <Compile Include="SolicitudFactura\SolicitudFacturaCabeceraDTO.cs" />
+    <Compile Include="SolicitudFactura\SolicitudFacturaDetalleDTO.cs" />
     <Compile Include="SolicitudFactura\SolicitudFacturaDTO.cs" />
     <Compile Include="SolicitudFactura\SolicitudFacturaFiltroDTO.cs" />
   </ItemGroup>

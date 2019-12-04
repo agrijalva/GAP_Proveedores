@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using EprocurementWeb.Models;
 using EprocurementWeb.Filters;
+using EPROCUREMENT.GAPPROVEEDOR.Entities;
 
 namespace EprocurementWeb.Controllers
 {
@@ -16,6 +17,7 @@ namespace EprocurementWeb.Controllers
         {
             return View();
         }
+
 
         // GET: SolicitudFacturacion
         public ActionResult SolicitudFacturacion()
@@ -40,8 +42,9 @@ namespace EprocurementWeb.Controllers
         }
 
         // GET: SolicitudFacturacion
-        public ActionResult SolicitudDetalle()
+        public ActionResult SolicitudDetalle(int idSolicitudFactura)
         {
+            ViewBag.IdSolicitudFactura = idSolicitudFactura;
             return View();
         }
 
@@ -64,6 +67,20 @@ namespace EprocurementWeb.Controllers
             var solicitudFacturaResponse = businessLogic.GetSolicitudFacturaList(request);
             
             return Json(solicitudFacturaResponse.SolicitudFacturaList, JsonRequestBehavior.AllowGet);           
+
+        }
+
+        public JsonResult GetSolicitudDetalleList(int idSolicitudFactura)
+        {
+            SolicitudFacturaBusiness businessLogic = new SolicitudFacturaBusiness();
+            var request = new SolicitudFacturaDetalleRequestDTO
+            {
+                IdSolicitudFactura = idSolicitudFactura
+            };
+
+            var solicitudDetalleResponse = businessLogic.GetSolicitudFacturaDetalle(request);
+
+            return Json(solicitudDetalleResponse, JsonRequestBehavior.AllowGet);
 
         }
 
