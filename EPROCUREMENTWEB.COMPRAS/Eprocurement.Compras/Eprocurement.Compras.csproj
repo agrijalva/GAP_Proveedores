@@ -343,6 +343,7 @@
     <Content Include="Content\Images\user-photo.png" />
     <Content Include="Content\StyleIBF.css" />
     <Content Include="Content\Styles\Login.css" />
+    <Content Include="Content\validacionProveedor.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
