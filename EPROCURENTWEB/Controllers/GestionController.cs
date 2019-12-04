@@ -69,6 +69,10 @@ namespace EprocurementWeb.Controllers
             };
 
             var solicitudFacturaResponse = businessLogic.GetSolicitudFacturaList(request);
+            foreach(var solicitud in solicitudFacturaResponse.SolicitudFacturaList)
+            {
+                solicitud.Fecha = solicitud.FechaSolicitud.ToShortDateString();
+            }
             
             return Json(solicitudFacturaResponse.SolicitudFacturaList, JsonRequestBehavior.AllowGet);           
 
