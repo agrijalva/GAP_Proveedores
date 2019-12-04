@@ -259,7 +259,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Contacto.Email, new { @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.Contacto.Email, new { id = "email_input", placeholder = "Ej. correo@dominio.com", @class = "form-control col-md-12" })
+                                                @Html.TextBoxFor(model => model.Contacto.Email, new { id = "email_input", type = "email", placeholder = "Ej. correo@dominio.com", @class = "form-control col-md-12" })
                                                 @Html.ValidationMessageFor(model => model.Contacto.Email, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
