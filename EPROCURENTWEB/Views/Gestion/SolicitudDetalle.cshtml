@@ -1,0 +1,172 @@
+﻿
+@{
+    ViewBag.Title = "Solicitud Detalle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<link href="~/Content/Styles/Site.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/Css/infoCuenta.css" rel="stylesheet" />
+<link href="~/Content/validacionProveedor.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-md-12">
+        <h5 class="mt-2 detalle-titulo">Solicitud de Facturación</h5>
+        <div class="card mt-3">
+            <div class="card-header mb-2" id="headingOne">
+                <span class="card-titulo">
+                    Orden: SIAP-OC-0003565
+                </span>
+            </div>
+            <div class="card-body no-border">
+                <div class="row">
+                    <div class="col-sm-3 cabecero-detalle">
+                        <label>Descripción</label>
+                        <p>Descripción</p>
+                    </div>
+
+                    <div class="col-sm-2 cabecero-detalle">
+                        <label>Importe contratado sin I.V.A.</label>
+                        <p>$ 2,584,455.0</p>
+                    </div>
+
+                    <div class="col-sm-2 cabecero-detalle">
+                        <label>Importe facturado sin I.V.A.</label>
+                        <p>$ 2,584,455.0</p>
+                    </div>
+
+                    <div class="col-sm-3 cabecero-detalle">
+                        <label>Importe pendiente de facturar sin I.V.A.</label>
+                        <p>$ 2,584,455.0</p>
+                    </div>
+
+                    <div class="col-sm-2 cabecero-detalle">
+                        <label>Importe pagado sin I.V.A.</label>
+                        <p>$ 2,584,455.0</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-sm-12">
+        <button class="btn-white">Exportar Excel</button>
+    </div>
+</div>
+
+
+<div class="row mt-3">
+    <div class="col-sm-12">
+        <table id="Table" class="table-detalle dataTable dataTables_wrapper ">
+            <thead class="bg-light-purple">
+                <tr>
+                    <td width="80">ID Lineas</td>
+                    <td width="80">Descripción</td>
+                    <td>Cantidad Adquirida</td>
+                    <td>Precio Unitario</td>
+                    <td>Importe Adquirido</td>
+                    <td>Cantidad Facturada</td>
+                    <td>Cantidad a Facturar</td>
+                    <td>Importe Facturadop<br />sin I.V.A.</td>
+                    <td>Importe a Facturar<br />sin I.V.A.</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>1</b></td>
+                    <td>12345678</td>
+                    <td>09/Diciembre/2019</td>
+                    <td>$ 354,456.00</td>
+                    <td>GDL-OC-0003235</td>
+                    <td>X</td>
+                    <td>X</td>
+                    <td><span class="text-warning"><b>Pendiente</b></span></td>
+                    <td><a href="#">Ver</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-sm-6">&nbsp;</div>
+    <div class="col-sm-3">
+        <button class="btn-white">Adjuntar XML</button>
+    </div>
+    <div class="col-sm-3">
+        <button class="btn-white">Adjuntar PDF</button>
+    </div>
+</div>
+
+@*<script type="text/javascript">
+        var fn_buscar = function () {
+                //var idGiroProveedor = $('#giro').val() == '' ? null : $('#giro').val();
+                //var idAeropuerto = $('#aeropuerto').val() == '' ? null : $('#aeropuerto').val();
+            //var idEstatus = $('#estatus').val() == '' ? null : $('#estatus').val();
+            console.log('Entro');
+            var jsonData = JSON.stringify({ idSolicitudFactura: null, idEstatus: null, fechaInicio: null, fechaFin: null });
+                $.ajax({
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    url: '@Url.Action("GetSolicitudFacturaList", "Gestion")',
+                    data: jsonData,
+                    async: false,
+                    success: function(data) {
+                        console.log("Traigo Datos", data)
+                        $("#Table").html('');
+                        $("#Table").append('<thead class="bg-light-purple"><tr>' +
+                            '<td>Número de solicitud</td>'+
+                            '<td>Número de recepción</td>' +
+                            '<td>Fecha de solicitud</td>' +
+                            '<td>Número de Orden de Compra</td>' +
+                            '<td>PDF</td>' +
+                            '<td>XML</td>' +
+                            '<td>Estatus</td>' +
+                            '<td>Ver</td></tr></thead>'
+                        );
+                        $("#Table").DataTable().clear().draw();
+                        $("#Table").DataTable().destroy();
+
+                        $("#Table").append('<tbody>');
+                        for (i = 0; i < data.length; i++) {
+                            console.log(data);
+
+                            var link = '@Html.ActionLink(" ", "About", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
+                            link = link.replace('_idProv_', data[i].IdProveedor);
+                            var link = '@Html.ActionLink(" ", "AceptarProveedor", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
+                            link = link.replace('_idProv_', data[i].IdProveedor);
+
+                            $("#Table").append('<tr>' +
+                                '<td style="dislay: none;"><b>' + data[i].IdSolicitudFactura + '</b></td>' +
+                                '<td style="dislay: none;">' + data[i].NumeroRecepcion + '</td>' +
+                                '<td style="dislay: none;">' + data[i].FechaSolicitud + '</td>' +
+                                '<td style="dislay: none;">' + data[i].Monto + '</td>' +
+                                '<td style="dislay: none;">' + data[i].RutaPDF + '</td>' +
+                                '<td style="dislay: none;">' + data[i].RutaXML + '</td>' +
+                                '<td style="dislay: none;">' + data[i].UltimoEstatus + '</td>' +
+                                '<td style="dislay: none;">' + data[i].UltimoStatusLabel + '</td>' + '</tr>'
+                                //'<td style="dislay: none;"><div class="btn-circle">' + link + '</div></td>' + '</tr>'
+                            );
+                        }
+                        $("#Table").append('</tbody>');
+
+                        $('#Table').DataTable({
+                            "paging": false,
+                                "bScrollInfinite": true,
+                                "bScrollCollapse": true
+                            });
+
+                    },
+                });
+        }
+
+        $(document).ready(function () {
+            console.log('Aqui');
+            fn_buscar();
+        });
+
+    </script>*@

@@ -97,10 +97,10 @@
                  console.log("Traigo Datos", data)
                  $("#Table").html('');
                  $("#Table").append('<thead class="bg-light-purple"><tr>' +
-                     '<td>Número de solicitud</td>'+
+                     '<td>Número de<br> solicitud</td>'+
                      '<td>Número de recepción</td>' +
                      '<td>Fecha de solicitud</td>' +
-                     '<td>Número de Orden de Compra</td>' +
+                     '<td>Importe</td>' +
                      '<td>PDF</td>' +
                      '<td>XML</td>' +
                      '<td>Estatus</td>' +
@@ -117,16 +117,36 @@
                      link = link.replace('_idProv_', data[i].IdProveedor);*@
                      @*var link = '@Html.ActionLink(" ", "AceptarProveedor", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
                      link = link.replace('_idProv_', data[i].IdProveedor);*@
+                     var link = '@Html.ActionLink("Ver", "SolicitudDetalle", "Gestion", new { idSolicitud ="_idSoliocitud_" }, new { @class = "" })';
+                     link = link.replace('_idSoliocitud_', data[i].IdSolicitudFactura);
+
+                     var color = ''
+                     switch (data[i].UltimoEstatus) {
+                         case 1: color = '#43ac3e';
+                             break;
+                         case 2: color = '#de343c';
+                             break;
+                         case 3: color = '#f9a32f';
+                             break;
+                         case 4: color = '#f9a32f';
+                             break;
+                         case 5: color = '#f9a32f';
+                             break;
+                     }
 
                      $("#Table").append('<tr>' +
-                         '<td style="dislay: none;"><b>' + data[i].IdSolicitudFactura + '</b></td>' +
+                         '<td style="dislay: none;" align="center"><b>' + data[i].IdSolicitudFactura + '</b></td>' +
                          '<td style="dislay: none;">' + data[i].NumeroRecepcion + '</td>' +
                          '<td style="dislay: none;">' + data[i].FechaSolicitud + '</td>' +
-                         '<td style="dislay: none;">' + data[i].Monto + '</td>' +
-                         '<td style="dislay: none;">' + data[i].RutaPDF + '</td>' +
-                         '<td style="dislay: none;">' + data[i].RutaXML + '</td>' +
-                         '<td style="dislay: none;">' + data[i].UltimoEstatus + '</td>' +
-                         '<td style="dislay: none;">' + data[i].UltimoStatusLabel + '</td>' + '</tr>'
+                         '<td style="dislay: none;" align="right">$ ' + addCommas(data[i].Monto) + '</td>' +
+                         //'<td style="dislay: none;">' + data[i].RutaPDF + '</td>' +
+                         //'<td style="dislay: none;">' + data[i].RutaXML + '</td>' +
+                         '<td style="dislay: none;" align="center"><img src="/Content/Images/descargar.png" width="32" /></td>' +
+                         '<td style="dislay: none;" align="center"><img src="/Content/Images/descargar.png" width="32" /></td>' +
+
+                         //'<td style="dislay: none;">' + data[i].UltimoEstatus + '</td>' +
+                         '<td style="dislay: none; color:'+ color +'"><b>' + data[i].UltimoStatusLabel + '</b></td>' +
+                         '<td style="dislay: none;">'+ link +'</td>' + '</tr>'
                          //'<td style="dislay: none;"><div class="btn-circle">' + link + '</div></td>' + '</tr>'
                      );
                  }
@@ -141,6 +161,20 @@
              },
          });
     }
+
+    function addCommas(nStr)
+    {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
+
 
     $(document).ready(function () {
         console.log('Aqui');

@@ -289,3 +289,32 @@ a:hover {
     color: #aca1c4;
     background-color: transparent;
 }
+
+.cabecero-detalle label {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.cabecero-detalle p {
+    font-size:16px;
+    font-weight: 600;
+}
+
+.no-border{
+    border:none !important;
+}
+
+.btn-white {
+    border-radius: 60px;
+    background-color: white;
+    padding: 8px 70px;
+    font-size: 14px;
+    float: right;
+    border: solid 1px rgba(68,41,121,1);
+    color: rgba(68,41,121,1);
+    font-weight: 600;
+}
+
+.table-detalle tbody tr td{
+    font-size: 13px;
+}

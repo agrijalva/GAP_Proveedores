@@ -23,6 +23,12 @@ namespace EprocurementWeb.Controllers
             return View();
         }
 
+        // GET: SolicitudFacturacion
+        public ActionResult SolicitudDetalle()
+        {
+            return View();
+        }
+
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult GetSolicitudFacturaList(int? idSolicitudFactura, int? idEstatus, DateTime? fechaInicio, DateTime? fechaFin)
         {
