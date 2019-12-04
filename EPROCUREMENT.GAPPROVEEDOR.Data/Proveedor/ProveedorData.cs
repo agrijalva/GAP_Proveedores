@@ -513,6 +513,53 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             return response;
         }
 
+        public ProveedorContactoResponseDTO GetContactoProveedorItem(ContactoRequestDTO request)
+        {
+            var response = new ProveedorContactoResponseDTO()
+            {
+                ContactoItem = new ProveedorContactoDTO()
+            };
+
+            try
+            {
+                using (var conexion = new SqlConnection(Helper.Connection()))
+                {
+                    conexion.Open();
+                    var cmdContacto = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorContacto_GETByEmail]", conexion);
+                    var contacto = new ProveedorContactoDTO();
+                    cmdContacto.CommandType = CommandType.StoredProcedure;
+                    cmdContacto.Parameters.Add(new SqlParameter("@email", request.Contacto.Email));
+                    using (SqlDataReader reader = cmdContacto.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            response.ContactoItem.IdContacto = Convert.ToInt32(reader["IdContacto"]);
+                            response.ContactoItem.IdProveedor = Convert.ToInt32(reader["IdProveedor"]);
+                            response.ContactoItem.NombreContacto = reader["NombreContacto"].ToString();
+                            response.ContactoItem.Cargo = reader["Cargo"].ToString();
+                            response.ContactoItem.IdNacionalidad = Convert.ToInt32(reader["IdNacionalidad"]);
+                            response.ContactoItem.TelefonoDirecto = reader["TelefonoDirecto"].ToString();
+                            response.ContactoItem.TelefonoMovil = reader["TelefonoMovil"].ToString();
+                            response.ContactoItem.Fax = reader["Fax"].ToString();
+                            response.ContactoItem.Email = request.Contacto.Email;
+                            response.ContactoItem.IdZonaHoraria = Convert.ToInt32(reader["IdZonaHoraria"]);
+                            response.ContactoItem.IdPais = Convert.ToInt32(reader["IdPais"]);
+                            response.ContactoItem.IdIdioma = Convert.ToInt32(reader["IdIdioma"]);
+                            response.ContactoItem.ContactoPrincipal = Convert.ToInt32(reader["ContactoPrincipal"]);
+                        }
+                    }
+
+                }
+                response.Success = true;
+            }
+            catch (Exception exception)
+            {
+                response.Success = false;
+            }
+
+            return response;
+        }
+
         public ContactoResponseDTO InsertContacto(ContactoRequestDTO request)
         {
             var response = new ContactoResponseDTO();

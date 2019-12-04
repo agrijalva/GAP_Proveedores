@@ -87,6 +87,7 @@
     <Compile Include="Request\LoginUsuarioRequestDTO.cs" />
     <Compile Include="Request\ProveedorAprobarRequestDTO.cs" />
     <Compile Include="Request\MunicipioRequestDTO.cs" />
+    <Compile Include="Response\ProveedorContactoResponseDTO.cs" />
     <Compile Include="Request\ProveedorCuentaRequestDTO.cs" />
     <Compile Include="Request\ProveedorDetalleRequestDTO.cs" />
     <Compile Include="Request\ProveedorDocumentoRequestDTO.cs" />
