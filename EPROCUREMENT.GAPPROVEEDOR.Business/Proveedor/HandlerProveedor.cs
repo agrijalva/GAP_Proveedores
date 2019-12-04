@@ -246,6 +246,16 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.Proveedor
             return response;
         }
 
+        public ProveedorContactoResponseDTO GetContactoProveedorItem(ContactoRequestDTO request)
+        {
+            var response = proveedorData.GetContactoProveedorItem(request);
+            if (!response.Success)
+            {
+                response.ErrorList = new List<ErrorDTO> { new ErrorDTO { Codigo = "", Mensaje = string.Format("No fue posible recuperar datos disponibles o no se encontro alguna solicitud en proceso") } };
+            }
+            return response;
+        }
+
         public ContactoResponseDTO UpdateContacto(ContactoRequestDTO request)
         {
             var response = new ContactoResponseDTO();

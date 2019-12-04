@@ -154,30 +154,43 @@ namespace EprocurementWeb.Controllers
             try
             {
                 BusinessLogic businessLogic = new BusinessLogic();
+
                 var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
                 if (ModelState.IsValid)
                 {
-                    ContactoRequestDTO request = new ContactoRequestDTO();
-                    request.Contacto = new ProveedorContactoDTO
+                    var correoValido = businessLogic.ValidacionCampos(new ContactoRequestDTO { Contacto = new ProveedorContactoDTO { Email = contactoItem.Email } });
+
+                    if (correoValido)
                     {
-                        Cargo = contactoItem.Cargo,
-                        Email = contactoItem.Email,
-                        Fax = contactoItem.Fax,
-                        IdIdioma = contactoItem.IdIdioma,
-                        IdNacionalidad = contactoItem.IdNacionalidad,
-                        IdPais = contactoItem.IdPais,
-                        IdProveedor = usuarioInfo.IdProveedor,
-                        IdZonaHoraria = contactoItem.IdZonaHoraria,
-                        NombreContacto = contactoItem.NombreContacto,
-                        TelefonoDirecto = contactoItem.TelefonoDirecto,
-                        TelefonoMovil = contactoItem.TelefonoMovil,
-                        ContactoPrincipal = contactoItem.EsPrincipal ? 1 : 0
-                    };
-                    var response = businessLogic.UpdateContacto(request);
-                    if (response.Success)
-                    {
-                        return Redirect("/Contacto/Index#insertSuccess");
+                        ContactoRequestDTO request = new ContactoRequestDTO();
+                        request.Contacto = new ProveedorContactoDTO
+                        {
+                            Cargo = contactoItem.Cargo,
+                            Email = contactoItem.Email,
+                            Fax = contactoItem.Fax,
+                            IdIdioma = contactoItem.IdIdioma,
+                            IdNacionalidad = contactoItem.IdNacionalidad,
+                            IdPais = contactoItem.IdPais,
+                            IdProveedor = usuarioInfo.IdProveedor,
+                            IdZonaHoraria = contactoItem.IdZonaHoraria,
+                            NombreContacto = contactoItem.NombreContacto,
+                            TelefonoDirecto = contactoItem.TelefonoDirecto,
+                            TelefonoMovil = contactoItem.TelefonoMovil,
+                            ContactoPrincipal = contactoItem.EsPrincipal ? 1 : 0
+                        };
+                        var response = businessLogic.UpdateContacto(request);
+                        if (response.Success)
+                        {
+                            return Redirect("/Contacto/Index#insertSuccess");
+                        }
                     }
+                    else
+                    {
+                        ViewBag.ZonaHorariaList = businessLogic.GetZonaHorariaList();
+                        ViewBag.NacionalidadList = businessLogic.GetNacionalidadList();
+                        ViewBag.PaisList = businessLogic.GetPaisesList();
+                        ModelState.AddModelError("Email", "Este Email ya se encuentra registrado");
+                    }                  
                 }
                 else
                 {

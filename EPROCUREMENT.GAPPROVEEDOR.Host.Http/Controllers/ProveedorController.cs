@@ -157,6 +157,14 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
         }
 
         [HttpPost]
+        [Route("ContactoProveedorItem")]
+        public ProveedorContactoResponseDTO GetContactoProveedorItem([FromBody]ContactoRequestDTO request)
+        {
+            var response = new HandlerProveedor().GetContactoProveedorItem(request);
+            return response;
+        }
+
+        [HttpPost]
         [Route("UpdateContacto")]
         public ContactoResponseDTO UpdateContacto([FromBody]ContactoRequestDTO request)
         {
