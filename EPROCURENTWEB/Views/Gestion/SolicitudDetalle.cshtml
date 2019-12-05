@@ -60,7 +60,9 @@
 
 <div class="row mt-3">
     <div class="col-sm-12">
-        <button class="btn-white">Exportar Excel</button>
+        @*<button class="btn-white">Exportar Excel</button>*@
+        <a href="@Url.Action("ExportToExcel", "Gestion", new { idSolicitudFactura = (int)ViewBag.IdSolicitudFactura })" class="ntb-agregarcontacto"><i class="fa fa-plus"></i> Exportar Excel</a>
+        @*<a href="@Url.Action("Download", "Gestion", new { idSolicitudFactura = (int)ViewBag.IdSolicitudFactura })" class="ntb-agregarcontacto"><i class="fa fa-plus"></i> Exportar Excel</a>*@
     </div>
 </div>
 
@@ -111,8 +113,8 @@
                             '<td>Importe Adquirido</td>' +
                             '<td>Cantidad Facturada</td>' +
                             '<td>Cantidad a Facturar</td>' +
-                            '<td>Importe Facturado <br />sin I.V.A.</td>' +
-                            '<td>Importe a Facturar <br />sin I.V.A.</td></tr></thead>'
+                            '<td>Importe Facturado<br />sin I.V.A.</td>' +
+                            '<td>Importe a Facturar<br />sin I.V.A.</td></tr></thead>'
                         );
                         $("#Table").DataTable().clear().draw();
                         $("#Table").DataTable().destroy();
