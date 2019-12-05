@@ -25,31 +25,31 @@
                     <div class="col-sm-3 cabecero-detalle">
                         <label>Descripción</label>
                         <p class="control-label">
-                            @Html.Label("lblDescripcion", "lblDescripcion", new { id = "lblDescripcion" })
+                            @Html.Label("lblDescripcion", "...", new { id = "lblDescripcion" })
                         </p>
                         
                     </div>
 
                     <div class="col-sm-2 cabecero-detalle">
-                        <label>Importe contratado sin I.V.A.</label>
-                        <p class="control-label">
-                            @Html.Label("lblImporteContratado", "lblImporteContratado", new { id = "lblImporteContratado", @class = "" })
+                        <label class="pull-right">Importe contratado sin I.V.A.</label>
+                        <p class="control-label text-right">
+                            @Html.Label("lblImporteContratado", "...", new { id = "lblImporteContratado", @class = "" })
                         </p>
                     </div>
 
-                    <div class="col-sm-2 cabecero-detalle">
-                        <label>Importe facturado sin I.V.A.</label>
-                        <p class="control-label">@Html.Label("lblImporteFacturado", "lblImporteFacturado", new { id = "lblImporteFacturado" })</p>
+                    <div class="col-sm-2 cabecero-detalle text-right">
+                        <label class="text-right">Importe facturado sin I.V.A.</label>
+                        <p class="control-label text-right">@Html.Label("lblImporteFacturado", "...", new { id = "lblImporteFacturado" })</p>
                     </div>
 
-                    <div class="col-sm-3 cabecero-detalle">
-                        <label>Importe pendiente de facturar sin I.V.A.</label>
-                        <p class="control-label">@Html.Label("lblImportePendiente", "lblImportePendiente", new { id = "lblImportePendiente" })</p>
+                    <div class="col-sm-3 cabecero-detalle text-right">
+                        <label class="pull-right">Importe pendiente de facturar sin I.V.A.</label>
+                        <p class="control-label text-right">@Html.Label("lblImportePendiente", "...", new { id = "lblImportePendiente" })</p>
                     </div>
 
-                    <div class="col-sm-2 cabecero-detalle">
-                        <label>Importe pagado sin I.V.A.</label>
-                        <p class="control-label">@Html.Label("lblImporteFacturar", "lblImporteFacturar", new { id = "lblImporteFacturar" })</p>
+                    <div class="col-sm-2 cabecero-detalle text-right">
+                        <label class="text-right">Importe pagado sin I.V.A.</label>
+                        <p class="control-label text-right">@Html.Label("lblImporteFacturar", "...", new { id = "lblImporteFacturar" })</p>
                     </div>
 
                 </div>
@@ -61,7 +61,7 @@
 <div class="row mt-3">
     <div class="col-sm-12">
         @*<button class="btn-white">Exportar Excel</button>*@
-        <a href="@Url.Action("ExportToExcel", "Gestion", new { idSolicitudFactura = (int)ViewBag.IdSolicitudFactura })" class="ntb-agregarcontacto"><i class="fa fa-plus"></i> Exportar Excel</a>
+        <a style="float:right;" href="@Url.Action("ExportToExcel", "Gestion", new { idSolicitudFactura = (int)ViewBag.IdSolicitudFactura })" class="ntb-agregarcontacto"><i class="fa fa-plus"></i> Exportar Excel</a>
         @*<a href="@Url.Action("Download", "Gestion", new { idSolicitudFactura = (int)ViewBag.IdSolicitudFactura })" class="ntb-agregarcontacto"><i class="fa fa-plus"></i> Exportar Excel</a>*@
     </div>
 </div>
@@ -99,10 +99,10 @@
                         var importePendiente = (data.SolicitudFacturaCabecera.ImporteContratado - data.SolicitudFacturaCabecera.ImporteFacturado + data.SolicitudFacturaCabecera.ImporteFacturar)
                         console.log(data.SolicitudFacturaCabecera.Descripcion);
                         $('#lblDescripcion').html(data.SolicitudFacturaCabecera.Descripcion);
-                        $('#lblImporteContratado').html(data.SolicitudFacturaCabecera.ImporteContratado);
-                        $('#lblImporteFacturado').html(data.SolicitudFacturaCabecera.ImporteFacturado);
-                        $('#lblImportePendiente').html(importePendiente);
-                        $('#lblImporteFacturar').html(data.SolicitudFacturaCabecera.ImporteFacturar);
+                        $('#lblImporteContratado').html('$ ' + addCommas(data.SolicitudFacturaCabecera.ImporteContratado));
+                        $('#lblImporteFacturado').html('$ ' + addCommas(data.SolicitudFacturaCabecera.ImporteFacturado));
+                        $('#lblImportePendiente').html('$ ' + addCommas(importePendiente));
+                        $('#lblImporteFacturar').html('$ ' + addCommas(data.SolicitudFacturaCabecera.ImporteFacturar));
 
                         $("#Table").html('');
                         $("#Table").append('<thead class="bg-light-purple"><tr>' +
