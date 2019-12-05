@@ -82,13 +82,13 @@
              success: function(data) {
                  $("#Table").html('');
                  $("#Table").append('<thead class="bg-light-purple"><tr>' +
-                     '<td>Número de<br> solicitud</td>'+
-                     '<td>Número de recepción</td>' +
-                     '<td>Fecha de solicitud</td>' +
+                     '<td align="left">Número de<br> solicitud</td>'+
+                     '<td align="left">Número de recepción</td>' +
+                     '<td align="left">Fecha de solicitud</td>' +
                      '<td align="right">Importe</td>' +
+                     '<td align="center">Estatus</td>' +
                      '<td align="center">PDF</td>' +
                      '<td align="center">XML</td>' +
-                     '<td align="center">Estatus</td>' +
                      '<td>Ver</td></tr></thead>'
                  );
                  $("#Table").DataTable().clear().draw();
@@ -125,11 +125,10 @@
                          '<td style="dislay: none;" align="right">$ ' + addCommas(data[i].Monto) + '</td>' +
                          //'<td style="dislay: none;">' + data[i].RutaPDF + '</td>' +
                          //'<td style="dislay: none;">' + data[i].RutaXML + '</td>' +
+                         '<td style="dislay: none; color:'+ color +'" align="center"><b>' + data[i].UltimoStatusLabel + '</b></td>' +
                          '<td style="dislay: none;" align="center"><img src="/Content/Images/icon/upload.png" width="32" /></td>' +
                          '<td style="dislay: none;" align="center"><img src="/Content/Images/icon/upload.png" width="32" /></td>' +
-
                          //'<td style="dislay: none;">' + data[i].UltimoEstatus + '</td>' +
-                         '<td style="dislay: none; color:'+ color +'"><b>' + data[i].UltimoStatusLabel + '</b></td>' +
                          '<td style="dislay: none;">'+ link +'</td>' + '</tr>'
                          //'<td style="dislay: none;"><div class="btn-circle">' + link + '</div></td>' + '</tr>'
                      );
@@ -159,11 +158,12 @@
         return x1 + x2;
     }
 
+    $(".navbar-nav .nav-item").removeClass("active");
+    $("#nav-2").addClass("active");
 
     $(document).ready(function () {
         fn_buscar();
-        $(".navbar-nav .nav-item").removeClass("active");
-        $("#nav-2").addClass("active");
+        
     });
 
 </script>

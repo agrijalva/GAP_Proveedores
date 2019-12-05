@@ -104,15 +104,15 @@
 
                         $("#Table").html('');
                         $("#Table").append('<thead class="bg-light-purple"><tr>' +
-                            '<td width="80">ID Lineas</td>'+
-                            '<td width="80">Descripción</td>' +
-                            '<td>Cantidad Adquirida</td>' +
-                            '<td>Precio Unitario</td>' +
-                            '<td>Importe Adquirido</td>' +
-                            '<td>Cantidad Facturada</td>' +
-                            '<td>Cantidad a Facturar</td>' +
-                            '<td>Importe Facturado <br />sin I.V.A.</td>' +
-                            '<td>Importe a Facturar <br />sin I.V.A.</td></tr></thead>'
+                            '<td width="50">ID Lineas</td>'+
+                            '<td width="130">Descripción</td>' +
+                            '<td align="right">Cantidad Adquirida</td>' +
+                            '<td align="right">Precio Unitario</td>' +
+                            '<td align="right">Importe Adquirido</td>' +
+                            '<td align="right">Cantidad Facturada</td>' +
+                            '<td align="right">Cantidad a Facturar</td>' +
+                            '<td align="right">Importe Facturado <br />sin I.V.A.</td>' +
+                            '<td align="right">Importe a Facturar <br />sin I.V.A.</td></tr></thead>'
                         );
                         $("#Table").DataTable().clear().draw();
                         $("#Table").DataTable().destroy();
@@ -120,15 +120,15 @@
                         console.log( "SolicitudFacturaDetalleList", data.SolicitudFacturaDetalleList );
                         for (i = 0; i < data.SolicitudFacturaDetalleList.length; i++) {                           
                             $("#Table").append('<tr>' +
-                                '<td style="dislay: none;"><b>' + data.SolicitudFacturaDetalleList[i].Linea + '</b></td>' +
+                                '<td style="dislay: none; text-align:right"><b>' + data.SolicitudFacturaDetalleList[i].Linea + '</b></td>' +
                                 '<td style="dislay: none;">' + data.SolicitudFacturaDetalleList[i].Descripcion + '</td>' +
-                                '<td style="dislay: none;">' + data.SolicitudFacturaDetalleList[i].CantidadAdquirida + '</td>' +
-                                '<td style="dislay: none;">' + data.SolicitudFacturaDetalleList[i].PrecioUnitario + '</td>' +
-                                '<td style="dislay: none;">' + data.SolicitudFacturaDetalleList[i].ImporteAdquirido + '</td>' +
-                                '<td style="dislay: none;">' + data.SolicitudFacturaDetalleList[i].CantidadFacturada + '</td>' +
-                                '<td style="dislay: none;">' + data.SolicitudFacturaDetalleList[i].CantidadFacturar + '</td>' +
-                                '<td style="dislay: none;">' + data.SolicitudFacturaDetalleList[i].ImporteFacturado + '</td>' +
-                                '<td style="dislay: none;">' + data.SolicitudFacturaDetalleList[i].ImporteFacturar + '</td>' + '</tr>'
+                                '<td style="dislay: none; text-align:right">' + addCommas( data.SolicitudFacturaDetalleList[i].CantidadAdquirida ) + '</td>' +
+                                '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].PrecioUnitario ) + '</td>' +
+                                '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].ImporteAdquirido) + '</td>' +
+                                '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].CantidadFacturada ) + '</td>' +
+                                '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].CantidadFacturar) + '</td>' +
+                                '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].ImporteFacturado ) + '</td>' +
+                                '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].ImporteFacturar ) + '</td>' + '</tr>'
                             );
                         }
                         $("#Table").append('</tbody>');
@@ -142,6 +142,19 @@
                     },
                 });
         }
+
+    function addCommas(nStr)
+    {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
 
         $(document).ready(function () {
             fn_buscar();
