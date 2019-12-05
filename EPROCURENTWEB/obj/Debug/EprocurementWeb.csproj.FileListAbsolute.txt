@@ -258,3 +258,12 @@ C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCURENTWEB\obj\D
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCURENTWEB\obj\Debug\EprocurementWeb.csproj.CopyComplete
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCURENTWEB\obj\Debug\EprocurementWeb.dll
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCURENTWEB\obj\Debug\EprocurementWeb.pdb
+C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCURENTWEB\bin\DocumentFormat.OpenXml.dll
+C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCURENTWEB\bin\ExcelNumberFormat.dll
+C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCURENTWEB\bin\FastMember.dll
+C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCURENTWEB\bin\System.IO.FileSystem.Primitives.dll
+C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCURENTWEB\bin\System.IO.Packaging.dll
+C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCURENTWEB\bin\DocumentFormat.OpenXml.xml
+C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCURENTWEB\bin\ExcelNumberFormat.xml
+C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCURENTWEB\bin\EPPlus.dll
+C:\Users\Mauricio Salgado\Documents\Desarrollo\Alpha Soluciones\Desarrollo\GAP_Proveedores\EPROCURENTWEB\bin\EPPlus.xml

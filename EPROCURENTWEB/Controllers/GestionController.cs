@@ -7,6 +7,13 @@ using System.Web.Mvc;
 using EprocurementWeb.Models;
 using EprocurementWeb.Filters;
 using EPROCUREMENT.GAPPROVEEDOR.Entities;
+using System.IO;
+using System.Text;
+using System.Web.UI.WebControls;
+using System.Web.UI;
+using OfficeOpenXml;
+using System.Data;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace EprocurementWeb.Controllers
 {
@@ -90,6 +97,74 @@ namespace EprocurementWeb.Controllers
 
             return Json(solicitudDetalleResponse, JsonRequestBehavior.AllowGet);
 
+        }
+
+        public ActionResult ExportToExcel(int idSolicitudFactura)
+        {
+            try
+            {
+                SolicitudFacturaBusiness businessLogic = new SolicitudFacturaBusiness();
+                var request = new SolicitudFacturaDetalleRequestDTO
+                {
+                    IdSolicitudFactura = idSolicitudFactura
+                };
+                var solicitudDetalleResponse = businessLogic.GetSolicitudFacturaDetalle(request);
+                if (solicitudDetalleResponse.Success)
+                {
+                    DataTable dataTable = new DataTable();
+                    dataTable.Columns.Add("ID Lineas", typeof(int));
+                    dataTable.Columns.Add("Descripción", typeof(string));
+                    dataTable.Columns.Add("Cantidad Adquirida", typeof(decimal));
+                    dataTable.Columns.Add("Precio Unitario", typeof(decimal));
+                    dataTable.Columns.Add("Importe Adquirido", typeof(decimal));
+                    dataTable.Columns.Add("Cantidad Facturada", typeof(decimal));
+                    dataTable.Columns.Add("Cantidad a Facturar", typeof(decimal));
+                    dataTable.Columns.Add("Importe Facturado sin I.V.A.", typeof(decimal));
+                    dataTable.Columns.Add("Importe a Facturar sin I.V.A.", typeof(decimal));
+
+                    foreach (var solicitud in solicitudDetalleResponse.SolicitudFacturaDetalleList)
+                    {
+                        DataRow row = dataTable.NewRow();
+                        row[0] = solicitud.Linea;
+                        row[1] = solicitud.Descripcion;
+                        row[2] = solicitud.CantidadAdquirida;
+                        row[3] = solicitud.PrecioUnitario;
+                        row[4] = solicitud.ImporteAdquirido;
+                        row[5] = solicitud.CantidadFacturada;
+                        row[6] = solicitud.CantidadFacturar;
+                        row[7] = solicitud.ImporteFacturado;
+                        row[8] = solicitud.ImporteFacturar;
+                        dataTable.Rows.Add(row);
+                    }
+
+                    var memoryStream = new MemoryStream();
+                    using (var excelPackage = new ExcelPackage(memoryStream))
+                    {
+                        var worksheet = excelPackage.Workbook.Worksheets.Add("Solicitud");
+                        worksheet.Cells["A1"].LoadFromDataTable(dataTable, true, OfficeOpenXml.Table.TableStyles.None);
+                        worksheet.Cells["A1:AN1"].Style.Font.Bold = true;
+                        //worksheet.DefaultRowHeight = 18;
+
+                        //worksheet.Column(2).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left;
+                        //worksheet.Column(6).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        //worksheet.Column(7).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        worksheet.DefaultColWidth = 20;
+                        worksheet.Column(2).AutoFit();
+
+                        byte[] data = excelPackage.GetAsByteArray();
+                        var date = DateTime.Now;
+                        return File(data, "application/octet-stream", "SolicitudDetalle_" + date.ToShortDateString() + ".xlsx");
+                    }
+                }
+                else
+                {
+                    return new EmptyResult();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         // GET: SolicitudCotizacion
