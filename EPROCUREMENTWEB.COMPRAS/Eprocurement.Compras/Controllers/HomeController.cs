@@ -11,7 +11,7 @@ using Eprocurement.Compras.Filters;
 
 namespace Eprocurement.Compras.Controllers
 {
-
+    [Authorize]
     public class HomeController : Controller
     {
         public List<AeropuertoDTO> aeropuertoList;

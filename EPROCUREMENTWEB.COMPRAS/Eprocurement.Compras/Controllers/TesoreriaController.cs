@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Eprocurement.Compras.Controllers
 {
+    [Authorize]
     public class TesoreriaController : Controller
     {
         public List<AeropuertoDTO> aeropuertoList;
