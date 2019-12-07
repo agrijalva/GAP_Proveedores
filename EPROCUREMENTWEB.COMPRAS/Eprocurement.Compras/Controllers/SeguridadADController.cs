@@ -57,7 +57,6 @@ namespace Eprocurement.Compras.Controllers
                     return View("Index");
                 }
             }
-
             else
             {
                 ViewBag.Error = authenticationResult.ErrorMessage;

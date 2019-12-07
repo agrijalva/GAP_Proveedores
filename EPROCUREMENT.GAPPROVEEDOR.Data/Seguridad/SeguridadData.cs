@@ -59,6 +59,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                     cmdUsuario.CommandType = CommandType.StoredProcedure;
                     cmdUsuario.Parameters.Add(new SqlParameter("@Usuario", SqlDbType.NVarChar, 50)).Value = request.Usuario.NombreUsuario;
                     cmdUsuario.Parameters.Add(new SqlParameter("@Password", SqlDbType.NVarChar, 50)).Value = request.Usuario.Password;
+                    cmdUsuario.Parameters.Add(new SqlParameter("@idRol", SqlDbType.Int)).Value = request.Usuario.IdUsuarioRol;
                     cmdUsuario.Parameters.Add(new SqlParameter("Result", SqlDbType.BigInt) { Direction = ParameterDirection.ReturnValue });
                     cmdUsuario.ExecuteNonQuery();
                     response.Success = Convert.ToInt32(cmdUsuario.Parameters["Result"].Value) > 0;
