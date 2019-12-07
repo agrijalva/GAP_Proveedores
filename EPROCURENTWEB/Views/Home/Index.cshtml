@@ -89,21 +89,21 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.NombreEmpresa, new { @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.NombreEmpresa, new { placeholder = "Ej. Grupo Aeroportuario del Pacífico", @class = "form-control col-md-12" })
+                                                @Html.TextBoxFor(model => model.NombreEmpresa, new { placeholder = "Ej. Grupo Aeroportuario del Pacífico", @class = "form-control col-md-12", maxlength = "250" })
                                                 @Html.ValidationMessageFor(model => model.NombreEmpresa, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.RazonSocial, new { @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.RazonSocial, new { placeholder = "Ej. Grupo Aeroportuario del Pacífico", @class = "form-control col-md-12" })
+                                                @Html.TextBoxFor(model => model.RazonSocial, new { placeholder = "Ej. Grupo Aeroportuario del Pacífico", @class = "form-control col-md-12", maxlength = "250" })
                                                 @Html.ValidationMessageFor(model => model.RazonSocial, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.RFC, new { @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.RFC, new { id = "rfc_input", placeholder = "13 caracteres", @class = "form-control col-md-12" })
+                                                @Html.TextBoxFor(model => model.RFC, new { id = "rfc_input", placeholder = "13 caracteres", @class = "form-control col-md-12", maxlength = "13" })
                                                 @Html.ValidationMessageFor(model => model.RFC, "", new { @class = "label-formulario field-validation-error" })
 
                                                 <pre id="resultado"></pre>
@@ -112,21 +112,21 @@
                                         <div class="col-md-6" id="inpgro-nif">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.NIF, new { @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.NIF, new { @class = "form-control col-md-12" })
+                                                @Html.TextBoxFor(model => model.NIF, new { @class = "form-control col-md-12", maxlength = "50" })
                                             </div>
                                         </div>
 
                                         <div class="col-md-3" id="inpgro-tin">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.TIN, new { id = "lblTIN", @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.TIN, new { @class = "form-control col-md-12" })
+                                                @Html.TextBoxFor(model => model.TIN, new { @class = "form-control col-md-12", maxlength = "50" })
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Direccion.CodigoPostal, new { @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.Direccion.CodigoPostal, new { placeholder = "5 caracteres", @class = "form-control col-md-12" })
+                                                @Html.TextBoxFor(model => model.Direccion.CodigoPostal, new { placeholder = "5 caracteres", @class = "form-control col-md-12", maxlength = "5" })
                                                 @Html.ValidationMessageFor(model => model.Direccion.CodigoPostal, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
@@ -141,7 +141,7 @@
                                         <div class="col-md-3" id="inpgro-Municipio">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Direccion.Municipio, new { id = "lblMunicipio", @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.Direccion.Municipio, new { @class = "form-control col-md-12" })
+                                                @Html.TextBoxFor(model => model.Direccion.Municipio, new { @class = "form-control col-md-12", maxlength = "250" })
                                             </div>
                                         </div>
 
@@ -149,7 +149,7 @@
                                             <div class="form-group">
                                                 @*@Html.Label("estado", @RHome.State, new { @class = "label-formulario" })*@
                                                 @Html.Label("estado", "Estado", new { id = "lblEstado", @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.Direccion.Estado, new { @class = "form-control col-md-12" })
+                                                @Html.TextBoxFor(model => model.Direccion.Estado, new { @class = "form-control col-md-12", maxlength = "150" })
                                             </div>
                                         </div>
 
@@ -163,7 +163,7 @@
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Direccion.Calle, new { @class = "label-formulario" })
                                                 @Html.TextBoxFor(model => model.Direccion.Calle, new { @class = "form-control col-md-12" })
-                                                @Html.ValidationMessageFor(model => model.Direccion.Calle, "", new { @class = "label-formulario field-validation-error" })
+                                                @Html.ValidationMessageFor(model => model.Direccion.Calle, "", new { @class = "label-formulario field-validation-error", maxlength = "150" })
                                             </div>
                                         </div>
 
@@ -178,19 +178,19 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.ProvTelefono, new { @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.ProvTelefono, new { placeholder = "55 1234 5678", @class = "form-control col-md-12" })
+                                                @Html.TextBoxFor(model => model.ProvTelefono, new { placeholder = "55 1234 5678", @class = "form-control col-md-12", maxlength = "50" })
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.ProvFax, new { @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.ProvFax, new { @class = "form-control col-md-12" })
+                                                @Html.TextBoxFor(model => model.ProvFax, new { @class = "form-control col-md-12", maxlength = "50" })
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.PaginaWeb, new { @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.PaginaWeb, new { placeholder = "Ej. www.mipaginaweb.com", @class = "form-control col-md-12" })
+                                                @Html.TextBoxFor(model => model.PaginaWeb, new { placeholder = "Ej. www.mipaginaweb.com", @class = "form-control col-md-12", maxlength = "250" })
                                             </div>
                                         </div>
                                     </div>
@@ -221,14 +221,14 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Contacto.NombreContacto, new { @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.Contacto.NombreContacto, new { @class = "form-control col-md-12" })
+                                                @Html.TextBoxFor(model => model.Contacto.NombreContacto, new { @class = "form-control col-md-12", maxlength = "300" })
                                                 @Html.ValidationMessageFor(model => model.Contacto.NombreContacto, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Contacto.Cargo, new { @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.Contacto.Cargo, new { @class = "form-control col-md-12" })
+                                                @Html.TextBoxFor(model => model.Contacto.Cargo, new { @class = "form-control col-md-12", maxlength = "250" })
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -241,25 +241,25 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Contacto.TelefonoDirecto, new { @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.Contacto.TelefonoDirecto, new { placeholder = "Ej. 55 1234 5678", @class = "form-control col-md-12" })
+                                                @Html.TextBoxFor(model => model.Contacto.TelefonoDirecto, new { placeholder = "Ej. 55 1234 5678", @class = "form-control col-md-12", maxlength = "50" })
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Contacto.TelefonoMovil, new { @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.Contacto.TelefonoMovil, new { placeholder = "Ej. 55 1234 5678", @class = "form-control col-md-12" })
+                                                @Html.TextBoxFor(model => model.Contacto.TelefonoMovil, new { placeholder = "Ej. 55 1234 5678", @class = "form-control col-md-12", maxlength = "50" })
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Contacto.Fax, new { @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.Contacto.Fax, new { @class = "form-control col-md-12" })
+                                                @Html.TextBoxFor(model => model.Contacto.Fax, new { @class = "form-control col-md-12", maxlength = "50" })
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Contacto.Email, new { @class = "label-formulario" })
-                                                @Html.TextBoxFor(model => model.Contacto.Email, new { id = "email_input", type = "email", placeholder = "Ej. correo@dominio.com", @class = "form-control col-md-12" })
+                                                @Html.TextBoxFor(model => model.Contacto.Email, new { id = "email_input", type = "email", placeholder = "Ej. correo@dominio.com", @class = "form-control col-md-12", maxlength = "250" })
                                                 @Html.ValidationMessageFor(model => model.Contacto.Email, "", new { @class = "label-formulario field-validation-error" })
                                             </div>
                                         </div>
