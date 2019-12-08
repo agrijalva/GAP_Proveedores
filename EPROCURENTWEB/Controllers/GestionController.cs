@@ -26,6 +26,7 @@ namespace EprocurementWeb.Controllers
         // GET: Gestion
         public ActionResult Index()
         {
+
             return View();
         }
 
@@ -165,6 +166,51 @@ namespace EprocurementWeb.Controllers
             {
                 throw;
             }
+        }
+
+        public JsonResult GetFacturaList(
+            int? IdAeropuerto,
+            string OrdenCompra,
+            string Folio,
+            DateTime? FechaFacInicio,
+            DateTime? FechaFacFin,
+            DateTime? FechaPagoInicio,
+            DateTime? FechaPagoFin
+            )
+        {
+            var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
+            SolicitudFacturaBusiness businessLogic = new SolicitudFacturaBusiness();
+            var request = new FacturaRequestModel
+            {
+                FacturaFiltro = new FacturaFiltroModel
+                {
+                    IdProveedor = usuarioInfo.IdProveedor,
+                    IdAeropuerto = IdAeropuerto,
+                    OrdenCompra = OrdenCompra,
+                    Folio = Folio,
+                    FechaFacInicio = FechaFacInicio,
+                    FechaFacFin = FechaFacFin,
+                    FechaPagoInicio = FechaPagoInicio,
+                    FechaPagoFin = FechaPagoFin
+                }
+            };
+
+            var FacturaResponse = businessLogic.GetFacturaList(request);
+            //Console.Write("Estoy del lado de C#");
+            //Console.WriteLine(FacturaResponse);
+
+
+            //foreach (var solicitud in FacturaResponse.FacturaList)
+            //{
+            //    solicitud.FechaFactura = solicitud.FechaFactura.ToShortDateString();
+            //    solicitud.FechaFactura = solicitud.FechaFactura.ToShortDateString();
+            //}
+
+            //var fr = FacturaResponse.FacturaList
+
+            return Json(FacturaResponse.FacturaList, JsonRequestBehavior.AllowGet);
+            //return Json("{success: true, msg:'Ejemplo'}");
+
         }
 
         // GET: SolicitudCotizacion

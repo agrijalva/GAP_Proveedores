@@ -87,6 +87,7 @@
     <Compile Include="Request\LoginUsuarioRequestDTO.cs" />
     <Compile Include="Request\ProveedorAprobarRequestDTO.cs" />
     <Compile Include="Request\MunicipioRequestDTO.cs" />
+    <Compile Include="Request\FacturaRequestDTO.cs" />
     <Compile Include="Response\ProveedorContactoResponseDTO.cs" />
     <Compile Include="Request\ProveedorCuentaRequestDTO.cs" />
     <Compile Include="Request\ProveedorDetalleRequestDTO.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Response\ResetPasswordResponseDTO.cs" />
     <Compile Include="Response\ResponseBaseDTO.cs" />
     <Compile Include="Response\SolicitudFacturaDetalleResponseDTO.cs" />
+    <Compile Include="Response\FacturaResponseDTO.cs" />
     <Compile Include="Response\SolicitudFacturaResponseDTO.cs" />
     <Compile Include="Response\TipoCuentaResponseDTO.cs" />
     <Compile Include="Response\TipoProveedorResponseDTO.cs" />
@@ -133,7 +135,9 @@
     <Compile Include="Seguridad\UsuarioDTO.cs" />
     <Compile Include="SolicitudFactura\SolicitudFacturaCabeceraDTO.cs" />
     <Compile Include="SolicitudFactura\SolicitudFacturaDetalleDTO.cs" />
+    <Compile Include="SolicitudFactura\FacturaDTO.cs" />
     <Compile Include="SolicitudFactura\SolicitudFacturaDTO.cs" />
+    <Compile Include="SolicitudFactura\FacturaFiltroDTO.cs" />
     <Compile Include="SolicitudFactura\SolicitudFacturaFiltroDTO.cs" />
   </ItemGroup>
   <ItemGroup />

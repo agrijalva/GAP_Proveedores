@@ -58,5 +58,30 @@ namespace EprocurementWeb.Business
             }
             return response;
         }
+
+        public FacturaResponseModel GetFacturaList(FacturaRequestModel request)
+        {
+            
+            FacturaResponseModel response = new FacturaResponseModel();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/SolicitudFactura/");
+                var json = JsonConvert.SerializeObject(request);
+                Console.WriteLine(json);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                Console.WriteLine(content);
+                var responseTask = client.PostAsync("FacturaGetList", content);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+                    response = JSSerializer.Deserialize<FacturaResponseModel>(readTask.Result);
+                }
+            }
+            return response;
+        }
     }
 }

@@ -202,7 +202,70 @@
     </div>
 </div>
 
-<script>
+<script type="text/javascript">
+    //$(function () { // will trigger when the document is ready
+    //   $('.datepicker').datepicker(); //Initialise any date pickers
+    //});
+
+    var fn_buscar = function () {
+         //var idGiroProveedor = $('#giro').val() == '' ? null : $('#giro').val();
+         //var idAeropuerto = $('#aeropuerto').val() == '' ? null : $('#aeropuerto').val();
+        var idEstatus = $('#estatus').val() == '' ? null : $('#estatus').val();
+        var numeroSolicitud = $('#NumeroSolicitud').val() == '' ? null : $('#NumeroSolicitud').val();
+        var fechaInicio = $('#FechaInicio').val() == '' ? null : $('#FechaInicio').val();
+        var fechaFin = $('#FechaFin').val() == '' ? null : $('#FechaFin').val();
+
+
+        console.log('idEstatus', idEstatus);
+        console.log('numeroSolicitud', numeroSolicitud);
+        //var jsonData = JSON.stringify({ idSolicitudFactura: numeroSolicitud, idEstatus: idEstatus, fechaInicio: fechaInicio, fechaFin: fechaFin });
+        var jsonData = JSON.stringify({
+            IdAeropuerto: 2,
+            OrdenCompra: '001',
+            Folio: '',
+            FechaFacInicio: '',
+            FechaFacFin: '',
+            FechaPagoInicio: '',
+            FechaPagoFin: ''
+        });
+         $.ajax({
+             type: "POST",
+             contentType: "application/json; charset=utf-8",
+             url: '@Url.Action("GetFacturaList", "Gestion")',
+             data: jsonData,
+             async: false,
+             success: function (data) {
+                 console.log( 'Aqui deben estar los datos de respuesta' );
+                 console.log( "GetFacturaList", data );
+             },
+             error: function (xhr, error) {
+                 console.log( 'Aqui deben estar errores' );
+                 console.debug(xhr);
+                 console.debug(error);
+             }
+         });
+    }
+
+    function addCommas(nStr)
+    {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
+
     $(".navbar-nav .nav-item").removeClass("active");
     $("#nav-1").addClass("active");
+
+    $(document).ready(function () {
+        console.log("Pido los datos de la factura");
+        fn_buscar();
+
+    });
+
 </script>

@@ -29,5 +29,15 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
 
             return estadoResponse;
         }
+
+        [HttpPost]
+        [Route("FacturaGetList")]
+        public FacturaResponseDTO GetFacturaList([FromBody]FacturaRequestDTO request)
+        {
+            //Console.WriteLine(request);
+            var ListResponse = new HandlerSolicitudFactura().GetFacturaList(request);
+
+            return ListResponse;
+        }
     }
 }

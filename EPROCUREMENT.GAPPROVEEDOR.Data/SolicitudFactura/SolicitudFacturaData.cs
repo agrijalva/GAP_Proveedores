@@ -119,5 +119,59 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
             return response;
         }
+
+        public FacturaResponseDTO GetFacturaList(FacturaRequestDTO request)
+        {
+            var response = new FacturaResponseDTO()
+            {
+                FacturaList = new List<FacturaDTO>()
+            };
+
+            try
+            {
+                using (var conexion = new SqlConnection(Helper.Connection()))
+                {
+                    conexion.Open();
+                    var cmdContacto = new SqlCommand("[dbo].[usp_EPROCUREMENT_ProveedorFactura_GETL]", conexion);
+                    FacturaDTO Factura = null;
+                    cmdContacto.CommandType = CommandType.StoredProcedure;
+                    cmdContacto.Parameters.Add(new SqlParameter("@IdProveedor", request.FacturaFiltro.IdProveedor));
+                    cmdContacto.Parameters.Add(new SqlParameter("@IdAeropuerto", request.FacturaFiltro.IdAeropuerto));
+                    cmdContacto.Parameters.Add(new SqlParameter("@OrdenCompra", request.FacturaFiltro.OrdenCompra));
+                    cmdContacto.Parameters.Add(new SqlParameter("@Folio", request.FacturaFiltro.Folio));
+                    cmdContacto.Parameters.Add(new SqlParameter("@FechaFacturaIni", request.FacturaFiltro.FechaFacInicio));
+                    cmdContacto.Parameters.Add(new SqlParameter("@FechaFacturaFin", request.FacturaFiltro.FechaFacFin));
+                    cmdContacto.Parameters.Add(new SqlParameter("@FechaPagoIni", request.FacturaFiltro.FechaPagoInicio));
+                    cmdContacto.Parameters.Add(new SqlParameter("@FechaPagoFin", request.FacturaFiltro.FechaPagoFin));
+
+                    //SqlDataReader reader = cmdContacto.ExecuteReader();
+
+                    using (SqlDataReader reader = cmdContacto.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Factura = new FacturaDTO();
+                            Factura.IdFactura = Convert.ToInt32(reader["IdFactura"]);
+                            Factura.IdAeropuerto = Convert.ToInt32(reader["IdAeropuerto"]);
+                            Factura.Aeropuerto = reader["Aeropuerto"].ToString();
+                            Factura.OrdenCompra = reader["OrdenCompra"].ToString();
+                            Factura.Folio = reader["Folio"].ToString();
+                            Factura.Monto = Convert.ToDecimal(reader["Monto"]);
+                            Factura.FechaFactura = Convert.ToDateTime(reader["FechaFactura"].ToString());
+                            Factura.IdEstatus = Convert.ToInt32(reader["IdEstatus"]);
+                            Factura.Estatus = reader["Estatus"].ToString();
+                            Factura.FechaPago = Convert.ToDateTime(reader["FechaPago"].ToString());
+                        }
+                    }
+                }
+                response.Success = true;
+            }
+            catch (Exception exception)
+            {
+                response.Success = false;
+            }
+
+            return response;
+        }
     }
 }

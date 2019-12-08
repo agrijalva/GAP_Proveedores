@@ -55,7 +55,8 @@ namespace EprocurementWeb.Controllers
             catch (Exception ex)
             {
                 ViewBag.Error = "Se generó un problema al procesar el acceso";
-                return View();
+                return View("Index");
+                //return View();
             }
 
         }
