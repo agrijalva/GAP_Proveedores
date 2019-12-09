@@ -276,3 +276,4 @@ C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCURENTWEB\bin\S
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCURENTWEB\bin\DocumentFormat.OpenXml.xml
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCURENTWEB\bin\EPPlus.xml
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCURENTWEB\bin\ExcelNumberFormat.xml
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCURENTWEB\obj\Debug\EprocurementWeb.csproj.CoreCompileInputs.cache
