@@ -83,5 +83,32 @@ namespace EprocurementWeb.Business
             }
             return response;
         }
+
+        public bool GuardarDocumentos(List<DocumentoModel> documentoList, string rfc, int idSolicitud)
+        {
+            bool respuesta = false;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/SolicitudFactura/");
+                using (var content = new MultipartFormDataContent())
+                {
+                    foreach (var file in documentoList)
+                    {
+                        byte[] Bytes = new byte[file.File.InputStream.Length + 1];
+                        file.File.InputStream.Read(Bytes, 0, Bytes.Length);
+                        var fileContent = new ByteArrayContent(Bytes);
+                        fileContent.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment") { FileName = (rfc + "_" + idSolicitud + "_" + file.NombreDocumento) };
+                        content.Add(fileContent);
+                    }
+
+                    var result = client.PostAsync("Upload", content).Result;
+
+                    if (result.StatusCode == System.Net.HttpStatusCode.Created) { respuesta = true; }
+                    else { respuesta = false; }
+                }
+            }
+
+            return respuesta;
+        }
     }
 }

@@ -69,7 +69,9 @@
     <Reference Include="System.IO.Packaging, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.Packaging.4.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -136,6 +138,11 @@
     <Compile Include="Business\BusinessLogic.cs" />
     <Compile Include="Business\SeguridadBusiness.cs" />
     <Compile Include="Business\SolicitudFacturaBusiness.cs" />
+    <Compile Include="Connected Services\SatServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Content\Texts\RError.es-mx1.Designer.cs">
       <DependentUpon>RError.es-mx.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -219,10 +226,12 @@
     <Compile Include="Models\Response\ResponseBaseModel.cs" />
     <Compile Include="Models\Response\FacturaResponseModel.cs" />
     <Compile Include="Models\Response\SolicitudFacturaResponseModel.cs" />
+    <Compile Include="Models\SolicitudFactura\Comprobante .cs" />
     <Compile Include="Models\SolicitudFactura\FacturaFiltroModel.cs" />
     <Compile Include="Models\SolicitudFactura\SolicitudFacturaFiltroModel.cs" />
     <Compile Include="Models\SolicitudFactura\FacturaModel.cs" />
     <Compile Include="Models\SolicitudFactura\SolicitudFacturaModel.cs" />
+    <Compile Include="Models\SolicitudFactura\TimbreFiscalDigital .cs" />
     <Compile Include="Models\UsuarioModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -232,6 +241,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\SatServiceReference\configuration91.svcinfo" />
+    <None Include="Connected Services\SatServiceReference\configuration.svcinfo" />
+    <Content Include="Connected Services\SatServiceReference\EprocurementWeb.SatServiceReference.Acuse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\SatServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -303,6 +321,16 @@
     <Content Include="Content\PDF\PruebaTerminos.pdf" />
     <Content Include="Content\PDF\DocAviso.pdf" />
     <Content Include="Content\PDF\DocTerminos.pdf" />
+    <None Include="Connected Services\SatServiceReference\ConsultaCFDIService.wsdl" />
+    <None Include="Connected Services\SatServiceReference\ConsultaCFDIService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SatServiceReference\ConsultaCFDIService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SatServiceReference\ConsultaCFDIService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Content\Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Content\Scripts\jquery-1.10.2.js" />
     <Content Include="Content\Scripts\jquery-1.10.2.min.js" />
@@ -553,6 +581,12 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\SatServiceReference\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

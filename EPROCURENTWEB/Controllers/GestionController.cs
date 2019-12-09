@@ -14,6 +14,13 @@ using System.Web.UI;
 using OfficeOpenXml;
 using System.Data;
 using DocumentFormat.OpenXml.Spreadsheet;
+using System.Xml.Schema;
+using System.Configuration;
+using System.Net.Http;
+using System.Xml;
+using System.Xml.Serialization;
+using System.Xml.Linq;
+using EprocurementWeb.SatServiceReference;
 
 namespace EprocurementWeb.Controllers
 {
@@ -223,6 +230,240 @@ namespace EprocurementWeb.Controllers
         public ActionResult OrdenCompra()
         {
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult Upload() //string descripcion, HttpPostedFileBase fichero
+        {
+            try
+            {
+                HttpFileCollectionBase files = Request.Files;
+                HttpPostedFileBase ficheroXml = files[0];
+                HttpPostedFileBase ficheroPdf = files[1];
+                var strNombreXml = Path.GetFileName(ficheroXml.FileName);
+                if (ficheroXml.ContentType == "text/xml")
+                {
+                    var path = Path.Combine(Server.MapPath("~/Content"), Path.GetFileName(ficheroXml.FileName));
+                    ficheroXml.SaveAs(path);
+                    BinaryReader b = new BinaryReader(ficheroXml.InputStream);
+                    byte[] binData = b.ReadBytes(ficheroXml.ContentLength);
+                    string result = System.Text.Encoding.UTF8.GetString(binData);
+                    var document = XDocument.Load(path);
+
+                    leerDocumento(path);
+                    if (Directory.Exists(Path.GetDirectoryName(path)))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                }
+                List<DocumentoModel> documentoList = new List<DocumentoModel>();
+                documentoList.Add(new DocumentoModel { IdDetalle = 8, NombreDocumento = Path.GetFileName(ficheroXml.FileName), Extension = "xml", File = ficheroXml });
+                documentoList.Add(new DocumentoModel { IdDetalle = 8, NombreDocumento = Path.GetFileName(ficheroPdf.FileName), Extension = "pdf", File = ficheroPdf });
+                var respuesta = new SolicitudFacturaBusiness().GuardarDocumentos(documentoList, "SAEM871008BH6", 8);
+
+                return Json(respuesta, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrio un error al procesar la información del documento " + ex.Message);
+            }
+
+            return Json(false, JsonRequestBehavior.AllowGet);
+            //using (var content = new MultipartFormDataContent())
+            //{
+            //    byte[] Bytes = new byte[fichero.InputStream.Length + 1];
+            //    fichero.InputStream.Read(Bytes, 0, Bytes.Length);
+            //    var fileContent = new ByteArrayContent(Bytes);
+            //    fileContent.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment") { FileName = file.FileName };
+            //    content.Add(fileContent);
+
+            //}
+
+
+            //SolicitudFacturaBusiness businessLogic = new SolicitudFacturaBusiness();
+            //var request = new SolicitudFacturaDetalleRequestDTO
+            //{
+            //    IdSolicitudFactura = 8
+            //};
+            //var solicitudDetalleResponse = businessLogic.GetSolicitudFacturaDetalle(request);
+
+            //return View();
+        }
+        
+        public bool leerDocumento(string path)
+        {
+            //DocumentosCFDI doc = new DocumentosCFDI();
+            XDocument xmlInput = null;
+            XNamespace df;
+            try
+            {
+                xmlInput = XDocument.Load(path);
+                df = xmlInput.Root.Name.Namespace;
+                XNamespace tfd = @"http://www.sat.gob.mx/TimbreFiscalDigital";
+                XDocument timbre = XDocument.Parse(xmlInput.Root.Element(xmlInput.Root.Name.Namespace + "Complemento").ToString());
+
+                var rfcProveedor = xmlInput.Root.Element(df + "Emisor").Attribute("rfc").Value;
+                var rfcRecpetor = xmlInput.Root.Element(df + "Receptor").Attribute("rfc").Value;
+                var total = Convert.ToDecimal(xmlInput.Root.Attribute("total").Value);
+                var foliFiscal = timbre.Root.Element(tfd + "TimbreFiscalDigital").Attribute("UUID").Value;
+                return ValidarCFDISat(rfcProveedor, rfcRecpetor, total, foliFiscal);
+
+
+                //var serie = xmlInput.Root.Attribute("serie").Value;
+                //var folio = xmlInput.Root.Attribute("folio").Value;    
+                //foreach (XElement xe in timbre.DescendantNodes())
+                //{
+                //    if (xe.Name.LocalName == "TimbreFiscalDigital" || xe.Name.LocalName == "Complemento")
+                //    {
+                //        var noCertificadoSAT = xe.Attribute("noCertificadoSAT").Value;
+                //        var folioFiscal = xe.Attribute("UUID").Value;
+                //        var fechaCertificacion = Convert.ToDateTime(xe.Attribute("FechaTimbrado").Value);
+                //    }
+                //}
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Ocurrio un error al procesar la información del documento " + ex.Message);
+            }
+
+
+        }
+
+        private bool ValidarCFDISat(string rfcEmisor, string rfcReceptor, decimal total, string folioFidcal)
+        {
+            var proxy = new ConsultaCFDIServiceClient();//SatCFDIServiceClient();
+            var query = $"?re={rfcEmisor}&rr={rfcReceptor}&tt={total}&id={folioFidcal}";
+            var response = proxy.Consulta(query);
+            List<string> errors = new List<string>();
+            var resultado = false;
+            if (response.CodigoEstatus == null || response.Estado == null)
+            {
+                var value = string.Empty;
+                if (response.CodigoEstatus == null)
+                {
+                    value += " (Código Estatus)";
+                }
+                if (response.Estado == null)
+                {
+                    value += " (Estado)";
+                }
+                errors.Add("Se regresaron valores nulos en la consulta. " + value);
+            }
+            else if (response.Estado.ToUpper() != "VIGENTE")
+            {
+                errors.Add($"Error SAT: {response.Estado} {response.CodigoEstatus}");
+            }
+            else if (response.Estado == "Vigente" && response.CodigoEstatus == "S - Comprobante obtenido satisfactoriamente.")
+            {
+                resultado = true;
+            }
+
+            return resultado;
+        }
+
+        private void CheckXmlFile(string sPathXML)
+        {
+            try
+            {
+                //string sPathXML = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, GlobalResources.EtiquetaForm.content, "FolioFiscala8cc94dca26e42899149e749e2d1ca1a.xml");
+
+                //crear un objeto el cual tendrá el resultado final, este objeto es el principal
+                Comprobante oComprobante;
+                //pon la ruta donde tienes tu archivo XML Timbrado
+                string path = sPathXML;//@"C:\miXML.xml";
+
+                //creamos un objeto XMLSerializer para deserializar
+                XmlSerializer oSerializer = new XmlSerializer(typeof(Comprobante));
+
+                //creamos un flujo el cual recibe nuestro xml
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    //aqui deserializamos
+                    oComprobante = (Comprobante)oSerializer.Deserialize(reader);
+
+                    //Deserializamos el complemento timbre fiscal
+                    foreach (var oComplemento in oComprobante.Complemento)
+                    {
+                        foreach (var oComplementoInterior in oComplemento.Any)
+                        {
+                            //si el complemento es TimbreFiscalDigital lo deserializamos
+                            if (oComplementoInterior.Name.Contains("TimbreFiscalDigital"))
+                            {
+
+                                //Objeto para aplicar ahora la deserialización del complemento timbre
+                                XmlSerializer oSerializerComplemento = new XmlSerializer(typeof(TimbreFiscalDigital));
+                                //creamos otro flujo para el complemento
+                                using (var readerComplemento = new StringReader(oComplementoInterior.OuterXml))
+                                {
+                                    //y por ultimo deserializamos el complemento
+                                    oComprobante.TimbreFiscalDigital =
+                                        (TimbreFiscalDigital)oSerializerComplemento.Deserialize(readerComplemento);
+                                }
+
+                            }
+                        }
+                    }
+                }
+
+                byte[] fileBytes = System.IO.File.ReadAllBytes(sPathXML);
+                var xmlText = Encoding.UTF8.GetString(fileBytes);
+
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(xmlText);
+                string json = Newtonsoft.Json.JsonConvert.SerializeXmlNode(doc);
+
+
+                var byteOrderMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
+                if (xmlText.StartsWith(byteOrderMarkUtf8))
+                {
+                    xmlText = xmlText.Remove(0, byteOrderMarkUtf8.Length);
+                }
+
+                if (!xmlText.StartsWith("<"))
+                {
+                    xmlText = "<" + xmlText;
+                }
+
+                var xDocument = XDocument.Parse(xmlText);
+                var xElement = xDocument.Root;
+                var satSchema = GetSatSchema();
+                List<string> errors = new List<string>();
+                List<object> er = new List<object>();
+                xDocument.Validate(satSchema, (o, e) =>
+                {
+                    er.Add(o);
+                    errors.Add(e.Message);
+                });
+
+            }
+            catch (Exception exception)
+            {
+                throw (exception);
+            }
+        }
+
+        private XmlSchemaSet GetSatSchema()
+        {
+            XmlSchemaSet schema = null;
+            var urlCfdiSchema = ConfigurationManager.AppSettings["UrlCfdiSchema"];//  Helpers.Configuration.GetAppString("UrlCfdiSchema");
+            var urlTimbreSchema = ConfigurationManager.AppSettings["UrlTimbreFiscalSchema"]; //Helpers.Configuration.GetAppString("UrlTimbreFiscalSchema");
+            var cfdiNamespace = ConfigurationManager.AppSettings["CfdiTargetNamespace"];//Helpers.Configuration.GetAppString("CfdiTargetNamespace");
+            var timbreNamespace = ConfigurationManager.AppSettings["TimbreFiscalNamespace"];//Helpers.Configuration.GetAppString("TimbreFiscalNamespace");
+
+            var client = new HttpClient();
+            try
+            {
+                schema = new XmlSchemaSet();
+                schema.Add(cfdiNamespace, XmlReader.Create(urlCfdiSchema));
+                schema.Add(timbreNamespace, XmlReader.Create(urlTimbreSchema));
+            }
+            catch (Exception exception)
+            {
+                throw (exception);
+            }
+
+            return schema;
         }
     }
 }
