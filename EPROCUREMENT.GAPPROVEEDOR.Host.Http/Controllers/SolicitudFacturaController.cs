@@ -2,9 +2,12 @@
 using EPROCUREMENT.GAPPROVEEDOR.Entities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
@@ -38,6 +41,50 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
             var ListResponse = new HandlerSolicitudFactura().GetFacturaList(request);
 
             return ListResponse;
+        }
+
+        [HttpPost]
+        [Route("Upload")]
+        public HttpResponseMessage Upload()
+        {
+            HttpResponseMessage result = null;
+
+            if (Request.Content.IsMimeMultipartContent("form-data"))
+            {
+                var request = HttpContext.Current.Request;
+
+                if (request.Files.Count > 0)
+                {
+                    var nombreArchivo = request.Files[0].FileName;
+                    string[] authorsList = nombreArchivo.Split('_');
+                    string ruta = ConfigurationManager.AppSettings["rutaDocuments"] + "/Facturas/" + authorsList[0] + "/" + authorsList[1] + "/";
+                    string rutaF = HttpContext.Current.Server.MapPath(ruta);
+                    if (!Directory.Exists(rutaF))
+                    {
+                        Directory.CreateDirectory(rutaF);
+                    }
+
+                    var docfiles = new List<string>();
+                    foreach (string file in request.Files)
+                    {
+                        var postedFile = request.Files[file];
+                        var filePath = Path.Combine(rutaF + "\\" + postedFile.FileName);
+                        postedFile.SaveAs(filePath);
+                        docfiles.Add(filePath);
+                    }
+                    result = Request.CreateResponse(HttpStatusCode.Created, docfiles);
+                }
+                else
+                {
+                    result = Request.CreateResponse(HttpStatusCode.BadRequest);
+                }
+            }
+            else
+            {
+                result = Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+
+            return result;
         }
     }
 }

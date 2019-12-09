@@ -74,17 +74,32 @@
     </div>
 </div>
 
+@*<form action="/Gestion/Upload" method="post" class="registro-form form-horizontal" id="form_fact" enctype="multipart/form-data">
+        <label for="descripcion">Adjuntar XML:</label>
+        <input type="file" name="fichero" size="40">
+        <br />
+        <input type="submit" value="Enviar" />
+    </form>*@
+
+
+
 <div class="row mt-3">
-    <div class="col-sm-6">&nbsp;</div>
+    <div class="col-sm-3">&nbsp;</div>
     <div class="col-sm-3">
-        <button class="btn-white">Adjuntar XML</button>
+        <label for="descripcion">Adjuntar XML:</label>
+        <input type="file" id="fileXml" name="ficheroXml" size="40">
     </div>
     <div class="col-sm-3">
-        <button class="btn-white">Adjuntar PDF</button>
+        <label for="descripcion">Adjuntar PDF:</label>
+        <input type="file" id="filePdf" name="ficheroPdf" size="40">
+    </div>
+    <div class="col-sm-3">
+        <div>&nbsp;</div>
+        <input type="button" id="btnFile" value="Enviar" />
     </div>
 </div>
 
-<script type="text/javascript">
+    <script type="text/javascript">
         var fn_buscar = function () {
         var numeroSolicitud = $('#idSolicitudFactura').val() == '' ? null : $('#idSolicitudFactura').val();
             console.log('idSolicitudFactura', numeroSolicitud);
@@ -120,7 +135,7 @@
                         $("#Table").DataTable().destroy();
                         $("#Table").append('<tbody>');
                         console.log( "SolicitudFacturaDetalleList", data.SolicitudFacturaDetalleList );
-                        for (i = 0; i < data.SolicitudFacturaDetalleList.length; i++) {                           
+                        for (i = 0; i < data.SolicitudFacturaDetalleList.length; i++) {
                             $("#Table").append('<tr>' +
                                 '<td style="dislay: none; text-align:right"><b>' + data.SolicitudFacturaDetalleList[i].Linea + '</b></td>' +
                                 '<td style="dislay: none;">' + data.SolicitudFacturaDetalleList[i].Descripcion + '</td>' +
@@ -162,6 +177,37 @@
             fn_buscar();
             $(".navbar-nav .nav-item").removeClass("active");
             $("#nav-2").addClass("active");
+
+            $("#btnFile").click(function () {
+            var fileXml = $("#fileXml").get(0).files;
+                var filePdf = $("#filePdf").get(0).files;
+                console.log(fileXml, filePdf);
+            var fileData = new FormData();
+                fileData.append("fileXml", fileXml[0]);
+                fileData.append("filePdf", filePdf[0]);
+
+
+            //for (var i = 0; i < files.length; i++) {
+            //    fileData.append("fileInput", files[i]);
+            //}
+ 
+            $.ajax({
+                type: "POST",
+                url: "/Gestion/Upload",
+                dataType: "json",
+                contentType: false, 
+                processData: false,
+                data: fileData,
+                success: function (result, status, xhr) {
+                    console.log('result', result);
+                },
+                error: function (xhr, status, error) {
+                    alert(status);
+                }
+            });
+        });
+
+
         });
 
     </script>

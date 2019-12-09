@@ -133,6 +133,7 @@
     <Compile Include="Response\ZonaHorariaResponseDTO.cs" />
     <Compile Include="Seguridad\AuthenticationResult.cs" />
     <Compile Include="Seguridad\UsuarioDTO.cs" />
+    <Compile Include="SolicitudFactura\DocumentoModel.cs" />
     <Compile Include="SolicitudFactura\SolicitudFacturaCabeceraDTO.cs" />
     <Compile Include="SolicitudFactura\SolicitudFacturaDetalleDTO.cs" />
     <Compile Include="SolicitudFactura\FacturaDTO.cs" />
