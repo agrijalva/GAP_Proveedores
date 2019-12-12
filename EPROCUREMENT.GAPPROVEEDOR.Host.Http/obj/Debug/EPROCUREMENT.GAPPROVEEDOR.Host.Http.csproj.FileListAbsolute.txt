@@ -473,3 +473,4 @@ C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPRO
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Host.Http\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Host.Http.csproj.CopyComplete
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Host.Http\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Host.Http.dll
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Host.Http\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Host.Http.pdb
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Host.Http\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Host.Http.csproj.CoreCompileInputs.cache

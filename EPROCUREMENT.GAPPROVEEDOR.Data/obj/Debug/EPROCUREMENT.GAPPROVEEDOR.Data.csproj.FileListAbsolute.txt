@@ -89,3 +89,4 @@ C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPRO
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Data\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.csproj.CopyComplete
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Data\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.dll
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Data\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.pdb
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Data\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.csproj.CoreCompileInputs.cache
