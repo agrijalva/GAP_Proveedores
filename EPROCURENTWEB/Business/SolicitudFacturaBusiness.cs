@@ -84,6 +84,30 @@ namespace EprocurementWeb.Business
             return response;
         }
 
+        public EstatusSolicitudResponseModel GuardarHistoricoEstatusSolicitud(EstatusSolicitudRequestModel request)
+        {
+            EstatusSolicitudResponseModel response = new EstatusSolicitudResponseModel();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/SolicitudFactura/");
+                var json = JsonConvert.SerializeObject(request);
+                Console.WriteLine(json);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                Console.WriteLine(content);
+                var responseTask = client.PostAsync("GuardarHistoricoEstatusSolicitud", content);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+                    response = JSSerializer.Deserialize<EstatusSolicitudResponseModel>(readTask.Result);
+                }
+            }
+            return response;
+        }
+
         public bool GuardarDocumentos(List<DocumentoModel> documentoList, string rfc, int idSolicitud)
         {
             bool respuesta = false;

@@ -13,5 +13,6 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Entities
         public decimal ImporteAdquirido { get; set; }
         public decimal ImporteFacturado { get; set; }
         public decimal ImporteFacturar { get; set; }
+        public int IdEstatusSolicitud { get; set; }
     }
 }

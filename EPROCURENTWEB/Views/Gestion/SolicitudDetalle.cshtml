@@ -5,6 +5,7 @@
 }
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <link href="~/Content/Styles/Site.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <link href="~/Content/Css/infoCuenta.css" rel="stylesheet" />
@@ -27,7 +28,7 @@
                         <p class="control-label">
                             @Html.Label("lblDescripcion", "...", new { id = "lblDescripcion" })
                         </p>
-                        
+
                     </div>
 
                     <div class="col-sm-2 cabecero-detalle">
@@ -83,7 +84,7 @@
 
 
 
-<div class="row mt-3">
+<div class="row mt-3" id="divArchivos">
     <div class="col-sm-3">&nbsp;</div>
     <div class="col-sm-3">
         <label for="descripcion">Adjuntar XML:</label>
@@ -99,10 +100,9 @@
     </div>
 </div>
 
-    <script type="text/javascript">
+<script type="text/javascript">
         var fn_buscar = function () {
         var numeroSolicitud = $('#idSolicitudFactura').val() == '' ? null : $('#idSolicitudFactura').val();
-            console.log('idSolicitudFactura', numeroSolicitud);
             var jsonData = JSON.stringify({ idSolicitudFactura: numeroSolicitud });
                 $.ajax({
                     type: "POST",
@@ -118,7 +118,11 @@
                         $('#lblImporteFacturado').html('$ ' + addCommas(data.SolicitudFacturaCabecera.ImporteFacturado));
                         $('#lblImportePendiente').html('$ ' + addCommas(importePendiente));
                         $('#lblImporteFacturar').html('$ ' + addCommas(data.SolicitudFacturaCabecera.ImporteFacturar));
-
+                        //$('#idEstatusSolicitud').val(data.SolicitudFacturaCabecera.IdEstatusSolicitud);
+                        console.log('IdEstatusSolicitud', data.SolicitudFacturaCabecera.IdEstatusSolicitud);
+                        if (data.SolicitudFacturaCabecera.IdEstatusSolicitud != 1) {
+                            $("#divArchivos").addClass("control-display-none");
+                        }
                         $("#Table").html('');
                         $("#Table").append('<thead class="bg-light-purple"><tr>' +
                             '<td width="50">ID Lineas</td>'+
@@ -179,35 +183,85 @@
             $("#nav-2").addClass("active");
 
             $("#btnFile").click(function () {
-            var fileXml = $("#fileXml").get(0).files;
+                var fileXml = $("#fileXml").get(0).files;
                 var filePdf = $("#filePdf").get(0).files;
-                console.log(fileXml, filePdf);
-            var fileData = new FormData();
-                fileData.append("fileXml", fileXml[0]);
-                fileData.append("filePdf", filePdf[0]);
-
-
-            //for (var i = 0; i < files.length; i++) {
-            //    fileData.append("fileInput", files[i]);
-            //}
- 
-            $.ajax({
-                type: "POST",
-                url: "/Gestion/Upload",
-                dataType: "json",
-                contentType: false, 
-                processData: false,
-                data: fileData,
-                success: function (result, status, xhr) {
-                    console.log('result', result);
-                },
-                error: function (xhr, status, error) {
-                    alert(status);
+                if (fileXml.length != 1) {
+                    Swal.fire({
+                        position: 'middle',
+                        icon: 'error',
+                        title: 'Información invalida, por favor agregue un archivo xml.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 }
-            });
+                else if (filePdf.length != 1) {
+                    Swal.fire({
+                        position: 'middle',
+                        icon: 'error',
+                        title: 'Información invalida, por favor agregue un archivo pdf.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+                else {
+                    var nombreXml = fileXml[0].name;
+                    var nombrePdf = filePdf[0].name;
+                    console.log(nombreXml.substr(nombreXml.length - 3, nombreXml.length));
+                    if (nombreXml.substr(nombreXml.length - 3, nombreXml.length) == 'xml' && nombrePdf.substr(nombrePdf.length - 3, nombrePdf.length) == 'pdf') {
+
+                        console.log(nombreXml.substr(nombreXml.length - 3, nombreXml.length));
+                        var fileData = new FormData();
+
+                        var numeroSolicitud = $('#idSolicitudFactura').val() == '' ? null : $('#idSolicitudFactura').val();
+                        console.log('idSolicitudFactura', numeroSolicitud);
+                        fileData.append("fileXml", fileXml[0]);
+                        fileData.append("filePdf", filePdf[0]);
+                        fileData.append("idSolicitudFactura", numeroSolicitud);
+                        //for (var i = 0; i < files.length; i++) {
+                        //    fileData.append("fileInput", files[i]);
+                        //}
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/Gestion/Upload",
+                            dataType: "json",
+                            contentType: false,
+                            processData: false,
+                            data: fileData,
+                            success: function (result, status, xhr) {
+                                if (result.success) {
+                                    $("#divArchivos").addClass("control-display-none");
+                                }
+
+                                var icon = result.success ? "success" : "error";
+                                Swal.fire({
+                                    position: 'middle',
+                                    icon: icon,
+                                    title: 'Información invalida, por favor vuelva a intentarlo.',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                console.log('result', result);
+                            },
+                            error: function (xhr, status, error) {
+                                alert(status);
+                            }
+                        });
+                    }
+                    else {
+                        console.log(nombreXml.name.substr(fileXml[0].name.length - 3, nombreXml.name.length));
+                        Swal.fire({
+                            position: 'middle',
+                            icon: 'error',
+                            title: 'Información invalida, por favor vuelva a intentarlo.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                }
         });
 
 
         });
 
-    </script>
+</script>

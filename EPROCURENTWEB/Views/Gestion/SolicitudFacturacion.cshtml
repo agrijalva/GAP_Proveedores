@@ -6,6 +6,14 @@
 }
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
+<!-- Bootstrap DatePicker -->
+
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<script src="~/scripts\jquery-ui-1.12.1.min.js"></script>
+<!-- Bootstrap DatePicker -->
+
+
 <div class="row">
     <div class="col-md-12">
         <div class="card mt-3">
@@ -26,12 +34,16 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 @Html.Label("Fecha Inicio", "Fecha Inicio", new { @class = "control-label text-right " })
-                                @Html.TextBox("FechaInicio", "", new { @class = "form-control datepicker", placeholder = "" })
-                                @*<input type="text" class="form-control" placeholder="" />*@
+                                @*@Html.TextBox("FechaInicio", "", new { @class = "form-control datepicker", placeholder = "", @readonly = "readonly", style = "width: 40%;" })*@
+                                @*@Html.Editor("HHhhh", "hhhhh", new { htmlAttributes = new { @class = "datepicker" } })*@
+                                <input type="text" name="FechaInicio" class=" datepicker" id="FechaInicio" size="15" onkeydown="return false" placeholder="Fecha" data-date-format="dd/mm/yyyy">
+
                             </div>
                             <div class="col-sm-6">
                                 @Html.Label("Fecha Fin", "Fecha Fin", new { @class = "control-label text-right " })
-                                @Html.TextBox("FechaFin", "", new { @class = "form-control datepicker", placeholder = "" })
+                                @*@Html.TextBox("FechaFin", "", new { @class = "form-control datepicker", placeholder = "", @readonly = "readonly" })*@
+                                <input type="text" name="fechaFin" class="datepicker" id="FechaFin" size="15" onkeydown="return false" placeholder="Fecha" data-date-format="dd/mm/yyyy">
+
                                 @*<label class="control-label text-right">Fecha Fin</label>
         <input type="text" class="form-control" placeholder="" />*@
                             </div>
@@ -57,9 +69,37 @@
 </div>
 
 <script type="text/javascript">
-    //$(function () { // will trigger when the document is ready
-    //   $('.datepicker').datepicker(); //Initialise any date pickers
-    //});
+    $.datepicker.regional['es'] = {
+ closeText: 'Cerrar',
+ prevText: '< Ant',
+ nextText: 'Sig >',
+ currentText: 'Hoy',
+ monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+ monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+ dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+ dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+ dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+ weekHeader: 'Sm',
+ dateFormat: 'dd/mm/yy',
+ firstDay: 1,
+ isRTL: false,
+ showMonthAfterYear: false,
+ yearSuffix: ''
+ };
+ $.datepicker.setDefaults($.datepicker.regional['es']);
+    $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                //yearRange : "-10:+10"
+                minDate: new Date(2018, 0, 1),
+                maxDate: new Date(2019, 12, 1),
+                showOn: "both",
+                language: "es",
+                buttonText : "<i class='fa fa-calendar'></i>"
+            });
+        });
 
     var fn_buscar = function () {
          //var idGiroProveedor = $('#giro').val() == '' ? null : $('#giro').val();
@@ -69,7 +109,7 @@
         var fechaInicio = $('#FechaInicio').val() == '' ? null : $('#FechaInicio').val();
         var fechaFin = $('#FechaFin').val() == '' ? null : $('#FechaFin').val();
 
-        
+
         console.log('idEstatus', idEstatus);
         console.log('numeroSolicitud', numeroSolicitud);
         var jsonData = JSON.stringify({ idSolicitudFactura: numeroSolicitud, idEstatus: idEstatus, fechaInicio: fechaInicio, fechaFin: fechaFin });
@@ -96,11 +136,6 @@
 
                  $("#Table").append('<tbody>');
                  for (i = 0; i < data.length; i++) {
-
-                     @*var link = '@Html.ActionLink(" ", "About", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
-                     link = link.replace('_idProv_', data[i].IdProveedor);*@
-                     @*var link = '@Html.ActionLink(" ", "AceptarProveedor", "Home", new { idProvider ="_idProv_" }, new { @class = "fas fa-eye icon-color" })';
-                     link = link.replace('_idProv_', data[i].IdProveedor);*@
                      var link = '@Html.ActionLink(" ", "SolicitudDetalle", "Gestion", new { IdSolicitudFactura ="_idSoliocitud_" }, new { @class = "btn-ver" })';
                      link = link.replace('_idSoliocitud_', data[i].IdSolicitudFactura);
 
@@ -111,7 +146,7 @@
                          case 2: color = '#448aff'; // En Proceso
                              break;
                          case 3: color = '#43ac3e'; // Aceptada
-                             break; 
+                             break;
                          case 4: color = '#de343c'; // Rechazada
                              break;
                          case 5: color = '#43ac3e'; // Aceptada
@@ -162,8 +197,8 @@
     $("#nav-2").addClass("active");
 
     $(document).ready(function () {
-        fn_buscar();
-        
+        fn_buscar();       
+
     });
 
 </script>

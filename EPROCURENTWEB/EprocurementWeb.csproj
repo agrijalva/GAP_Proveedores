@@ -212,6 +212,7 @@
     <Compile Include="Models\Proveedor\ProveedorGiroModel.cs" />
     <Compile Include="Models\Proveedor\ProveedorModel.cs" />
     <Compile Include="Models\Proveedor\ProveedorUsuarioModel.cs" />
+    <Compile Include="Models\Request\EstatusSolicitudRequestModel.cs" />
     <Compile Include="Models\Request\ProveedorDetalleRequestModel.cs" />
     <Compile Include="Models\Request\ProveedorFiltroRequestModel.cs" />
     <Compile Include="Models\Request\ProveedorRequestModel.cs" />
@@ -220,6 +221,7 @@
     <Compile Include="Models\Request\SolicitudFacturaRequestModel.cs" />
     <Compile Include="Models\Response\AeropuertoResponseModel.cs" />
     <Compile Include="Models\Response\CaptchaResponse.cs" />
+    <Compile Include="Models\Response\EstatusSolicitudResponseModel.cs" />
     <Compile Include="Models\Response\ProveedorDetalleResponseModel.cs" />
     <Compile Include="Models\Response\ProveedorFiltroResponseModel.cs" />
     <Compile Include="Models\Response\ProveedorResponseModel.cs" />
@@ -282,6 +284,8 @@
     <Content Include="Content\Scripts\bootstrap.bundle.min.js" />
     <Content Include="Content\Scripts\bootstrap.js" />
     <Content Include="Content\Scripts\bootstrap.min.js" />
+    <Content Include="Content\Scripts\jquery-1.12.4.min.js" />
+    <Content Include="Content\Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Content\Styles\Login.css" />
     <Content Include="Content\Scripts\es-mx\jquery.validate.extension.js" />
     <Content Include="Content\Scripts\fr-fr\jquery.validate.extension.js" />
@@ -290,6 +294,7 @@
     <Content Include="Content\Images\Spain.png" />
     <Content Include="Content\Images\United-States-of-America.png" />
     <Content Include="Content\StyleIBF.css" />
+    <Content Include="Content\themes\base\jquery-ui.min.css" />
     <Content Include="Content\validacionProveedor.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -455,6 +460,7 @@
     <Content Include="scripts\jquery-3.4.1.slim.js" />
     <Content Include="scripts\jquery-3.4.1.slim.min.js" />
     <None Include="scripts\jquery.validate-vsdoc.js" />
+    <Content Include="scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="scripts\jquery.validate.js" />
     <Content Include="scripts\jquery.validate.min.js" />
     <Content Include="scripts\libs\favicon.ico" />
