@@ -44,6 +44,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             solicitudFactura.RutaXML = reader["RutaXML"].ToString();
                             solicitudFactura.UltimoEstatus = Convert.ToInt32(reader["UltimoEstatus"]);
                             solicitudFactura.UltimoStatusLabel = reader["UltimoStatusLabel"].ToString();
+                            solicitudFactura.IdEstatusSolicitud = Convert.ToInt32(reader["UltimoEstatus"]);
                             response.SolicitudFacturaList.Add(solicitudFactura);
                         }
                     }

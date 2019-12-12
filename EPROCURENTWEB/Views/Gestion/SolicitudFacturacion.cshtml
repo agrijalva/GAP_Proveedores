@@ -45,7 +45,7 @@
                                 <input type="text" name="fechaFin" class="datepicker" id="FechaFin" size="15" onkeydown="return false" placeholder="Fecha" data-date-format="dd/mm/yyyy">
 
                                 @*<label class="control-label text-right">Fecha Fin</label>
-        <input type="text" class="form-control" placeholder="" />*@
+                                    <input type="text" class="form-control" placeholder="" />*@
                             </div>
                         </div>
                     </div>
@@ -68,25 +68,59 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    $.datepicker.regional['es'] = {
- closeText: 'Cerrar',
- prevText: '< Ant',
- nextText: 'Sig >',
- currentText: 'Hoy',
- monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
- monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
- dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
- dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
- dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
- weekHeader: 'Sm',
- dateFormat: 'dd/mm/yy',
- firstDay: 1,
- isRTL: false,
- showMonthAfterYear: false,
- yearSuffix: ''
- };
- $.datepicker.setDefaults($.datepicker.regional['es']);
+@Html.Hidden("idSolicitudFactura", 0)
+<!-- Modal Documentación pendiente -->
+<div class="modal fade" id="modalArchivos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-purple">
+                <h5 class="modal-title" id="exampleModalLongTitle">Adjuntar Archivos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row mt-3" id="divArchivos">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label for="descripcion">Adjuntar XML:</label>
+                            <input type="file" id="fileXml" name="ficheroXml" size="40">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label for="descripcion">Adjuntar PDF:</label>
+                            <input type="file" id="filePdf" name="ficheroPdf" size="40">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btnStyle btnWhite btn-modal-cancelar" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="btnEnviarDoctos" class="btnStyle btn-modal-aceptar"><i class='fas fa-paper-plane'></i> Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $.datepicker.regional['es'] = {
+            closeText: 'Cerrar',
+            prevText: '< Ant',
+            nextText: 'Sig >',
+            currentText: 'Hoy',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+            weekHeader: 'Sm',
+            dateFormat: 'dd/mm/yy',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ''
+        };
+        $.datepicker.setDefaults($.datepicker.regional['es']);
     $(function () {
             $(".datepicker").datepicker({
                 dateFormat: "dd/mm/yy",
@@ -138,7 +172,13 @@
                  for (i = 0; i < data.length; i++) {
                      var link = '@Html.ActionLink(" ", "SolicitudDetalle", "Gestion", new { IdSolicitudFactura ="_idSoliocitud_" }, new { @class = "btn-ver" })';
                      link = link.replace('_idSoliocitud_', data[i].IdSolicitudFactura);
+                     var btnArchivos = '<input type="button" value="X" data-toggle="modal" data-target="#modalArchivos" " onclick="fn_cargarArchivos(_IdSolicitudFactura_)"/>';//onclick="fn_cargarArchivos(_IdSolicitudFactura_)
+                     
 
+                     btnArchivos = btnArchivos.replace('_IdSolicitudFactura_', data[i].IdSolicitudFactura)
+                     //btnArchivos = btnArchivos.replace('_Icono_', '<i class="fas fa-upload"></i>')
+
+                     //<input type="button" class="btnStyle btnWhite" data-toggle="modal" data-target="#modalRechazar" value="Rechazar" />
                      var color = ''
                      switch (data[i].UltimoEstatus) {
                          case 1: color = '#f9a32f'; // Pendiente
@@ -152,21 +192,31 @@
                          case 5: color = '#43ac3e'; // Aceptada
                              break;
                      }
-
-                     $("#Table").append('<tr>' +
-                         '<td style="dislay: none;" align="center"><b>' + data[i].IdSolicitudFactura + '</b></td>' +
-                         '<td style="dislay: none;">' + data[i].NumeroRecepcion + '</td>' +
-                         '<td style="dislay: none;">' + data[i].Fecha + '</td>' +
-                         '<td style="dislay: none;" align="right">$ ' + addCommas(data[i].Monto) + '</td>' +
-                         //'<td style="dislay: none;">' + data[i].RutaPDF + '</td>' +
-                         //'<td style="dislay: none;">' + data[i].RutaXML + '</td>' +
-                         '<td style="dislay: none; color:'+ color +'" align="center"><b>' + data[i].UltimoStatusLabel + '</b></td>' +
-                         '<td style="dislay: none;" align="center"><img src="/Content/Images/icon/upload.png" width="32" /></td>' +
-                         '<td style="dislay: none;" align="center"><img src="/Content/Images/icon/upload.png" width="32" /></td>' +
-                         //'<td style="dislay: none;">' + data[i].UltimoEstatus + '</td>' +
-                         '<td style="dislay: none;">'+ link +'</td>' + '</tr>'
-                         //'<td style="dislay: none;"><div class="btn-circle">' + link + '</div></td>' + '</tr>'
-                     );
+                     console.log(data[i].UltimoEstatus);
+                     if (data[i].UltimoEstatus == 1) {
+                         $("#Table").append('<tr>' +
+                             '<td style="dislay: none;" align="center"><b>' + data[i].IdSolicitudFactura + '</b></td>' +
+                             '<td style="dislay: none;">' + data[i].NumeroRecepcion + '</td>' +
+                             '<td style="dislay: none;">' + data[i].Fecha + '</td>' +
+                             '<td style="dislay: none;" align="right">$ ' + addCommas(data[i].Monto) + '</td>' +
+                             '<td style="dislay: none; color:' + color + '" align="center"><b>' + data[i].UltimoStatusLabel + '</b></td>' +
+                             '<td style="dislay: none;" align="center"><img src="/Content/Images/icon/upload.png" width="32" />' + btnArchivos + '</td>' +
+                             '<td style="dislay: none;" align="center"><img src="/Content/Images/icon/upload.png" width="32" />' + btnArchivos + '</td>' +
+                             '<td style="dislay: none;">' + link + '</td>' + '</tr>'
+                         );
+                     }
+                     else {
+                         $("#Table").append('<tr>' +
+                             '<td style="dislay: none;" align="center"><b>' + data[i].IdSolicitudFactura + '</b></td>' +
+                             '<td style="dislay: none;">' + data[i].NumeroRecepcion + '</td>' +
+                             '<td style="dislay: none;">' + data[i].Fecha + '</td>' +
+                             '<td style="dislay: none;" align="right">$ ' + addCommas(data[i].Monto) + '</td>' +
+                             '<td style="dislay: none; color:' + color + '" align="center"><b>' + data[i].UltimoStatusLabel + '</b></td>' +
+                             '<td style="dislay: none;" align="center"></td>' +
+                             '<td style="dislay: none;" align="center"></td>' +
+                             '<td style="dislay: none;">' + link + '</td>' + '</tr>'
+                         );
+                     }
                  }
                  $("#Table").append('</tbody>');
 
@@ -193,12 +243,94 @@
         return x1 + x2;
     }
 
+    var fn_cargarArchivos = function (idSolicitudFactura) {
+        $('#idSolicitudFactura').val(idSolicitudFactura);
+    };
+
     $(".navbar-nav .nav-item").removeClass("active");
     $("#nav-2").addClass("active");
 
     $(document).ready(function () {
-        fn_buscar();       
+        fn_buscar();
+        var url = '@Url.Action("SolicitudFacturacion", "Gestion")';
+        $("#btnEnviarDoctos").click(function () {
+                var fileXml = $("#fileXml").get(0).files;
+                var filePdf = $("#filePdf").get(0).files;
+                if (fileXml.length != 1) {
+                    Swal.fire({
+                        position: 'middle',
+                        icon: 'error',
+                        title: 'Información invalida, por favor agregue un archivo xml.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+                else if (filePdf.length != 1) {
+                    Swal.fire({
+                        position: 'middle',
+                        icon: 'error',
+                        title: 'Información invalida, por favor agregue un archivo pdf.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+                else {
+                    var nombreXml = fileXml[0].name;
+                    var nombrePdf = filePdf[0].name;
+                    console.log(nombreXml.substr(nombreXml.length - 3, nombreXml.length));
+                    if (nombreXml.substr(nombreXml.length - 3, nombreXml.length) == 'xml' && nombrePdf.substr(nombrePdf.length - 3, nombrePdf.length) == 'pdf') {
+
+                        console.log(nombreXml.substr(nombreXml.length - 3, nombreXml.length));
+                        var fileData = new FormData();
+
+                        var numeroSolicitud = $('#idSolicitudFactura').val() == '' ? null : $('#idSolicitudFactura').val();
+                        console.log('idSolicitudFactura', numeroSolicitud);
+                        fileData.append("fileXml", fileXml[0]);
+                        fileData.append("filePdf", filePdf[0]);
+                        fileData.append("idSolicitudFactura", numeroSolicitud);
+                        //for (var i = 0; i < files.length; i++) {
+                        //    fileData.append("fileInput", files[i]);
+                        //}
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/Gestion/Upload",
+                            dataType: "json",
+                            contentType: false,
+                            processData: false,
+                            data: fileData,
+                            success: function (result, status, xhr) {    
+                                var icon = result.success ? "success" : "error";
+                                Swal.fire({
+                                    position: 'middle',
+                                    icon: icon,
+                                    title: result.responseText,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+
+                                if (result.success) {
+                                    setTimeout(function () { window.location.href = url; }, 1500);
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                alert(status);
+                            }
+                        });
+                    }
+                    else {
+                        console.log(nombreXml.name.substr(fileXml[0].name.length - 3, nombreXml.name.length));
+                        Swal.fire({
+                            position: 'middle',
+                            icon: 'error',
+                            title: 'Información invalida, por favor vuelva a intentarlo.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                }
+        });
 
     });
 
-</script>
+    </script>

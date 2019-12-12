@@ -278,7 +278,7 @@ namespace EprocurementWeb.Controllers
                     }
                     if (respuestaArchivo)
                     {
-                        var request = new EstatusSolicitudRequestModel { IdSolicitudFactura = idEstatusSolicitud, IdEstatusSolicitud = idEstatusSolicitud };
+                        var request = new EstatusSolicitudRequestModel { IdSolicitudFactura = idEstatusSolicitud, IdEstatusSolicitud = 2 };
                         var respuestaEstatus = new SolicitudFacturaBusiness().GuardarHistoricoEstatusSolicitud(request);
                         if(respuestaEstatus.Success)
                         {
