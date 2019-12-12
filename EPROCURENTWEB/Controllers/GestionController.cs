@@ -270,14 +270,15 @@ namespace EprocurementWeb.Controllers
                     List<DocumentoModel> documentoList = new List<DocumentoModel>();
                     documentoList.Add(new DocumentoModel { IdDetalle = 8, NombreDocumento = Path.GetFileName(ficheroXml.FileName), Extension = "xml", File = ficheroXml });
                     documentoList.Add(new DocumentoModel { IdDetalle = 8, NombreDocumento = Path.GetFileName(ficheroPdf.FileName), Extension = "pdf", File = ficheroPdf });
-                    var respuestaArchivo = new SolicitudFacturaBusiness().GuardarDocumentos(documentoList, "SAEM871008BH6", 8);
+                    var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
+                    var respuestaArchivo = new SolicitudFacturaBusiness().GuardarDocumentos(documentoList, usuarioInfo.NombreUsuario, idEstatusSolicitud);
                     if (Directory.Exists(Path.GetDirectoryName(path)))
                     {
                         System.IO.File.Delete(path);
                     }
                     if (respuestaArchivo)
                     {
-                        var request = new EstatusSolicitudRequestModel { IdSolicitudFactura = 8, IdEstatusSolicitud = idEstatusSolicitud };
+                        var request = new EstatusSolicitudRequestModel { IdSolicitudFactura = idEstatusSolicitud, IdEstatusSolicitud = idEstatusSolicitud };
                         var respuestaEstatus = new SolicitudFacturaBusiness().GuardarHistoricoEstatusSolicitud(request);
                         if(respuestaEstatus.Success)
                         {
