@@ -82,12 +82,14 @@
     <Compile Include="Request\ContactoRequestDTO.cs" />
     <Compile Include="Request\EstadoRequestDTO.cs" />
     <Compile Include="Request\EstatusProveedorRequestDTO.cs" />
+    <Compile Include="Request\EstatusSolicitudRequestDTO.cs" />
     <Compile Include="Request\FormatoArchivoRequestDTO.cs" />
     <Compile Include="Request\InformacionFinancieraRequestDTO.cs" />
     <Compile Include="Request\LoginUsuarioRequestDTO.cs" />
     <Compile Include="Request\ProveedorAprobarRequestDTO.cs" />
     <Compile Include="Request\MunicipioRequestDTO.cs" />
     <Compile Include="Request\FacturaRequestDTO.cs" />
+    <Compile Include="Response\EstatusSolicitudResponseDTO.cs" />
     <Compile Include="Response\ProveedorContactoResponseDTO.cs" />
     <Compile Include="Request\ProveedorCuentaRequestDTO.cs" />
     <Compile Include="Request\ProveedorDetalleRequestDTO.cs" />

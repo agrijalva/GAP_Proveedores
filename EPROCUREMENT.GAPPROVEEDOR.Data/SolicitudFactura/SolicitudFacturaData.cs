@@ -44,6 +44,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             solicitudFactura.RutaXML = reader["RutaXML"].ToString();
                             solicitudFactura.UltimoEstatus = Convert.ToInt32(reader["UltimoEstatus"]);
                             solicitudFactura.UltimoStatusLabel = reader["UltimoStatusLabel"].ToString();
+                            solicitudFactura.IdEstatusSolicitud = Convert.ToInt32(reader["UltimoEstatus"]);
                             response.SolicitudFacturaList.Add(solicitudFactura);
                         }
                     }
@@ -86,6 +87,8 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             solicitudFacturaCabecero.ImporteAdquirido = Convert.ToDecimal(reader["ImporteAdquirido"].ToString());
                             solicitudFacturaCabecero.ImporteFacturado = Convert.ToDecimal(reader["ImporteFacturado"]);
                             solicitudFacturaCabecero.ImporteFacturar = Convert.ToDecimal(reader["ImporteFacturar"]);
+                            solicitudFacturaCabecero.IdEstatusSolicitud = Convert.ToInt32(reader["IdEstatusSolicitud"]);
+                            
                             response.SolicitudFacturaCabecera = solicitudFacturaCabecero;
                         }
                     }
@@ -175,5 +178,35 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
             return response;
         }
+
+        public EstatusSolicitudResponseDTO GuardarHistoricoEstatusSolicitud(EstatusSolicitudRequestDTO request)
+        {
+            var response = new EstatusSolicitudResponseDTO()
+            {
+                ErrorList = new List<ErrorDTO>()
+            };
+
+            try
+            {
+                using (var conexion = new SqlConnection(Helper.Connection()))
+                {
+                    conexion.Open();
+                    var cmdUpdate = new SqlCommand("[dbo].[usp_EPROCUREMENT_HistoricoEstatusSolicitud_INS]", conexion);
+                    cmdUpdate.CommandType = CommandType.StoredProcedure;
+                    cmdUpdate.Parameters.Add(new SqlParameter("@IdSolicitudFactura", request.IdSolicitudFactura));
+                    cmdUpdate.Parameters.Add(new SqlParameter("@IdEstatusSolicitud", request.IdEstatusSolicitud));
+                    cmdUpdate.Parameters.Add(new SqlParameter("Result", SqlDbType.BigInt) { Direction = ParameterDirection.ReturnValue });
+                    cmdUpdate.ExecuteNonQuery();
+                    var resultDelete = Convert.ToInt32(cmdUpdate.Parameters["Result"].Value);
+
+                    response.Success = true;
+                }
+            }
+            catch (Exception exception)
+            {
+            }
+            return response;
+        }
+
     }
 }

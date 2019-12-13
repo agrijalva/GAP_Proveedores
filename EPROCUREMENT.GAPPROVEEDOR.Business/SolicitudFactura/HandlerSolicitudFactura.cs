@@ -49,5 +49,17 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.SolicitudFactura
             }
             return response;
         }
+
+        public EstatusSolicitudResponseDTO GuardarHistoricoEstatusSolicitud(EstatusSolicitudRequestDTO request)
+        {
+            var response = solicitudFacturaData.GuardarHistoricoEstatusSolicitud(request);
+
+            if (!response.Success)
+            {
+                response.ErrorList = new List<ErrorDTO> { new ErrorDTO { Codigo = "", Mensaje = string.Format("No fue posible recuperar datos disponibles o no se encontro alguna solicitud en proceso") } };
+            }
+            return response;
+        }
+
     }
 }

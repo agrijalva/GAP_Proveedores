@@ -36,6 +36,7 @@ namespace EprocurementWeb.Controllers
         {
             BusinessLogic businessLogic = new BusinessLogic();
             aeropuertoList = businessLogic.GetAeropuertosList();
+            //var aa = GetFacturaList(null, null, null, null, null, null, null);
             return View();
         }
 
@@ -250,38 +251,68 @@ namespace EprocurementWeb.Controllers
         {
             try
             {
+                var idEstatusSolicitud = 0;
+                if (!string.IsNullOrEmpty(Request.Form.Get("idSolicitudFactura").ToString()))
+                {
+                    idEstatusSolicitud = Convert.ToInt32(Request.Form.Get("idSolicitudFactura"));
+                }
                 HttpFileCollectionBase files = Request.Files;
+                if (files.Count < 2)
+                {
+                    return Json(new { success = false, responseText = "Debe agregar archivo xml y pdf" }, JsonRequestBehavior.AllowGet);
+                }
                 HttpPostedFileBase ficheroXml = files[0];
                 HttpPostedFileBase ficheroPdf = files[1];
-                var strNombreXml = Path.GetFileName(ficheroXml.FileName);
-                if (ficheroXml.ContentType == "text/xml")
+                if (ficheroXml.ContentType != "text/xml")
                 {
-                    var path = Path.Combine(Server.MapPath("~/Content"), Path.GetFileName(ficheroXml.FileName));
-                    ficheroXml.SaveAs(path);
-                    BinaryReader b = new BinaryReader(ficheroXml.InputStream);
-                    byte[] binData = b.ReadBytes(ficheroXml.ContentLength);
-                    string result = System.Text.Encoding.UTF8.GetString(binData);
-                    var document = XDocument.Load(path);
+                    return Json(new { success = false, responseText = "Debe agregar un archivo con extensión XML" }, JsonRequestBehavior.AllowGet);
+                }
+                if (ficheroPdf.ContentType != "application/pdf")
+                {
+                    return Json(new { success = false, responseText = "Debe agregar un archivo con extensión PDF" }, JsonRequestBehavior.AllowGet);
+                }
+                var strNombreXml = Path.GetFileName(ficheroXml.FileName);
+                var path = Path.Combine(Server.MapPath("~/Content"), Path.GetFileName(ficheroXml.FileName));
+                ficheroXml.SaveAs(path);
+                BinaryReader b = new BinaryReader(ficheroXml.InputStream);
+                byte[] binData = b.ReadBytes(ficheroXml.ContentLength);
+                string result = System.Text.Encoding.UTF8.GetString(binData);
+                var document = XDocument.Load(path);
 
-                    leerDocumento(path);
+                if (ValidarXml(path))
+                {
+                    List<DocumentoModel> documentoList = new List<DocumentoModel>();
+                    documentoList.Add(new DocumentoModel { IdDetalle = 8, NombreDocumento = Path.GetFileName(ficheroXml.FileName), Extension = "xml", File = ficheroXml });
+                    documentoList.Add(new DocumentoModel { IdDetalle = 8, NombreDocumento = Path.GetFileName(ficheroPdf.FileName), Extension = "pdf", File = ficheroPdf });
+                    var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
+                    var respuestaArchivo = new SolicitudFacturaBusiness().GuardarDocumentos(documentoList, usuarioInfo.NombreUsuario, idEstatusSolicitud);
                     if (Directory.Exists(Path.GetDirectoryName(path)))
                     {
                         System.IO.File.Delete(path);
                     }
+                    if (respuestaArchivo)
+                    {
+                        var request = new EstatusSolicitudRequestModel { IdSolicitudFactura = idEstatusSolicitud, IdEstatusSolicitud = 2 };
+                        var respuestaEstatus = new SolicitudFacturaBusiness().GuardarHistoricoEstatusSolicitud(request);
+                        if(respuestaEstatus.Success)
+                        {
+                            return Json(new { success = true, responseText = "Archivos almacenados correctamente" }, JsonRequestBehavior.AllowGet);
+                        }
+                        return Json(new { success = false, responseText = "Ocurrio un error al guardar los archivos" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false, responseText = "Ocurrio un error al guardar los archivos" }, JsonRequestBehavior.AllowGet);
+                    }
                 }
-                List<DocumentoModel> documentoList = new List<DocumentoModel>();
-                documentoList.Add(new DocumentoModel { IdDetalle = 8, NombreDocumento = Path.GetFileName(ficheroXml.FileName), Extension = "xml", File = ficheroXml });
-                documentoList.Add(new DocumentoModel { IdDetalle = 8, NombreDocumento = Path.GetFileName(ficheroPdf.FileName), Extension = "pdf", File = ficheroPdf });
-                var respuesta = new SolicitudFacturaBusiness().GuardarDocumentos(documentoList, "SAEM871008BH6", 8);
-
-                return Json(respuesta, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, responseText = "El archivo XML es invalido" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 throw new Exception("Ocurrio un error al procesar la información del documento " + ex.Message);
             }
 
-            return Json(false, JsonRequestBehavior.AllowGet);
+            return Json(new { success = false, responseText = "Ocurrio un error al procesar los archivos" }, JsonRequestBehavior.AllowGet);
             //using (var content = new MultipartFormDataContent())
             //{
             //    byte[] Bytes = new byte[fichero.InputStream.Length + 1];
@@ -303,11 +334,12 @@ namespace EprocurementWeb.Controllers
             //return View();
         }
         
-        public bool leerDocumento(string path)
+        public bool ValidarXml(string path)
         {
             //DocumentosCFDI doc = new DocumentosCFDI();
             XDocument xmlInput = null;
             XNamespace df;
+            var respuesta = false;
             try
             {
                 xmlInput = XDocument.Load(path);
@@ -315,13 +347,17 @@ namespace EprocurementWeb.Controllers
                 XNamespace tfd = @"http://www.sat.gob.mx/TimbreFiscalDigital";
                 XDocument timbre = XDocument.Parse(xmlInput.Root.Element(xmlInput.Root.Name.Namespace + "Complemento").ToString());
 
-                var rfcProveedor = xmlInput.Root.Element(df + "Emisor").Attribute("rfc").Value;
-                var rfcRecpetor = xmlInput.Root.Element(df + "Receptor").Attribute("rfc").Value;
-                var total = Convert.ToDecimal(xmlInput.Root.Attribute("total").Value);
+                var rfcProveedor = xmlInput.Root.Element(df + "Emisor").Attribute("rfc") != null ? xmlInput.Root.Element(df + "Emisor").Attribute("rfc").Value : xmlInput.Root.Element(df + "Emisor").Attribute("Rfc").Value;
+                //var rfcProveedor = xmlInput.Root.Element(df + "Emisor").Attributes().First().Value;
+                var rfcRecpetor = xmlInput.Root.Element(df + "Receptor").Attribute("rfc") != null ? xmlInput.Root.Element(df + "Receptor").Attribute("rfc").Value : xmlInput.Root.Element(df + "Receptor").Attribute("Rfc").Value;
+                //var rfcRecpetor = xmlInput.Root.Element(df + "Receptor").Attributes().First().Value;
+                var total = xmlInput.Root.Attribute("total") != null ? Convert.ToDecimal(xmlInput.Root.Attribute("total").Value) : Convert.ToDecimal(xmlInput.Root.Attribute("Total").Value);
+                //var total = Convert.ToDecimal(xmlInput.Root.Attributes().ElementAt(11).Value);
                 var foliFiscal = timbre.Root.Element(tfd + "TimbreFiscalDigital").Attribute("UUID").Value;
-                return ValidarCFDISat(rfcProveedor, rfcRecpetor, total, foliFiscal);
-
-
+                if (!string.IsNullOrEmpty(rfcProveedor) && !string.IsNullOrEmpty(rfcRecpetor) && !string.IsNullOrEmpty(foliFiscal) && total != 0)
+                {
+                    respuesta = ValidarCFDISat(rfcProveedor, rfcRecpetor, total, foliFiscal);
+                }
                 //var serie = xmlInput.Root.Attribute("serie").Value;
                 //var folio = xmlInput.Root.Attribute("folio").Value;    
                 //foreach (XElement xe in timbre.DescendantNodes())
@@ -336,11 +372,9 @@ namespace EprocurementWeb.Controllers
             }
             catch (Exception ex)
             {
-
                 throw new Exception("Ocurrio un error al procesar la información del documento " + ex.Message);
             }
-
-
+            return respuesta;
         }
 
         private bool ValidarCFDISat(string rfcEmisor, string rfcReceptor, decimal total, string folioFidcal)
