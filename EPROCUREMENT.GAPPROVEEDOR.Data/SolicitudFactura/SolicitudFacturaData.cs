@@ -157,10 +157,12 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             Factura.OrdenCompra = reader["OrdenCompra"].ToString();
                             Factura.Folio = reader["Folio"].ToString();
                             Factura.Monto = Convert.ToDecimal(reader["Monto"]);
+                            // Factura.FechaFactura = Convert.ToDateTime(reader["FechaFactura"].ToString());
                             Factura.FechaFactura = Convert.ToDateTime(reader["FechaFactura"].ToString());
                             Factura.IdEstatus = Convert.ToInt32(reader["IdEstatus"]);
                             Factura.Estatus = reader["Estatus"].ToString();
                             Factura.FechaPago = Convert.ToDateTime(reader["FechaPago"].ToString());
+                            response.FacturaList.Add(Factura);
                         }
                     }
                 }

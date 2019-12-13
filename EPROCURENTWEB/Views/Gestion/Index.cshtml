@@ -12,30 +12,30 @@
                     <div class="col-md-12 h-filtro">Filtrar por</div>
                     <div class="form-group col-md-4">
                         <label class="control-label text-right">Aeropuerto</label>
-                        <select class="form-control">
+                        <select class="form-control" id="idAeropuerto">
                             <option>Selecione</option>
                         </select>
                     </div>
                     <div class="form-group col-md-4">
                         <label class="control-label text-right">Orden de compra</label>
-                        <input type="text" class="form-control" />
+                        <input type="text" class="form-control" id="OrdenCompra" />
                     </div>
                     <div class="form-group col-md-4">
                         <label class="control-label text-right">Folio</label>
-                        <input type="text" class="form-control" />
+                        <input type="text" class="form-control" id="Folio" />
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-md-4">
                         <div class="row">
-                            <div class="col-sm-12"><label class="control-label text-right">Fecha propuesta de pago</label></div>
+                            <div class="col-sm-12"><label class="control-label text-right">Fecha de factura</label></div>
                             <div class="col-sm-2"> <label class="control-label text-right" style="color:#68686a !important">Inicio</label> </div>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" />
+                                <input type="text" class="form-control" id="FechaFacInicio" />
                             </div>
                             <div class="col-sm-2"> <label class="control-label text-right" style="color:#68686a !important">Fin</label> </div>
-                            <div class="col-sm-4"><input type="text" class="form-control" /></div>
+                            <div class="col-sm-4"><input type="text" class="form-control" id="FechaFacFin" /></div>
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -43,14 +43,14 @@
                             <div class="col-sm-12"><label class="control-label text-right">Fecha propuesta de pago</label></div>
                             <div class="col-sm-2"> <label class="control-label text-right" style="color:#68686a !important">Inicio</label> </div>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" />
+                                <input type="text" class="form-control" id="FechaPagoInicio" />
                             </div>
                             <div class="col-sm-2"> <label class="control-label text-right" style="color:#68686a !important">Fin</label> </div>
-                            <div class="col-sm-4"><input type="text" class="form-control" /></div>
+                            <div class="col-sm-4"><input type="text" class="form-control" id="FechaPagoFin" /></div>
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <button id="buscar" class="btn btn-search btn-purple float-right">
+                        <button id="buscar" class="btn btn-search btn-purple float-right" onclick="fn_buscar()">
                             <i class="fas fa-search"></i> Buscar
                         </button>
                     </div>
@@ -63,170 +63,22 @@
 
 <div class="row mt-3">
     <div class="col-sm-12">
-        <table id="Table" class="dataTable dataTables_wrapper ">
-            <thead class="bg-light-purple">
-                <tr>
-                    <td>Aeropuerto</td>
-                    <td>Numero de Orden de Compra</td>
-                    <td>Folio</td>
-                    <td>Monto</td>
-                    <td>Fecha de factura</td>
-                    <td>Estatus</td>
-                    <td>Fecha propuesta de pago</td>
-                    <td>Ver</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><b>GDL</b></td>
-                    <td>GDL-OC-0003235</td>
-                    <td>1234567890</td>
-                    <td>$ 354,456.00</td>
-                    <td>09/Diciembre/2019</td>
-                    <td><span class="text-warning"><b>Pendiente</b></span></td>
-                    <td>09/Diciembre/2019</td>
-                    <td><a href="#">Ver</a></td>
-                </tr>
-                <tr>
-                    <td><b>GDL</b></td>
-                    <td>GDL-OC-0003235</td>
-                    <td>1234567890</td>
-                    <td>$ 354,456.00</td>
-                    <td>09/Diciembre/2019</td>
-                    <td><span class="text-warning"><b>Pendiente</b></span></td>
-                    <td>09/Diciembre/2019</td>
-                    <td><a href="#">Ver</a></td>
-                </tr>
-                <tr>
-                    <td><b>GDL</b></td>
-                    <td>GDL-OC-0003235</td>
-                    <td>1234567890</td>
-                    <td>$ 354,456.00</td>
-                    <td>09/Diciembre/2019</td>
-                    <td><span class="text-warning"><b>Pendiente</b></span></td>
-                    <td>09/Diciembre/2019</td>
-                    <td><a href="#">Ver</a></td>
-                </tr>
-                <tr>
-                    <td><b>GDL</b></td>
-                    <td>GDL-OC-0003235</td>
-                    <td>1234567890</td>
-                    <td>$ 354,456.00</td>
-                    <td>09/Diciembre/2019</td>
-                    <td><span class="text-warning"><b>Pendiente</b></span></td>
-                    <td>09/Diciembre/2019</td>
-                    <td><a href="#">Ver</a></td>
-                </tr>
-                <tr>
-                    <td><b>GDL</b></td>
-                    <td>GDL-OC-0003235</td>
-                    <td>1234567890</td>
-                    <td>$ 354,456.00</td>
-                    <td>09/Diciembre/2019</td>
-                    <td><span class="text-warning"><b>Pendiente</b></span></td>
-                    <td>09/Diciembre/2019</td>
-                    <td><a href="#">Ver</a></td>
-                </tr>
-                <tr>
-                    <td><b>GDL</b></td>
-                    <td>GDL-OC-0003235</td>
-                    <td>1234567890</td>
-                    <td>$ 354,456.00</td>
-                    <td>09/Diciembre/2019</td>
-                    <td><span class="text-warning"><b>Pendiente</b></span></td>
-                    <td>09/Diciembre/2019</td>
-                    <td><a href="#">Ver</a></td>
-                </tr>
-                <tr>
-                    <td><b>GDL</b></td>
-                    <td>GDL-OC-0003235</td>
-                    <td>1234567890</td>
-                    <td>$ 354,456.00</td>
-                    <td>09/Diciembre/2019</td>
-                    <td><span class="text-warning"><b>Pendiente</b></span></td>
-                    <td>09/Diciembre/2019</td>
-                    <td><a href="#">Ver</a></td>
-                </tr>
-                <tr>
-                    <td><b>GDL</b></td>
-                    <td>GDL-OC-0003235</td>
-                    <td>1234567890</td>
-                    <td>$ 354,456.00</td>
-                    <td>09/Diciembre/2019</td>
-                    <td><span class="text-warning"><b>Pendiente</b></span></td>
-                    <td>09/Diciembre/2019</td>
-                    <td><a href="#">Ver</a></td>
-                </tr>
-                <tr>
-                    <td><b>GDL</b></td>
-                    <td>GDL-OC-0003235</td>
-                    <td>1234567890</td>
-                    <td>$ 354,456.00</td>
-                    <td>09/Diciembre/2019</td>
-                    <td><span class="text-warning"><b>Pendiente</b></span></td>
-                    <td>09/Diciembre/2019</td>
-                    <td><a href="#">Ver</a></td>
-                </tr>
-                <tr>
-                    <td><b>GDL</b></td>
-                    <td>GDL-OC-0003235</td>
-                    <td>1234567890</td>
-                    <td>$ 354,456.00</td>
-                    <td>09/Diciembre/2019</td>
-                    <td><span class="text-warning"><b>Pendiente</b></span></td>
-                    <td>09/Diciembre/2019</td>
-                    <td><a href="#">Ver</a></td>
-                </tr>
-                <tr>
-                    <td><b>GDL</b></td>
-                    <td>GDL-OC-0003235</td>
-                    <td>1234567890</td>
-                    <td>$ 354,456.00</td>
-                    <td>09/Diciembre/2019</td>
-                    <td><span class="text-warning"><b>Pendiente</b></span></td>
-                    <td>09/Diciembre/2019</td>
-                    <td><a href="#">Ver</a></td>
-                </tr>
-                <tr>
-                    <td><b>GDL</b></td>
-                    <td>GDL-OC-0003235</td>
-                    <td>1234567890</td>
-                    <td>$ 354,456.00</td>
-                    <td>09/Diciembre/2019</td>
-                    <td><span class="text-warning"><b>Pendiente</b></span></td>
-                    <td>09/Diciembre/2019</td>
-                    <td><a href="#">Ver</a></td>
-                </tr>
-            </tbody>
-        </table>
+        <table id="Table" class="dataTable dataTables_wrapper "></table>
     </div>
 </div>
 
 <script type="text/javascript">
-    //$(function () { // will trigger when the document is ready
-    //   $('.datepicker').datepicker(); //Initialise any date pickers
-    //});
 
     var fn_buscar = function () {
-         //var idGiroProveedor = $('#giro').val() == '' ? null : $('#giro').val();
-         //var idAeropuerto = $('#aeropuerto').val() == '' ? null : $('#aeropuerto').val();
-        var idEstatus = $('#estatus').val() == '' ? null : $('#estatus').val();
-        var numeroSolicitud = $('#NumeroSolicitud').val() == '' ? null : $('#NumeroSolicitud').val();
-        var fechaInicio = $('#FechaInicio').val() == '' ? null : $('#FechaInicio').val();
-        var fechaFin = $('#FechaFin').val() == '' ? null : $('#FechaFin').val();
 
-
-        console.log('idEstatus', idEstatus);
-        console.log('numeroSolicitud', numeroSolicitud);
-        //var jsonData = JSON.stringify({ idSolicitudFactura: numeroSolicitud, idEstatus: idEstatus, fechaInicio: fechaInicio, fechaFin: fechaFin });
         var jsonData = JSON.stringify({
-            IdAeropuerto: 2,
-            OrdenCompra: '001',
-            Folio: '',
-            FechaFacInicio: '',
-            FechaFacFin: '',
-            FechaPagoInicio: '',
-            FechaPagoFin: ''
+            IdAeropuerto: $('#IdAeropuerto').val() == '' ? null : $('#IdAeropuerto').val(),
+            OrdenCompra: $('#OrdenCompra').val() == '' ? null : $('#OrdenCompra').val(),
+            Folio: $('#Folio').val() == '' ? null : $('#Folio').val(),
+            FechaFacInicio: $('#FechaFacInicio').val() == '' ? null : $('#FechaFacInicio').val(),
+            FechaFacFin: $('#FechaFacFin').val() == '' ? null : $('#FechaFacFin').val(),
+            FechaPagoInicio: $('#FechaPagoInicio').val() == '' ? null : $('#FechaPagoInicio').val(),
+            FechaPagoFin: $('#FechaPagoFin').val() == '' ? null : $('#FechaPagoFin').val()
         });
          $.ajax({
              type: "POST",
@@ -236,12 +88,62 @@
              async: false,
              success: function (data) {
                  console.log( 'Aqui deben estar los datos de respuesta' );
-                 console.log( "GetFacturaList", data );
-             },
-             error: function (xhr, error) {
-                 console.log( 'Aqui deben estar errores' );
-                 console.debug(xhr);
-                 console.debug(error);
+                 console.log("GetFacturaList", data);
+
+                 $("#Table").html('');
+                 $("#Table").append(
+                     '<thead class="bg-light-purple"><tr>' +
+                     '<td align="left">Aeropuerto</td>'+
+                     '<td align="left">Número de orden de compra</td>' +
+                     '<td align="left">Folio</td>' +
+                     '<td align="right">Monto</td>' +
+                     '<td align="center">Fecha de factura</td>' +
+                     '<td align="center">Estatus</td>' +
+                     '<td align="center">Fecha propuesta de pago</td>' +
+                     '<td>Ver</td>'+
+                     '</tr ></thead > '
+                 );
+                 $("#Table").DataTable().clear().draw();
+                 $("#Table").DataTable().destroy();
+
+                 $("#Table").append('<tbody>');
+                 for (i = 0; i < data.length; i++) {
+
+                     var link = '@Html.ActionLink(" ", "SolicitudDetalle", "Gestion", new { IdFactura = "_idFactura_" }, new { @class = "btn-ver" })';
+                     link = link.replace('_idFactura_', data[i].IdFactura);
+
+                     var color = ''
+                     switch (data[i].IdEstatus) {
+                         case 1: color = '#f9a32f'; // Pendiente
+                             break;
+                         case 2: color = '#448aff'; // En Proceso
+                             break;
+                         case 3: color = '#43ac3e'; // Aceptada
+                             break; 
+                         case 4: color = '#de343c'; // Rechazada
+                             break;
+                         case 5: color = '#43ac3e'; // Aceptada
+                             break;
+                     }
+
+                     $("#Table").append('<tr>' +
+                         '<td style="dislay: none;" align="center"><b>' + data[i].Aeropuerto + '</b></td>' +
+                         '<td style="dislay: none;">' + data[i].OrdenCompra + '</td>' +
+                         '<td style="dislay: none;">' + data[i].Folio + '</td>' +
+                         '<td style="dislay: none;" align="right">$ ' + addCommas(data[i].Monto) + '</td>' +
+                         '<td style="dislay: none;">' + data[i].FechaFactura + '</td>' +
+                         '<td style="dislay: none; color:' + color + '" align="center"><b>' + data[i].Estatus + '</b></td>' +
+                         '<td style="dislay: none;">' + data[i].FechaPago + '</td>' +
+                         '<td style="dislay: none;">'+ link +'</td>' + '</tr>'
+                     );
+                 }
+                 $("#Table").append('</tbody>');
+
+                 $('#Table').DataTable({
+                        "paging": false,
+                         "bScrollInfinite": true,
+                         "bScrollCollapse": true
+                     });
              }
          });
     }

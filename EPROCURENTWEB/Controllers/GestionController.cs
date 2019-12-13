@@ -26,6 +26,7 @@ namespace EprocurementWeb.Controllers
 {
     public class GestionController : Controller
     {
+        public List<AeropuertoModel> aeropuertoList;
         public string nav_factura;
         public string nav_sFactura;
         public string nav_sCotizacion;
@@ -33,7 +34,8 @@ namespace EprocurementWeb.Controllers
         // GET: Gestion
         public ActionResult Index()
         {
-
+            BusinessLogic businessLogic = new BusinessLogic();
+            aeropuertoList = businessLogic.GetAeropuertosList();
             return View();
         }
 
@@ -203,20 +205,31 @@ namespace EprocurementWeb.Controllers
             };
 
             var FacturaResponse = businessLogic.GetFacturaList(request);
-            //Console.Write("Estoy del lado de C#");
-            //Console.WriteLine(FacturaResponse);
-
-
-            //foreach (var solicitud in FacturaResponse.FacturaList)
-            //{
-            //    solicitud.FechaFactura = solicitud.FechaFactura.ToShortDateString();
-            //    solicitud.FechaFactura = solicitud.FechaFactura.ToShortDateString();
-            //}
-
-            //var fr = FacturaResponse.FacturaList
+            foreach (var solicitud in FacturaResponse.FacturaList)
+            {
+                //solicitud.FechaFactura = solicitud.FechaFactura.ToShortDateString();
+                //solicitud.FechaPago = solicitud.FechaPago.ToShortDateString();
+            }
 
             return Json(FacturaResponse.FacturaList, JsonRequestBehavior.AllowGet);
             //return Json("{success: true, msg:'Ejemplo'}");
+
+        }
+
+        public JsonResult GetAeropuertoList()
+        {
+            //SolicitudFacturaBusiness businessLogic = new SolicitudFacturaBusiness();
+            //var request = new FacturaRequestModel {}
+
+            //var FacturaResponse = businessLogic.GetFacturaList(request);
+            //foreach (var solicitud in FacturaResponse.FacturaList)
+            //{
+            //    //solicitud.FechaFactura = solicitud.FechaFactura.ToShortDateString();
+            //    //solicitud.FechaPago = solicitud.FechaPago.ToShortDateString();
+            //}
+
+            //return Json(FacturaResponse.FacturaList, JsonRequestBehavior.AllowGet);
+            return Json("{success: true, msg:'Ejemplo'}");
 
         }
 
