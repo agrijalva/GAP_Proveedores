@@ -94,5 +94,14 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
 
             return result;
         }
+
+        [HttpGet]
+        [Route("AeropuertoGetList")]
+        public AeropuertoListaResponseDTO GetAeropuertoLista()
+        {
+            var ListResponse = new HandlerSolicitudFactura().GetAeropuertoLista();
+
+            return ListResponse;
+        }
     }
 }

@@ -197,6 +197,7 @@
     </Compile>
     <Compile Include="Helpers\GlobalHelper.cs" />
     <Compile Include="Models\ActualizaPasswordModel.cs" />
+    <Compile Include="Models\Catalogo\AeropuertoListaModel.cs" />
     <Compile Include="Models\Catalogo\EstatusSolicitudModel.cs" />
     <Compile Include="Models\CodigoPostalModel.cs" />
     <Compile Include="Models\Comun\ErrorModel.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Models\Request\RequestBaseModel.cs" />
     <Compile Include="Models\Request\FacturaRequestModel.cs" />
     <Compile Include="Models\Request\SolicitudFacturaRequestModel.cs" />
+    <Compile Include="Models\Response\AeropuertoListaResponseModel.cs" />
     <Compile Include="Models\Response\AeropuertoResponseModel.cs" />
     <Compile Include="Models\Response\CaptchaResponse.cs" />
     <Compile Include="Models\Response\EstatusSolicitudResponseModel.cs" />

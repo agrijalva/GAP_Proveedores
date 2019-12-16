@@ -26,7 +26,7 @@ namespace EprocurementWeb.Controllers
 {
     public class GestionController : Controller
     {
-        public List<AeropuertoModel> aeropuertoList;
+        public List<AeropuertoListaDTO> AeropuertoList;
         public string nav_factura;
         public string nav_sFactura;
         public string nav_sCotizacion;
@@ -34,8 +34,9 @@ namespace EprocurementWeb.Controllers
         // GET: Gestion
         public ActionResult Index()
         {
-            BusinessLogic businessLogic = new BusinessLogic();
-            aeropuertoList = businessLogic.GetAeropuertosList();
+            GetAeropuertoList();
+            ViewBag.AeropuertoList = AeropuertoList;
+            
             //var aa = GetFacturaList(null, null, null, null, null, null, null);
             return View();
         }
@@ -179,7 +180,7 @@ namespace EprocurementWeb.Controllers
         }
 
         public JsonResult GetFacturaList(
-            int? IdAeropuerto,
+            string IdAeropuerto,
             string OrdenCompra,
             string Folio,
             DateTime? FechaFacInicio,
@@ -217,21 +218,11 @@ namespace EprocurementWeb.Controllers
 
         }
 
-        public JsonResult GetAeropuertoList()
+        public void GetAeropuertoList()
         {
-            //SolicitudFacturaBusiness businessLogic = new SolicitudFacturaBusiness();
-            //var request = new FacturaRequestModel {}
-
-            //var FacturaResponse = businessLogic.GetFacturaList(request);
-            //foreach (var solicitud in FacturaResponse.FacturaList)
-            //{
-            //    //solicitud.FechaFactura = solicitud.FechaFactura.ToShortDateString();
-            //    //solicitud.FechaPago = solicitud.FechaPago.ToShortDateString();
-            //}
-
-            //return Json(FacturaResponse.FacturaList, JsonRequestBehavior.AllowGet);
-            return Json("{success: true, msg:'Ejemplo'}");
-
+            SolicitudFacturaBusiness businessLogic = new SolicitudFacturaBusiness();
+            AeropuertoList = businessLogic.GetAeropuertoList();
+            //var AeropuertoListaResponse = businessLogic.GetAeropuertoList();
         }
 
         // GET: SolicitudCotizacion

@@ -9,7 +9,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Entities
     public class FacturaFiltroDTO
     {
         public int IdProveedor { get; set; }
-        public int? IdAeropuerto { get; set; }
+        public string IdAeropuerto { get; set; }
         public string OrdenCompra { get; set; }
         public string Folio { get; set; }
         public DateTime? FechaFacInicio { get; set; }

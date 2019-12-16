@@ -89,6 +89,7 @@
     <Compile Include="Request\ProveedorAprobarRequestDTO.cs" />
     <Compile Include="Request\MunicipioRequestDTO.cs" />
     <Compile Include="Request\FacturaRequestDTO.cs" />
+    <Compile Include="Response\AeropuertoListaResponseDTO.cs" />
     <Compile Include="Response\EstatusSolicitudResponseDTO.cs" />
     <Compile Include="Response\ProveedorContactoResponseDTO.cs" />
     <Compile Include="Request\ProveedorCuentaRequestDTO.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Seguridad\AuthenticationResult.cs" />
     <Compile Include="Seguridad\UsuarioDTO.cs" />
     <Compile Include="SolicitudFactura\DocumentoModel.cs" />
+    <Compile Include="SolicitudFactura\AeropuertoListaDTO.cs" />
     <Compile Include="SolicitudFactura\SolicitudFacturaCabeceraDTO.cs" />
     <Compile Include="SolicitudFactura\SolicitudFacturaDetalleDTO.cs" />
     <Compile Include="SolicitudFactura\FacturaDTO.cs" />

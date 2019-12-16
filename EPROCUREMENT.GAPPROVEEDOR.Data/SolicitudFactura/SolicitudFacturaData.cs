@@ -179,6 +179,43 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             return response;
         }
 
+        public AeropuertoListaResponseDTO GetAeropuertoLista()
+        {
+            var response = new AeropuertoListaResponseDTO()
+            {
+                AeropuertoLista = new List<AeropuertoListaDTO>()
+            };
+
+            try
+            {
+                using (var conexion = new SqlConnection(Helper.Connection()))
+                {
+                    conexion.Open();
+                    var cmdContacto = new SqlCommand("[dbo].[usp_EPROCUREMENT_Aeropuerto_GETL]", conexion);
+                    AeropuertoListaDTO Aeropuerto = null;
+                    cmdContacto.CommandType = CommandType.StoredProcedure;
+
+                    using (SqlDataReader reader = cmdContacto.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Aeropuerto = new AeropuertoListaDTO();
+                            Aeropuerto.Id = reader["Id"].ToString();
+                            Aeropuerto.Nombre = reader["Nombre"].ToString();
+                            response.AeropuertoLista.Add(Aeropuerto);
+                        }
+                    }
+                }
+                response.Success = true;
+            }
+            catch (Exception exception)
+            {
+                response.Success = false;
+            }
+
+            return response;
+        }
+
         public EstatusSolicitudResponseDTO GuardarHistoricoEstatusSolicitud(EstatusSolicitudRequestDTO request)
         {
             var response = new EstatusSolicitudResponseDTO()

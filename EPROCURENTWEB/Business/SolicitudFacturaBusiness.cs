@@ -61,7 +61,6 @@ namespace EprocurementWeb.Business
 
         public FacturaResponseModel GetFacturaList(FacturaRequestModel request)
         {
-            
             FacturaResponseModel response = new FacturaResponseModel();
             using (var client = new HttpClient())
             {
@@ -83,6 +82,99 @@ namespace EprocurementWeb.Business
             }
             return response;
         }
+
+        public List<AeropuertoListaDTO> GetAeropuertoList()
+        {
+            var lstAeropuertos = new List<AeropuertoListaDTO>();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/SolicitudFactura/");
+                //var responseTask = client.GetAsync("AeropuertoGetList");
+                var responseTask = client.GetAsync("AeropuertoGetList");
+                responseTask.Wait();
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JavaScriptSerializer JSserializer = new JavaScriptSerializer();
+
+                    var response = JSserializer.Deserialize<AeropuertoListaResponseDTO>(readTask.Result);
+                    lstAeropuertos = response.AeropuertoLista;
+                }
+            }
+            return lstAeropuertos;
+        }
+
+        //public AeropuertoListaResponseModel GetAeropuertoList()
+        //{
+        //    AeropuertoListaResponseModel response = new AeropuertoListaResponseModel();
+        //    using (var client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri(urlApi + "api/SolicitudFactura/");
+        //        var json = JsonConvert.SerializeObject(request);
+        //        Console.WriteLine(json);
+        //        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        //        Console.WriteLine(content);
+        //        var responseTask = client.PostAsync("AeropuertoGetList", content);
+        //        responseTask.Wait();
+
+        //        var result = responseTask.Result;
+        //        if (result.IsSuccessStatusCode)
+        //        {
+        //            var readTask = result.Content.ReadAsStringAsync();
+        //            JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+        //            response = JSSerializer.Deserialize<AeropuertoListaResponseModel>(readTask.Result);
+        //        }
+        //    }
+        //    return response;
+        //}
+
+        //public List<PaisDTO> GetPaisesList()
+        //{
+        //    var lstPaises = new List<PaisDTO>();
+        //    using (var client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri(urlApi + "api/Catalogo/");
+        //        var responseTask = client.GetAsync("PaisGetList");
+        //        responseTask.Wait();
+        //        var result = responseTask.Result;
+        //        if (result.IsSuccessStatusCode)
+        //        {
+        //            var readTask = result.Content.ReadAsStringAsync();
+        //            JavaScriptSerializer JSserializer = new JavaScriptSerializer();
+
+        //            var response = JSserializer.Deserialize<PaisResponseDTO>(readTask.Result);
+        //            lstPaises = response.PaisList;
+        //        }
+        //    }
+        //    return lstPaises;
+        //}
+
+        //public AeropuertoListaResponseModel GetAeropuertoList()
+        //{
+
+        //    AeropuertoListaModel response = new AeropuertoListaModel();
+        //    using (var client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri(urlApi + "api/SolicitudFactura/");
+        //        //var json = JsonConvert.SerializeObject(request);
+        //        //Console.WriteLine(json);
+        //        //var content = new StringContent(json, Encoding.UTF8, "application/json");
+        //        //Console.WriteLine(content);
+        //        //var responseTask = client.PostAsync("AeropuertoGetList", content);
+        //        var responseTask = client.PostAsync("AeropuertoGetList", null);
+        //        responseTask.Wait();
+
+        //        var result = responseTask.Result;
+        //        if (result.IsSuccessStatusCode)
+        //        {
+        //            var readTask = result.Content.ReadAsStringAsync();
+        //            JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+        //            response = JSSerializer.Deserialize<AeropuertoListaModel>(readTask.Result);
+        //        }
+        //    }
+        //    return response;
+        //}
 
         public EstatusSolicitudResponseModel GuardarHistoricoEstatusSolicitud(EstatusSolicitudRequestModel request)
         {
