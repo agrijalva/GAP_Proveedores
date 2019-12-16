@@ -226,5 +226,26 @@ namespace EprocurementWeb.Business
 
             return respuesta;
         }
+        public FacturaDetalleResponseDTO GetFacturaDetalle(FacturaDetalleRequestDTO request)
+        {
+            FacturaDetalleResponseDTO response = new FacturaDetalleResponseDTO();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/SolicitudFactura/");
+                var json = JsonConvert.SerializeObject(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var responseTask = client.PostAsync("GetFacturaDetalle", content);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+                    response = JSSerializer.Deserialize<FacturaDetalleResponseDTO>(readTask.Result);
+                }
+            }
+            return response;
+        }
     }
 }

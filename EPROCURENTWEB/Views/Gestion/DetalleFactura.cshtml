@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewBag.Title = "Detalle Facturas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/Styles/Site.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/Css/infoCuenta.css" rel="stylesheet" />
+<link href="~/Content/validacionProveedor.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-md-12">
+        <h5 class="mt-2 detalle-titulo">Detalle de la factura</h5>
+        <div class="card mt-3">
+            <div class="card-header mb-2" id="headingOne">
+                <span class="card-titulo">
+                    Orden: SIAP-OC-0003565
+                </span>
+            </div>
+            @Html.Hidden("idFactura", (int)ViewBag.idFactura)
+            <div class="card-body no-border">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row ml-2">
+                            <div class="col-sm-5"><p class="control-label">Recepción de producto</p></div>
+                            <div class="col-sm-7">CFDI 1107</div>
+                        </div>
+                        <div class="row ml-2">
+                            <div class="col-sm-5"><p class="control-label">Fecha recepción</p></div>
+                            <div class="col-sm-7">CFDI 1107</div>
+                        </div>
+                        <div class="row ml-2">
+                            <div class="col-sm-5"><p class="control-label">Subtotal</p></div>
+                            <div class="col-sm-7">CFDI 1107</div>
+                        </div>
+                        <div class="row ml-2">
+                            <div class="col-sm-5"><p class="control-label">Anticipo</p></div>
+                            <div class="col-sm-7">CFDI 1107</div>
+                        </div>
+                        <div class="row ml-2">
+                            <div class="col-sm-5"><p class="control-label">Impuestos</p></div>
+                            <div class="col-sm-7">CFDI 1107</div>
+                        </div>
+                        <div class="row ml-2">
+                            <div class="col-sm-5"><p class="control-label">Total</p></div>
+                            <div class="col-sm-7">CFDI 1107</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row ml-2">
+                            <div class="col-sm-5"><p class="control-label">Recepción de producto</p></div>
+                            <div class="col-sm-7">CFDI 1107</div>
+                        </div>
+                        <div class="row ml-2">
+                            <div class="col-sm-5"><p class="control-label">Recepción de producto</p></div>
+                            <div class="col-sm-7">CFDI 1107</div>
+                        </div>
+                        <div class="row ml-2">
+                            <div class="col-sm-5"><p class="control-label">Recepción de producto</p></div>
+                            <div class="col-sm-7">CFDI 1107</div>
+                        </div>
+                        <div class="row ml-2">
+                            <div class="col-sm-5"><p class="control-label">Recepción de producto</p></div>
+                            <div class="col-sm-7">CFDI 1107</div>
+                        </div>
+                        <div class="row ml-2">
+                            <div class="col-sm-5"><p class="control-label">Recepción de producto</p></div>
+                            <div class="col-sm-7">CFDI 1107</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var fn_buscar = function () {
+        var idFactura = $('#idFactura').val() == '' ? null : $('#idFactura').val();
+        var jsonData = JSON.stringify({ idFactura: idFactura });
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: '@Url.Action("GetFacturaDetalle", "Gestion")',
+                data: jsonData,
+                async: false,
+                success: function (data) {
+                    console.log("GetFacturaDetalle", data );
+                },
+            });
+        }
+    function addCommas(nStr) {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
+
+    $(".navbar-nav .nav-item").removeClass("active");
+    $("#nav-1").addClass("active");
+
+    $(document).ready(function () {
+        fn_buscar();
+    });
+
+</script>

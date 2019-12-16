@@ -13,9 +13,9 @@ namespace EprocurementWeb.Models
         public string OrdenCompra { get; set; }
         public string Folio { get; set; }
         public decimal Monto { get; set; }
-        public DateTime FechaFactura { get; set; }
+        public string FechaFactura { get; set; }
         public int IdEstatus { get; set; }
         public string Estatus { get; set; }
-        public DateTime FechaPago { get; set; }
+        public string FechaPago { get; set; }
     }
 }

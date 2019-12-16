@@ -111,7 +111,7 @@
                  $("#Table").append('<tbody>');
                  for (i = 0; i < data.length; i++) {
 
-                     var link = '@Html.ActionLink(" ", "SolicitudDetalle", "Gestion", new { IdFactura = "_idFactura_" }, new { @class = "btn-ver" })';
+                     var link = '@Html.ActionLink(" ", "DetalleFactura", "Gestion", new { IdFactura = "_idFactura_" }, new { @class = "btn-ver" })';
                      link = link.replace('_idFactura_', data[i].IdFactura);
 
                      var color = ''
@@ -130,13 +130,13 @@
 
                      $("#Table").append('<tr>' +
                          '<td style="dislay: none;" align="center"><b>' + data[i].Aeropuerto + '</b></td>' +
-                         '<td style="dislay: none;">' + data[i].OrdenCompra + '</td>' +
-                         '<td style="dislay: none;">' + data[i].Folio + '</td>' +
+                         '<td style="dislay: none;" align="center">' + data[i].OrdenCompra + '</td>' +
+                         '<td style="dislay: none;" align="center">' + data[i].Folio + '</td>' +
                          '<td style="dislay: none;" align="right">$ ' + addCommas(data[i].Monto) + '</td>' +
-                         '<td style="dislay: none;">' + data[i].FechaFactura + '</td>' +
+                         '<td style="dislay: none;" align="center">' + data[i].FechaFactura + '</td>' +
                          '<td style="dislay: none; color:' + color + '" align="center"><b>' + data[i].Estatus + '</b></td>' +
-                         '<td style="dislay: none;">' + data[i].FechaPago + '</td>' +
-                         '<td style="dislay: none;">'+ link +'</td>' + '</tr>'
+                         '<td style="dislay: none;" align="center">' + data[i].FechaPago + '</td>' +
+                         '<td style="dislay: none;" align="center">'+ link +'</td>' + '</tr>'
                      );
                  }
                  $("#Table").append('</tbody>');

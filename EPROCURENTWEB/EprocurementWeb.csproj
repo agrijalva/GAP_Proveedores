@@ -533,6 +533,7 @@
     <Content Include="Views\Contacto\NuevoContacto.cshtml" />
     <Content Include="Views\MiCuenta\ActualizarPassword.cshtml" />
     <Content Include="Views\Gestion\SolicitudDetalle.cshtml" />
+    <Content Include="Views\Gestion\DetalleFactura.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

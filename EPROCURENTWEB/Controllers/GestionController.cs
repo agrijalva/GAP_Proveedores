@@ -212,9 +212,7 @@ namespace EprocurementWeb.Controllers
                 //solicitud.FechaFactura = solicitud.FechaFactura.ToShortDateString();
                 //solicitud.FechaPago = solicitud.FechaPago.ToShortDateString();
             }
-
             return Json(FacturaResponse.FacturaList, JsonRequestBehavior.AllowGet);
-            //return Json("{success: true, msg:'Ejemplo'}");
 
         }
 
@@ -502,6 +500,26 @@ namespace EprocurementWeb.Controllers
             }
 
             return schema;
+        }
+
+        public ActionResult DetalleFactura(int idFactura)
+        {
+            ViewBag.idFactura = idFactura;
+            return View();
+        }
+
+        public JsonResult GetFacturaDetalle(int idFactura)
+        {
+            SolicitudFacturaBusiness businessLogic = new SolicitudFacturaBusiness();
+            var request = new FacturaDetalleRequestDTO
+            {
+                IdFactura = idFactura
+            };
+
+            var solicitudDetalleResponse = businessLogic.GetFacturaDetalle(request);
+
+            return Json(solicitudDetalleResponse, JsonRequestBehavior.AllowGet);
+
         }
     }
 }
