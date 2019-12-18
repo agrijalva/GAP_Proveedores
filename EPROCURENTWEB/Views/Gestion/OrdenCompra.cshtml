@@ -44,11 +44,6 @@
             IdEstatus: $('#IdEstatus').val() == '' ? null : $('#IdEstatus').val()
         });
 
-        //var jsonData = JSON.stringify({
-        //    OrdenCompra: null,
-        //    IdEstatus: null
-        //});
-
         $.ajax({
             type: "POST",
             contentType: "application/json; charset=utf-8",
@@ -58,7 +53,7 @@
             success: function (data) {
                 console.log(data);
                 $("#Table").html('');
-                 $("#Table").append(
+                $("#Table").append(
                      '<thead class="bg-light-purple"><tr>' +
                      //'<td align="left">Número de proveedor</td>'+
                      '<td align="left">Moneda</td>' +

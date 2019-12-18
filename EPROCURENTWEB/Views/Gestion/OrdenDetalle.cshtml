@@ -4,6 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .input-grid{
+        border:none !important;
+    }
+</style>
+
 <div class="row">
     <div class="col-md-12">
         <div class="card mt-3">
@@ -29,47 +35,60 @@
     </div>
 </div>
 
-
+@*<div class="table-responsive">
+    <table id="Table" class="dataTable dataTables_wrapper "></table>
+</div>*@
 <div class="row mt-3">
     <div class="col-sm-12">
-        <table id="Table" class="dataTable dataTables_wrapper "></table>
+        <div class="table-responsive">
+            <table id="Table" class="dataTable dataTables_wrapper "></table>
+        </div>
     </div>
 </div>
 
 <script>
-    var fn_buscar2 = function () {
-
-        var jsonData = JSON.stringify({
-            OrdenCompra: $('#OrdenCompra').val() == '' ? null : $('#OrdenCompra').val(),
-            IdEstatus: $('#IdEstatus').val() == '' ? null : $('#IdEstatus').val()
-        });
+    var fn_buscar = function () {
 
         //var jsonData = JSON.stringify({
-        //    OrdenCompra: null,
-        //    IdEstatus: null
+        //    OrdenCompra: $('#OrdenCompra').val() == '' ? null : $('#OrdenCompra').val(),
+        //    IdEstatus: $('#IdEstatus').val() == '' ? null : $('#IdEstatus').val()
         //});
+
+        var jsonData = JSON.stringify({
+            OrdenCompra: 'AGU-OC-0001027'
+        });
 
         $.ajax({
             type: "POST",
             contentType: "application/json; charset=utf-8",
-            url: '@Url.Action("GetOrdenCompraList", "Gestion")',
+            url: '@Url.Action("GetOrdenCompraDetalleList", "Gestion")',
             data: jsonData,
             async: false,
             success: function (data) {
-                console.log(data);
+                //console.log("GetOrdenCompraDetalleList", data);
                 $("#Table").html('');
-                 $("#Table").append(
+                $("#Table").append(
                      '<thead class="bg-light-purple"><tr>' +
-                     //'<td align="left">Número de proveedor</td>'+
-                     '<td align="left">Moneda</td>' +
-                     '<td align="left">Aeropuerto</td>' +
-                     '<td align="right">Órden Compra</td>' +
-                     '<td align="center">Descripción</td>' +
-                     //'<td align="center">RFC</td>' +
-                     '<td align="center">Importe</td>' +
-                     '<td align="center">Estatus</td>' +
-                     '<td>Descargar</td>' +
-                     '<td>Ver</td>' +
+                    '<td align="center">Linea</td>' +
+                    '<td align="center">Categoria</td>' +
+                    '<td align="center">Producto</td>' +
+                    '<td align="center">Unidad</td>' +
+                    '<td align="center">Moneda</td>' +
+                    //'<td align="center" style="width:300px !important;">OrdenCompra</td>' +
+                    //'<td align="center">Empresa</td>' +
+                    //'<td align="center">Agrupador</td>' +
+                    //'<td align="center">CentroCosto</td>' +
+                    //'<td align="center">TipoPresupuesto</td>' +
+                    '<td align="center">Cantidad</td>' +
+                    '<td align="center">Recibido</td>' +
+                    '<td align="center">Facturado</td>' +
+                    //'<td align="center">Solicitud</td>' +
+                    '<td align="center">Precio</td>' +
+                    '<td align="center">Monto</td>' +
+                    //'<td align="center">ImpuestosxVenta</td>' +
+                    //'<td align="center">CuentaProveedor</td>' +
+                    //'<td align="center">RECIDLinSol</td>' +
+                    //'<td align="center">EsConvenio</td>' +
                      '</tr ></thead > '
                  );
                  $("#Table").DataTable().clear().draw();
@@ -77,39 +96,42 @@
 
                  $("#Table").append('<tbody>');
                  for (i = 0; i < data.length; i++) {
-
-                     var link = '@Html.ActionLink(" ", "DetalleOrdenCompra", "Gestion", new { OrdenCompra = "_OC_" }, new { @class = "btn-ver" })';
-                     link = link.replace('_OC_', data[i].OrdenCompra);
-
-                     var color = ''
-                     switch (data[i].IdEstatus) {
-                         case 1: color = '#f9a32f'; // Pendiente
-                             break;
-                         case 2: color = '#448aff'; // En Proceso
-                             break;
-                         case 3: color = '#43ac3e'; // Aceptada
-                             break; 
-                     }
-
                      $("#Table").append('<tr>' +
                          //'<td style="dislay: none;" align="center"><b>' + data[i].NumeroProveedor + '</b></td>' +
+                         '<td style="dislay: none;" align="center">' + data[i].Linea + '</td>' +
+                         '<td style="dislay: none;" align="left"><div style="width:250px">' + data[i].Categoria + '</div></td>' +
+                         //'<td style="dislay: none;" align="left"><div style="width:400px">' + data[i].Producto.substring(0,60) + ' ... </div></td>' +
+                         '<td style="dislay: none;" align="left"><div style="width:400px"><input readonly="readonly" class="input-grid" type="text" style="width:400px" value="' + data[i].Producto + '"></div></td>' +
+                         '<td style="dislay: none;" align="center">' + data[i].Unidad + '</td>' +
                          '<td style="dislay: none;" align="center">' + data[i].Moneda + '</td>' +
-                         '<td style="dislay: none;" align="center">' + data[i].Empresa + '</td>' +
-                         '<td style="dislay: none;" align="center">' + data[i].OrdenCompra + '</td>' +
-                         '<td style="dislay: none;" align="center">' + data[i].Descripcion + '</td>' +
-                         '<td style="dislay: none;" align="right">$ ' + addCommas(data[i].Importe) + '</td>' +
-                         '<td style="dislay: none; color:' + color + '" align="center"><b>' + data[i].Estatus + '</b></td>' +
-                         '<td style="dislay: none;" align="center"><b>Descargar</b></td>' +
-                         '<td style="dislay: none;" align="center">'+ link +'</td>' + '</tr>'
-                     );
-                 }
-                 $("#Table").append('</tbody>');
+                         //'<td style="dislay: none;" align="center">' + data[i].OrdenCompra + '</td>' +
+                         //'<td style="dislay: none;" align="center">' + data[i].Empresa + '</td>' +
+                         //'<td style="dislay: none;" align="center">' + data[i].Agrupador + '</td>' +
+                         //'<td style="dislay: none;" align="center">' + data[i].CentroCosto + '</td>' +
+                         //'<td style="dislay: none;" align="center">' + data[i].TipoPresupuesto + '</td>' +
+                         '<td style="dislay: none;" align="right"><div style="width:100px">' + addCommas(data[i].Cantidad) + '<div></td>' +
+                         '<td style="dislay: none;" align="right"><div style="width:100px">' + addCommas(data[i].Recibido) + '<div></td>' +
+                         '<td style="dislay: none;" align="right"><div style="width:100px">$ ' + addCommas(data[i].Facturado) + '<div></td>' +
+                         //'<td style="dislay: none;" align="center">' + data[i].Solicitud + '</td>' +
+                         '<td style="dislay: none;" align="right"><div style="width:100px">$ ' + addCommas(data[i].Precio) + '<div></td>' +
+                         '<td style="dislay: none;" align="right"><div style="width:100px">$ ' + addCommas(data[i].Monto) + '<div></td>' +
+                         //'<td style="dislay: none;" align="center">' + data[i].ImpuestosxVenta + '</td>' +
+                         //'<td style="dislay: none;" align="center">' + data[i].CuentaProveedor + '</td>' +
+                         //'<td style="dislay: none;" align="center">' + data[i].RECIDLinSol + '</td>' +
+                         //'<td style="dislay: none;" align="center">' + data[i].EsConvenio + '</td>' +
+                     '</tr>'
 
-                 $('#Table').DataTable({
-                        "paging": false,
-                         "bScrollInfinite": true,
-                         "bScrollCollapse": true
-                     });
+                         // '<td style="dislay: none;" align="right">$ ' + addCommas(data[i].Importe) + '</td>' +
+                     );
+                }
+                $("#Table").append('</tbody>');
+
+                $('#Table').DataTable({
+                    "paging": false,
+                    "bScrollInfinite": true,
+                    "bScrollCollapse": true
+                });
+                
             }
         });
     }

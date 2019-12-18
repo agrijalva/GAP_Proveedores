@@ -36,5 +36,27 @@ namespace EprocurementWeb.Business
             }
             return response;
         }
+
+        public OrdenCompraDetalleResponseModel GetOrdenCompraDetalleList(OrdenCompraDetalleRequestModel request)
+        {
+            OrdenCompraDetalleResponseModel response = new OrdenCompraDetalleResponseModel();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(urlApi + "api/OrdenCompra/");
+                var json = JsonConvert.SerializeObject(request);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var responseTask = client.PostAsync("OrdenCompraDetalleGetList", content);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    JavaScriptSerializer JSSerializer = new JavaScriptSerializer();
+                    response = JSSerializer.Deserialize<OrdenCompraDetalleResponseModel>(readTask.Result);
+                }
+            }
+            return response;
+        }
     }
 }

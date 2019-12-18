@@ -23,5 +23,14 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
 
             return response;
         }
+
+        [HttpPost]
+        [Route("OrdenCompraDetalleGetList")]
+        public OrdenCompraDetalleResponseDTO GetOrdenCompraDetalleList([FromBody]OrdenCompraDetalleRequestDTO request)
+        {
+            var response = new HandlerOrdenCompra().GetOrdenCompraDetalleList(request);
+
+            return response;
+        }
     }
 }

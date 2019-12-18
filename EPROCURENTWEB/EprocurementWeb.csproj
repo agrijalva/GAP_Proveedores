@@ -206,7 +206,9 @@
     <Compile Include="Models\Comun\TipoFiltro.cs" />
     <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\MiCuentaModel.cs" />
+    <Compile Include="Models\OrdenCompra\OrdenCompraDetalleFiltroModel.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraFiltroModel.cs" />
+    <Compile Include="Models\OrdenCompra\OrdenCompraDetalleModel.cs" />
     <Compile Include="Models\PaisModel.cs" />
     <Compile Include="Models\ProveedorRegistro.cs" />
     <Compile Include="Models\Catalogo\AeropuertoModel.cs" />
@@ -217,6 +219,7 @@
     <Compile Include="Models\Proveedor\ProveedorModel.cs" />
     <Compile Include="Models\Proveedor\ProveedorUsuarioModel.cs" />
     <Compile Include="Models\Request\EstatusSolicitudRequestModel.cs" />
+    <Compile Include="Models\Request\OrdenCompraDetalleRequestModel.cs" />
     <Compile Include="Models\Request\OrdenCompraRequestModel.cs" />
     <Compile Include="Models\Request\ProveedorDetalleRequestModel.cs" />
     <Compile Include="Models\Request\ProveedorFiltroRequestModel.cs" />
@@ -228,6 +231,7 @@
     <Compile Include="Models\Response\AeropuertoResponseModel.cs" />
     <Compile Include="Models\Response\CaptchaResponse.cs" />
     <Compile Include="Models\Response\EstatusSolicitudResponseModel.cs" />
+    <Compile Include="Models\Response\OrdenCompraDetalleResponseModel.cs" />
     <Compile Include="Models\Response\OrdenCompraResponseModel.cs" />
     <Compile Include="Models\Response\ProveedorDetalleResponseModel.cs" />
     <Compile Include="Models\Response\ProveedorFiltroResponseModel.cs" />

@@ -55,5 +55,60 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
 
             return response;
         }
+
+        public OrdenCompraDetalleResponseDTO GetOrdenCompraDetalleList(OrdenCompraDetalleRequestDTO request)
+        {
+            var response = new OrdenCompraDetalleResponseDTO()
+            {
+                OrdenCompraDetalleList = new List<OrdenCompraDetalleDTO>()
+            };
+
+            try
+            {
+                using (var conexion = new SqlConnection(Helper.Connection()))
+                {
+                    conexion.Open();
+                    var cmdContacto = new SqlCommand("[dbo].[usp_EPROCUREMENT_OrdenCompraLineas_GETL]", conexion);
+                    OrdenCompraDetalleDTO OrdenCompraDetalle = null;
+                    cmdContacto.CommandType = CommandType.StoredProcedure;
+                    cmdContacto.Parameters.Add(new SqlParameter("@OrdenCompra", request.OrdenCompraDetalleFiltro.OrdenCompra));
+                    using (SqlDataReader reader = cmdContacto.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            OrdenCompraDetalle = new OrdenCompraDetalleDTO();
+                            OrdenCompraDetalle.Linea = Convert.ToInt32(reader["Linea"].ToString());
+                            OrdenCompraDetalle.OrdenCompra = reader["OrdenCompra"].ToString();
+                            OrdenCompraDetalle.Empresa = reader["Empresa"].ToString();
+                            OrdenCompraDetalle.Agrupador = reader["Agrupador"].ToString();
+                            OrdenCompraDetalle.CentroCosto = reader["CentroCosto"].ToString();
+                            OrdenCompraDetalle.TipoPresupuesto = reader["TipoPresupuesto"].ToString();
+                            OrdenCompraDetalle.Cantidad = Convert.ToDecimal(reader["Cantidad"].ToString());
+                            OrdenCompraDetalle.Recibido = Convert.ToDecimal(reader["Recibido"].ToString());
+                            OrdenCompraDetalle.Facturado = Convert.ToDecimal(reader["Facturado"].ToString());
+                            OrdenCompraDetalle.Solicitud = reader["Solicitud"].ToString();
+                            OrdenCompraDetalle.Precio = Convert.ToDecimal(reader["Precio"].ToString());
+                            OrdenCompraDetalle.Monto = Convert.ToDecimal(reader["Monto"].ToString());
+                            OrdenCompraDetalle.Categoria = reader["Categoria"].ToString();
+                            OrdenCompraDetalle.Producto = reader["Producto"].ToString();
+                            OrdenCompraDetalle.Unidad = reader["Unidad"].ToString();
+                            OrdenCompraDetalle.Moneda = reader["Moneda"].ToString();
+                            OrdenCompraDetalle.ImpuestosxVenta = reader["ImpuestosxVenta"].ToString();
+                            OrdenCompraDetalle.CuentaProveedor = reader["CuentaProveedor"].ToString();
+                            OrdenCompraDetalle.RECIDLinSol = reader["RECIDLinSol"].ToString();
+                            OrdenCompraDetalle.EsConvenio = Convert.ToInt32(reader["EsConvenio"].ToString());
+                            response.OrdenCompraDetalleList.Add(OrdenCompraDetalle);
+                        }
+                    }
+                }
+                response.Success = true;
+            }
+            catch (Exception exception)
+            {
+                response.Success = false;
+            }
+
+            return response;
+        }
     }
 }

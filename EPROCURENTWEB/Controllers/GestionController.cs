@@ -551,5 +551,21 @@ namespace EprocurementWeb.Controllers
             return Json(ordenCompraResponse.OrdenCompraList, JsonRequestBehavior.AllowGet);
 
         }
+
+        public JsonResult GetOrdenCompraDetalleList(string OrdenCompra)
+        {
+            OrdenCompraBusiness businessLogic = new OrdenCompraBusiness();
+            var request = new OrdenCompraDetalleRequestModel
+            {
+                OrdenCompraDetalleFiltro = new OrdenCompraDetalleFiltroModel
+                {
+                    OrdenCompra = OrdenCompra
+                }
+            };
+
+            var ordenCompraResponse = businessLogic.GetOrdenCompraDetalleList(request);
+            return Json(ordenCompraResponse.OrdenCompraDetalleList, JsonRequestBehavior.AllowGet);
+
+        }
     }
 }

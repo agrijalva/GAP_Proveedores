@@ -27,5 +27,16 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Business.OrdenCompra
             }
             return response;
         }
+
+        public OrdenCompraDetalleResponseDTO GetOrdenCompraDetalleList(OrdenCompraDetalleRequestDTO request)
+        {
+            var response = ordenCompraData.GetOrdenCompraDetalleList(request);
+
+            if (!response.Success)
+            {
+                response.ErrorList = new List<ErrorDTO> { new ErrorDTO { Codigo = "", Mensaje = string.Format("No fue posible recuperar datos disponibles o no se encontro alguna solicitud en proceso") } };
+            }
+            return response;
+        }
     }
 }
