@@ -15,7 +15,7 @@
         <div class="card mt-3">
             <div class="card-header mb-2" id="headingOne">
                 <span class="card-titulo">
-                    Orden: SIAP-OC-0003565
+                    Orden: @Html.Label("lblOrdenCompra", "...", new { id = "lblOrdenCompra" })
                 </span>
             </div>
             @Html.Hidden("idFactura", (int)ViewBag.idFactura)
@@ -24,49 +24,50 @@
                     <div class="col-sm-6">
                         <div class="row ml-2">
                             <div class="col-sm-5"><p class="control-label">Recepción de producto</p></div>
-                            <div class="col-sm-7">CFDI 1107</div>
+                            <div class="col-sm-7">@Html.Label("lblRecepcion", "...", new { id = "lblRecepcion" })</div>
+                            @*@Html.Label("lblDescripcion", "...", new { id = "lblDescripcion" })*@
                         </div>
                         <div class="row ml-2">
                             <div class="col-sm-5"><p class="control-label">Fecha recepción</p></div>
-                            <div class="col-sm-7">CFDI 1107</div>
+                            <div class="col-sm-7">@Html.Label("lblFechaRecepcion", "...", new { id = "lblFechaRecepcion" })</div>
                         </div>
                         <div class="row ml-2">
                             <div class="col-sm-5"><p class="control-label">Subtotal</p></div>
-                            <div class="col-sm-7">CFDI 1107</div>
+                            <div class="col-sm-7">$ @Html.Label("lblSubtotal", "...", new { id = "lblSubtotal" })</div>
                         </div>
                         <div class="row ml-2">
                             <div class="col-sm-5"><p class="control-label">Anticipo</p></div>
-                            <div class="col-sm-7">CFDI 1107</div>
+                            <div class="col-sm-7">$ @Html.Label("lblAnticipo", "...", new { id = "lblAnticipo" })</div>
                         </div>
                         <div class="row ml-2">
                             <div class="col-sm-5"><p class="control-label">Impuestos</p></div>
-                            <div class="col-sm-7">CFDI 1107</div>
+                            <div class="col-sm-7">$ @Html.Label("lblImpuestos", "...", new { id = "lblImpuestos" })</div>
                         </div>
                         <div class="row ml-2">
                             <div class="col-sm-5"><p class="control-label">Total</p></div>
-                            <div class="col-sm-7">CFDI 1107</div>
+                            <div class="col-sm-7">$ @Html.Label("lblTotal", "...", new { id = "lblTotal" })</div>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="row ml-2">
-                            <div class="col-sm-5"><p class="control-label">Recepción de producto</p></div>
-                            <div class="col-sm-7">CFDI 1107</div>
+                            <div class="col-sm-5"><p class="control-label">Pagado</p></div>
+                            <div class="col-sm-7">@Html.Label("lblPagado", "...", new { id = "lblPagado" })</div>
                         </div>
                         <div class="row ml-2">
-                            <div class="col-sm-5"><p class="control-label">Recepción de producto</p></div>
-                            <div class="col-sm-7">CFDI 1107</div>
+                            <div class="col-sm-5"><p class="control-label">Facturado</p></div>
+                            <div class="col-sm-7">@Html.Label("lblFacturado", "...", new { id = "lblFacturado" })</div>
                         </div>
                         <div class="row ml-2">
-                            <div class="col-sm-5"><p class="control-label">Recepción de producto</p></div>
-                            <div class="col-sm-7">CFDI 1107</div>
+                            <div class="col-sm-5"><p class="control-label">Fecha de factura</p></div>
+                            <div class="col-sm-7">@Html.Label("lblFechaFactura", "...", new { id = "lblFechaFactura" })</div>
                         </div>
                         <div class="row ml-2">
-                            <div class="col-sm-5"><p class="control-label">Recepción de producto</p></div>
-                            <div class="col-sm-7">CFDI 1107</div>
+                            <div class="col-sm-5"><p class="control-label">No. de factura</p></div>
+                            <div class="col-sm-7">@Html.Label("lblNoFactura", "...", new { id = "lblNoFactura" })</div>
                         </div>
                         <div class="row ml-2">
-                            <div class="col-sm-5"><p class="control-label">Recepción de producto</p></div>
-                            <div class="col-sm-7">CFDI 1107</div>
+                            <div class="col-sm-5"><p class="control-label">Fecha programada de pago</p></div>
+                            <div class="col-sm-7">@Html.Label("lblFechaPago", "...", new { id = "lblFechaPago" })</div>
                         </div>
                     </div>
                 </div>
@@ -86,6 +87,18 @@
                 data: jsonData,
                 async: false,
                 success: function (data) {
+                    $("#lblOrdenCompra").html(data.FacturaDetalleDTO.OrdenCompra);
+                    $("#lblRecepcion").html(data.FacturaDetalleDTO.NoFactura);
+                    $("#lblFechaRecepcion").html(data.FacturaDetalleDTO.FechaRecepcion);
+                    $("#lblSubtotal").html(addCommas(data.FacturaDetalleDTO.Subtotal));
+                    $("#lblAnticipo").html(addCommas(data.FacturaDetalleDTO.Anticipo));
+                    $("#lblImpuestos").html(addCommas(data.FacturaDetalleDTO.Impuestos));
+                    $("#lblTotal").html(addCommas(data.FacturaDetalleDTO.Total));
+                    $("#lblPagado").html(data.FacturaDetalleDTO.Pagado);
+                    $("#lblFacturado").html(data.FacturaDetalleDTO.Facturado);
+                    $("#lblFechaFactura").html(data.FacturaDetalleDTO.FechaFactura);
+                    $("#lblNoFactura").html(data.FacturaDetalleDTO.NoFactura);
+                    $("#lblFechaPago").html(data.FacturaDetalleDTO.FechaPago);
                     console.log("GetFacturaDetalle", data );
                 },
             });

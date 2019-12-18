@@ -232,6 +232,17 @@ namespace EprocurementWeb.Controllers
         // GET: OrdenCompra
         public ActionResult OrdenCompra()
         {
+            List<EstatusOrdenCompraModel> estatusList = new List<EstatusOrdenCompraModel>();
+            estatusList.Add(new EstatusOrdenCompraModel { IdEstatus = 1, EstatusNombre = "Pendiente" });
+            estatusList.Add(new EstatusOrdenCompraModel { IdEstatus = 2, EstatusNombre = "En Proceso" });
+            estatusList.Add(new EstatusOrdenCompraModel { IdEstatus = 3, EstatusNombre = "Recibida" });
+            ViewBag.EstatusOrdenCompraList = estatusList;
+
+            return View();
+        }
+
+        public ActionResult OrdenDetalle()
+        {
             return View();
         }
 
@@ -519,6 +530,25 @@ namespace EprocurementWeb.Controllers
             var solicitudDetalleResponse = businessLogic.GetFacturaDetalle(request);
 
             return Json(solicitudDetalleResponse, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public JsonResult GetOrdenCompraList(string OrdenCompra, int? idEstatus)
+        {
+            var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
+            OrdenCompraBusiness businessLogic = new OrdenCompraBusiness();
+            var request = new OrdenCompraRequestModel
+            {
+                OrdenCompraFiltro = new OrdenCompraFiltroModel
+                {
+                    IdProveedor = usuarioInfo.IdProveedor,
+                    OrdenCompra = OrdenCompra,
+                    IdEstatus = idEstatus
+                }
+            };
+
+            var ordenCompraResponse = businessLogic.GetOrdenCompraList(request);
+            return Json(ordenCompraResponse.OrdenCompraList, JsonRequestBehavior.AllowGet);
 
         }
     }

@@ -267,17 +267,17 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                         if (reader.Read())
                         {
                             FacturaDetalle = new FacturaDetalleDTO();
-                            FacturaDetalle.OrdenCompra = reader["Descripcion"].ToString();
-                            FacturaDetalle.FechaRecepcion = reader["Descripcion"].ToString();
-                            FacturaDetalle.Subtotal = Convert.ToDecimal(reader["Descripcion"].ToString());
-                            FacturaDetalle.Anticipo = Convert.ToDecimal(reader["Descripcion"].ToString());
-                            FacturaDetalle.Impuestos = Convert.ToDecimal(reader["Descripcion"].ToString());
-                            FacturaDetalle.Total = Convert.ToDecimal(reader["Descripcion"].ToString());
-                            FacturaDetalle.Pagado = reader["Descripcion"].ToString();
-                            FacturaDetalle.Facturado = reader["Descripcion"].ToString();
-                            FacturaDetalle.FechaFactura = reader["Descripcion"].ToString();
-                            FacturaDetalle.NoFactura = reader["Descripcion"].ToString();
-                            FacturaDetalle.FechaPago = reader["Descripcion"].ToString();
+                            FacturaDetalle.OrdenCompra = reader["OrdenCompra"].ToString();
+                            FacturaDetalle.FechaRecepcion = reader["FechaRecepcion"].ToString();
+                            FacturaDetalle.Subtotal = Convert.ToDecimal(reader["Subtotal"].ToString());
+                            FacturaDetalle.Anticipo = Convert.ToDecimal(reader["Anticipo"].ToString());
+                            FacturaDetalle.Impuestos = Convert.ToDecimal(reader["Impuestos"].ToString());
+                            FacturaDetalle.Total = Convert.ToDecimal(reader["Total"].ToString());
+                            FacturaDetalle.Pagado = reader["Pagado"].ToString();
+                            FacturaDetalle.Facturado = reader["Facturado"].ToString();
+                            FacturaDetalle.FechaFactura = reader["FechaFactura"].ToString();
+                            FacturaDetalle.NoFactura = reader["NoFactura"].ToString();
+                            FacturaDetalle.FechaPago = reader["FechaPago"].ToString();
 
                             response.FacturaDetalleDTO = FacturaDetalle;
                         }

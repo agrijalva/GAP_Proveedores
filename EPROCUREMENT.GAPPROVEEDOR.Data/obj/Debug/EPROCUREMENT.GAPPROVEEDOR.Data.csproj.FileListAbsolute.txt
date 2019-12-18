@@ -86,7 +86,7 @@ C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPRO
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Data\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.App_GlobalResources.ResourceConstants.resources
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Data\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.App_GlobalResources.StoredProcedures.resources
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Data\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.csproj.GenerateResource.cache
+C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Data\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.csproj.CoreCompileInputs.cache
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Data\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.csproj.CopyComplete
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Data\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.dll
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Data\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.pdb
-C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Data\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.csproj.CoreCompileInputs.cache

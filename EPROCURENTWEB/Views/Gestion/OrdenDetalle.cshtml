@@ -12,7 +12,7 @@
                     <div class="col-md-12 h-filtro">Filtrar por</div>
                     <div class="form-group col-md-4">
                         <label class="control-label text-right">Aeropuerto</label>
-                        @Html.DropDownList("idEstatus", new SelectList(ViewBag.EstatusOrdenCompraList, "IdEstatus", "EstatusNombre"), "Seleccionar", new { @class = "form-control" })
+                        <select></select>
                     </div>
                     <div class="form-group col-md-4">
                         <label class="control-label text-right">Orden de compra</label>
@@ -37,7 +37,7 @@
 </div>
 
 <script>
-    var fn_buscar = function () {
+    var fn_buscar2 = function () {
 
         var jsonData = JSON.stringify({
             OrdenCompra: $('#OrdenCompra').val() == '' ? null : $('#OrdenCompra').val(),
@@ -78,7 +78,7 @@
                  $("#Table").append('<tbody>');
                  for (i = 0; i < data.length; i++) {
 
-                     var link = '@Html.ActionLink(" ", "OrdenDetalle", "Gestion", new { OrdenCompra = "_OC_" }, new { @class = "btn-ver" })';
+                     var link = '@Html.ActionLink(" ", "DetalleOrdenCompra", "Gestion", new { OrdenCompra = "_OC_" }, new { @class = "btn-ver" })';
                      link = link.replace('_OC_', data[i].OrdenCompra);
 
                      var color = ''

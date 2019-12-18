@@ -67,6 +67,7 @@
     <Compile Include="Helper\ProveedorEstatusDTO.cs" />
     <Compile Include="Helper\ProveedorFiltroDTO.cs" />
     <Compile Include="Helper\ProveedorUsuarioDTO.cs" />
+    <Compile Include="OrdenCompra\OrdenCompraFiltroDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proveedor\HistoricoEstatusProveedorDTO.cs" />
     <Compile Include="Proveedor\ProveedorContactoDTO.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Request\EstadoRequestDTO.cs" />
     <Compile Include="Request\EstatusProveedorRequestDTO.cs" />
     <Compile Include="Request\EstatusSolicitudRequestDTO.cs" />
+    <Compile Include="Request\OrdenCompraRequestDTO.cs" />
     <Compile Include="Request\FormatoArchivoRequestDTO.cs" />
     <Compile Include="Request\InformacionFinancieraRequestDTO.cs" />
     <Compile Include="Request\LoginUsuarioRequestDTO.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Request\FacturaDetalleRequestDTO.cs" />
     <Compile Include="Response\AeropuertoListaResponseDTO.cs" />
     <Compile Include="Response\EstatusSolicitudResponseDTO.cs" />
+    <Compile Include="Response\OrdenCompraResponseDTO.cs" />
     <Compile Include="Response\ProveedorContactoResponseDTO.cs" />
     <Compile Include="Request\ProveedorCuentaRequestDTO.cs" />
     <Compile Include="Request\ProveedorDetalleRequestDTO.cs" />
@@ -141,6 +144,7 @@
     <Compile Include="SolicitudFactura\DocumentoModel.cs" />
     <Compile Include="SolicitudFactura\AeropuertoListaDTO.cs" />
     <Compile Include="SolicitudFactura\FacturaDetalleDTO.cs" />
+    <Compile Include="OrdenCompra\OrdenCompraDTO.cs" />
     <Compile Include="SolicitudFactura\SolicitudFacturaCabeceraDTO.cs" />
     <Compile Include="SolicitudFactura\SolicitudFacturaDetalleDTO.cs" />
     <Compile Include="SolicitudFactura\FacturaDTO.cs" />
