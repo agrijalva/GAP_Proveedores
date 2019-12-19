@@ -34,15 +34,17 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 @Html.Label("Fecha Inicio", "Fecha Inicio", new { @class = "control-label text-right " })
+                                <br />
                                 @*@Html.TextBox("FechaInicio", "", new { @class = "form-control datepicker", placeholder = "", @readonly = "readonly", style = "width: 40%;" })*@
                                 @*@Html.Editor("HHhhh", "hhhhh", new { htmlAttributes = new { @class = "datepicker" } })*@
-                                <input type="text" name="FechaInicio" class=" datepicker" id="FechaInicio" size="15" onkeydown="return false" placeholder="Fecha" data-date-format="dd/mm/yyyy">
+                                <input type="text" autocomplete="off" name="FechaInicio" style="font-size:12px;" class="form-control datepicker" id="FechaInicio" size="15" onkeydown="return false" placeholder="dd/mm/yyyy" data-date-format="dd/mm/yyyy">
 
                             </div>
                             <div class="col-sm-6">
                                 @Html.Label("Fecha Fin", "Fecha Fin", new { @class = "control-label text-right " })
+                                <br/>
                                 @*@Html.TextBox("FechaFin", "", new { @class = "form-control datepicker", placeholder = "", @readonly = "readonly" })*@
-                                <input type="text" name="fechaFin" class="datepicker" id="FechaFin" size="15" onkeydown="return false" placeholder="Fecha" data-date-format="dd/mm/yyyy">
+                                <input type="text" autocomplete="off" name="fechaFin" cstyle="font-size:12px;" class="form-control datepicker" id="FechaFin" size="15" onkeydown="return false" placeholder="dd/mm/yyyy" data-date-format="dd/mm/yyyy">
 
                                 @*<label class="control-label text-right">Fecha Fin</label>
                                     <input type="text" class="form-control" placeholder="" />*@
@@ -200,8 +202,10 @@
                              '<td style="dislay: none;">' + data[i].Fecha + '</td>' +
                              '<td style="dislay: none;" align="right">$ ' + addCommas(data[i].Monto) + '</td>' +
                              '<td style="dislay: none; color:' + color + '" align="center"><b>' + data[i].UltimoStatusLabel + '</b></td>' +
-                             '<td style="dislay: none;" align="center"><img src="/Content/Images/icon/upload.png" width="32" />' + btnArchivos + '</td>' +
-                             '<td style="dislay: none;" align="center"><img src="/Content/Images/icon/upload.png" width="32" />' + btnArchivos + '</td>' +
+                             //'<td style="dislay: none;" align="center"><img src="/Content/Images/icon/upload.png" width="32" />' + btnArchivos + '</td>' +
+                             //'<td style="dislay: none;" align="center"><img src="/Content/Images/icon/upload.png" width="32" />' + btnArchivos + '</td>' +
+                             '<td style="dislay: none;" align="center"><img src="/Content/Images/icon/upload.png" width="32" /></td>' +
+                             '<td style="dislay: none;" align="center"><img src="/Content/Images/icon/upload.png" width="32" /></td>' +
                              '<td style="dislay: none;">' + link + '</td>' + '</tr>'
                          );
                      }
@@ -252,6 +256,8 @@
 
     $(document).ready(function () {
         fn_buscar();
+        $(".ui-datepicker-trigger").hide();
+
         var url = '@Url.Action("SolicitudFacturacion", "Gestion")';
         $("#btnEnviarDoctos").click(function () {
                 var fileXml = $("#fileXml").get(0).files;

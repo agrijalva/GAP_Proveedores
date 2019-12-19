@@ -29,7 +29,7 @@
 @Html.Hidden("OrdenCompra", (string)ViewBag.OrdenCompra)
 <div class="row">
     <div class="col-md-12">
-        <h5 class="mt-2 detalle-titulo">Solicitud de Facturación</h5>
+        <h5 class="mt-2 detalle-titulo">Detalle de la Orden de Compra</h5>
         <div class="card mt-3">
             <div class="card-header mb-2" id="headingOne">
                 <span class="card-titulo">
@@ -126,12 +126,12 @@
                     //'<td align="center">Agrupador</td>' +
                     //'<td align="center">CentroCosto</td>' +
                     //'<td align="center">TipoPresupuesto</td>' +
-                    '<td align="center">Cantidad</td>' +
-                    '<td align="center">Recibido</td>' +
-                    '<td align="center">Facturado</td>' +
+                    '<td align="right">Cantidad</td>' +
+                    '<td align="right">Recibido</td>' +
+                    '<td align="right">Facturado</td>' +
                     //'<td align="center">Solicitud</td>' +
-                    '<td align="center">Precio</td>' +
-                    '<td align="center">Monto</td>' +
+                    '<td align="right">Precio</td>' +
+                    '<td align="right">Monto</td>' +
                     //'<td align="center">ImpuestosxVenta</td>' +
                     //'<td align="center">CuentaProveedor</td>' +
                     //'<td align="center">RECIDLinSol</td>' +
@@ -156,12 +156,12 @@
                          //'<td style="dislay: none;" align="center">' + data[i].Agrupador + '</td>' +
                          //'<td style="dislay: none;" align="center">' + data[i].CentroCosto + '</td>' +
                          //'<td style="dislay: none;" align="center">' + data[i].TipoPresupuesto + '</td>' +
-                         '<td style="dislay: none;" align="right"><div style="width:100px">' + addCommas(data[i].Cantidad) + '<div></td>' +
-                         '<td style="dislay: none;" align="right"><div style="width:100px">' + addCommas(data[i].Recibido) + '<div></td>' +
-                         '<td style="dislay: none;" align="right"><div style="width:100px">' + addCommas(data[i].Facturado) + '<div></td>' +
+                         '<td style="dislay: none; text-align: right;" align="right"><div style="width:100px">' + addCommas(data[i].Cantidad) + '<div></td>' +
+                         '<td style="dislay: none; text-align: right;" align="right"><div style="width:100px">' + addCommas(data[i].Recibido) + '<div></td>' +
+                         '<td style="dislay: none; text-align: right;" align="right"><div style="width:100px">' + addCommas(data[i].Facturado) + '<div></td>' +
                          //'<td style="dislay: none;" align="center">' + data[i].Solicitud + '</td>' +
-                         '<td style="dislay: none;" align="right"><div style="width:100px">$ ' + addCommas(data[i].Precio) + '<div></td>' +
-                         '<td style="dislay: none;" align="right"><div style="width:100px">$ ' + addCommas(data[i].Monto) + '<div></td>' +
+                         '<td style="dislay: none; text-align: right;" align="right"><div style="width:100px">$ ' + addCommas(data[i].Precio) + '<div></td>' +
+                         '<td style="dislay: none; text-align: right;" align="right"><div style="width:100px">$ ' + addCommas(data[i].Monto) + '<div></td>' +
                          //'<td style="dislay: none;" align="center">' + data[i].ImpuestosxVenta + '</td>' +
                          //'<td style="dislay: none;" align="center">' + data[i].CuentaProveedor + '</td>' +
                          //'<td style="dislay: none;" align="center">' + data[i].RECIDLinSol + '</td>' +

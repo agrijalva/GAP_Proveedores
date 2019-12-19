@@ -3,6 +3,12 @@
     ViewBag.Title = "Facturas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<!-- Bootstrap DatePicker -->
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<script src="~/scripts\jquery-ui-1.12.1.min.js"></script>
+<!-- Bootstrap DatePicker -->
 
 <div class="row">
     <div class="col-md-12">
@@ -14,8 +20,8 @@
                         <label class="control-label text-right">Aeropuerto</label>
                         @Html.DropDownList("idAeropuerto", new SelectList(ViewBag.AeropuertoList, "Id", "Nombre"), "Seleccionar", new { @class = "form-control" })
                         @*<select class="form-control" id="idAeropuerto">
-            <option>Selecione</option>
-        </select>*@
+                                <option>Selecione</option>
+                            </select>*@
                     </div>
                     <div class="form-group col-md-4">
                         <label class="control-label text-right">Orden de compra</label>
@@ -33,10 +39,12 @@
                             <div class="col-sm-12"><label class="control-label text-right">Fecha de factura</label></div>
                             <div class="col-sm-2"> <label class="control-label text-right" style="color:#68686a !important">Inicio</label> </div>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="FechaFacInicio" />
+                                <input type="text" autocomplete="off" name="FechaFacInicio" style="font-size:12px;" class="form-control datepicker" id="FechaFacInicio" size="15" onkeydown="return false" placeholder="" data-date-format="dd/mm/yyyy">
                             </div>
                             <div class="col-sm-2"> <label class="control-label text-right" style="color:#68686a !important">Fin</label> </div>
-                            <div class="col-sm-4"><input type="text" class="form-control" id="FechaFacFin" /></div>
+                            <div class="col-sm-4">
+                                <input type="text" autocomplete="off" name="FechaFacFin" style="font-size:12px;" class="form-control datepicker" id="FechaFacFin" size="15" onkeydown="return false" placeholder="" data-date-format="dd/mm/yyyy">
+                            </div>
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -44,10 +52,12 @@
                             <div class="col-sm-12"><label class="control-label text-right">Fecha propuesta de pago</label></div>
                             <div class="col-sm-2"> <label class="control-label text-right" style="color:#68686a !important">Inicio</label> </div>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="FechaPagoInicio" />
+                                <input type="text" autocomplete="off" name="FechaPagoInicio" style="font-size:12px;" class="form-control datepicker" id="FechaPagoInicio" size="15" onkeydown="return false" placeholder="" data-date-format="dd/mm/yyyy">
                             </div>
                             <div class="col-sm-2"> <label class="control-label text-right" style="color:#68686a !important">Fin</label> </div>
-                            <div class="col-sm-4"><input type="text" class="form-control" id="FechaPagoFin" /></div>
+                            <div class="col-sm-4">
+                                <input type="text" autocomplete="off" name="FechaPagoFin" style="font-size:12px;" class="form-control datepicker" id="FechaPagoFin" size="15" onkeydown="return false" placeholder="" data-date-format="dd/mm/yyyy">
+                            </div>
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -69,6 +79,38 @@
 </div>
 
 <script type="text/javascript">
+    $.datepicker.regional['es'] = {
+        closeText: 'Cerrar',
+        prevText: '< Ant',
+        nextText: 'Sig >',
+        currentText: 'Hoy',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+        weekHeader: 'Sm',
+        dateFormat: 'dd/mm/yy',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    };
+    $.datepicker.setDefaults($.datepicker.regional['es']);
+    $(function () {
+        $(".datepicker").datepicker({
+            dateFormat: "dd/mm/yy",
+            changeMonth: true,
+            changeYear: true,
+            //yearRange : "-10:+10"
+            minDate: new Date(2018, 0, 1),
+            maxDate: new Date(2019, 12, 1),
+            showOn: "both",
+            language: "es",
+            showButtonPanel: false,
+            buttonText: "<i class='fa fa-calendar'></i>"
+        });
+    });
 
     var fn_buscar = function () {
 
@@ -121,7 +163,7 @@
                          case 2: color = '#448aff'; // En Proceso
                              break;
                          case 3: color = '#43ac3e'; // Aceptada
-                             break; 
+                             break;
                          case 4: color = '#de343c'; // Rechazada
                              break;
                          case 5: color = '#43ac3e'; // Aceptada
@@ -168,6 +210,7 @@
 
     $(document).ready(function () {
         fn_buscar();
+        $(".ui-datepicker-trigger").hide();
     });
 
 </script>

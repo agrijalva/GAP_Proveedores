@@ -10,6 +10,11 @@
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <link href="~/Content/Css/infoCuenta.css" rel="stylesheet" />
 <link href="~/Content/validacionProveedor.css" rel="stylesheet" />
+<style>
+    #divArchivos{
+        font-size: 12px;
+    }
+</style>
 
 <div class="row">
     <div class="col-md-12">
@@ -87,16 +92,20 @@
 <div class="row mt-3" id="divArchivos">
     <div class="col-sm-3">&nbsp;</div>
     <div class="col-sm-3">
-        <label for="descripcion">Adjuntar XML:</label>
-        <input type="file" id="fileXml" name="ficheroXml" size="40">
+        <div class="row">
+            <label for="descripcion"><b>Adjuntar XML:</b></label>
+            <input type="file" class="ntb-agregarcontacto" id="fileXml" name="ficheroXml" size="40">
+        </div>
     </div>
     <div class="col-sm-3">
-        <label for="descripcion">Adjuntar PDF:</label>
-        <input type="file" id="filePdf" name="ficheroPdf" size="40">
+        <div class="row">
+            <label for="descripcion"><b>Adjuntar PDF:</b></label>
+            <input type="file" class="ntb-agregarcontacto" id="filePdf" name="ficheroPdf" size="40">
+        </div>
     </div>
     <div class="col-sm-3">
         <div>&nbsp;</div>
-        <input type="button" id="btnFile" value="Enviar" />
+        <input type="button" class="ntb-agregarcontacto" id="btnFile" value="Enviar" />
     </div>
 </div>
 
@@ -125,15 +134,24 @@
                         }
                         $("#Table").html('');
                         $("#Table").append('<thead class="bg-light-purple"><tr>' +
-                            '<td width="50">ID Lineas</td>'+
-                            '<td width="130">Descripción</td>' +
-                            '<td align="right">Cantidad Adquirida</td>' +
-                            '<td align="right">Precio Unitario</td>' +
-                            '<td align="right">Importe Adquirido</td>' +
-                            '<td align="right">Cantidad Facturada</td>' +
-                            '<td align="right">Cantidad a Facturar</td>' +
-                            '<td align="right">Importe Facturado <br />sin I.V.A.</td>' +
-                            '<td align="right">Importe a Facturar <br />sin I.V.A.</td></tr></thead>'
+                            '<td width="50">Linea</td>'+
+                            '<td width="130">Texto</td>' +
+                            '<td align="right">Cantidad Total</td>' +
+                            '<td align="right">Monto Total</td>' +
+                            '<td align="right">Cantidad pendiente</td>' +
+                            '<td align="right">Monto Pendiente</td>' +
+                            '<td align="right">Cantidad solicitada</td>' +
+                            '<td align="right">Monto solicitado</td>' +
+                            '</tr></thead>'
+
+
+                            //'<td align="right">Cantidad Adquirida</td>' +
+                            //'<td align="right">Precio Unitario</td>' +
+                            //'<td align="right">Importe Adquirido</td>' +
+                            //'<td align="right">Cantidad Facturada</td>' +
+                            //'<td align="right">Cantidad a Facturar</td>' +
+                            //'<td align="right">Importe Facturado <br />sin I.V.A.</td>' +
+                            //'<td align="right">Importe a Facturar <br />sin I.V.A.</td></tr></thead>'
                         );
                         $("#Table").DataTable().clear().draw();
                         $("#Table").DataTable().destroy();
@@ -141,16 +159,30 @@
                         console.log( "SolicitudFacturaDetalleList", data.SolicitudFacturaDetalleList );
                         for (i = 0; i < data.SolicitudFacturaDetalleList.length; i++) {
                             $("#Table").append('<tr>' +
-                                '<td style="dislay: none; text-align:right"><b>' + data.SolicitudFacturaDetalleList[i].Linea + '</b></td>' +
+                                '<td style="dislay: none; text-align:left"><b>' + data.SolicitudFacturaDetalleList[i].Linea + '</b></td>' +
                                 '<td style="dislay: none;">' + data.SolicitudFacturaDetalleList[i].Descripcion + '</td>' +
-                                '<td style="dislay: none; text-align:right">' + addCommas( data.SolicitudFacturaDetalleList[i].CantidadAdquirida ) + '</td>' +
+                                '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].CantidadAdquirida) + '</td>' +
+
+
                                 '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].PrecioUnitario ) + '</td>' +
                                 '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].ImporteAdquirido) + '</td>' +
                                 '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].CantidadFacturada ) + '</td>' +
                                 '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].CantidadFacturar) + '</td>' +
-                                '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].ImporteFacturado ) + '</td>' +
+                                //'<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].ImporteFacturado ) + '</td>' +
                                 '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].ImporteFacturar ) + '</td>' + '</tr>'
                             );
+
+                            //$("#Table").append('<tr>' +
+                            //    '<td style="dislay: none; text-align:right"><b>' + data.SolicitudFacturaDetalleList[i].Linea + '</b></td>' +
+                            //    '<td style="dislay: none;">' + data.SolicitudFacturaDetalleList[i].Descripcion + '</td>' +
+                            //    '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].CantidadAdquirida) + '</td>' +
+                            //    '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(data.SolicitudFacturaDetalleList[i].PrecioUnitario) + '</td>' +
+                            //    '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].ImporteAdquirido) + '</td>' +
+                            //    '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(data.SolicitudFacturaDetalleList[i].CantidadFacturada) + '</td>' +
+                            //    '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].CantidadFacturar) + '</td>' +
+                            //    '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(data.SolicitudFacturaDetalleList[i].ImporteFacturado) + '</td>' +
+                            //    '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(data.SolicitudFacturaDetalleList[i].ImporteFacturar) + '</td>' + '</tr>'
+                            //);
                         }
                         $("#Table").append('</tbody>');
 

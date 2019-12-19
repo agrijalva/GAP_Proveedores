@@ -11,12 +11,12 @@
                 <div class="row" style="">
                     <div class="col-md-12 h-filtro">Filtrar por</div>
                     <div class="form-group col-md-4">
-                        <label class="control-label text-right">Aeropuerto</label>
-                        @Html.DropDownList("idEstatus", new SelectList(ViewBag.EstatusOrdenCompraList, "IdEstatus", "EstatusNombre"), "Seleccionar", new { @class = "form-control" })
-                    </div>
-                    <div class="form-group col-md-4">
                         <label class="control-label text-right">Orden de compra</label>
                         <input type="text" class="form-control" id="OrdenCompra" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label text-right">Estatus</label>
+                        @Html.DropDownList("idEstatus", new SelectList(ViewBag.EstatusOrdenCompraList, "IdEstatus", "EstatusNombre"), "Seleccionar", new { @class = "form-control" })
                     </div>
                     <div class="form-group col-md-4">
                         <button id="buscar" class="btn btn-search btn-purple float-right" onclick="fn_buscar()">
@@ -40,8 +40,11 @@
     var fn_buscar = function () {
         var jsonData = JSON.stringify({
             OrdenCompra: $('#OrdenCompra').val() == '' ? null : $('#OrdenCompra').val(),
-            IdEstatus: $('#IdEstatus').val() == '' ? null : $('#IdEstatus').val()
+            IdEstatus: $("#idEstatus").val() == "" ? null : $("#idEstatus").val()
         });
+
+        //console.log("IdEstatus", $("#idEstatus").val());
+        console.log(jsonData );
 
         $.ajax({
             type: "POST",

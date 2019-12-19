@@ -10,6 +10,6 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Entities
     {
         public int IdProveedor { get; set; }
         public string OrdenCompra { get; set; }
-        public int IdEstatus { get; set; }
+        public int? IdEstatus { get; set; }
     }
 }
