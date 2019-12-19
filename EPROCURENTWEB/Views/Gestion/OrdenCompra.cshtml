@@ -38,7 +38,6 @@
 
 <script>
     var fn_buscar = function () {
-
         var jsonData = JSON.stringify({
             OrdenCompra: $('#OrdenCompra').val() == '' ? null : $('#OrdenCompra').val(),
             IdEstatus: $('#IdEstatus').val() == '' ? null : $('#IdEstatus').val()
@@ -51,16 +50,13 @@
             data: jsonData,
             async: false,
             success: function (data) {
-                console.log(data);
                 $("#Table").html('');
                 $("#Table").append(
                      '<thead class="bg-light-purple"><tr>' +
-                     //'<td align="left">Número de proveedor</td>'+
                      '<td align="left">Moneda</td>' +
                      '<td align="left">Aeropuerto</td>' +
                      '<td align="right">Órden Compra</td>' +
                      '<td align="center">Descripción</td>' +
-                     //'<td align="center">RFC</td>' +
                      '<td align="center">Importe</td>' +
                      '<td align="center">Estatus</td>' +
                      '<td>Descargar</td>' +
@@ -73,8 +69,9 @@
                  $("#Table").append('<tbody>');
                  for (i = 0; i < data.length; i++) {
 
-                     var link = '@Html.ActionLink(" ", "OrdenDetalle", "Gestion", new { OrdenCompra = "_OC_" }, new { @class = "btn-ver" })';
-                     link = link.replace('_OC_', data[i].OrdenCompra);
+                     //var link = '@Html.ActionLink(" ", "OrdenDetalle", "Gestion", new { OrdenCompra = "_OC_" }, new { @class = "btn-ver" })';
+                     //link = link.replace('_OC_', data[i].OrdenCompra);
+                     var link = '<a class="btn-ver" href="javascript:openLink(\'' + data[i].OrdenCompra + '\',\'' + data[i].Moneda + '\',\'' + data[i].Empresa + '\',\'' + data[i].Descripcion + '\',\'' + data[i].Importe + '\',\'' + data[i].Estatus + '\');">&nbsp;</a>';
 
                      var color = ''
                      switch (data[i].IdEstatus) {
@@ -87,7 +84,6 @@
                      }
 
                      $("#Table").append('<tr>' +
-                         //'<td style="dislay: none;" align="center"><b>' + data[i].NumeroProveedor + '</b></td>' +
                          '<td style="dislay: none;" align="center">' + data[i].Moneda + '</td>' +
                          '<td style="dislay: none;" align="center">' + data[i].Empresa + '</td>' +
                          '<td style="dislay: none;" align="center">' + data[i].OrdenCompra + '</td>' +
@@ -101,10 +97,10 @@
                  $("#Table").append('</tbody>');
 
                  $('#Table').DataTable({
-                        "paging": false,
-                         "bScrollInfinite": true,
-                         "bScrollCollapse": true
-                     });
+                    "paging": false,
+                    "bScrollInfinite": true,
+                    "bScrollCollapse": true
+                 });
             }
         });
     }
@@ -120,6 +116,20 @@
             x1 = x1.replace(rgx, '$1' + ',' + '$2');
         }
         return x1 + x2;
+    }
+
+    function openLink(oc, moneda, aeropuerto, descripcion, importe, estatus) {
+        var objData = {
+            moneda: moneda,
+            aeropuerto: aeropuerto,
+            descripcion: descripcion,
+            importe: importe,
+            estatus: estatus
+        };
+        localStorage.setItem("OC", JSON.stringify(objData));
+        //console.log(JSON.parse(oc));
+        //console.log(JSON.parse(item));
+        location.href = "OrdenDetalle?OrdenCompra=" + oc;
     }
 
     $(".navbar-nav .nav-item").removeClass("active");

@@ -17,31 +17,56 @@
         border-bottom: none !important;
     }
 
-    #Table_info{
-        display:none;
+    #Table_info {
+        display: none;
     }
 </style>
+<link href="~/Content/Styles/Site.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/Css/infoCuenta.css" rel="stylesheet" />
+<link href="~/Content/validacionProveedor.css" rel="stylesheet" />
 
 @Html.Hidden("OrdenCompra", (string)ViewBag.OrdenCompra)
 <div class="row">
     <div class="col-md-12">
+        <h5 class="mt-2 detalle-titulo">Solicitud de Facturación</h5>
         <div class="card mt-3">
-            <div class="card-body">
-                <div class="row" style="">
-                    <div class="col-md-12 h-filtro">Filtrar por</div>
-                    <div class="form-group col-md-4">
-                        <label class="control-label text-right">Aeropuerto</label>
-                        <select></select>
+            <div class="card-header mb-2" id="headingOne">
+                <span class="card-titulo">
+                    Orden: @Html.Label("lblOC", "...", new { id = "lblOC" })
+                </span>
+            </div>
+            <div class="card-body no-border">
+                <div class="row">
+                    <div class="col-sm-2 cabecero-detalle">
+                        <label>Aeropuerto</label>
+                        <p class="control-label">
+                            @Html.Label("lblAeropuerto", "...", new { id = "lblAeropuerto" })
+                        </p>
+
                     </div>
-                    <div class="form-group col-md-4">
-                        <label class="control-label text-right">Orden de compra</label>
-                        <input type="text" class="form-control" id="OrdenCompra" />
+                    <div class="col-sm-4 cabecero-detalle">
+                        <label>Descripción</label>
+                        <p class="control-label">
+                            @Html.Label("lblDescripcion", "...", new { id = "lblDescripcion" })
+                        </p>
                     </div>
-                    <div class="form-group col-md-4">
-                        <button id="buscar" class="btn btn-search btn-purple float-right" onclick="fn_buscar()">
-                            <i class="fas fa-search"></i> Buscar
-                        </button>
+
+                    <div class="col-sm-2 cabecero-detalle text-right">
+                        <label class="text-right">Importe</label>
+                        <p class="control-label text-right">@Html.Label("lblImporte", "...", new { id = "lblImporte" })</p>
                     </div>
+
+                    <div class="col-sm-2 cabecero-detalle">
+                        <label>Moneda</label>
+                        <p class="control-label">@Html.Label("lblMoneda", "...", new { id = "lblMoneda" })</p>
+                    </div>
+
+                    <div class="col-sm-2 cabecero-detalle">
+                        <label>Estatus</label>
+                        <p class="control-label">@Html.Label("lblEstatus", "...", new { id = "lblEstatus" })</p>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -61,6 +86,17 @@
 
 <script>
     var fn_buscar = function () {
+
+        var oc = localStorage.getItem("OC");
+        oc = JSON.parse(oc );
+        console.log("oc", oc );
+        $("#lblAeropuerto").html(oc.aeropuerto);
+        $("#lblDescripcion").html(oc.descripcion);
+        $("#lblImporte").html('$ ' + addCommas(oc.importe));
+        $("#lblMoneda").html(oc.moneda);
+        $("#lblEstatus").html(oc.estatus);
+        $("#lblOC").html($('#OrdenCompra').val());
+
         var jsonData = JSON.stringify({
             OrdenCompra: $('#OrdenCompra').val() == '' ? null : $('#OrdenCompra').val()
         });
