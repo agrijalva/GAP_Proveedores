@@ -241,8 +241,9 @@ namespace EprocurementWeb.Controllers
             return View();
         }
 
-        public ActionResult OrdenDetalle()
+        public ActionResult OrdenDetalle(string OrdenCompra)
         {
+            ViewBag.OrdenCompra = OrdenCompra;
             return View();
         }
 
