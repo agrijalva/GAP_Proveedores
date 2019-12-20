@@ -402,13 +402,13 @@ namespace EprocurementWeb.Controllers
                     };
 
                     var solicitudDetalleResponse = businessLogic.GetSolicitudFacturaDetalle(request);
-                    var montoTolerancia = Convert.ToDecimal(ConfigurationManager.AppSettings["urlApi"]);
+                    var montoTolerancia = Convert.ToDecimal(ConfigurationManager.AppSettings["parametroTolerancia"]);
                     var importeValidar = solicitudDetalleResponse.SolicitudFacturaCabecera.ImporteContratado;
-                    if (total != importeValidar || ((total - importeValidar) > montoTolerancia) || ((total - importeValidar) < -montoTolerancia))
+                    if (total != importeValidar && ((total - importeValidar) > montoTolerancia) || ((total - importeValidar) < -montoTolerancia))
                     {
                         return "El total de la factura es diferente al total de los registros.";
                     }
-                    respuesta = ValidarCFDISat(rfcProveedor, rfcRecpetor, total, foliFiscal) ? "" : "La información de la factura no es válida";
+                    respuesta = ValidarCFDISat(rfcProveedor, rfcRecpetor, total, foliFiscal) ? "" : "La información de la factura no es válida ante el SAT.";
                 }
                 //var serie = xmlInput.Root.Attribute("serie").Value;
                 //var folio = xmlInput.Root.Attribute("folio").Value;    
@@ -424,7 +424,7 @@ namespace EprocurementWeb.Controllers
             }
             catch (Exception ex)
             {
-                respuesta = "Se generó un error al validar la factura.";
+                respuesta = "Se generó un error al validar la factura ante el SAT.";
             }
             return respuesta;
         }
@@ -434,26 +434,8 @@ namespace EprocurementWeb.Controllers
             var proxy = new ConsultaCFDIServiceClient();//SatCFDIServiceClient();
             var query = $"?re={rfcEmisor}&rr={rfcReceptor}&tt={total}&id={folioFidcal}";
             var response = proxy.Consulta(query);
-            List<string> errors = new List<string>();
-            var resultado = false;
-            if (response.CodigoEstatus == null || response.Estado == null)
-            {
-                var value = string.Empty;
-                if (response.CodigoEstatus == null)
-                {
-                    value += " (Código Estatus)";
-                }
-                if (response.Estado == null)
-                {
-                    value += " (Estado)";
-                }
-                errors.Add("Se regresaron valores nulos en la consulta. " + value);
-            }
-            else if (response.Estado.ToUpper() != "VIGENTE")
-            {
-                errors.Add($"Error SAT: {response.Estado} {response.CodigoEstatus}");
-            }
-            else if (response.Estado == "Vigente" && response.CodigoEstatus == "S - Comprobante obtenido satisfactoriamente.")
+            var resultado = false;           
+            if (response.Estado == "Vigente" && response.CodigoEstatus == "S - Comprobante obtenido satisfactoriamente.")
             {
                 resultado = true;
             }
