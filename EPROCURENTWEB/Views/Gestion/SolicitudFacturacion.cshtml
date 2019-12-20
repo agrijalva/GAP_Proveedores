@@ -72,6 +72,7 @@
 
 @Html.Hidden("idSolicitudFactura", 0)
 @Html.Hidden("tipoEmpresa", (int)ViewBag.TipoEmpresa)
+
 <!-- Modal Documentación pendiente -->
 <div class="modal fade" id="modalArchivos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md" role="document">
@@ -84,12 +85,15 @@
             </div>
             <div class="modal-body">
                 <div class="row mt-3" id="divArchivos">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <label for="descripcion">Adjuntar XML:</label>
-                            <input type="file" id="fileXml" name="ficheroXml" size="40">
+                    @if (ViewBag.TipoEmpresa == 1)
+                    {
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="descripcion">Adjuntar XML:</label>
+                                <input type="file" id="fileXml" name="ficheroXml" size="40">
+                            </div>
                         </div>
-                    </div>
+                    }
                     <div class="row">
                         <div class="col-sm-12">
                             <label for="descripcion">Adjuntar PDF:</label>
@@ -139,16 +143,12 @@
         });
 
     var fn_buscar = function () {
-         //var idGiroProveedor = $('#giro').val() == '' ? null : $('#giro').val();
-         //var idAeropuerto = $('#aeropuerto').val() == '' ? null : $('#aeropuerto').val();
         var idEstatus = $('#estatus').val() == '' ? null : $('#estatus').val();
         var numeroSolicitud = $('#NumeroSolicitud').val() == '' ? null : $('#NumeroSolicitud').val();
         var fechaInicio = $('#FechaInicio').val() == '' ? null : $('#FechaInicio').val();
         var fechaFin = $('#FechaFin').val() == '' ? null : $('#FechaFin').val();
         var tipoEmpresa = $('#tipoEmpresa').val()
 
-        console.log('idEstatus', idEstatus);
-        console.log('numeroSolicitud', numeroSolicitud);
         var jsonData = JSON.stringify({ idSolicitudFactura: numeroSolicitud, idEstatus: idEstatus, fechaInicio: fechaInicio, fechaFin: fechaFin });
          $.ajax({
              type: "POST",
@@ -269,9 +269,10 @@
 
         var url = '@Url.Action("SolicitudFacturacion", "Gestion")';
         $("#btnEnviarDoctos").click(function () {
-                var fileXml = $("#fileXml").get(0).files;
+            var tipoEmpresa = $('#tipoEmpresa').val();
+                var fileXml = tipoEmpresa == 1 ? $("#fileXml").get(0).files : null;
                 var filePdf = $("#filePdf").get(0).files;
-                if (fileXml.length != 1) {
+                if (tipoEmpresa == 1 && fileXml.length != 1) {
                     Swal.fire({
                         position: 'middle',
                         icon: 'error',
@@ -290,17 +291,20 @@
                     });
                 }
                 else {
-                    var nombreXml = fileXml[0].name;
+                     var nombreXml = tipoEmpresa == 1 ? fileXml[0].name : '';
                     var nombrePdf = filePdf[0].name;
                     console.log(nombreXml.substr(nombreXml.length - 3, nombreXml.length));
-                    if (nombreXml.substr(nombreXml.length - 3, nombreXml.length) == 'xml' && nombrePdf.substr(nombrePdf.length - 3, nombrePdf.length) == 'pdf') {
-
-                        console.log(nombreXml.substr(nombreXml.length - 3, nombreXml.length));
+                    if ((tipoEmpresa != 1 || nombreXml.substr(nombreXml.length - 3, nombreXml.length) == 'xml') && nombrePdf.substr(nombrePdf.length - 3, nombrePdf.length) == 'pdf') {
                         var fileData = new FormData();
 
                         var numeroSolicitud = $('#idSolicitudFactura').val() == '' ? null : $('#idSolicitudFactura').val();
                         console.log('idSolicitudFactura', numeroSolicitud);
-                        fileData.append("fileXml", fileXml[0]);
+                        if (tipoEmpresa == 1) {
+                            fileData.append("fileXml", fileXml[0]);
+                        }
+                        else {
+                            fileData.append("fileXml", filePdf[0]);
+                        }
                         fileData.append("filePdf", filePdf[0]);
                         fileData.append("idSolicitudFactura", numeroSolicitud);
                         //for (var i = 0; i < files.length; i++) {
