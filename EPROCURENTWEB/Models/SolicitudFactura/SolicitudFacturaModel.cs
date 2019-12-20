@@ -16,7 +16,7 @@ namespace EprocurementWeb.Models
         public string RutaXML { get; set; }
         public int UltimoEstatus { get; set; }
         public string UltimoStatusLabel { get; set; }
-        public int IdEstatusSolicitud { get; set; }
-        
+        public int IdEstatusSolicitud { get; set; }      
+
     }
 }

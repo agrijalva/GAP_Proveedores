@@ -232,6 +232,8 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                     cmdUpdate.CommandType = CommandType.StoredProcedure;
                     cmdUpdate.Parameters.Add(new SqlParameter("@IdSolicitudFactura", request.IdSolicitudFactura));
                     cmdUpdate.Parameters.Add(new SqlParameter("@IdEstatusSolicitud", request.IdEstatusSolicitud));
+                    cmdUpdate.Parameters.Add(new SqlParameter("@RutaPDF", SqlDbType.NVarChar, 350)).Value = request.RutaPDF;
+                    cmdUpdate.Parameters.Add(new SqlParameter("@RutaXML", SqlDbType.NVarChar, 350)).Value = request.RutaXML;
                     cmdUpdate.Parameters.Add(new SqlParameter("Result", SqlDbType.BigInt) { Direction = ParameterDirection.ReturnValue });
                     cmdUpdate.ExecuteNonQuery();
                     var resultDelete = Convert.ToInt32(cmdUpdate.Parameters["Result"].Value);

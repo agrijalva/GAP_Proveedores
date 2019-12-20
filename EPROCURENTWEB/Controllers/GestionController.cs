@@ -92,9 +92,12 @@ namespace EprocurementWeb.Controllers
             };
 
             var solicitudFacturaResponse = businessLogic.GetSolicitudFacturaList(request);
+          
             foreach(var solicitud in solicitudFacturaResponse.SolicitudFacturaList)
             {
                 solicitud.Fecha = solicitud.FechaSolicitud.ToShortDateString();
+                solicitud.RutaPDF = ConfigurationManager.AppSettings["urlApi"] + "api/SolicitudFactura/Documento?image=" + solicitud.RutaPDF;//"TRL891222ST7_4_d7e720c8-bdfd-4597-bbab-e9aa40d8413a.pdf";//documento.NombreArchivo;
+                solicitud.RutaXML = usuarioInfo.TipoEmpresa == 1 ? ConfigurationManager.AppSettings["urlApi"] + "api/SolicitudFactura/Documento?image=" + solicitud.RutaXML : "";//"SQP981128289_29_d7e720c8-bdfd-4597-bbab-e9aa40d8413a.xml";//documento.NombreArchivo;
             }
             
             return Json(solicitudFacturaResponse.SolicitudFacturaList, JsonRequestBehavior.AllowGet);           
@@ -282,6 +285,7 @@ namespace EprocurementWeb.Controllers
                 }
 
                 List<DocumentoModel> documentoList = new List<DocumentoModel>();
+                var nombreXML = string.Empty;
                 if (usuarioInfo.TipoEmpresa == 1)
                 {
                     ficheroXml = files[0];
@@ -306,6 +310,7 @@ namespace EprocurementWeb.Controllers
                         return Json(new { success = false, responseText = "El archivo XML es invalido" }, JsonRequestBehavior.AllowGet);
                     }
                     documentoList.Add(new DocumentoModel { IdDetalle = 8, NombreDocumento = Path.GetFileName(ficheroXml.FileName), Extension = "xml", File = ficheroXml });
+                    nombreXML = Path.GetFileName(ficheroXml.FileName);
                 }
 
                 documentoList.Add(new DocumentoModel { IdDetalle = 8, NombreDocumento = Path.GetFileName(ficheroPdf.FileName), Extension = "pdf", File = ficheroPdf });
@@ -313,7 +318,13 @@ namespace EprocurementWeb.Controllers
                 
                 if (respuestaArchivo)
                 {
-                    var request = new EstatusSolicitudRequestModel { IdSolicitudFactura = idEstatusSolicitud, IdEstatusSolicitud = 2 };
+                    var request = new EstatusSolicitudRequestModel
+                    {
+                        IdSolicitudFactura = idEstatusSolicitud,
+                        IdEstatusSolicitud = 2,
+                        RutaPDF = usuarioInfo.NombreUsuario + "_" + idEstatusSolicitud +  "_" + Path.GetFileName(ficheroPdf.FileName),
+                        RutaXML = usuarioInfo.NombreUsuario + "_" + idEstatusSolicitud + "_" + nombreXML
+                    };
                     var respuestaEstatus = new SolicitudFacturaBusiness().GuardarHistoricoEstatusSolicitud(request);
                     if (respuestaEstatus.Success)
                     {

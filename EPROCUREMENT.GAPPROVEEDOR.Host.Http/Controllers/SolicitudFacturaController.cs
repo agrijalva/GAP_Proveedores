@@ -112,5 +112,45 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
 
             return estadoResponse;
         }
+
+        [HttpGet]
+        [Route("Documento")]
+        public HttpResponseMessage Documento(string image)
+        {
+            string[] authorsList = image.Split('_');
+            string ruta = ConfigurationManager.AppSettings["rutaDocuments"] + "/Facturas/" + authorsList[0] + "/" + authorsList[1] + "/";
+            //string ruta = ConfigurationManager.AppSettings["rutaDocuments"];
+            string rutaF = HttpContext.Current.Server.MapPath(ruta);
+
+            string r = rutaF + "\\" + image;
+
+            if (!File.Exists(r))
+            {
+                r = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["rutaDocuments"]) + "\\notfound.jpg";
+            }
+
+            Byte[] b = File.ReadAllBytes(r);   // You can use your own method over here.         
+            MemoryStream ms = new MemoryStream(b);
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+            response.Content = new StreamContent(ms);
+            var division = image.Split('.');
+            if (division.Last() == "pdf")
+            {
+                response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/pdf");
+                response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
+            }
+            else if (division.Last() == "xml")
+            {
+                response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/xml");
+                response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
+            }
+            else
+            {
+                response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png");
+                response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
+            }
+
+            return response;
+        }
     }
 }

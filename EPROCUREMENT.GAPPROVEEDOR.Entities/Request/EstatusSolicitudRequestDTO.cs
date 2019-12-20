@@ -10,5 +10,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Entities
     {
         public int IdSolicitudFactura { get; set; }
         public int IdEstatusSolicitud { get; set; }
+        public string RutaPDF { get; set; }
+        public string RutaXML { get; set; }
     }
 }
