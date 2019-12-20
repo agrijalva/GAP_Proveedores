@@ -261,10 +261,10 @@ namespace EprocurementWeb.Controllers
             {
                 var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
 
-                var idEstatusSolicitud = 0;
+                var idSolicitudFactura = 0;
                 if (!string.IsNullOrEmpty(Request.Form.Get("idSolicitudFactura").ToString()))
                 {
-                    idEstatusSolicitud = Convert.ToInt32(Request.Form.Get("idSolicitudFactura"));
+                    idSolicitudFactura = Convert.ToInt32(Request.Form.Get("idSolicitudFactura"));
                 }
                 HttpFileCollectionBase files = Request.Files;
                 if (usuarioInfo.TipoEmpresa == 1 && files.Count < 2)
@@ -300,30 +300,30 @@ namespace EprocurementWeb.Controllers
                     byte[] binData = b.ReadBytes(ficheroXml.ContentLength);
                     string result = System.Text.Encoding.UTF8.GetString(binData);
                     var document = XDocument.Load(path);
-                    var archivoValido = ValidarXml(path);
+                    var respuestaValidacion = ValidarXml(path, idSolicitudFactura);
                     if (Directory.Exists(Path.GetDirectoryName(path)))
                     {
                         System.IO.File.Delete(path);
                     }
-                    if (!archivoValido)
+                    if (!string.IsNullOrEmpty(respuestaValidacion))
                     {
-                        return Json(new { success = false, responseText = "El archivo XML es invalido" }, JsonRequestBehavior.AllowGet);
+                        return Json(new { success = false, responseText = respuestaValidacion }, JsonRequestBehavior.AllowGet);
                     }
                     documentoList.Add(new DocumentoModel { IdDetalle = 8, NombreDocumento = Path.GetFileName(ficheroXml.FileName), Extension = "xml", File = ficheroXml });
                     nombreXML = Path.GetFileName(ficheroXml.FileName);
                 }
 
                 documentoList.Add(new DocumentoModel { IdDetalle = 8, NombreDocumento = Path.GetFileName(ficheroPdf.FileName), Extension = "pdf", File = ficheroPdf });
-                var respuestaArchivo = new SolicitudFacturaBusiness().GuardarDocumentos(documentoList, usuarioInfo.NombreUsuario, idEstatusSolicitud);
+                var respuestaArchivo = new SolicitudFacturaBusiness().GuardarDocumentos(documentoList, usuarioInfo.NombreUsuario, idSolicitudFactura);
                 
                 if (respuestaArchivo)
                 {
                     var request = new EstatusSolicitudRequestModel
                     {
-                        IdSolicitudFactura = idEstatusSolicitud,
+                        IdSolicitudFactura = idSolicitudFactura,
                         IdEstatusSolicitud = 2,
-                        RutaPDF = usuarioInfo.NombreUsuario + "_" + idEstatusSolicitud +  "_" + Path.GetFileName(ficheroPdf.FileName),
-                        RutaXML = usuarioInfo.NombreUsuario + "_" + idEstatusSolicitud + "_" + nombreXML
+                        RutaPDF = usuarioInfo.NombreUsuario + "_" + idSolicitudFactura +  "_" + Path.GetFileName(ficheroPdf.FileName),
+                        RutaXML = usuarioInfo.NombreUsuario + "_" + idSolicitudFactura + "_" + nombreXML
                     };
                     var respuestaEstatus = new SolicitudFacturaBusiness().GuardarHistoricoEstatusSolicitud(request);
                     if (respuestaEstatus.Success)
@@ -368,12 +368,12 @@ namespace EprocurementWeb.Controllers
             //return View();
         }
         
-        public bool ValidarXml(string path)
+        public string ValidarXml(string path, int idSolicitudFactura)
         {
-            //DocumentosCFDI doc = new DocumentosCFDI();
+            var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
             XDocument xmlInput = null;
             XNamespace df;
-            var respuesta = false;
+            var respuesta = "";
             try
             {
                 xmlInput = XDocument.Load(path);
@@ -390,7 +390,25 @@ namespace EprocurementWeb.Controllers
                 var foliFiscal = timbre.Root.Element(tfd + "TimbreFiscalDigital").Attribute("UUID").Value;
                 if (!string.IsNullOrEmpty(rfcProveedor) && !string.IsNullOrEmpty(rfcRecpetor) && !string.IsNullOrEmpty(foliFiscal) && total != 0)
                 {
-                    respuesta = ValidarCFDISat(rfcProveedor, rfcRecpetor, total, foliFiscal);
+                    if (usuarioInfo.NombreUsuario != rfcProveedor)
+                    {
+                        return "El RFC del emisor es diferente al RFC del proveedor.";
+                    }
+
+                    SolicitudFacturaBusiness businessLogic = new SolicitudFacturaBusiness();
+                    var request = new SolicitudFacturaDetalleRequestDTO
+                    {
+                        IdSolicitudFactura = idSolicitudFactura
+                    };
+
+                    var solicitudDetalleResponse = businessLogic.GetSolicitudFacturaDetalle(request);
+                    var montoTolerancia = Convert.ToDecimal(ConfigurationManager.AppSettings["urlApi"]);
+                    var importeValidar = solicitudDetalleResponse.SolicitudFacturaCabecera.ImporteContratado;
+                    if (total != importeValidar || ((total - importeValidar) > montoTolerancia) || ((total - importeValidar) < -montoTolerancia))
+                    {
+                        return "El total de la factura es diferente al total de los registros.";
+                    }
+                    respuesta = ValidarCFDISat(rfcProveedor, rfcRecpetor, total, foliFiscal) ? "" : "La información de la factura no es válida";
                 }
                 //var serie = xmlInput.Root.Attribute("serie").Value;
                 //var folio = xmlInput.Root.Attribute("folio").Value;    
@@ -406,7 +424,7 @@ namespace EprocurementWeb.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception("Ocurrio un error al procesar la información del documento " + ex.Message);
+                respuesta = "Se generó un error al validar la factura.";
             }
             return respuesta;
         }
