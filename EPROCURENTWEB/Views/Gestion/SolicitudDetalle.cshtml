@@ -97,7 +97,7 @@
         <div class="col-sm-3">
             <div class="row">
                 <label for="descripcion"><b>Adjuntar XML:</b></label>
-                <input type="file" class="ntb-agregarcontacto" id="fileXml" name="ficheroXml" size="40">
+                <input type="file" class="ntb-agregarcontacto1" id="fileXml" name="ficheroXml" size="40">
             </div>
         </div>
     }
@@ -124,6 +124,7 @@
                     data: jsonData,
                     async: false,
                     success: function (data) {
+                        console.log( "Valida los input file", data );
                         var importePendiente = (data.SolicitudFacturaCabecera.ImporteContratado - data.SolicitudFacturaCabecera.ImporteFacturado + data.SolicitudFacturaCabecera.ImporteFacturar)
                         console.log(data.SolicitudFacturaCabecera.Descripcion);
                         $('#lblDescripcion').html(data.SolicitudFacturaCabecera.Descripcion);

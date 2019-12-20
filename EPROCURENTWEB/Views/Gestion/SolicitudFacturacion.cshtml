@@ -244,6 +244,7 @@
 
     function addCommas(nStr)
     {
+        nStr = (Math.round(nStr * 100) / 100).toFixed(2);
         nStr += '';
         x = nStr.split('.');
         x1 = x[0];
