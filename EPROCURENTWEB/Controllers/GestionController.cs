@@ -45,6 +45,8 @@ namespace EprocurementWeb.Controllers
         // GET: SolicitudFacturacion
         public ActionResult SolicitudFacturacion()
         {
+            var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
+            ViewBag.TipoEmpresa = usuarioInfo.TipoEmpresa;
             List<EstatusSolicitudModel> estatusList = new List<EstatusSolicitudModel>();
             estatusList.Add(new EstatusSolicitudModel { IdEstatus = 1, Descripcion = "Pendiente" });
             estatusList.Add(new EstatusSolicitudModel { IdEstatus = 2, Descripcion = "En Proceso" });
@@ -68,6 +70,8 @@ namespace EprocurementWeb.Controllers
         public ActionResult SolicitudDetalle(int idSolicitudFactura)
         {
             ViewBag.IdSolicitudFactura = idSolicitudFactura;
+            var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
+            ViewBag.TipoEmpresa = usuarioInfo.TipoEmpresa;
             return View();
         }
 
@@ -252,61 +256,79 @@ namespace EprocurementWeb.Controllers
         {
             try
             {
+                var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
+
                 var idEstatusSolicitud = 0;
                 if (!string.IsNullOrEmpty(Request.Form.Get("idSolicitudFactura").ToString()))
                 {
                     idEstatusSolicitud = Convert.ToInt32(Request.Form.Get("idSolicitudFactura"));
                 }
                 HttpFileCollectionBase files = Request.Files;
-                if (files.Count < 2)
+                if (usuarioInfo.TipoEmpresa == 1 && files.Count < 2)
                 {
                     return Json(new { success = false, responseText = "Debe agregar archivo xml y pdf" }, JsonRequestBehavior.AllowGet);
                 }
-                HttpPostedFileBase ficheroXml = files[0];
-                HttpPostedFileBase ficheroPdf = files[1];
-                if (ficheroXml.ContentType != "text/xml")
+                else if (usuarioInfo.TipoEmpresa != 1 && files.Count < 1)
                 {
-                    return Json(new { success = false, responseText = "Debe agregar un archivo con extensión XML" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = false, responseText = "Debe agregar archivo pdf" }, JsonRequestBehavior.AllowGet);
                 }
+                HttpPostedFileBase ficheroXml = null;
+                HttpPostedFileBase ficheroPdf = null;
+                ficheroPdf = files.Count == 1 ? files[0] : files[1];
+                
                 if (ficheroPdf.ContentType != "application/pdf")
                 {
                     return Json(new { success = false, responseText = "Debe agregar un archivo con extensión PDF" }, JsonRequestBehavior.AllowGet);
                 }
-                var strNombreXml = Path.GetFileName(ficheroXml.FileName);
-                var path = Path.Combine(Server.MapPath("~/Content"), Path.GetFileName(ficheroXml.FileName));
-                ficheroXml.SaveAs(path);
-                BinaryReader b = new BinaryReader(ficheroXml.InputStream);
-                byte[] binData = b.ReadBytes(ficheroXml.ContentLength);
-                string result = System.Text.Encoding.UTF8.GetString(binData);
-                var document = XDocument.Load(path);
 
-                if (ValidarXml(path))
+                List<DocumentoModel> documentoList = new List<DocumentoModel>();
+                if (usuarioInfo.TipoEmpresa == 1)
                 {
-                    List<DocumentoModel> documentoList = new List<DocumentoModel>();
-                    documentoList.Add(new DocumentoModel { IdDetalle = 8, NombreDocumento = Path.GetFileName(ficheroXml.FileName), Extension = "xml", File = ficheroXml });
-                    documentoList.Add(new DocumentoModel { IdDetalle = 8, NombreDocumento = Path.GetFileName(ficheroPdf.FileName), Extension = "pdf", File = ficheroPdf });
-                    var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
-                    var respuestaArchivo = new SolicitudFacturaBusiness().GuardarDocumentos(documentoList, usuarioInfo.NombreUsuario, idEstatusSolicitud);
+                    ficheroXml = files[0];
+                    if (ficheroXml.ContentType != "text/xml")
+                    {
+                        return Json(new { success = false, responseText = "Debe agregar un archivo con extensión XML" }, JsonRequestBehavior.AllowGet);
+                    }
+                    var strNombreXml = Path.GetFileName(ficheroXml.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Content"), Path.GetFileName(ficheroXml.FileName));
+                    ficheroXml.SaveAs(path);
+                    BinaryReader b = new BinaryReader(ficheroXml.InputStream);
+                    byte[] binData = b.ReadBytes(ficheroXml.ContentLength);
+                    string result = System.Text.Encoding.UTF8.GetString(binData);
+                    var document = XDocument.Load(path);
+                    var archivoValido = ValidarXml(path);
                     if (Directory.Exists(Path.GetDirectoryName(path)))
                     {
                         System.IO.File.Delete(path);
                     }
-                    if (respuestaArchivo)
+                    if (!archivoValido)
                     {
-                        var request = new EstatusSolicitudRequestModel { IdSolicitudFactura = idEstatusSolicitud, IdEstatusSolicitud = 2 };
-                        var respuestaEstatus = new SolicitudFacturaBusiness().GuardarHistoricoEstatusSolicitud(request);
-                        if(respuestaEstatus.Success)
-                        {
-                            return Json(new { success = true, responseText = "Archivos almacenados correctamente" }, JsonRequestBehavior.AllowGet);
-                        }
-                        return Json(new { success = false, responseText = "Ocurrio un error al guardar los archivos" }, JsonRequestBehavior.AllowGet);
+                        return Json(new { success = false, responseText = "El archivo XML es invalido" }, JsonRequestBehavior.AllowGet);
                     }
-                    else
-                    {
-                        return Json(new { success = false, responseText = "Ocurrio un error al guardar los archivos" }, JsonRequestBehavior.AllowGet);
-                    }
+                    documentoList.Add(new DocumentoModel { IdDetalle = 8, NombreDocumento = Path.GetFileName(ficheroXml.FileName), Extension = "xml", File = ficheroXml });
                 }
-                return Json(new { success = false, responseText = "El archivo XML es invalido" }, JsonRequestBehavior.AllowGet);
+
+                documentoList.Add(new DocumentoModel { IdDetalle = 8, NombreDocumento = Path.GetFileName(ficheroPdf.FileName), Extension = "pdf", File = ficheroPdf });
+                var respuestaArchivo = new SolicitudFacturaBusiness().GuardarDocumentos(documentoList, usuarioInfo.NombreUsuario, idEstatusSolicitud);
+                
+                if (respuestaArchivo)
+                {
+                    var request = new EstatusSolicitudRequestModel { IdSolicitudFactura = idEstatusSolicitud, IdEstatusSolicitud = 2 };
+                    var respuestaEstatus = new SolicitudFacturaBusiness().GuardarHistoricoEstatusSolicitud(request);
+                    if (respuestaEstatus.Success)
+                    {
+                        return Json(new { success = true, responseText = "Archivos almacenados correctamente" }, JsonRequestBehavior.AllowGet);
+                    }
+                    return Json(new { success = false, responseText = "Ocurrio un error al guardar los archivos" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { success = false, responseText = "Ocurrio un error al guardar los archivos" }, JsonRequestBehavior.AllowGet);
+                }
+
+
+
+
             }
             catch (Exception ex)
             {

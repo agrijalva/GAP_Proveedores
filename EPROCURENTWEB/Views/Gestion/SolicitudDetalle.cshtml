@@ -26,6 +26,7 @@
                 </span>
             </div>
             @Html.Hidden("idSolicitudFactura", (int)ViewBag.IdSolicitudFactura)
+            @Html.Hidden("tipoEmpresa", (int)ViewBag.TipoEmpresa)
             <div class="card-body no-border">
                 <div class="row">
                     <div class="col-sm-3 cabecero-detalle">
@@ -91,12 +92,15 @@
 
 <div class="row mt-3" id="divArchivos">
     <div class="col-sm-3">&nbsp;</div>
-    <div class="col-sm-3">
-        <div class="row">
-            <label for="descripcion"><b>Adjuntar XML:</b></label>
-            <input type="file" class="ntb-agregarcontacto" id="fileXml" name="ficheroXml" size="40">
+    @if ((int)ViewBag.TipoEmpresa == 1)
+    {
+        <div class="col-sm-3">
+            <div class="row">
+                <label for="descripcion"><b>Adjuntar XML:</b></label>
+                <input type="file" class="ntb-agregarcontacto" id="fileXml" name="ficheroXml" size="40">
+            </div>
         </div>
-    </div>
+    }
     <div class="col-sm-3">
         <div class="row">
             <label for="descripcion"><b>Adjuntar PDF:</b></label>
@@ -143,15 +147,6 @@
                             '<td align="right">Cantidad solicitada</td>' +
                             '<td align="right">Monto solicitado</td>' +
                             '</tr></thead>'
-
-
-                            //'<td align="right">Cantidad Adquirida</td>' +
-                            //'<td align="right">Precio Unitario</td>' +
-                            //'<td align="right">Importe Adquirido</td>' +
-                            //'<td align="right">Cantidad Facturada</td>' +
-                            //'<td align="right">Cantidad a Facturar</td>' +
-                            //'<td align="right">Importe Facturado <br />sin I.V.A.</td>' +
-                            //'<td align="right">Importe a Facturar <br />sin I.V.A.</td></tr></thead>'
                         );
                         $("#Table").DataTable().clear().draw();
                         $("#Table").DataTable().destroy();
@@ -163,7 +158,6 @@
                                 '<td style="dislay: none;">' + data.SolicitudFacturaDetalleList[i].Descripcion + '</td>' +
                                 '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].CantidadAdquirida) + '</td>' +
 
-
                                 '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].PrecioUnitario ) + '</td>' +
                                 '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].ImporteAdquirido) + '</td>' +
                                 '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].CantidadFacturada ) + '</td>' +
@@ -171,18 +165,6 @@
                                 //'<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].ImporteFacturado ) + '</td>' +
                                 '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].ImporteFacturar ) + '</td>' + '</tr>'
                             );
-
-                            //$("#Table").append('<tr>' +
-                            //    '<td style="dislay: none; text-align:right"><b>' + data.SolicitudFacturaDetalleList[i].Linea + '</b></td>' +
-                            //    '<td style="dislay: none;">' + data.SolicitudFacturaDetalleList[i].Descripcion + '</td>' +
-                            //    '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].CantidadAdquirida) + '</td>' +
-                            //    '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(data.SolicitudFacturaDetalleList[i].PrecioUnitario) + '</td>' +
-                            //    '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].ImporteAdquirido) + '</td>' +
-                            //    '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(data.SolicitudFacturaDetalleList[i].CantidadFacturada) + '</td>' +
-                            //    '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].CantidadFacturar) + '</td>' +
-                            //    '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(data.SolicitudFacturaDetalleList[i].ImporteFacturado) + '</td>' +
-                            //    '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(data.SolicitudFacturaDetalleList[i].ImporteFacturar) + '</td>' + '</tr>'
-                            //);
                         }
                         $("#Table").append('</tbody>');
 
@@ -215,9 +197,11 @@
             $("#nav-2").addClass("active");
 
             $("#btnFile").click(function () {
-                var fileXml = $("#fileXml").get(0).files;
+                var tipoEmpresa = $('#tipoEmpresa').val();
+
+                var fileXml = tipoEmpresa == 1 ? $("#fileXml").get(0).files : null;
                 var filePdf = $("#filePdf").get(0).files;
-                if (fileXml.length != 1) {
+                if (tipoEmpresa == 1 && fileXml.length != 1) {
                     Swal.fire({
                         position: 'middle',
                         icon: 'error',
@@ -236,23 +220,22 @@
                     });
                 }
                 else {
-                    var nombreXml = fileXml[0].name;
+                    var nombreXml = tipoEmpresa == 1 ? fileXml[0].name : '';
                     var nombrePdf = filePdf[0].name;
-                    console.log(nombreXml.substr(nombreXml.length - 3, nombreXml.length));
-                    if (nombreXml.substr(nombreXml.length - 3, nombreXml.length) == 'xml' && nombrePdf.substr(nombrePdf.length - 3, nombrePdf.length) == 'pdf') {
+                    if ((tipoEmpresa != 1 || nombreXml.substr(nombreXml.length - 3, nombreXml.length) == 'xml') && nombrePdf.substr(nombrePdf.length - 3, nombrePdf.length) == 'pdf') {
 
-                        console.log(nombreXml.substr(nombreXml.length - 3, nombreXml.length));
                         var fileData = new FormData();
 
                         var numeroSolicitud = $('#idSolicitudFactura').val() == '' ? null : $('#idSolicitudFactura').val();
-                        console.log('idSolicitudFactura', numeroSolicitud);
-                        fileData.append("fileXml", fileXml[0]);
+                        if (tipoEmpresa == 1) {
+                            fileData.append("fileXml", fileXml[0]);
+                        }
+                        else {
+                            fileData.append("fileXml", filePdf[0]);
+                        }
                         fileData.append("filePdf", filePdf[0]);
                         fileData.append("idSolicitudFactura", numeroSolicitud);
-                        //for (var i = 0; i < files.length; i++) {
-                        //    fileData.append("fileInput", files[i]);
-                        //}
-
+                        console.log(fileData);
                         $.ajax({
                             type: "POST",
                             url: "/Gestion/Upload",
@@ -281,7 +264,6 @@
                         });
                     }
                     else {
-                        console.log(nombreXml.name.substr(fileXml[0].name.length - 3, nombreXml.name.length));
                         Swal.fire({
                             position: 'middle',
                             icon: 'error',
@@ -291,7 +273,7 @@
                         });
                     }
                 }
-        });
+            });
 
 
         });
