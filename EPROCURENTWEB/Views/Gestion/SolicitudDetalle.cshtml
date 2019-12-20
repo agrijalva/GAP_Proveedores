@@ -89,23 +89,24 @@
 
 
 
-<div class="row mt-3" id="divArchivos">
-    <div class="col-sm-3">&nbsp;</div>
+<div class="row mt-5" id="divArchivos">
+    <div class="col-sm-5">&nbsp;</div>
     <div class="col-sm-3">
         <div class="row">
             <label for="descripcion"><b>Adjuntar XML:</b></label>
-            <input type="file" class="ntb-agregarcontacto" id="fileXml" name="ficheroXml" size="40">
+            <input type="file" class="ntb-agregarcontacto1" id="fileXml" name="ficheroXml" size="40">
         </div>
     </div>
-    <div class="col-sm-3">
+    
+    <div class="col-sm-2">
         <div class="row">
             <label for="descripcion"><b>Adjuntar PDF:</b></label>
-            <input type="file" class="ntb-agregarcontacto" id="filePdf" name="ficheroPdf" size="40">
+            <input type="file" class="ntb-agregarcontacto1" id="filePdf" name="ficheroPdf" size="40">
         </div>
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-2">
         <div>&nbsp;</div>
-        <input type="button" class="ntb-agregarcontacto" id="btnFile" value="Enviar" />
+        <input type="button" style="float:right;" class="ntb-agregarcontacto pull-right" id="btnFile" value="Enviar" />
     </div>
 </div>
 
@@ -136,14 +137,20 @@
                         $("#Table").append('<thead class="bg-light-purple"><tr>' +
                             '<td width="50">Linea</td>'+
                             '<td width="130">Texto</td>' +
-                            '<td align="right">Cantidad Total</td>' +
-                            '<td align="right">Monto Total</td>' +
-                            '<td align="right">Cantidad pendiente</td>' +
-                            '<td align="right">Monto Pendiente</td>' +
                             '<td align="right">Cantidad solicitada</td>' +
+                            '<td align="right">Precio unitario</td>' +
                             '<td align="right">Monto solicitado</td>' +
                             '</tr></thead>'
 
+
+                            //'<td width="50">Linea</td>' +
+                            //'<td width="130">Texto</td>' +
+                            //'<td align="right">Cantidad Total</td>' +
+                            //'<td align="right">Monto Total</td>' +
+                            //'<td align="right">Cantidad pendiente</td>' +
+                            //'<td align="right">Monto Pendiente</td>' +
+                            //'<td align="right">Cantidad solicitada</td>' +
+                            //'<td align="right">Monto solicitado</td>' +
 
                             //'<td align="right">Cantidad Adquirida</td>' +
                             //'<td align="right">Precio Unitario</td>' +
@@ -161,15 +168,18 @@
                             $("#Table").append('<tr>' +
                                 '<td style="dislay: none; text-align:left"><b>' + data.SolicitudFacturaDetalleList[i].Linea + '</b></td>' +
                                 '<td style="dislay: none;">' + data.SolicitudFacturaDetalleList[i].Descripcion + '</td>' +
-                                '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].CantidadAdquirida) + '</td>' +
-
-
-                                '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].PrecioUnitario ) + '</td>' +
-                                '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].ImporteAdquirido) + '</td>' +
-                                '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].CantidadFacturada ) + '</td>' +
                                 '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].CantidadFacturar) + '</td>' +
+                                '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].PrecioUnitario) + '</td>' +
+                                '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].ImporteFacturar) + '</td>' +
+                                '</tr>'
+
+                                //'<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].PrecioUnitario ) + '</td>' +
+                                //'<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].ImporteAdquirido) + '</td>' +
+                                //'<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].CantidadFacturada ) + '</td>' +
+                                //'<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].CantidadFacturar) + '</td>' +
                                 //'<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].ImporteFacturado ) + '</td>' +
-                                '<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].ImporteFacturar ) + '</td>' + '</tr>'
+                                //'<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(data.SolicitudFacturaDetalleList[i].ImporteFacturar) + '</td>' +
+                                
                             );
 
                             //$("#Table").append('<tr>' +
@@ -188,16 +198,16 @@
 
                         $('#Table').DataTable({
                             "paging": false,
-                                "bScrollInfinite": true,
-                                "bScrollCollapse": true
-                            });
-
+                            "bScrollInfinite": true,
+                            "bScrollCollapse": true
+                        });
                     },
                 });
         }
 
     function addCommas(nStr)
     {
+        nStr = (Math.round(nStr * 100) / 100).toFixed(2);
         nStr += '';
         x = nStr.split('.');
         x1 = x[0];
