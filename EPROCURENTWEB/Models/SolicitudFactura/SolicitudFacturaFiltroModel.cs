@@ -7,7 +7,7 @@ namespace EprocurementWeb.Models
 {
     public class SolicitudFacturaFiltroModel
     {
-        public int IdProveedor { get; set; }
+        public int? IdProveedor { get; set; }
         public int? IdSolicitudFactura { get; set; }
         public int? IdEstatus { get; set; }
         public DateTime? FechaInicio { get; set; }

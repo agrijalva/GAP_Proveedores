@@ -293,23 +293,25 @@ namespace EprocurementWeb.Controllers
                     {
                         return Json(new { success = false, responseText = "Debe agregar un archivo con extensión XML" }, JsonRequestBehavior.AllowGet);
                     }
+                    documentoList.Add(new DocumentoModel { IdDetalle = 8, NombreDocumento = Path.GetFileName(ficheroXml.FileName), Extension = "xml", File = ficheroXml });
                     var strNombreXml = Path.GetFileName(ficheroXml.FileName);
                     var path = Path.Combine(Server.MapPath("~/Content"), Path.GetFileName(ficheroXml.FileName));
+                    
                     ficheroXml.SaveAs(path);
                     BinaryReader b = new BinaryReader(ficheroXml.InputStream);
                     byte[] binData = b.ReadBytes(ficheroXml.ContentLength);
                     string result = System.Text.Encoding.UTF8.GetString(binData);
                     var document = XDocument.Load(path);
                     var respuestaValidacion = ValidarXml(path, idSolicitudFactura);
-                    if (Directory.Exists(Path.GetDirectoryName(path)))
-                    {
-                        System.IO.File.Delete(path);
-                    }
+                    //if (Directory.Exists(Path.GetDirectoryName(path)))
+                    //{
+                    //    System.IO.File.Delete(path);
+                    //}
                     if (!string.IsNullOrEmpty(respuestaValidacion))
                     {
                         return Json(new { success = false, responseText = respuestaValidacion }, JsonRequestBehavior.AllowGet);
                     }
-                    documentoList.Add(new DocumentoModel { IdDetalle = 8, NombreDocumento = Path.GetFileName(ficheroXml.FileName), Extension = "xml", File = ficheroXml });
+                    
                     nombreXML = Path.GetFileName(ficheroXml.FileName);
                 }
 

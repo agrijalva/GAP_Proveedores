@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -60,7 +61,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
             if (Request.Content.IsMimeMultipartContent("form-data"))
             {
                 var request = HttpContext.Current.Request;
-
+                var eaa = Request.Content;
                 if (request.Files.Count > 0)
                 {
                     var nombreArchivo = request.Files[0].FileName;
@@ -76,7 +77,12 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
                     foreach (string file in request.Files)
                     {
                         var postedFile = request.Files[file];
+                        //postedFile.InputStream
                         var filePath = Path.Combine(rutaF + "\\" + postedFile.FileName);
+                        //using (var fs = new System.IO.FileStream(filePath, System.IO.FileMode.Create))
+                        //{
+                        //    postedFile.InputStream.CopyTo(fs);
+                        //}
                         postedFile.SaveAs(filePath);
                         docfiles.Add(filePath);
                     }
@@ -113,13 +119,12 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
             return estadoResponse;
         }
 
-        [HttpGet]
-        [Route("Documento")]
+        //[HttpGet]
+        //[Route("Documento")]
         public HttpResponseMessage Documento(string image)
         {
             string[] authorsList = image.Split('_');
             string ruta = ConfigurationManager.AppSettings["rutaDocuments"] + "/Facturas/" + authorsList[0] + "/" + authorsList[1] + "/";
-            //string ruta = ConfigurationManager.AppSettings["rutaDocuments"];
             string rutaF = HttpContext.Current.Server.MapPath(ruta);
 
             string r = rutaF + "\\" + image;
@@ -150,6 +155,89 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
                 response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
             }
 
+            return response;
+        }
+
+        [HttpGet]
+        [Route("Documento")]
+        //[Route("GetDocumentoSolicitud")]
+        public HttpResponseMessage GetDocumentoSolicitud(string image)
+        {
+            string[] arrayNombre = image.Split('_');
+            var idSolicitudItem = arrayNombre[1];
+            int idSolicitudFactura = Convert.ToInt32(idSolicitudItem);
+            SolicitudFacturaRequestDTO request = new SolicitudFacturaRequestDTO
+            {
+                SolicitudFacturaFiltro = new SolicitudFacturaFiltroDTO
+                {
+                    IdSolicitudFactura = idSolicitudFactura
+                }
+            };
+            var solicitudResponse = new HandlerSolicitudFactura().GetSolicitudFacturaList(request);
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+            var solicitud = (solicitudResponse != null && solicitudResponse.SolicitudFacturaList.Count > 0) ? solicitudResponse.SolicitudFacturaList.First() : null;
+            if(solicitud != null)
+            {
+                Dictionary<string, byte[]> fileListZip = new Dictionary<string, byte[]>();
+                string[] nombreRuta = solicitud.RutaPDF.Split('_');
+                string ruta = ConfigurationManager.AppSettings["rutaDocuments"] + "/Facturas/" + nombreRuta[0] + "/" + nombreRuta[1] + "/";
+                string rutaF = HttpContext.Current.Server.MapPath(ruta);
+                string r = rutaF + "\\" + solicitud.RutaPDF;
+                if (!File.Exists(r))
+                {
+                    r = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["rutaDocuments"]) + "\\notfound.jpg";
+                }
+                Byte[] b = File.ReadAllBytes(r);
+                fileListZip.Add(solicitud.RutaPDF, b);
+
+                if(!string.IsNullOrEmpty(solicitud.RutaXML))
+                {
+                    r = rutaF + "\\" + solicitud.RutaXML;
+                    if (!File.Exists(r))
+                    {
+                        r = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["rutaDocuments"]) + "\\notfound.jpg";
+                    }
+                    b = File.ReadAllBytes(r);
+                    fileListZip.Add(solicitud.RutaXML, b);
+                }
+
+                var bytesZip = CompressToZip("Archivos" + idSolicitudFactura + ".zip", fileListZip);
+                
+                MemoryStream ms = new MemoryStream(bytesZip);
+                response.Content = new StreamContent(ms);
+                response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/zip");
+                response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
+            }
+            return response;
+
+        }
+
+        private byte[] CompressToZip(string fileName, Dictionary<string, byte[]> fileList)
+        {
+            byte[] response;
+
+            using (var zipArchiveMemoryStream = new MemoryStream())
+            {
+                using (var zipArchive = new ZipArchive(zipArchiveMemoryStream, ZipArchiveMode.Create, true))
+                {
+                    foreach (var file in fileList)
+                    {
+
+                        var zipEntry = zipArchive.CreateEntry(file.Key);
+                        using (var entryStream = zipEntry.Open())
+                        {
+                            using (var tmpMemory = new MemoryStream(file.Value))
+                            {
+                                tmpMemory.CopyTo(entryStream);
+                            };
+
+                        }
+                    }
+                }
+
+                zipArchiveMemoryStream.Seek(0, SeekOrigin.Begin);
+                response = zipArchiveMemoryStream.ToArray();
+            }
             return response;
         }
     }
