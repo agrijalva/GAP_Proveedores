@@ -96,8 +96,8 @@ namespace EprocurementWeb.Controllers
             foreach(var solicitud in solicitudFacturaResponse.SolicitudFacturaList)
             {
                 solicitud.Fecha = solicitud.FechaSolicitud.ToShortDateString();
-                solicitud.RutaPDF = ConfigurationManager.AppSettings["urlApi"] + "api/SolicitudFactura/Documento?image=" + solicitud.RutaPDF;//"TRL891222ST7_4_d7e720c8-bdfd-4597-bbab-e9aa40d8413a.pdf";//documento.NombreArchivo;
-                solicitud.RutaXML = usuarioInfo.TipoEmpresa == 1 ? ConfigurationManager.AppSettings["urlApi"] + "api/SolicitudFactura/Documento?image=" + solicitud.RutaXML : "";//"SQP981128289_29_d7e720c8-bdfd-4597-bbab-e9aa40d8413a.xml";//documento.NombreArchivo;
+                solicitud.RutaPDF = ConfigurationManager.AppSettings["urlApi"] + "api/SolicitudFactura/Documento?idSolicitudFactura=" + solicitud.IdSolicitudFactura;//"TRL891222ST7_4_d7e720c8-bdfd-4597-bbab-e9aa40d8413a.pdf";//documento.NombreArchivo;
+                solicitud.RutaXML = usuarioInfo.TipoEmpresa == 1 ? ConfigurationManager.AppSettings["urlApi"] + "api/SolicitudFactura/Documento?idSolicitudFactura=" + solicitud.IdSolicitudFactura : "";//"SQP981128289_29_d7e720c8-bdfd-4597-bbab-e9aa40d8413a.xml";//documento.NombreArchivo;
             }
             
             return Json(solicitudFacturaResponse.SolicitudFacturaList, JsonRequestBehavior.AllowGet);           
@@ -303,10 +303,10 @@ namespace EprocurementWeb.Controllers
                     string result = System.Text.Encoding.UTF8.GetString(binData);
                     var document = XDocument.Load(path);
                     var respuestaValidacion = ValidarXml(path, idSolicitudFactura);
-                    //if (Directory.Exists(Path.GetDirectoryName(path)))
-                    //{
-                    //    System.IO.File.Delete(path);
-                    //}
+                    if (Directory.Exists(Path.GetDirectoryName(path)))
+                    {
+                        System.IO.File.Delete(path);
+                    }
                     if (!string.IsNullOrEmpty(respuestaValidacion))
                     {
                         return Json(new { success = false, responseText = respuestaValidacion }, JsonRequestBehavior.AllowGet);
