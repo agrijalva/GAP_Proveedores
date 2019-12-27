@@ -1,0 +1,784 @@
+﻿
+@model Eprocurement.Compras.Models.OrdenCompraDTO
+@{
+    ViewBag.Title = "Solicitud de Facturación";
+    Layout = "~/Views/Shared/_LayoutSf.cshtml";
+    var modoVista = ViewBag.Modo;
+}
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="@Url.Content("~/ContentSF/Css/infoCuenta.css")" rel="stylesheet" />
+<link href="@Url.Content("~/ContentSF/validacionProveedor.css")" rel="stylesheet" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<link href="@Url.Content("~/ScriptsSF/handsontable.full.min.css")" rel="stylesheet" />
+<script src="@Url.Content("~/ScriptsSF/handsontable.full.min.js")"></script>
+
+
+<script lang="javascript" src="@Url.Content("~/ScriptsSF/xlsx.full.min.js")"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+<style>
+    .wrappedText {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap !important;
+    }
+    .ht_clone_top th {
+        background-color: #e8e4ee;
+        color: #6f5c99;
+        /*border-radius: 10px;*/
+        box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+        font-size: 10px;
+        font-weight: 600;
+        text-align: center;
+        border: none;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: pre-wrap !important;
+        font-size: 12px;
+    }
+
+
+    .handsontable .changeType {
+        position: absolute;
+        right: 0px;
+        opacity: 0;
+    }
+
+    .handsontable td {
+        text-align: center;
+        border: none;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap !important;
+        border-bottom: 3px solid #f6f6f8;
+        border-top: 3px solid #f6f6f8;
+        font-size: 12px;
+        vertical-align: middle;
+        /*height: 30px;*/
+    }
+
+    .handsontable tr, .handsontable th {
+        border-top: 1px solid gray;
+        border-bottom: 1px solid gray;
+        vertical-align: middle;
+    }
+
+    .celdasEditables {
+        border: 1px solid #CECFD2 !important;
+        border-radius: 5px;
+    }
+
+        .celdasEditables:focus {
+            border: 1px solid #5D468B !important;
+            border-radius: 5px;
+        }
+
+    .celdaTotal::after {
+        content: "Total:";
+    }
+
+    .btn-whitePurple, .btn-purpleWhite {
+        margin-top: 0px;
+        height: 40px;
+    }
+
+    .container {
+        max-width: 1400px !important;
+    }
+
+    .forcedHeaderSwal, .swal2-title {
+        display: block !important;
+        position: absolute !important;
+        width: 100% !important;
+        top: 0px !important;
+        text-align: center !important;
+
+        background: #2c1949 !important;
+        color: white !important;
+        height: 40px !important;
+    }
+    
+</style>
+
+<div class="container" >
+    <div class="row pb-0">
+        <div class="col-sm-12">
+            <h3 class="subtitle">
+                @*//@EprocurementWeb.GlobalResources.RHome.TitlePP*@
+            </h3>
+        </div>
+    </div>
+    
+
+    <div id="handsonOrdenes" style="width:100%;overflow:hidden;height: 100vh;min-height:120px;max-height: 20vh;margin-top:10px;margin-bottom:10px;"></div>
+    <div class="row" style="text-align:right;height:50px;">
+        <div class="col-sm-3">
+
+        </div>
+        <div class="col-sm-3">
+
+        </div>
+        <div class="col-sm-3">
+            <button id="exportarExcel" class="btn btn-whitePurple float-right btnFacturas">
+                <i class="fas "></i> Exportar Excel
+            </button>
+        </div>
+        <div class="col-sm-3">
+            <button id="importarExcel" class="btn btn-whitePurple float-right btnFacturas">
+                <i class="fas "></i> Importar Excel
+            </button>
+            <input type="file" style="display:none;" id="excelInput" name="fileUploader" accept=".xls, .xlsx" />
+        </div>
+    </div>
+    @*<div id="handsonSolicitudes" style="width:100%;overflow:hidden;height: calc(100vh - 435px);"></div>*@
+    <div id="handsonSolicitudes" style="width:100%;overflow:hidden;height: 500px;min-height:120px;max-height: 30vh;margin-top:10px;margin-bottom:10px;"></div>
+    <div class="loadOverlay"></div>
+    <div class="row" style="text-align:right;">
+        <div class="col-sm-3">
+        </div>
+        <div class="col-sm-3">
+            @if (((string)modoVista).ToLower() == "crear")
+            {
+                <button id="btnAceptar" class="btn btn-whitePurple float-right btnFacturas">
+                    <i class="fas "></i> Cancelar
+                </button>
+            }
+            else
+            {
+                <button id="btnBorrador" class="btn btn-whitePurple float-right btnFacturas">
+                    <i class="fas "></i> Borrador
+                </button>
+            }
+
+        </div>
+        <div class="col-sm-3">
+            @if (((string)modoVista).ToLower() == "crear")
+            {
+                <button id="btnGuardar" class="btn btn-whitePurple float-right btnFacturas">
+                    <i class="fas "></i> Guardar
+                </button>
+            }
+            else
+            {
+                <button id="btnCancelar" class="btn btn-whitePurple float-right btnFacturas">
+                    <i class="fas "></i> Cancelar
+                </button>
+            }
+        </div>
+        <div class="col-sm-3">
+            @if (((string)modoVista).ToLower() == "crear")
+            {
+                <button id="btnGenerar" class="btn btn-purpleWhite float-right btnFacturas">
+                    <i class="fas "></i> Generar Solicitud
+                </button>
+            }
+            else
+            {
+                <button id="btnAceptar" class="btn btn-purpleWhite float-right btnFacturas">
+                    <i class="fas "></i> Aceptar
+                </button>
+            }
+
+
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+
+    //Document ready
+    $(document).ready(function () {
+
+        bindings();
+
+    });
+
+    var headersOrdenes = [
+        'Agrupador', 'Centro de costo', 'Tipo presupuesto', 'Total',
+        @{
+            var anioIndex = 1;
+            foreach(var item in new [] { Model.AnioPresupuesto1, Model.AnioPresupuesto2, Model.AnioPresupuesto3, Model.AnioPresupuesto4, Model.AnioPresupuesto5 }.Where(x => x != 0) )
+            {
+                @:'Año presupuesto' +@anioIndex,
+                anioIndex++;
+            }
+        }
+
+        'Pendiente 2019', 'Recibiendo'
+    ];
+    var headersSolicitudes = [
+        'Línea', 'Producto', 'Texto', 'Cantidad',
+        'Cantidad a recibir', 'Cantidad recibida', 'Total recibido', 'Cantidad por ejecutar',
+        'Precio', 'Monto', 'Monto neto', 'Agrupador', 'Centro de costo', 'Tipo presupuesto'
+    ];
+
+    var dataOrdenes = [];
+    //Llenado por razor de renglones tabla cabecero(Ordenes)
+    //dataOrdenes.push(["1", 'Trazo de...', "2170", "C-MLM", "Gasto","Servicios","5008090016","1812.13","148753","245042.87","245042.87"]);
+
+    var dataSolicitudes = [];
+    //Llenado por razor de renglones tabla editable(Solicitudes)
+    @{
+        var agrupadorAnterior = "";
+
+        foreach (var item in Model.lineas)
+        {
+            if (agrupadorAnterior != item.Agrupador)
+            {
+                agrupadorAnterior = item.Agrupador;
+                @:dataOrdenes.push([
+                @:  "@agrupadorAnterior", '@Model.CentroCosto', "@Model.TipoPresupuesto", "@Model.Total",
+                foreach(var anioPres in new [] { Model.AnioPresupuesto1, Model.AnioPresupuesto2, Model.AnioPresupuesto3, Model.AnioPresupuesto4, Model.AnioPresupuesto5 }.Where(x => x != 0))
+                {
+                    @: "@anioPres",
+                }
+                @:  "", ""
+                @:]);
+            }
+
+        }
+
+
+
+        foreach(var item in Model.lineas){
+            @:dataSolicitudes.push(["@item.Linea", '@Html.Raw(item.Producto.Replace("\"", "\\\""))',"@Html.Raw(item.Texto.Replace("\"", "\\\""))", "@item.Cantidad",
+            @: ("@item.CantidadRecibir"!="0"?"@item.CantidadRecibir":""), "@item.CantidadRecibida","@item.TotalRecibido","@item.CantidadXEjecutar",
+            @: "@item.Precio",("@item.Monto"!="0"?"@item.Monto":""),"@item.MontoNeto","@item.Agrupador","@item.CentroCosto","@item.TipoPresupuesto"]);
+
+        }
+
+    }
+    //Renglones *ejemplo para diseño de tabla
+    //dataSolicitudes.push([
+    //    '10', 'Examenes medicos','Pruebas tecnologicas al personal de siapmlml', '7','',
+    //    '0', '0', '7', '310', '0','2170','5008090016','C-MLM', 'GASTO'
+    //]);
+    //dataSolicitudes.push([
+    //    '15', 'Algun producto...', 'Algun texto descripcion...', '4', '',
+    //    '1', '1', '4', '660', '0', '5700', '6009013022', 'C-MLM', 'GASTO'
+    //]);
+    //Ultima fila, necesaria para calculo de totales.
+    //dataSolicitudes.push([]);
+
+    //------------------------------------------------------------------//
+    //                  Configuracion general editor                    //
+    //------------------------------------------------------------------//
+    //Patron para mostrar dinero en tabla
+    var moneyPatern = {
+        pattern: '$0.0,0000',
+        culture: 'es-MX'
+    }
+    var numericPatern = {
+        pattern: '##,##0.00',//pattern: '0.0000',//*Comentar
+        culture:'es-MX'
+    }
+    var colCadena = {};
+    var colNumero = {
+        type: 'numeric',numericFormat:numericPatern
+    };
+    var colMoneda = {
+        type: 'numeric', numericFormat: moneyPatern
+    };
+    ////Configuracion columnas
+    var columnasOrdenes = [
+        colNumero, colCadena, colCadena,  colMoneda,
+        @foreach(var item in new [] { Model.AnioPresupuesto1, Model.AnioPresupuesto2, Model.AnioPresupuesto3, Model.AnioPresupuesto4, Model.AnioPresupuesto5 }.Where(x => x != 0) )
+        {
+        @: colMoneda,
+        }
+
+        colNumero, colNumero
+
+    ];
+
+    var columnasSolicitudes = [
+        colNumero, colCadena, colCadena, colNumero,
+        colNumero, colNumero, colNumero, colNumero,
+        colMoneda, colMoneda, colMoneda, colCadena,
+        colCadena, colCadena
+
+    ];
+    //var sumatoriaColumnas = [
+    //    {
+    //        destinationRow: 0,
+    //        destinationColumn: 9,
+    //        reversedRowCoords: true,
+    //        type: 'sum',
+    //        forceNumeric: true
+    //    },
+    //    {
+    //        destinationRow: 0,
+    //        destinationColumn: 10,
+    //        reversedRowCoords: true,
+    //        type: 'sum',
+    //        forceNumeric: true
+    //    }
+    //]
+
+    ////Configuracion celdas
+    var celdasOrdenes = function (row, col, prop) {
+
+        var cellProperties = {};
+        cellProperties.readOnly = true;
+        return cellProperties;
+    }
+    var celdasSolicitudes = function (row, col, prop) {
+
+        var cellProperties = {};
+        if ( (col != 4 && col != 9) || "@(((string)modoVista).ToLower())"=="ver") {
+            cellProperties.readOnly = true;
+        } else {
+            //if (row != dataSolicitudes.length - 1) {
+                cellProperties.className = cellProperties.className + ' celdasEditables';
+            //}
+
+        }
+
+        //Celdas con tooltip
+        if (col === 1|| col===2) {
+            cellProperties.renderer = commentsRenderer
+        }
+
+        //if (col == 8 && row == dataSolicitudes.length - 1) {
+        //    cellProperties.className = cellProperties.className+" celdaTotal";
+        //}
+
+        return cellProperties;
+    }
+    //Cell renderers
+    function commentsRenderer(instance, td, row, col, prop, value, cellProperties) {
+
+        Handsontable.renderers.TextRenderer.apply(this, arguments);
+
+        //console.log(instance.getDataAtCell(row, col).length);
+
+        //if (instance.getDataAtCell(row, col).length > 64)
+        td.innerHTML = '<div class="wrappedText" title="' + td.innerHTML + '">' + td.innerHTML + '</div>';
+
+    }
+    ////Recuperacion contenedores
+    var containerOrdenes = document.getElementById('handsonOrdenes');
+    var containerSolicitudes = document.getElementById('handsonSolicitudes');
+
+    var hotOrdenes = new Handsontable(containerOrdenes, {
+        data: dataOrdenes,
+        rowHeaders: false,
+        columnHeaderHeight: 60,
+        colHeaders: headersOrdenes,
+        colWidths: '80',
+        rowHeights: '35',
+        filters: true,
+        dropdownMenu: true,
+        stretchV: 'all',
+        stretchH: 'all',
+        licenseKey: 'non-commercial-and-evaluation',
+        columns: columnasOrdenes,
+        cells: celdasOrdenes
+
+
+    });
+    var hotSolicitudes = new Handsontable(containerSolicitudes, {
+        data: dataSolicitudes,
+        rowHeaders: false,
+        columnHeaderHeight: 45,
+        colHeaders: headersSolicitudes,
+        colWidths: '80',
+        rowHeights: '35',
+        filters: true,
+        dropdownMenu: true,
+        stretchH: 'all',
+        licenseKey: 'non-commercial-and-evaluation',
+        columns: columnasSolicitudes,
+        cells: celdasSolicitudes,
+        //columnSummary: sumatoriaColumnas,
+        afterChange: function (changes, source) {
+            if (!changes) {
+                return;
+            }
+            var lstRow = hotSolicitudes.countRows();
+            $.each(changes, function (index, change) {
+                console.log("-----------------------------change: " + JSON.stringify(change));
+                var rowIndex = change[0];
+                var colIndex = change[1];
+                var oldVal = change[2];
+                var newVal = change[3];
+
+                //if (oldVal != newVal && rowIndex != (lstRow - 1) && source!="afterChange") {
+                if (oldVal != newVal && source != "afterChangeSol") {
+
+                    var cantidad = parseFloat(hotSolicitudes.getDataAtCell(rowIndex, 3));
+                    var cantidadPorRec = parseFloat(hotSolicitudes.getDataAtCell(rowIndex, 4));
+                    var cantidadRec = parseFloat(hotSolicitudes.getDataAtCell(rowIndex, 5));
+                    var precio = Number(hotSolicitudes.getDataAtCell(rowIndex, 8));
+                    var monto = Number(hotSolicitudes.getDataAtCell(rowIndex, 9));
+                    var montoNeto = Number(hotSolicitudes.getDataAtCell(rowIndex, 10));
+
+
+                    console.log("-----------------------------");
+                    console.log("Esto trae el monto: " + monto);
+                    console.log("oldval: " + oldVal + " newVal: " + newVal);
+                    console.log("precio: " + precio + " cantidadRec: " + cantidadRec);
+
+                    var colCount = hotOrdenes.countCols();
+                    var rowCount = hotOrdenes.countRows();
+
+                    if (colIndex == 4) {
+                        if (cantidadPorRec > (cantidad - cantidadRec)) {
+                            Swal.fire(
+                                'Dato invalido',
+                                "La cantidad a recibir debe ser menor o igual a la Cantidad menos la cantidad recibida ",
+                                'warning'
+                            );
+                            hotSolicitudes.setDataAtCell(rowIndex, 4, oldVal, "afterChangeSol");
+                        } else {
+                            hotSolicitudes.setDataAtCell(rowIndex, 9, (precio * cantidadPorRec), "afterChangeSol");
+                        }
+                        actualizaTotales(rowCount, colCount);
+
+                    }
+                    else if (colIndex == 9) {
+                        if (monto > (montoNeto - (cantidadRec * precio))) {
+                            Swal.fire(
+                                'Dato invalido',
+                                "El monto no debe superar la cantidad total",
+                                'warning'
+                            );
+                            hotSolicitudes.setDataAtCell(rowIndex, 9, oldVal, "afterChangeSol");
+                        } else {
+                            hotSolicitudes.setDataAtCell(rowIndex, 4, (monto / precio), "afterChangeSol");
+                        }
+                        actualizaTotales(rowCount, colCount);
+
+                    }
+
+                }
+
+            });
+        },
+        afterLoadData: function (initialLoad) {
+            if (initialLoad) {
+                
+                var colCount = hotOrdenes.countCols();
+                var rowCount = hotOrdenes.countRows();
+                setTimeout(function () {
+                    actualizaTotales(rowCount, colCount);
+
+                });
+            }
+            
+        }
+
+    });
+    function actualizaTotales(yPos, xPos) {
+
+        //console.log("actualizando totales columna: " + xPos + " renglones: " + yPos);
+        //Sumamos
+        var recibiendo = 0;
+        var pendiente = 0;
+        for (var i = 0; i < yPos; i++) {
+            recibiendo += Number( hotSolicitudes.getDataAtCell(i, 4) );
+            pendiente += ( Number(hotSolicitudes.getDataAtCell(i, 3)) - Number(hotSolicitudes.getDataAtCell(i, 5)) );
+
+        }
+
+        while (yPos > 0) {
+
+            console.log("actualizando totales columna: " + xPos + " renglones: " + yPos);
+            //Recibiendo
+            hotOrdenes.setDataAtCell(yPos - 1, xPos - 1,recibiendo , "afterChangeSol");
+            //Pendientes
+            hotOrdenes.setDataAtCell(yPos-1, xPos-2, pendiente , "afterChangeSol");
+            yPos--;
+        }
+    
+    }
+    //Recupera los datos de la tabla proporcionada
+    function readTableSol(tabla, estatus) {
+
+        var listaSolicitudes = [];
+
+        //Formamos lista de solicitudes
+        for (var i in tabla) {
+            var solArr = tabla[i];
+            //var solObj= {
+            //    Linea: solArr[0],
+            //    Producto: solArr[1],
+            //    Texto: solArr[2],
+            //    Cantidad: solArr[3],
+            //    CantidadRecibir: solArr[4],
+            //    CantidadRecibida: solArr[5],
+            //    TotalRecibido: solArr[6],
+            //    CantidadXEjecutar: solArr[7],
+            //    Precio: solArr[8],
+            //    Monto: solArr[9],
+            //    MontoNeto: solArr[10],
+            //    Agrupador: solArr[11],
+            //    CentroCosto: solArr[12],
+            //    TipoPresupuesto: solArr[13]
+
+            //}
+            var solObj= {
+                Linea: solArr[0],
+                CantidadRecibir: solArr[4],
+                Monto: solArr[9]
+            }
+            listaSolicitudes.push(solObj);
+        }
+        return listaSolicitudes
+    }
+
+    function bindings() {
+        $('#btnAceptar').click(function () {
+
+           window.location = "@Url.Content("~/SolicitudFacturas/Index")"+"?noOrden=" + "@Model.OrdenCompra";
+        });
+        $('#exportarExcel').click(function () {
+
+            const exportPlugin = hotSolicitudes.getPlugin('exportFile');
+
+            exportPlugin.downloadFile('csv', {
+                filename: 'Ordenes',
+                columnHeaders: true
+            });
+
+        });
+
+         @if( ((string)modoVista).ToLower() != "ver" )
+         {
+             <text>
+                $('#btnGenerar').click(function () {
+
+                    //Obtenemos datos de handsontable
+                    var dataSol = hotSolicitudes.getData();
+
+                    //Llamamos funcion para leer tabla y formatear datos antes del envio
+                    var listaSolicitudes = readTableSol(dataSol);
+
+                    //console.log("hotdata: \n" + JSON.stringify(dataHandson, null, 2));
+                    //console.log("jsonData: \n" + JSON.stringify(listaSolicitudes, null, 2));
+
+                    $.post("@Url.Content("~/SolicitudFacturas/GuardaSolicitudes")",
+                        {
+                            listaSolicitudes: listaSolicitudes,
+                            noOrden: "@Model.OrdenCompra",
+                            estatus:'Pendiente'
+                        },
+                        function (res) {
+                            Swal.fire(
+                                'Solicitud creada',
+                                "Se ha realizado una nueva solicitud con exito",
+                                'success'
+                            ).then(function () {
+                                window.location ="@Url.Content("~/SolicitudFacturas/Index")"+"?noOrden=@Model.OrdenCompra";
+                            });
+
+                        }).fail(function (data) {
+                            Swal.fire(
+                                'Ocurrio un problema',
+                                "Ocurrio un error al generar la solicitud",
+                                'error'
+                            );
+                        });
+                });
+                $('#btnCancelar').click(function () {
+                    (async () => {
+                        const { value: comentario } = await Swal.fire({
+                            title: '<div>Descripcion de la cancelacion</div>',
+                            html:
+                                '<\br>'+
+                                '<label style="margin-top: 35px;float:left;">Ingresa una descripcion para el proveedor</label>'+
+                                '<textarea id="txtAreaCancelar" class="swal2-textarea">'
+                                ,
+                            inputPlaceholder: 'Ingresa una descripcion para el proveedor',
+                            preConfirm: () => {
+                                return [
+                                    document.getElementById('txtAreaCancelar').value
+                                ]
+                            }
+                        })
+
+                        if (comentario && comentario!="") {
+                            
+                            submitCancelaSolicitud(comentario);
+                            
+                            //Swal.fire(`Entered email: ${email}`)
+                        }
+                    })()
+                });
+               
+
+                $('#btnBorrador').click(function () {
+
+                    //Obtenemos datos de handsontable
+                    var dataSol = hotSolicitudes.getData();
+
+                    //Llamamos funcion para leer tabla y formatear datos antes del envio
+                    var listaSolicitudes = readTableSol(dataSol);
+
+
+                    $.post("@Url.Content("~/SolicitudFacturas/GuardaSolicitudes")",
+                        {
+                            listaSolicitudes: listaSolicitudes,
+                            noOrden: "@Model.OrdenCompra",
+                            estatus:'Borrador'
+                        },
+                        function (res) {
+                            Swal.fire(
+                                'Solicitud almacenada',
+                                "Se solicitud fue almacenada como borrador de manera exitosa",
+                                'success'
+                            ).then(function () {
+                                window.location = "@Url.Content("~/SolicitudFacturas/Index")"+"?noOrden=" + "@Model.OrdenCompra";
+                            });
+
+                        }).fail(function (data) {
+                            Swal.fire(
+                                'Ocurrio un problema',
+                                "Ocurrio un problema al guardar la solicitud como borrador",
+                                'error'
+                            );
+                        });
+                });
+
+                $('#importarExcel').click(function () {
+
+                    //Se selecciona archivo
+                    $('#excelInput').click();
+
+                });
+
+                $('#excelInput').change(function (evt) {
+
+                    var selectedFile = evt.target.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function (event) {
+                        var data = event.target.result;
+                        var workbook = XLSX.read(data, {
+                            type: 'binary'
+                        });
+                        console.log('file loaded');
+                        workbook.SheetNames.forEach(function (sheetName) {
+
+                            var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                            insertRowsHandson(XL_row_object);
+                            //var json_object = JSON.stringify(XL_row_object);
+                            //document.getElementById("jsonObject").innerHTML = json_object;
+                        })
+                        console.log('excel parsed');
+                    };
+                    reader.onerror = function (event) {
+                        console.error("File could not be read! Code " + event.target.error.code);
+                    };
+
+                    reader.readAsBinaryString(selectedFile);
+
+                });
+             </text>
+
+         }
+         else
+         {
+             <text> 
+                $('#btnGenerar, #btnCancelar, #btnBorrador, #importarExcel ').click(function () {
+                    Swal.fire(
+                        'Accion inhabilitada',
+                        "No es posible realizar esta accion cuando estas en modo de solo lectura",
+                        'info'
+                    );
+                });
+            </text>
+         }
+
+
+    }
+
+    function insertRowsHandson(nvosRenglones) {
+
+        var hotData = hotSolicitudes.getData();
+        console.log( "Esto trae la handsontable: \n"+JSON.stringify(hotData, null, 2) )
+
+        console.log( "Esto trae json renglones importados :\n" + JSON.stringify(nvosRenglones, null, 2) );
+
+        //var ultimoRenglon = hotSolicitudes.countRows();
+
+        //Buscamos renglones para editar su valor
+        for (var i = 0; i < nvosRenglones.length; i++) {
+
+            var renglonActual = nvosRenglones[i];
+            console.log("renglonActual:" + JSON.stringify(renglonActual,null,2) );
+
+            if (!renglonActual["Monto"] && !renglonActual["Cantidad a recibir"]) {
+                continue;
+            }
+
+            var editIndex = hotData.findIndex(function (lineaHot) {
+                return lineaHot[0] == renglonActual["Línea"];
+            });
+
+            //Insertamos renglon nuevo despues del penultimo actual
+            //hotSolicitudes.alter('insert_row', (ultimoRenglon+i) , 1);
+            var j = 0;
+            for (var key in renglonActual) {
+
+                var celdaActual = renglonActual[key];
+
+                //Realizamos validacion de posicion debidio a que el parseo csv->json suprime renglones vacios
+                if (j == 4 && key != "Cantidad a recibir") j++;
+                if (j == 9 && key != "Monto") j++;
+
+                //console.log("celdaActual("+key+"): " + celdaActual );
+                hotSolicitudes.setDataAtCell(( editIndex ) , j, celdaActual );
+
+                j++;
+            }
+
+        }
+
+        console.log("Termino insercion de nuevas solicitudes");
+
+        $('#excelInput').val('');
+
+        hotSolicitudes.render();
+
+    }
+    function submitCancelaSolicitud() {
+
+        //Obtenemos datos de handsontable
+        var dataSol = hotSolicitudes.getData();
+
+        //Llamamos funcion para leer tabla y formatear datos antes del envio
+        var listaSolicitudes = readTableSol(dataSol);
+
+        //Obtenemos comentario
+        //var comentario = $('#txtAreaCancelar').val();
+
+        $.post("@Url.Content("~/SolicitudFacturas/GuardaSolicitudes")",
+            {
+                listaSolicitudes: listaSolicitudes ,
+                noOrden: "@Model.OrdenCompra",
+                comentario: comentario,
+                estatus:'Cancelada'
+            },
+            function (res) {
+                Swal.fire(
+                    'Solicitud cancelada',
+                    "Se a cancelo con exito la solicitud",
+                    'success'
+                ).then(function () {
+                    window.location = "@Url.Content("~/SolicitudFacturas/Index")"+"?noOrden=" + "@Model.OrdenCompra";
+                });
+
+            }).fail(function (data) {
+                Swal.fire(
+                    'Ocurrio un problema',
+                    "Ocurrio un error al cancelar la solicitud",
+                    'error'
+                );
+            });
+    }
+</script>
+

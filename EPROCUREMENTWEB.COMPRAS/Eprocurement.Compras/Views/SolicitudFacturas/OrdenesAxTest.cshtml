@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "OrdenesAxTest";
+    Layout = "~/Views/Shared/_LayoutInit.cshtml";
+}
+
+<link href="~/Content/Css/infoCuenta.css" rel="stylesheet" />
+<link href="~/Content/validacionProveedor.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<h2>Ordenes Ax </h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="accordion" id="accordionExample">
+            <div class="card card-border">
+                <div class="card-header" id="headingOne">
+                    <span class="card-titulo">
+                        Selector de ordenes de compra:
+                        <button class="btn btn-link collapsed float-right" type="button" data-toggle="collapse" data-target="#detallecontacto" aria-expanded="false" aria-controls="collapseThree">
+                            <i class="fas fa-chevron-up collapse-color"></i>
+                        </button>
+                    </span>
+                </div>
+                <div id="detalleOrden" class="show collapse in" aria-labelledby="headingOne" data-parent="#accordionExample" aria-expanded="true" style="">
+                    <div>
+                        <div class="card-body">
+                            @*Renglon Informacion*@
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="label-formulario ordenPrueba" data-orden="AGU-OC-0001021">AGU-OC-0001021</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="label-formulario ordenPrueba" data-orden="AGU-OC-0001076">AGU-OC-0001076</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="label-formulario ordenPrueba" data-orden="AGU-OC-0001104">AGU-OC-0001104</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="label-formulario ordenPrueba" data-orden="AGU-OC-0001113">AGU-OC-0001113</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            @*Renglon Informacion*@
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="label-formulario ordenPrueba" data-orden="AGU-OC-0000003">AGU-OC-0000003</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="label-formulario ordenPrueba" data-orden="AGU-OC-0000004">AGU-OC-0000004</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="label-formulario ordenPrueba" data-orden="AGU-OC-0000005">AGU-OC-0000005</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="label-formulario ordenPrueba" data-orden="AGU-OC-0000006">AGU-OC-0000006</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //Inicia ready
+    $(document).ready(function () {
+
+        //Redireccion a index de solicitud facturas con id de orden
+        $('.ordenPrueba').click(function () {
+
+            var orden = $(this).attr('data-orden');
+            
+            window.location = "@Url.Content("~/SolicitudFacturas/Index")"+"?noOrden="+orden;
+            
+        });
+
+    });
+    //Termina ready
+
+</script>

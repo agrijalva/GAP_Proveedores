@@ -1,0 +1,255 @@
+﻿@model Eprocurement.Compras.Models.OrdenDTO
+
+
+@{
+    ViewBag.Title = "Solicitud de Facturación";
+    Layout = "~/Views/Shared/_LayoutSF.cshtml";
+}
+<link href="~/ContentSF/Css/infoCuenta.css" rel="stylesheet" />
+<link href="~/ContentSF/validacionProveedor.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+<link href="~/ContentSF/jquery-ui-1.12.1.css" rel="stylesheet" />
+@*<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">*@
+@*<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+        crossorigin="anonymous"></script>*@
+<script src="~/ScriptsSF/jquery-ui-1.12.1.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css">
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" ></script>*@
+
+<script src="@Url.Content("~/ScriptsSF/Moment.js")" ></script>
+
+
+
+<div class="container">
+    <div class="row pb-0">
+        <div class="col-sm-12">
+            <h3 class="subtitle">
+                @*//@EprocurementWeb.GlobalResources.RHome.TitlePP*@
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="accordion" id="accordionExample">
+                <div class="card card-border">
+                    <div class="card-header" id="headingOne">
+                        <span class="card-titulo">
+                            Orden: @Model.NoOrdenCompra
+                            <button class="btn btn-link collapsed float-right" type="button" data-toggle="collapse" data-target="#detallecontacto" aria-expanded="false" aria-controls="collapseThree">
+                                <i class="fas fa-chevron-up collapse-color"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div id="detalleOrden" class="show collapse in" aria-labelledby="headingOne" data-parent="#accordionExample" aria-expanded="true" style="">
+                        <div>
+                            <div class="card-body">
+
+                                @*Renglon Informacion*@
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="label-formulario">Descripción</label><br />
+                                            <label>@Model.Descripcion</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="label-formulario">Razón Social</label><br />
+                                            <label>@Model.RazonSocial</label>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mt-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12 h-filtro">Filtrar por</div>
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label class="control-label text-right">Número de solicitud</label>
+                                    <input id="inputNoSolicitud" type="text" class="form-control" />
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="control-label text-right">Estatus</label>
+                                    <select id="selectEstatus" class="form-control">
+                                        <option value="" >Seleccione...</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label class="control-label text-right">Fecha Inicio</label>
+                                    <input id="inputFechaInicio" type="text" class="form-control" placeholder="    /    /" />
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="control-label text-right">Fecha Fin</label>
+                                    <input id="inputFechaFin" type="text" class="form-control" placeholder="    /    /" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4" style="text-align:center;">
+                            <button id="btnBuscar" class="btn btn-search btn-whitePurple">
+                                <i class="fas fa-search"></i> Buscar
+                            </button>
+                            <button id="btnNvaSolicitud" class="btn btn-purpleWhite">
+                                <i class="fas "></i> Nueva Solicitud
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row mt-3">
+        <div class="col-sm-12">
+            <table id="Table" class="dataTable dataTables_wrapper ">
+                <thead class="bg-light-purple">
+                    <tr>
+                        <td width="80">Número de solicitud</td>
+                        @*<td width="80">Número de recepción</td>*@
+                        <td>Fecha de solicitud</td>
+                        <td>Importe</td>
+                        <td>Estatus</td>
+                        @*<td>Número de Orden de Compra</td>*@
+                        <td>PDF</td>
+                        <td>XML</td>
+                        <td>Accion</td>
+                    </tr>
+                </thead>
+                <tbody>
+                 
+                    @foreach (var item in Model.solicitud)
+                    {
+                        <tr class="trSolicitud">
+                            <td class="tdSolicitudId" ><b>@item.IdSolicitudFactura</b></td>
+                            @*<td>@item.NoRecepcion</td>*@
+                            <td class="tdSolicitudFecha" >@item.FechaSolicitud</td>
+                            <td class="tdSolicitudImporte">$ 354,456.00</td>
+                            <td class="tdSolicitudEstatus" ><span class="text-warning"><b>@item.Estatus</b></span></td>
+                            <td class="tdSolicitudIdPDF" >@item.PDF</td>
+                            <td class="tdSolicitudIdXML" >@item.XML</td>
+                            <td class="tdSolicitudIdAccion" ><a href="#" class="btnVer">@(item.Estatus=="Borrador"? "Editar": "Ver")</a></td> 
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        LlenadoEstatus();
+
+        $('.btnVer').click(function () {
+            var orden = "@Model.NoOrdenCompra";
+
+            window.location = "@Url.Content("~/SolicitudFacturas/Create")"+"?noOrden=" + orden+"&accion="+$(this).text().toLowerCase() ;
+        })
+
+        $('#btnNvaSolicitud').click(function () {
+
+            var orden = "@Model.NoOrdenCompra";
+
+            window.location = "@Url.Content("~/SolicitudFacturas/Create")"+"?noOrden=" + orden+"&accion=crear";
+
+        });
+
+        $('#btnBuscar').click(function () {
+
+            //Leemos filtros introducidos
+            var filtroSolicitud = $('#inputNoSolicitud').val();
+            var filtroEstatus = $('#selectEstatus').val();
+            var filtroFechaInicio = $('#inputFechaInicio').val();
+            var filtroFechaFin = $('#inputFechaFin').val();
+            var renglones = $('.trSolicitud');
+
+            //Restauramos renglones ocultos con anterioridad
+            renglones.css('display','');
+
+            //Procesamos cada filtro en orden
+            if (filtroSolicitud != "") {
+
+                renglones.find('.tdSolicitudId').not(function () {
+                    return $(this).find('b').text().indexOf(filtroSolicitud) != -1;
+                }).closest('.trSolicitud').css('display', 'none');
+
+            }
+            if (filtroEstatus != "") {
+
+                renglones.find('.tdSolicitudEstatus').not(function () {
+                    return $(this).find('b').text().toLowerCase().indexOf(filtroEstatus.toLowerCase()) != -1;
+                }).closest('.trSolicitud').css('display', 'none');
+
+            }
+            if (filtroFechaInicio != "") {
+                renglones.find('.tdSolicitudFecha').not(function () {
+                    return moment( $(this).html().split(' ')[0], "DD/MM/YYYY").toDate() >= moment(filtroFechaInicio, "DD/MM/YYYY").toDate();
+                }).closest('.trSolicitud').css('display', 'none');
+            }
+            if (filtroFechaFin != "") {
+                renglones.find('.tdSolicitudFecha').not(function () {
+                    return moment($(this).html().split(' ')[0], "DD/MM/YYYY").toDate() <= moment(filtroFechaFin, "DD/MM/YYYY").toDate();
+                }).closest('.trSolicitud').css('display', 'none');
+            }
+            
+
+        });
+
+        //$('#inputNoSolicitud').datepicker();
+        $('#inputFechaInicio').datepicker({
+            regional: 'es',
+            closeText: 'Cerrar',
+            dateFormat: 'dd/mm/yy',
+            currentText: 'Hoy',
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié;', 'Juv', 'Vie', 'Sáb'],
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+            showButtonPanel: true,
+            changeMonth: true,
+            changeYear: true
+        });
+        $('#inputFechaFin').datepicker({
+            regional: 'es',
+            closeText: 'Cerrar',
+            dateFormat: 'dd/mm/yy',
+            currentText: 'Hoy',
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié;', 'Juv', 'Vie', 'Sáb'],
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+            showButtonPanel: true,
+            changeMonth: true,
+            changeYear: true
+        });
+    });
+    function LlenadoEstatus() {
+        $.post(
+            '@Url.Content("~/SolicitudFacturas/GetOpcionesEstatus")',
+            {},
+            function (data) {
+                $("#selectEstatus option").remove();
+                $('#selectEstatus').append($('<option></option>').text("Seleccione...").val(""));
+                $.each(data.option, function (index, item) {
+                    $("#selectEstatus").append($("<option></option>").text(item.Nombre).val(item.Nombre) );
+                });
+            }
+        );
+    }
+</script>
