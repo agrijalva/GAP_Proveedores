@@ -161,11 +161,11 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Host.Http.Controllers
         [HttpGet]
         [Route("Documento")]
         //[Route("GetDocumentoSolicitud")]
-        public HttpResponseMessage GetDocumentoSolicitud(string image)
+        public HttpResponseMessage GetDocumentoSolicitud(int idSolicitudFactura)
         {
-            string[] arrayNombre = image.Split('_');
-            var idSolicitudItem = arrayNombre[1];
-            int idSolicitudFactura = Convert.ToInt32(idSolicitudItem);
+            //string[] arrayNombre = image.Split('_');
+            //var idSolicitudItem = arrayNombre[1];
+            //int idSolicitudFactura = Convert.ToInt32(idSolicitudItem);
             SolicitudFacturaRequestDTO request = new SolicitudFacturaRequestDTO
             {
                 SolicitudFacturaFiltro = new SolicitudFacturaFiltroDTO
