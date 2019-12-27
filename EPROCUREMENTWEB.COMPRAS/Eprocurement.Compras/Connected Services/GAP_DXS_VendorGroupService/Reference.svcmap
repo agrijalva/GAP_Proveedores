@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="d4c69943-6108-4cad-b9f9-0d5f9e0edd83" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="DXS_VendorGroupService.wsdl" MetadataType="Wsdl" ID="dd7bd973-b8d9-4c94-9982-4821d9e78c0c" SourceId="1" SourceUrl="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService?wsdl=wsdl0" />
+    <MetadataFile FileName="DXS_VendorGroupService.xsd" MetadataType="Schema" ID="d3321461-297b-4797-97c1-245716725836" SourceId="1" SourceUrl="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService?xsd=xsd5" />
+    <MetadataFile FileName="DXS_VendorGroupService1.xsd" MetadataType="Schema" ID="84a573f6-1a92-462c-abfe-d17c0bd572ee" SourceId="1" SourceUrl="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService?xsd=xsd0" />
+    <MetadataFile FileName="DXS_VendorGroupService2.xsd" MetadataType="Schema" ID="50843e33-219b-40ea-8951-ebde29261660" SourceId="1" SourceUrl="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService?xsd=xsd4" />
+    <MetadataFile FileName="DXS_VendorGroupService3.xsd" MetadataType="Schema" ID="18663476-cfc8-4803-aac7-a171d478991a" SourceId="1" SourceUrl="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService?xsd=xsd3" />
+    <MetadataFile FileName="DXS_VendorGroupService4.xsd" MetadataType="Schema" ID="d611b988-2ffc-4fb3-991a-f936b2eeae21" SourceId="1" SourceUrl="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService?xsd=xsd1" />
+    <MetadataFile FileName="DXS_VendorGroupService5.xsd" MetadataType="Schema" ID="5524df45-084a-4add-b122-f2b435702052" SourceId="1" SourceUrl="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService?xsd=xsd6" />
+    <MetadataFile FileName="DXS_VendorGroupService6.xsd" MetadataType="Schema" ID="6f668755-d59b-4ae0-a0e6-22b609b1aaeb" SourceId="1" SourceUrl="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService?xsd=xsd2" />
+    <MetadataFile FileName="DXS_VendorGroupService1.wsdl" MetadataType="Wsdl" ID="65f16393-23be-48d7-8fa7-50e58a2da272" SourceId="1" SourceUrl="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService" />
+    <MetadataFile FileName="DXS_VendorGroupService7.xsd" MetadataType="Schema" ID="02603468-7d2b-4985-a20a-539069e4c067" SourceId="1" SourceUrl="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService?xsd=xsd7" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -16,7 +16,24 @@
     <title>@ViewBag.Title</title>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .cl-o {
+            position: absolute;
+            font-size: 14px;
+            right:calc(50%);
+            margin-top:-28px;
+            background-color:white;
+            width: 15px;
+        }
 
+        .btn-radius{
+            border-radius:50px;
+        }
+
+        .btn-radius:hover {
+            border-radius: 50px !important;
+        }
+    </style>
 </head>
 <body>
     <div class="background row" style="padding-bottom: 0px;">
@@ -78,10 +95,13 @@
                             <div class="mt-2">
                                 @ViewBag.Error
                             </div>
-                            <div class="mt-2">
+                            <div class="mt-3">
                                 <div class="a-options" style="text-align:center">
-                                    @Html.ActionLink("Olvidaste tu contraseña", "IniciarRecuperacion", "Seguridad")
+                                    @Html.ActionLink("¿Olvidaste tu contraseña?", "IniciarRecuperacion", "Seguridad")
                                 </div>
+                            </div>
+                            <div>
+                                <hr /> <div class="cl-o">o</div>
                             </div>
                             <div class="mt-2">
                                 <div class="a-options" style="text-align:center">

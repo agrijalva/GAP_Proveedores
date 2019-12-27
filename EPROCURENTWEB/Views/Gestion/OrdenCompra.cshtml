@@ -74,7 +74,7 @@
 
                      //var link = '@Html.ActionLink(" ", "OrdenDetalle", "Gestion", new { OrdenCompra = "_OC_" }, new { @class = "btn-ver" })';
                      //link = link.replace('_OC_', data[i].OrdenCompra);
-                     var link = '<a class="btn-ver" href="javascript:openLink(\'' + data[i].OrdenCompra + '\',\'' + data[i].Moneda + '\',\'' + data[i].Empresa + '\',\'' + data[i].Descripcion + '\',\'' + data[i].Importe + '\',\'' + data[i].Estatus + '\');">&nbsp;</a>';
+                     var link = '<a class="btn-ver" href="javascript:openLink(\'' + data[i].OrdenCompra + '\',\'' + data[i].Moneda + '\',\'' + data[i].Empresa + '\',\'' + data[i].Descripcion + '\',\'' + data[i].Importe + '\',' + data[i].IdEstatus + ',\'' + data[i].Estatus + '\');">&nbsp;</a>';
 
                      var color = ''
                      switch (data[i].IdEstatus) {
@@ -121,12 +121,13 @@
         return x1 + x2;
     }
 
-    function openLink(oc, moneda, aeropuerto, descripcion, importe, estatus) {
+    function openLink(oc, moneda, aeropuerto, descripcion, importe, idEstatus, estatus) {
         var objData = {
             moneda: moneda,
             aeropuerto: aeropuerto,
             descripcion: descripcion,
             importe: importe,
+            idEstatus: idEstatus,
             estatus: estatus
         };
         localStorage.setItem("OC", JSON.stringify(objData));

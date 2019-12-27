@@ -278,6 +278,17 @@ a:hover {
     font-weight:600;
 }
 
+.ntb-cerrar {
+    border-radius: 50px;
+    border: solid 1px #432979;
+    background-color: #432979;
+    color: white;
+    padding: 5px 35px;
+    font-size: 12px;
+    font-weight: 600;
+    float:right;
+}
+
 .BTN-DELETE-CONTACTO {
     border: none;
     padding-top: 0px;

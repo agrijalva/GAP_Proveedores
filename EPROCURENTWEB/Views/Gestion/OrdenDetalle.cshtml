@@ -97,6 +97,15 @@
         $("#lblEstatus").html(oc.estatus);
         $("#lblOC").html($('#OrdenCompra').val());
 
+        switch (oc.idEstatus) {
+            case 1: $("#lblEstatus").css('color', '#f9a32f'); // Pendiente
+                break;
+            case 2: $("#lblEstatus").css('color', '#448aff'); // En Proceso
+                break;
+            case 3: $("#lblEstatus").css('color', '#43ac3e') // Aceptada
+                break;
+        }
+
         var jsonData = JSON.stringify({
             OrdenCompra: $('#OrdenCompra').val() == '' ? null : $('#OrdenCompra').val()
         });

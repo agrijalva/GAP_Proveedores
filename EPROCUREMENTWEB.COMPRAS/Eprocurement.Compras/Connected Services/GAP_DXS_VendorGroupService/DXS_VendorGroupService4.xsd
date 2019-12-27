@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Dynamics.Ax.Application" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Dynamics.Ax.Application" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Microsoft.Dynamics.Ax.Xpp" />
+  <xs:import schemaLocation="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="VendorAddressContract">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/Microsoft.Dynamics.Ax.Xpp" base="q1:XppObjectBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AccountNum" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="BuildingCompliment" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="City" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Company" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CountryId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="County" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="District" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IsPrimary" type="q1:NoYes" />
+          <xs:element minOccurs="0" name="Number" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PartyLocation" type="xs:long" />
+          <xs:element minOccurs="0" name="Role" type="tns:LogisticsLocationRoleType" />
+          <xs:element minOccurs="0" name="State" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Street" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ZipCode" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="VendorAddressContract" nillable="true" type="tns:VendorAddressContract" />
+  <xs:simpleType name="LogisticsLocationRoleType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Invoice" />
+      <xs:enumeration value="Delivery" />
+      <xs:enumeration value="SWIFT">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Payment">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Service">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Home">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Other">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Business">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">9</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RemitTo">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ShipCarrierThirdPartyShipping">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">11</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Statement">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">12</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FixedAsset">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">15</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="OneTime">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">16</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Recruit">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">17</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SMS">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">18</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Lading_W">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">101</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Unlading_W">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">102</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Consignment_IN">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">103</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="LogisticsLocationRoleType" nillable="true" type="tns:LogisticsLocationRoleType" />
+  <xs:complexType name="VendorAddressResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/Microsoft.Dynamics.Ax.Xpp" base="q2:XppObjectBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="PartyLocation" type="xs:long" />
+          <xs:element minOccurs="0" name="ResponseMessageStr" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VendorAddressCreated" type="xs:int" />
+          <xs:element minOccurs="0" name="parmAddresList" nillable="true" type="tns:ArrayOfVendorAddressContract" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="VendorAddressResponse" nillable="true" type="tns:VendorAddressResponse" />
+  <xs:complexType name="ArrayOfVendorAddressContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="VendorAddressContract" nillable="true" type="tns:VendorAddressContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfVendorAddressContract" nillable="true" type="tns:ArrayOfVendorAddressContract" />
+  <xs:complexType name="VendorContactContract">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/Microsoft.Dynamics.Ax.Xpp" base="q3:XppObjectBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AccountNum" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Company" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IsPrimary" type="q3:NoYes" />
+          <xs:element minOccurs="0" name="Locator" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LocatorExtension" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PartyLocation" type="xs:long" />
+          <xs:element minOccurs="0" name="Type" type="tns:LogisticsElectronicAddressMethodType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="VendorContactContract" nillable="true" type="tns:VendorContactContract" />
+  <xs:simpleType name="LogisticsElectronicAddressMethodType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Phone" />
+      <xs:enumeration value="Email" />
+      <xs:enumeration value="URL" />
+      <xs:enumeration value="Telex" />
+      <xs:enumeration value="Fax" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="LogisticsElectronicAddressMethodType" nillable="true" type="tns:LogisticsElectronicAddressMethodType" />
+  <xs:complexType name="VendorContactResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/Microsoft.Dynamics.Ax.Xpp" base="q4:XppObjectBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="PartyLocation" type="xs:long" />
+          <xs:element minOccurs="0" name="ResponseMessageStr" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VendorContactCreated" type="xs:int" />
+          <xs:element minOccurs="0" name="parmContactList" nillable="true" type="tns:ArrayOfVendorContactContract" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="VendorContactResponse" nillable="true" type="tns:VendorContactResponse" />
+  <xs:complexType name="ArrayOfVendorContactContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="VendorContactContract" nillable="true" type="tns:VendorContactContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfVendorContactContract" nillable="true" type="tns:ArrayOfVendorContactContract" />
+  <xs:complexType name="VendorContract">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q5="http://schemas.datacontract.org/2004/07/Microsoft.Dynamics.Ax.Xpp" base="q5:XppObjectBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AccountIdreference" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CurrencyCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DataAreaId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DirPartyName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="GroupId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LanguageId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OperationTypeMx" type="tns:VendorOperationType_MX" />
+          <xs:element minOccurs="0" name="PaymMode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PaymTermId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TaxGroup" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VendorTypeMx" type="tns:VendorType_MX" />
+          <xs:element minOccurs="0" name="parmAddresList" nillable="true" type="tns:ArrayOfVendorAddressContract" />
+          <xs:element minOccurs="0" name="parmContactList" nillable="true" type="tns:ArrayOfVendorContactContract" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="VendorContract" nillable="true" type="tns:VendorContract" />
+  <xs:simpleType name="VendorOperationType_MX">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Blank" />
+      <xs:enumeration value="ProServices">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RentLease">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Other">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">85</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="VendorOperationType_MX" nillable="true" type="tns:VendorOperationType_MX" />
+  <xs:simpleType name="VendorType_MX">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Blank" />
+      <xs:enumeration value="DomesticVendor">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ForeignVendor">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DomesticGlobal">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">15</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="VendorType_MX" nillable="true" type="tns:VendorType_MX" />
+  <xs:complexType name="VendorResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q6="http://schemas.datacontract.org/2004/07/Microsoft.Dynamics.Ax.Xpp" base="q6:XppObjectBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AccountNum" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ResponseMessageStr" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VendorCreated" type="xs:int" />
+          <xs:element minOccurs="0" name="VendorRecId" type="xs:long" />
+          <xs:element minOccurs="0" name="parmAddresList" nillable="true" type="tns:ArrayOfVendorAddressContract" />
+          <xs:element minOccurs="0" name="parmContactList" nillable="true" type="tns:ArrayOfVendorContactContract" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="VendorResponse" nillable="true" type="tns:VendorResponse" />
+</xs:schema>

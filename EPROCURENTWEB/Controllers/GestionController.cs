@@ -133,26 +133,44 @@ namespace EprocurementWeb.Controllers
                     DataTable dataTable = new DataTable();
                     dataTable.Columns.Add("ID Lineas", typeof(int));
                     dataTable.Columns.Add("Descripción", typeof(string));
-                    dataTable.Columns.Add("Cantidad Adquirida", typeof(decimal));
-                    dataTable.Columns.Add("Precio Unitario", typeof(decimal));
-                    dataTable.Columns.Add("Importe Adquirido", typeof(decimal));
-                    dataTable.Columns.Add("Cantidad Facturada", typeof(decimal));
-                    dataTable.Columns.Add("Cantidad a Facturar", typeof(decimal));
-                    dataTable.Columns.Add("Importe Facturado sin I.V.A.", typeof(decimal));
-                    dataTable.Columns.Add("Importe a Facturar sin I.V.A.", typeof(decimal));
+                    dataTable.Columns.Add("Cantidad Total", typeof(decimal));
+                    dataTable.Columns.Add("Monto Total", typeof(decimal));
+                    dataTable.Columns.Add("Cantidad Pendiente", typeof(decimal));
+                    dataTable.Columns.Add("Monto Pendiente", typeof(decimal));
+                    dataTable.Columns.Add("Cantidad Solicitada", typeof(decimal));
+                    dataTable.Columns.Add("Monto Solicitado", typeof(decimal));
+
+                    //dataTable.Columns.Add("ID Lineas", typeof(int));
+                    //dataTable.Columns.Add("Descripción", typeof(string));
+                    //dataTable.Columns.Add("Cantidad Adquirida", typeof(decimal));
+                    //dataTable.Columns.Add("Precio Unitario", typeof(decimal));
+                    //dataTable.Columns.Add("Importe Adquirido", typeof(decimal));
+                    //dataTable.Columns.Add("Cantidad Facturada", typeof(decimal));
+                    //dataTable.Columns.Add("Cantidad a Facturar", typeof(decimal));
+                    //dataTable.Columns.Add("Importe Facturado sin I.V.A.", typeof(decimal));
+                    //dataTable.Columns.Add("Importe a Facturar sin I.V.A.", typeof(decimal));
 
                     foreach (var solicitud in solicitudDetalleResponse.SolicitudFacturaDetalleList)
                     {
                         DataRow row = dataTable.NewRow();
                         row[0] = solicitud.Linea;
                         row[1] = solicitud.Descripcion;
-                        row[2] = solicitud.CantidadAdquirida;
-                        row[3] = solicitud.PrecioUnitario;
-                        row[4] = solicitud.ImporteAdquirido;
-                        row[5] = solicitud.CantidadFacturada;
-                        row[6] = solicitud.CantidadFacturar;
-                        row[7] = solicitud.ImporteFacturado;
-                        row[8] = solicitud.ImporteFacturar;
+                        row[2] = solicitud.CantidadTotal;
+                        row[3] = solicitud.MontoTotal;
+                        row[4] = solicitud.CantidadPendiente;
+                        row[5] = solicitud.MontoPendiente;
+                        row[6] = solicitud.CantidadSolicitada;
+                        row[7] = solicitud.MontoSolicitada;
+
+                        //row[0] = solicitud.Linea;
+                        //row[1] = solicitud.Descripcion;
+                        //row[2] = solicitud.CantidadAdquirida;
+                        //row[3] = solicitud.PrecioUnitario;
+                        //row[4] = solicitud.ImporteAdquirido;
+                        //row[5] = solicitud.CantidadFacturada;
+                        //row[6] = solicitud.CantidadFacturar;
+                        //row[7] = solicitud.ImporteFacturado;
+                        //row[8] = solicitud.ImporteFacturar;
                         dataTable.Rows.Add(row);
                     }
 
@@ -387,10 +405,12 @@ namespace EprocurementWeb.Controllers
                 //var rfcProveedor = xmlInput.Root.Element(df + "Emisor").Attributes().First().Value;
                 var rfcRecpetor = xmlInput.Root.Element(df + "Receptor").Attribute("rfc") != null ? xmlInput.Root.Element(df + "Receptor").Attribute("rfc").Value : xmlInput.Root.Element(df + "Receptor").Attribute("Rfc").Value;
                 //var rfcRecpetor = xmlInput.Root.Element(df + "Receptor").Attributes().First().Value;
+                //var total = xmlInput.Root.Attribute("total") != null ? Convert.ToDecimal(xmlInput.Root.Attribute("total").Value) : Convert.ToDecimal(xmlInput.Root.Attribute("Total").Value);
+                var subtotal = xmlInput.Root.Attribute("subtotal") != null ? Convert.ToDecimal(xmlInput.Root.Attribute("subtotal").Value) : Convert.ToDecimal(xmlInput.Root.Attribute("SubTotal").Value);
                 var total = xmlInput.Root.Attribute("total") != null ? Convert.ToDecimal(xmlInput.Root.Attribute("total").Value) : Convert.ToDecimal(xmlInput.Root.Attribute("Total").Value);
                 //var total = Convert.ToDecimal(xmlInput.Root.Attributes().ElementAt(11).Value);
                 var foliFiscal = timbre.Root.Element(tfd + "TimbreFiscalDigital").Attribute("UUID").Value;
-                if (!string.IsNullOrEmpty(rfcProveedor) && !string.IsNullOrEmpty(rfcRecpetor) && !string.IsNullOrEmpty(foliFiscal) && total != 0)
+                if (!string.IsNullOrEmpty(rfcProveedor) && !string.IsNullOrEmpty(rfcRecpetor) && !string.IsNullOrEmpty(foliFiscal) && subtotal != 0)
                 {
                     if (usuarioInfo.NombreUsuario != rfcProveedor)
                     {
@@ -405,8 +425,8 @@ namespace EprocurementWeb.Controllers
 
                     var solicitudDetalleResponse = businessLogic.GetSolicitudFacturaDetalle(request);
                     var montoTolerancia = Convert.ToDecimal(ConfigurationManager.AppSettings["parametroTolerancia"]);
-                    var importeValidar = solicitudDetalleResponse.SolicitudFacturaCabecera.ImporteContratado;
-                    if (total != importeValidar && ((total - importeValidar) > montoTolerancia) || ((total - importeValidar) < -montoTolerancia))
+                    var importeValidar = solicitudDetalleResponse.SolicitudFacturaCabecera.ImporteRecibido;
+                    if (subtotal != importeValidar && ((subtotal - importeValidar) > montoTolerancia) || ((subtotal - importeValidar) < -montoTolerancia))
                     {
                         return "El total de la factura es diferente al total de los registros.";
                     }

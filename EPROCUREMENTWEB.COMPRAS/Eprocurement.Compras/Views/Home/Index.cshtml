@@ -47,6 +47,10 @@
                         <button id="buscar" class="btn btn-search btn-purple float-right">
                             <i class="fas fa-search"></i> Buscar
                         </button>
+
+                        <button id="ax" class="btn btn-search btn-purple float-right">
+                            En Ax
+                        </button>
                     </div>
 
 
@@ -226,6 +230,23 @@
         });
     }
 
+    var fn_ax = function (idProveedor) {
+        /// Cargar Aeropuertos
+        var jsonData = JSON.stringify({ idProvider: 1228 });
+        $('#wkslist').empty();
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: '@Url.Action("GuardarEnAX", "Home")',
+            data: jsonData,
+            async: false,
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (data) { }
+        });
+    }
+
     var fn_verGiros = function (idProveedor) {
         /// Cargar Aeropuertos
         var jsonData = JSON.stringify({ idProvider: idProveedor });
@@ -250,6 +271,11 @@
 
     $("#buscar").click(function () {
         fn_buscar();
+    });
+
+    $("#ax").click(function () {
+        alert();
+        fn_ax();
     });
 
     $(document).ready(function() {

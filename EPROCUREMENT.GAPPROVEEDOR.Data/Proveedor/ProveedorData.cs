@@ -956,6 +956,8 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             response.Email = reader["Email"].ToString();
                             response.RazonSocial = reader["RazonSocial"].ToString();
                             response.Contacto = reader["NombreContacto"].ToString();
+
+
                         }
                     }
                 }

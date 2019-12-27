@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Eprocurement.Compras.Models;
 using EPROCUREMENT.GAPPROVEEDOR.Entities.Proveedor;
 using Eprocurement.Compras.Filters;
+using Eprocurement.Compras.GAP_DXS_VendorGroupService;
 
 namespace Eprocurement.Compras.Controllers
 {
@@ -352,6 +353,138 @@ namespace Eprocurement.Compras.Controllers
                 var proveedorDocumentoResponse = new BusinessLogic().GetProveedorDocumentoList(proveedorDocumentoRequest);
 
                 return Json(proveedorDocumentoResponse.ProveedorDocumentoList, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+        }
+
+        public ActionResult GuardarEnAX()
+        {
+            try
+            {
+                DXS_VendorPostServiceClient client = new DXS_VendorPostServiceClient();
+                CallContext context = new CallContext();
+
+                VendorResponse response;
+
+                VendorAddressResponse addressResponse;
+
+                VendorContactResponse contactResponse;
+
+                List<VendorAddressContract> vendorAddresList = new List<VendorAddressContract>();
+
+                List<VendorContactContract> vendorContactList = new List<VendorContactContract>();
+
+
+
+                context.Company = "GAP";
+
+                context.LogonAsUser = "rvargas";
+
+
+
+                //Creating vendor
+
+                VendorContract vendor = new VendorContract();
+
+                vendor.DataAreaId = "gap";
+
+                vendor.AccountIdreference = "Ref13";
+
+                vendor.DirPartyName = "Testing 13";
+
+                vendor.GroupId = "01";
+
+                vendor.OperationTypeMx = VendorOperationType_MX.Other;
+
+                vendor.VendorTypeMx = VendorType_MX.ForeignVendor;
+
+                vendor.TaxGroup = "01";
+
+                vendor.LanguageId = "es-mx";
+
+                vendor.PaymMode = "01";
+
+                vendor.PaymTermId = "01";
+
+                vendor.CurrencyCode = "MXN";
+
+
+
+                //Creating adress vendor
+
+                VendorAddressContract vendorAddress = new VendorAddressContract();
+
+                vendorAddress.Description = "Headquarters";
+
+                vendorAddress.CountryId = "MEX";
+
+                vendorAddress.ZipCode = "44100";
+
+                vendorAddress.State = "JAL";
+
+                vendorAddress.City = "Guadalajara";
+
+                vendorAddress.IsPrimary = NoYes.Yes;
+
+                vendorAddresList.Add(vendorAddress);
+
+                vendor.parmAddresList = vendorAddresList.ToArray();
+
+
+
+                //Creating contact info vendor
+
+                //email
+
+                VendorContactContract vendorContact = new VendorContactContract();
+
+                vendorContact.Description = "Correo headquarters";
+
+                vendorContact.Locator = "correo@mail.com";
+
+                vendorContact.Type = LogisticsElectronicAddressMethodType.Email;
+
+                vendorContact.IsPrimary = NoYes.Yes;
+
+                vendorContactList.Add(vendorContact);
+
+                //phone
+
+                VendorContactContract vendorContact2 = new VendorContactContract();
+
+                vendorContact2.Description = "Telefono headquarters";
+
+                vendorContact2.Locator = "3312345678";
+
+                vendorContact2.Type = LogisticsElectronicAddressMethodType.Phone;
+
+                vendorContact2.IsPrimary = NoYes.Yes;
+
+                vendorContactList.Add(vendorContact2);
+
+
+
+                vendor.parmContactList = vendorContactList.ToArray();
+
+
+
+                //creating response
+
+                response = client.createVendor(context, vendor);
+
+
+
+                Console.WriteLine(response.ResponseMessageStr);
+
+                Console.WriteLine(response.AccountNum);
+
+                Console.ReadKey();
+
+                return View();
             }
             catch (Exception ex)
             {

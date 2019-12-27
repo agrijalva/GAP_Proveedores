@@ -10,12 +10,11 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Entities
     {
         public int Linea { get; set; }
         public string Descripcion { get; set; }
-        public decimal CantidadAdquirida { get; set; }
-        public decimal PrecioUnitario { get; set; }
-        public decimal ImporteAdquirido { get; set; }
-        public decimal CantidadFacturada { get; set; }
-        public decimal CantidadFacturar { get; set; }
-        public decimal ImporteFacturado { get; set; }
-        public decimal ImporteFacturar { get; set; }
+        public decimal CantidadTotal { get; set; }
+        public decimal MontoTotal { get; set; }
+        public decimal CantidadPendiente { get; set; }
+        public decimal MontoPendiente { get; set; }
+        public decimal CantidadSolicitada { get; set; }
+        public decimal MontoSolicitada { get; set; }
     }
 }

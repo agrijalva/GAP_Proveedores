@@ -22,7 +22,7 @@
         <div class="card mt-3">
             <div class="card-header mb-2" id="headingOne">
                 <span class="card-titulo">
-                    Orden: SIAP-OC-0003565
+                    Orden: @Html.Label("lblOrdenCompra", "...", new { id = "lblOrdenCompra", @class = "" })
                 </span>
             </div>
             @Html.Hidden("idSolicitudFactura", (int)ViewBag.IdSolicitudFactura)
@@ -38,25 +38,25 @@
                     </div>
 
                     <div class="col-sm-2 cabecero-detalle">
-                        <label class="pull-right">Importe contratado sin I.V.A.</label>
+                        <label class="pull-right">Importe Total sin I.V.A.</label>
                         <p class="control-label text-right">
-                            @Html.Label("lblImporteContratado", "...", new { id = "lblImporteContratado", @class = "" })
+                            @Html.Label("lblImporteTotal", "...", new { id = "lblImporteTotal", @class = "" })
                         </p>
                     </div>
 
                     <div class="col-sm-2 cabecero-detalle text-right">
-                        <label class="text-right">Importe facturado sin I.V.A.</label>
-                        <p class="control-label text-right">@Html.Label("lblImporteFacturado", "...", new { id = "lblImporteFacturado" })</p>
+                        <label class="text-right">Importe recibido sin I.V.A.</label>
+                        <p class="control-label text-right">@Html.Label("lblImporteRecibido", "...", new { id = "lblImporteRecibido" })</p>
                     </div>
 
                     <div class="col-sm-3 cabecero-detalle text-right">
-                        <label class="pull-right">Importe pendiente de facturar sin I.V.A.</label>
+                        <label class="pull-right">Importe pendiente de recibir sin I.V.A.</label>
                         <p class="control-label text-right">@Html.Label("lblImportePendiente", "...", new { id = "lblImportePendiente" })</p>
                     </div>
 
                     <div class="col-sm-2 cabecero-detalle text-right">
-                        <label class="text-right">Importe pagado sin I.V.A.</label>
-                        <p class="control-label text-right">@Html.Label("lblImporteFacturar", "...", new { id = "lblImporteFacturar" })</p>
+                        <label class="text-right">Moneda</label>
+                        <p class="control-label text-right">@Html.Label("lblMoneda", "...", new { id = "lblMoneda" })</p>
                     </div>
 
                 </div>
@@ -107,13 +107,22 @@
             <input type="file" class="ntb-agregarcontacto1" id="filePdf" name="ficheroPdf" size="40">
         </div>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-3">
         <div>&nbsp;</div>
         <input type="button" style="float:right;" class="ntb-agregarcontacto pull-right" id="btnFile" value="Enviar" />
     </div>
 </div>
+<div class="row mt-3">
+    <div class="col-sm-12">
+        <div>&nbsp;</div>
 
-<script type="text/javascript">
+        @Html.ActionLink("Cerrar", "SolicitudFacturacion", "Gestion", new { @class = "ntb-cerrar" })
+
+        @*<input type="button" style="float:right;" class="ntb-cerrar pull-right" value="Cerrar" />*@
+    </div>
+</div>
+
+    <script type="text/javascript">
         var fn_buscar = function () {
         var numeroSolicitud = $('#idSolicitudFactura').val() == '' ? null : $('#idSolicitudFactura').val();
             var jsonData = JSON.stringify({ idSolicitudFactura: numeroSolicitud });
@@ -124,16 +133,13 @@
                     data: jsonData,
                     async: false,
                     success: function (data) {
-                        console.log( "Valida los input file", data );
-                        var importePendiente = (data.SolicitudFacturaCabecera.ImporteContratado - data.SolicitudFacturaCabecera.ImporteFacturado + data.SolicitudFacturaCabecera.ImporteFacturar)
-                        console.log(data.SolicitudFacturaCabecera.Descripcion);
                         $('#lblDescripcion').html(data.SolicitudFacturaCabecera.Descripcion);
-                        $('#lblImporteContratado').html('$ ' + addCommas(data.SolicitudFacturaCabecera.ImporteContratado));
-                        $('#lblImporteFacturado').html('$ ' + addCommas(data.SolicitudFacturaCabecera.ImporteFacturado));
-                        $('#lblImportePendiente').html('$ ' + addCommas(importePendiente));
-                        $('#lblImporteFacturar').html('$ ' + addCommas(data.SolicitudFacturaCabecera.ImporteFacturar));
-                        //$('#idEstatusSolicitud').val(data.SolicitudFacturaCabecera.IdEstatusSolicitud);
-                        console.log('IdEstatusSolicitud', data.SolicitudFacturaCabecera.IdEstatusSolicitud);
+                        $('#lblMoneda').html(data.SolicitudFacturaCabecera.Moneda);
+                        $('#lblOrdenCompra').html(data.SolicitudFacturaCabecera.OrdenCompra);
+                        $('#lblImporteTotal').html('$ ' + addCommas(data.SolicitudFacturaCabecera.ImporteTotal));
+                        $('#lblImporteRecibido').html('$ ' + addCommas(data.SolicitudFacturaCabecera.ImporteRecibido));
+                        $('#lblImportePendiente').html('$ ' + addCommas(data.SolicitudFacturaCabecera.ImportePendiente));
+
                         if (data.SolicitudFacturaCabecera.IdEstatusSolicitud != 1) {
                             $("#divArchivos").addClass("control-display-none");
                         }
@@ -141,8 +147,11 @@
                         $("#Table").append('<thead class="bg-light-purple"><tr>' +
                             '<td width="50">Linea</td>'+
                             '<td width="130">Texto</td>' +
+                            '<td align="right">Cantidad total</td>' +
+                            '<td align="right">Monto total</td>' +
+                            '<td align="right">Cantidad pendiente</td>' +
+                            '<td align="right">Monto pendiente</td>' +
                             '<td align="right">Cantidad solicitada</td>' +
-                            '<td align="right">Precio unitario</td>' +
                             '<td align="right">Monto solicitado</td>' +
                             '</tr></thead>'
 
@@ -155,18 +164,13 @@
                             $("#Table").append('<tr>' +
                                 '<td style="dislay: none; text-align:left"><b>' + data.SolicitudFacturaDetalleList[i].Linea + '</b></td>' +
                                 '<td style="dislay: none;">' + data.SolicitudFacturaDetalleList[i].Descripcion + '</td>' +
-                                '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].CantidadFacturar) + '</td>' +
-                                '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].PrecioUnitario) + '</td>' +
-                                '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].ImporteFacturar) + '</td>' +
-                                '</tr>'
-
-                                //'<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].PrecioUnitario ) + '</td>' +
-                                //'<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].ImporteAdquirido) + '</td>' +
-                                //'<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].CantidadFacturada ) + '</td>' +
-                                //'<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].CantidadFacturar) + '</td>' +
-                                //'<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", {style: "currency", currency: "MXN"}).format( data.SolicitudFacturaDetalleList[i].ImporteFacturado ) + '</td>' +
-                                //'<td style="dislay: none; text-align:right">' + new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(data.SolicitudFacturaDetalleList[i].ImporteFacturar) + '</td>' +
-
+                                '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].CantidadTotal) + '</td>' +
+                                '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].MontoTotal) + '</td>' +
+                                '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].CantidadPendiente) + '</td>' +
+                                '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].MontoPendiente) + '</td>' +
+                                '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].CantidadSolicitada) + '</td>' +
+                                '<td style="dislay: none; text-align:right">' + addCommas(data.SolicitudFacturaDetalleList[i].MontoSolicitada) + '</td>' +
+                            '</tr>'
                             );
                         }
                         $("#Table").append('</tbody>');
@@ -281,4 +285,4 @@
 
         });
 
-</script>
+    </script>

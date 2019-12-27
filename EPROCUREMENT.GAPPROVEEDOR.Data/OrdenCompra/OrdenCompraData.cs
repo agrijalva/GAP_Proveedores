@@ -96,7 +96,8 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                             OrdenCompraDetalle.ImpuestosxVenta = reader["ImpuestosxVenta"].ToString();
                             OrdenCompraDetalle.CuentaProveedor = reader["CuentaProveedor"].ToString();
                             OrdenCompraDetalle.RECIDLinSol = reader["RECIDLinSol"].ToString();
-                            OrdenCompraDetalle.EsConvenio = Convert.ToInt32(reader["EsConvenio"].ToString());
+                            //OrdenCompraDetalle.EsConvenio = Convert.ToInt32(reader["EsConvenio"].ToString());
+                            OrdenCompraDetalle.EsConvenio = 0;
                             response.OrdenCompraDetalleList.Add(OrdenCompraDetalle);
                         }
                     }

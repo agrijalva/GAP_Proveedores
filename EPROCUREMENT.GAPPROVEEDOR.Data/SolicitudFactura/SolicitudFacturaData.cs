@@ -82,13 +82,19 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                         if (reader.Read())
                         {
                             solicitudFacturaCabecero = new SolicitudFacturaCabeceraDTO();
+                            solicitudFacturaCabecero.OrdenCompra = reader["OrdenCompra"].ToString();
                             solicitudFacturaCabecero.Descripcion = reader["Descripcion"].ToString();
-                            solicitudFacturaCabecero.ImporteContratado = Convert.ToDecimal(reader["ImporteContratado"]);
-                            solicitudFacturaCabecero.ImporteAdquirido = Convert.ToDecimal(reader["ImporteAdquirido"].ToString());
-                            solicitudFacturaCabecero.ImporteFacturado = Convert.ToDecimal(reader["ImporteFacturado"]);
-                            solicitudFacturaCabecero.ImporteFacturar = Convert.ToDecimal(reader["ImporteFacturar"]);
+                            solicitudFacturaCabecero.ImporteTotal = Convert.ToDecimal(reader["ImporteTotal"]);
+                            solicitudFacturaCabecero.ImporteRecibido = Convert.ToDecimal(reader["ImporteRecibido"].ToString());
+                            solicitudFacturaCabecero.ImportePendiente = Convert.ToDecimal(reader["ImportePendiente"]);
                             solicitudFacturaCabecero.IdEstatusSolicitud = Convert.ToInt32(reader["IdEstatusSolicitud"]);
-                            
+                            solicitudFacturaCabecero.Moneda = reader["Moneda"].ToString(); 
+
+                            //solicitudFacturaCabecero.ImporteContratado = Convert.ToDecimal(reader["ImporteContratado"]);
+                            //solicitudFacturaCabecero.ImporteAdquirido = Convert.ToDecimal(reader["ImporteAdquirido"].ToString());
+                            //solicitudFacturaCabecero.ImporteFacturado = Convert.ToDecimal(reader["ImporteFacturado"]);
+                            //solicitudFacturaCabecero.ImporteFacturar = Convert.ToDecimal(reader["ImporteFacturar"]);
+
                             response.SolicitudFacturaCabecera = solicitudFacturaCabecero;
                         }
                     }
@@ -101,15 +107,15 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
                         while (reader.Read())
                         {
                             solicitudFacturaDetalle = new SolicitudFacturaDetalleDTO();
+
                             solicitudFacturaDetalle.Linea = Convert.ToInt32(reader["Linea"]);
-                            solicitudFacturaDetalle.Descripcion = reader["Descripcion"].ToString();
-                            solicitudFacturaDetalle.CantidadAdquirida = Convert.ToDecimal(reader["CantidadAdquirida"]);
-                            solicitudFacturaDetalle.PrecioUnitario = Convert.ToDecimal(reader["PrecioUnitario"]);
-                            solicitudFacturaDetalle.ImporteAdquirido = Convert.ToDecimal(reader["ImporteAdquirido"].ToString());
-                            solicitudFacturaDetalle.CantidadFacturada = Convert.ToDecimal(reader["CantidadFacturada"]);
-                            solicitudFacturaDetalle.CantidadFacturar = Convert.ToDecimal(reader["CantidadFacturar"]);
-                            solicitudFacturaDetalle.ImporteFacturado = Convert.ToDecimal(reader["ImporteFacturado"]);
-                            solicitudFacturaDetalle.ImporteFacturar = Convert.ToDecimal(reader["ImporteFacturar"]);
+                            solicitudFacturaDetalle.Descripcion = reader["Texto"].ToString();
+                            solicitudFacturaDetalle.CantidadTotal = Convert.ToDecimal(reader["CantidadTotal"]);
+                            solicitudFacturaDetalle.MontoTotal = Convert.ToDecimal(reader["MontoTotal"]);
+                            solicitudFacturaDetalle.CantidadPendiente = Convert.ToDecimal(reader["CantidadPendiente"]);
+                            solicitudFacturaDetalle.MontoPendiente = Convert.ToDecimal(reader["MontoPendiente"]);
+                            solicitudFacturaDetalle.CantidadSolicitada = Convert.ToDecimal(reader["CantidadSolicitada"]);
+                            solicitudFacturaDetalle.MontoSolicitada = Convert.ToDecimal(reader["MontoSolicitada"]);
                             response.SolicitudFacturaDetalleList.Add(solicitudFacturaDetalle);
                         }
                     }
@@ -118,6 +124,7 @@ namespace EPROCUREMENT.GAPPROVEEDOR.Data
             }
             catch (Exception exception)
             {
+                response.Success = false;
             }
 
             return response;
