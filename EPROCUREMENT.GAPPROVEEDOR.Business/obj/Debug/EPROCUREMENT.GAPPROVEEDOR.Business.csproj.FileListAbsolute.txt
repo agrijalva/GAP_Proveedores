@@ -83,3 +83,17 @@ C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPRO
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.csproj.CopyComplete
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.dll
 C:\Users\HP\Documents\Visual Studio Projects\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.pdb
+C:\Users\IntegraCenter49\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.dll
+C:\Users\IntegraCenter49\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.pdb
+C:\Users\IntegraCenter49\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.dll
+C:\Users\IntegraCenter49\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.dll
+C:\Users\IntegraCenter49\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\Microsoft.Owin.dll
+C:\Users\IntegraCenter49\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\Owin.dll
+C:\Users\IntegraCenter49\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.pdb
+C:\Users\IntegraCenter49\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Data.dll.config
+C:\Users\IntegraCenter49\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\EPROCUREMENT.GAPPROVEEDOR.Entities.pdb
+C:\Users\IntegraCenter49\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\bin\Debug\Microsoft.Owin.xml
+C:\Users\IntegraCenter49\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.csprojAssemblyReference.cache
+C:\Users\IntegraCenter49\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.csproj.CopyComplete
+C:\Users\IntegraCenter49\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.dll
+C:\Users\IntegraCenter49\Documents\GitHub\GAP_Proveedores\EPROCUREMENT.GAPPROVEEDOR.Business\obj\Debug\EPROCUREMENT.GAPPROVEEDOR.Business.pdb

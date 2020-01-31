@@ -192,22 +192,49 @@ namespace Eprocurement.Compras.Controllers
             }
         }
 
-        public JsonResult SetProveedorEstatus(int idProveedor, int estatus, string observaciones )
+        public JsonResult SetProveedorEstatus(int idProveedor, int estatus, string observaciones)
         {
             try
             {
-
+                ProveedorEstatusResponseDTO response = new ProveedorEstatusResponseDTO();
                 var usuarioInfo = new ValidaSession().ObtenerUsuarioSession();
                 BusinessLogic businessLogic = new BusinessLogic();
-                ProveedorAprobarRequestDTO request = new ProveedorAprobarRequestDTO();
-                request.EstatusProveedor = new HistoricoEstatusProveedorDTO { IdProveedor = idProveedor, IdEstatusProveedor = estatus, IdUsuario = usuarioInfo.IdUsuario, Observaciones = observaciones };
 
-                var response = businessLogic.SetProveedorEstatus(request);
+                ProveedorDetalleRequestDTO proveedorDetalleRequest = new ProveedorDetalleRequestDTO();
+                proveedorDetalleRequest.IdProveedor = idProveedor;
+
+                var proveedor = businessLogic.GetProveedorElemento(proveedorDetalleRequest).Proveedor;
+
+                var business = new Business.Business();
+                bool registrado = business.CreateVendor(usuarioInfo, proveedor);
+
+                if (registrado)
+                {
+                    ProveedorAprobarRequestDTO request = new ProveedorAprobarRequestDTO();
+                    request.EstatusProveedor = new HistoricoEstatusProveedorDTO { IdProveedor = idProveedor, IdEstatusProveedor = estatus, IdUsuario = usuarioInfo.IdUsuario, Observaciones = observaciones };
+
+                    response = businessLogic.SetProveedorEstatus(request);
+                }
+
                 return Json(response.Success, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
 
+                return null;
+            }
+        }
+
+        public JsonResult Test()
+        {
+            try
+            {
+                var b = new Business.Business();
+                b.CreateVendor();
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
                 return null;
             }
         }

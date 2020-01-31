@@ -504,6 +504,19 @@
             })
         });
 
+        $("#btnAprobar2").click(function () {
+            alert('btnaprobar');
+            console.log('btnaprobar');
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "/Home/Test",
+                async: false,
+                success: function (data) {
+                    console.log(data);
+                },
+            });
+        });
 
         $("#btnAprobar").click(function () {
 

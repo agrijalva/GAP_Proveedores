@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://tempuri.org" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService?xsd=xsd3" namespace="http://tempuri.org" />
+      <xsd:import schemaLocation="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService?xsd=xsd4" namespace="http://schemas.microsoft.com/dynamics/2010/01/datacontracts" />
+      <xsd:import schemaLocation="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService?xsd=xsd6" namespace="http://schemas.microsoft.com/dynamics/2008/01/documents/Fault" />
+      <xsd:import schemaLocation="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/Dynamics.Ax.Application" />
+      <xsd:import schemaLocation="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Microsoft.Dynamics.Ax.Xpp" />
+      <xsd:import schemaLocation="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://172.16.1.48:8150/DynamicsAx/Services/DXS_VendorGroupService?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/Microsoft.Dynamics.AX.Framework.Services" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="DXS_VendorPostServiceGetAddressVendorRequest">
+    <wsdl:part name="parameters" element="tns:DXS_VendorPostServiceGetAddressVendorRequest" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceGetAddressVendorRequest_Headers">
+    <wsdl:part xmlns:q1="http://schemas.microsoft.com/dynamics/2010/01/datacontracts" name="context" element="q1:CallContext" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceGetAddressVendorResponse">
+    <wsdl:part name="parameters" element="tns:DXS_VendorPostServiceGetAddressVendorResponse" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostService_getAddressVendor_AifFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.microsoft.com/dynamics/2008/01/documents/Fault" name="detail" element="q2:AifFault" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceUpdateContactVendorRequest">
+    <wsdl:part name="parameters" element="tns:DXS_VendorPostServiceUpdateContactVendorRequest" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceUpdateContactVendorRequest_Headers">
+    <wsdl:part xmlns:q3="http://schemas.microsoft.com/dynamics/2010/01/datacontracts" name="context" element="q3:CallContext" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceUpdateContactVendorResponse">
+    <wsdl:part name="parameters" element="tns:DXS_VendorPostServiceUpdateContactVendorResponse" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostService_updateContactVendor_AifFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.microsoft.com/dynamics/2008/01/documents/Fault" name="detail" element="q4:AifFault" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceCreateVendorRequest">
+    <wsdl:part name="parameters" element="tns:DXS_VendorPostServiceCreateVendorRequest" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceCreateVendorRequest_Headers">
+    <wsdl:part xmlns:q5="http://schemas.microsoft.com/dynamics/2010/01/datacontracts" name="context" element="q5:CallContext" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceCreateVendorResponse">
+    <wsdl:part name="parameters" element="tns:DXS_VendorPostServiceCreateVendorResponse" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostService_createVendor_AifFaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.microsoft.com/dynamics/2008/01/documents/Fault" name="detail" element="q6:AifFault" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceCreateContactVendorRequest">
+    <wsdl:part name="parameters" element="tns:DXS_VendorPostServiceCreateContactVendorRequest" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceCreateContactVendorRequest_Headers">
+    <wsdl:part xmlns:q7="http://schemas.microsoft.com/dynamics/2010/01/datacontracts" name="context" element="q7:CallContext" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceCreateContactVendorResponse">
+    <wsdl:part name="parameters" element="tns:DXS_VendorPostServiceCreateContactVendorResponse" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostService_createContactVendor_AifFaultFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.microsoft.com/dynamics/2008/01/documents/Fault" name="detail" element="q8:AifFault" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceCreateUpdateVendorRequest">
+    <wsdl:part name="parameters" element="tns:DXS_VendorPostServiceCreateUpdateVendorRequest" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceCreateUpdateVendorRequest_Headers">
+    <wsdl:part xmlns:q9="http://schemas.microsoft.com/dynamics/2010/01/datacontracts" name="context" element="q9:CallContext" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceCreateUpdateVendorResponse">
+    <wsdl:part name="parameters" element="tns:DXS_VendorPostServiceCreateUpdateVendorResponse" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostService_createUpdateVendor_AifFaultFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.microsoft.com/dynamics/2008/01/documents/Fault" name="detail" element="q10:AifFault" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceCreateAddressVendorRequest">
+    <wsdl:part name="parameters" element="tns:DXS_VendorPostServiceCreateAddressVendorRequest" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceCreateAddressVendorRequest_Headers">
+    <wsdl:part xmlns:q11="http://schemas.microsoft.com/dynamics/2010/01/datacontracts" name="context" element="q11:CallContext" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceCreateAddressVendorResponse">
+    <wsdl:part name="parameters" element="tns:DXS_VendorPostServiceCreateAddressVendorResponse" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostService_createAddressVendor_AifFaultFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.microsoft.com/dynamics/2008/01/documents/Fault" name="detail" element="q12:AifFault" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceGetContactVendorRequest">
+    <wsdl:part name="parameters" element="tns:DXS_VendorPostServiceGetContactVendorRequest" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceGetContactVendorRequest_Headers">
+    <wsdl:part xmlns:q13="http://schemas.microsoft.com/dynamics/2010/01/datacontracts" name="context" element="q13:CallContext" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostServiceGetContactVendorResponse">
+    <wsdl:part name="parameters" element="tns:DXS_VendorPostServiceGetContactVendorResponse" />
+  </wsdl:message>
+  <wsdl:message name="DXS_VendorPostService_getContactVendor_AifFaultFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.microsoft.com/dynamics/2008/01/documents/Fault" name="detail" element="q14:AifFault" />
+  </wsdl:message>
+  <wsdl:portType name="DXS_VendorPostService">
+    <wsdl:operation name="getAddressVendor">
+      <wsdl:input wsaw:Action="http://tempuri.org/DXS_VendorPostService/getAddressVendor" name="DXS_VendorPostServiceGetAddressVendorRequest" message="tns:DXS_VendorPostServiceGetAddressVendorRequest" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DXS_VendorPostService/getAddressVendorResponse" name="DXS_VendorPostServiceGetAddressVendorResponse" message="tns:DXS_VendorPostServiceGetAddressVendorResponse" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DXS_VendorPostService/getAddressVendorAifFaultFault" name="AifFaultFault" message="tns:DXS_VendorPostService_getAddressVendor_AifFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="updateContactVendor">
+      <wsdl:input wsaw:Action="http://tempuri.org/DXS_VendorPostService/updateContactVendor" name="DXS_VendorPostServiceUpdateContactVendorRequest" message="tns:DXS_VendorPostServiceUpdateContactVendorRequest" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DXS_VendorPostService/updateContactVendorResponse" name="DXS_VendorPostServiceUpdateContactVendorResponse" message="tns:DXS_VendorPostServiceUpdateContactVendorResponse" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DXS_VendorPostService/updateContactVendorAifFaultFault" name="AifFaultFault" message="tns:DXS_VendorPostService_updateContactVendor_AifFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="createVendor">
+      <wsdl:input wsaw:Action="http://tempuri.org/DXS_VendorPostService/createVendor" name="DXS_VendorPostServiceCreateVendorRequest" message="tns:DXS_VendorPostServiceCreateVendorRequest" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DXS_VendorPostService/createVendorResponse" name="DXS_VendorPostServiceCreateVendorResponse" message="tns:DXS_VendorPostServiceCreateVendorResponse" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DXS_VendorPostService/createVendorAifFaultFault" name="AifFaultFault" message="tns:DXS_VendorPostService_createVendor_AifFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="createContactVendor">
+      <wsdl:input wsaw:Action="http://tempuri.org/DXS_VendorPostService/createContactVendor" name="DXS_VendorPostServiceCreateContactVendorRequest" message="tns:DXS_VendorPostServiceCreateContactVendorRequest" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DXS_VendorPostService/createContactVendorResponse" name="DXS_VendorPostServiceCreateContactVendorResponse" message="tns:DXS_VendorPostServiceCreateContactVendorResponse" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DXS_VendorPostService/createContactVendorAifFaultFault" name="AifFaultFault" message="tns:DXS_VendorPostService_createContactVendor_AifFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="createUpdateVendor">
+      <wsdl:input wsaw:Action="http://tempuri.org/DXS_VendorPostService/createUpdateVendor" name="DXS_VendorPostServiceCreateUpdateVendorRequest" message="tns:DXS_VendorPostServiceCreateUpdateVendorRequest" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DXS_VendorPostService/createUpdateVendorResponse" name="DXS_VendorPostServiceCreateUpdateVendorResponse" message="tns:DXS_VendorPostServiceCreateUpdateVendorResponse" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DXS_VendorPostService/createUpdateVendorAifFaultFault" name="AifFaultFault" message="tns:DXS_VendorPostService_createUpdateVendor_AifFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="createAddressVendor">
+      <wsdl:input wsaw:Action="http://tempuri.org/DXS_VendorPostService/createAddressVendor" name="DXS_VendorPostServiceCreateAddressVendorRequest" message="tns:DXS_VendorPostServiceCreateAddressVendorRequest" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DXS_VendorPostService/createAddressVendorResponse" name="DXS_VendorPostServiceCreateAddressVendorResponse" message="tns:DXS_VendorPostServiceCreateAddressVendorResponse" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DXS_VendorPostService/createAddressVendorAifFaultFault" name="AifFaultFault" message="tns:DXS_VendorPostService_createAddressVendor_AifFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getContactVendor">
+      <wsdl:input wsaw:Action="http://tempuri.org/DXS_VendorPostService/getContactVendor" name="DXS_VendorPostServiceGetContactVendorRequest" message="tns:DXS_VendorPostServiceGetContactVendorRequest" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DXS_VendorPostService/getContactVendorResponse" name="DXS_VendorPostServiceGetContactVendorResponse" message="tns:DXS_VendorPostServiceGetContactVendorResponse" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DXS_VendorPostService/getContactVendorAifFaultFault" name="AifFaultFault" message="tns:DXS_VendorPostService_getContactVendor_AifFaultFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>
