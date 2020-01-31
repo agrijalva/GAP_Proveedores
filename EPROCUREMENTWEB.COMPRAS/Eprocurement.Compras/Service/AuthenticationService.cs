@@ -9,6 +9,7 @@ using System.Configuration;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Principal;
 using System.Web;
 
 namespace Eprocurement.Compras.Service
@@ -26,17 +27,22 @@ namespace Eprocurement.Compras.Service
 
         public AuthenticationResult SignIn(String username, String password)
         {
-            string val = "";
+            string error = "";
 
-            using ( PrincipalContext principalContext = new PrincipalContext(ContextType.Domain, GapActiveDirectory))
+            try
             {
-                //bool isValid = principalContext.ValidateCredentials(username, password);
-                bool isValid = true;
-                if (isValid)
+                using (PrincipalContext principalContext = new PrincipalContext(ContextType.Domain, GapActiveDirectory, username, password))
                 {
-                    if (HttpContext.Current.Request.IsLocal)
+                    var userPrincipal = UserPrincipal.FindByIdentity(principalContext, IdentityType.SamAccountName, username);
+                    var groupsUser = userPrincipal.GetGroups(principalContext);
+
+                    if (groupsUser.Any(c => c.Name.Equals("Compras SIAP")))
                     {
-                        try
+                        if (userPrincipal.IsAccountLockedOut())
+                        {
+                            error = "Acceso Invalido 102";
+                        }
+                        else
                         {
                             UsuarioDTO usuarioDTO = new BusinessLogic().LoginUsuarioItem(username, password);
                             if (usuarioDTO != null)
@@ -44,109 +50,77 @@ namespace Eprocurement.Compras.Service
                                 var identity = CreateIdentity(username, usuarioDTO.IdUsuarioRol.ToString(), JsonConvert.SerializeObject(usuarioDTO));
                                 authenticationManager.SignOut(LoginAuthentication.ApplicationCookie);
                                 authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, identity);
-                                return new AuthenticationResult();
                             }
                             else
                             {
-                                UsuarioDTO usuario = new BusinessLogic().AddUsuarioItem(username, password);
-                                if(usuarioDTO != null)
-                                {
-                                    UsuarioDTO u = new BusinessLogic().LoginUsuarioItem(username, password);
-                                    if (u != null)
-                                    {
-                                        var identity = CreateIdentity(username, usuarioDTO.IdUsuarioRol.ToString(), JsonConvert.SerializeObject(u));
-                                        authenticationManager.SignOut(LoginAuthentication.ApplicationCookie);
-                                        authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, identity);
-                                        return new AuthenticationResult();
-                                    }
-                                    else
-                                    {
-                                        val = "Acceso Invalido, Usuario local no existente";
-                                        return new AuthenticationResult(val);
-                                    }
-                                }
-                                else
-                                {
-                                    val = "Acceso Invalido, Usuario local no existente";
-                                    return new AuthenticationResult(val);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            val = "Acceso Invalido No se pudo crear su usuario 105: " + ex.Message;
-                        }
-                        return new AuthenticationResult(val);
-
-                    }
-                    UserPrincipal userPrincipal = UserPrincipal.FindByIdentity(
-                        principalContext,
-                        IdentityType.SamAccountName,
-                        username);
-
-                    if (userPrincipal.IsAccountLockedOut())
-                    {
-                        val = "Acceso Invalido 102";
-                    }
-
-                    if (!val.Contains("Invalido"))
-                    {
-                        try
-                        {
-                            UsuarioDTO usuarioDTO = new BusinessLogic().LoginUsuarioItem(username, password);
-                            if (usuarioDTO != null)
-                            {
-                                var identity = CreateIdentity(username, usuarioDTO.IdUsuarioRol.ToString(), JsonConvert.SerializeObject(usuarioDTO));
-                                authenticationManager.SignOut(LoginAuthentication.ApplicationCookie);
-                                authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, identity);
-                                return new AuthenticationResult();
-                            }
-                            else
-                            {
-                                UsuarioDTO usuario = new BusinessLogic().AddUsuarioItem(username, password);
+                                UsuarioDTO usuario = new BusinessLogic().AddUsuarioItem(username, password, 2);
                                 if (usuarioDTO != null)
                                 {
                                     UsuarioDTO u = new BusinessLogic().LoginUsuarioItem(username, password);
                                     if (u != null)
                                     {
-                                        var identity = CreateIdentity(username, usuarioDTO.IdUsuarioRol.ToString(), JsonConvert.SerializeObject(u));
+                                        var identity = CreateIdentity(username, u.IdUsuarioRol.ToString(), JsonConvert.SerializeObject(u));
                                         authenticationManager.SignOut(LoginAuthentication.ApplicationCookie);
                                         authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, identity);
-                                        return new AuthenticationResult();
                                     }
                                     else
                                     {
-                                        val = "Acceso Invalido, Usuario local no existente";
-                                        return new AuthenticationResult(val);
+                                        error = "Acceso Invalido, Usuario local no existente";                                        
                                     }
                                 }
                                 else
                                 {
-                                    val = "Acceso Invalido, Usuario local no existente";
-                                    return new AuthenticationResult(val);
+                                    error = "Acceso Invalido, Usuario local no existente";
                                 }
                             }
-                        }
-                        catch (Exception ex)
-                        {
-                            val = "Acceso Invalido No se pudo crear su usuario 105: " + ex.Message;
-                            return new AuthenticationResult(val);
                         }
                     }
                     else
                     {
-                        if (val.Length <= 0)
-                            val = "Acceso Invalido: " + val;
-
-                        return new AuthenticationResult(val);
+                        if (userPrincipal.IsAccountLockedOut())
+                        {
+                            error = "Acceso Invalido 102";
+                        }
+                        else
+                        {
+                            UsuarioDTO usuarioDTO = new BusinessLogic().LoginUsuarioItem(username, password);
+                            if (usuarioDTO != null)
+                            {
+                                var identity = CreateIdentity(username, usuarioDTO.IdUsuarioRol.ToString(), JsonConvert.SerializeObject(usuarioDTO));
+                                authenticationManager.SignOut(LoginAuthentication.ApplicationCookie);
+                                authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, identity);
+                            }
+                            else
+                            {
+                                UsuarioDTO usuario = new BusinessLogic().AddUsuarioItem(username, password, 3);
+                                if (usuarioDTO != null)
+                                {
+                                    UsuarioDTO u = new BusinessLogic().LoginUsuarioItem(username, password);
+                                    if (u != null)
+                                    {
+                                        var identity = CreateIdentity(username, u.IdUsuarioRol.ToString(), JsonConvert.SerializeObject(u));
+                                        authenticationManager.SignOut(LoginAuthentication.ApplicationCookie);
+                                        authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, identity);
+                                    }
+                                    else
+                                    {
+                                        error = "Acceso Invalido, Usuario local no existente";
+                                    }
+                                }
+                                else
+                                {
+                                    error = "Acceso Invalido, Usuario local no existente";
+                                }
+                            }
+                        }
                     }
                 }
-                else
-                {
-                    val = "Acceso Invalido: No se pudo validar con LDAP";
-                    return new AuthenticationResult(val);
-                }
             }
+            catch (Exception ex)
+            {
+                error = "Acceso Invalido: No se pudo validar con LDAP";
+            }
+            return new AuthenticationResult(error);
         }
 
         private ClaimsIdentity CreateIdentity(string userPrincipal, string rol, string propiedadesUsuario)

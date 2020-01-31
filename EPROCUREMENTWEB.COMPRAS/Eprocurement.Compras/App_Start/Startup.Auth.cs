@@ -16,7 +16,7 @@ namespace Eprocurement.Compras.App_Start
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = LoginAuthentication.ApplicationCookie,
-                LoginPath = new PathString("/SeguridadADController/Index"),
+                LoginPath = new PathString("/SeguridadAD/Index"),
                 Provider = new CookieAuthenticationProvider(),
                 CookieName = "LoginCookie",
                 CookieHttpOnly = true,

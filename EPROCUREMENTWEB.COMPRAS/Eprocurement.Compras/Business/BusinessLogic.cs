@@ -359,10 +359,10 @@ namespace Eprocurement.Compras.Business
             return usuarioDTO;
         }
 
-        public UsuarioDTO AddUsuarioItem(string usuario, string password)
+        public UsuarioDTO AddUsuarioItem(string usuario, string password, int idUsuarioRol)
         {
             UsuarioDTO usuarioDTO = null;
-            LoginUsuarioRequestDTO loginUsuario = new LoginUsuarioRequestDTO { Usuario = new UsuarioDTO { NombreUsuario = usuario, Password = password } };
+            LoginUsuarioRequestDTO loginUsuario = new LoginUsuarioRequestDTO { Usuario = new UsuarioDTO { NombreUsuario = usuario, Password = password, IdUsuarioRol = idUsuarioRol } };
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(urlApi + "api/Seguridad/");

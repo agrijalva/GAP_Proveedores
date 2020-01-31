@@ -117,7 +117,7 @@
                                         @Html.Label("cuenta", @EprocurementWeb.GlobalResources.RHome.Account, new { @class = "labelTexto control-label" })
                                     </div>
                                     <div class="inputIF">
-                                        @Html.TextBoxFor(model => model.ProveedorCuentaList[0].Cuenta, new { @class = "form-control inputIF", id = "cuenta" })
+                                        @Html.TextBoxFor(model => model.ProveedorCuentaList[0].Cuenta, new { @class = "form-control inputIF", id = "cuenta", maxlength = "50" })
                                         @Html.Label((string)@EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Generic, new { @class = "text-danger", id = "errorCuenta", @style = "display:none;" })
                                     </div>
                                 </div>
@@ -135,7 +135,7 @@
                                         @Html.Label("clabe", @EprocurementWeb.GlobalResources.RHome.CLABE, new { @class = "labelTexto control-label" })
                                     </div>
                                     <div class="inputIF">
-                                        @Html.TextBoxFor(model => model.ProveedorCuentaList[0].CLABE, new { @class = "form-control inputIF", id = "clave" })
+                                        @Html.TextBoxFor(model => model.ProveedorCuentaList[0].CLABE, new { @class = "form-control inputIF", id = "clave", maxlength = "50" })
                                         @Html.Label((string)@EprocurementWeb.GlobalResources.RHome.Message_Error_Required_Generic, new { @class = "text-danger", id = "errorClave", @style = "display:none;" })
                                     </div>
                                 </div>
